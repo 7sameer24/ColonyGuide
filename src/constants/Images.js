@@ -22,6 +22,7 @@ const Milk = require('../../assets/Images/milk.png');
 const Profile = require('../../assets/Images/Profile.png');
 const Home = require('../../assets/Images/Home.png');
 const Search = require('../../assets/Images/Search.png');
+const LocationIcon = require('../../assets/Images/LocationIcon.png');
 
 //Profile Icons//
 const Personal = require('../../assets/ProfileIcon/Personal.png');
@@ -88,4 +89,5 @@ export default {
   LogOut,
   BusinessBG,
   Search,
+  LocationIcon,
 };

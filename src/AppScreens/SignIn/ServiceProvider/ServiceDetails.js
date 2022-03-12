@@ -30,7 +30,7 @@ const ServiceDetails = ({navigation}) => {
       />
       <ButtonComponent
         title="Next"
-        onPress={() => navigation.navigate('Location')}
+        onPress={() => navigation.navigate('Your location')}
       />
     </View>
   );

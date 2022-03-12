@@ -10,6 +10,8 @@ const ButtonComponent = ({
   ButtonContainer,
   buttonStyle,
   titleStyle,
+  disabled,
+  loading,
 }) => {
   return (
     <Button
@@ -19,6 +21,8 @@ const ButtonComponent = ({
       titleStyle={[styles.titleStyle, {...titleStyle}]}
       onPress={onPress}
       type={btnType}
+      disabled={disabled}
+      loading={loading}
     />
   );
 };

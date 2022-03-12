@@ -11,6 +11,7 @@ const SignInScreen = ({navigation}) => {
       ButtonContainer: styles.ButtonContainer1,
       titleColor: COLORS.primary,
       onPress: 'Register',
+      role_id: 1,
     },
     {
       name: 'Service Provider',
@@ -18,6 +19,7 @@ const SignInScreen = ({navigation}) => {
       ButtonContainer: styles.ButtonContainer,
       titleColor: COLORS.white,
       onPress: 'Register',
+      role_id: 2,
     },
     {
       name: 'House Owners',
@@ -25,6 +27,7 @@ const SignInScreen = ({navigation}) => {
       ButtonContainer: styles.ButtonContainer1,
       titleColor: COLORS.primary,
       onPress: 'Register',
+      role_id: 3,
     },
     {
       name: 'Visitor',
@@ -32,6 +35,7 @@ const SignInScreen = ({navigation}) => {
       ButtonContainer: styles.ButtonContainer,
       titleColor: COLORS.white,
       onPress: 'Register',
+      role_id: 4,
     },
   ];
   return (
@@ -50,7 +54,9 @@ const SignInScreen = ({navigation}) => {
           buttonStyle={data.buttonStyle}
           containerStyle={data.ButtonContainer}
           titleStyle={{color: data.titleColor, fontFamily: FONTS.InterSemiBold}}
-          onPress={() => navigation.navigate(data.onPress, {Name: data.name})}
+          onPress={() =>
+            navigation.navigate(data.onPress, {role_id: data.role_id})
+          }
         />
       ))}
     </View>

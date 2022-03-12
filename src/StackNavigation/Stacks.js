@@ -53,7 +53,12 @@ const MyStack = () => {
     {name: 'Register', component: RegisterScreen, headerShown: false},
     {name: 'Otp', component: OtpScreen, headerTransparent: true, title: null},
     {name: 'Registration', component: AllRegistration, headerShown: false},
-    {name: 'Location', component: Location, headerShown: false},
+    {
+      name: 'Your location',
+      component: Location,
+      headerShown: true,
+      headerShadowVisible: false,
+    },
     {name: 'Address', component: AddressScreen, headerShown: false},
     {name: 'ForgotPassword', component: ForgotScreen, headerShown: false},
     {name: 'OTPNEWPASS', component: OtpNewPass, headerShown: false},
@@ -183,6 +188,7 @@ const MyStack = () => {
             headerShadowVisible: data.headerShadowVisible,
             headerTitle: data.headerTitle,
             headerBackVisible: data.headerBackVisible,
+            title: data.title,
           })}
         />
       ))}

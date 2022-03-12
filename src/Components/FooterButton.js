@@ -17,10 +17,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterRegular,
     fontSize: 12,
     color: COLORS.third,
-  },
-  resendTouch: {
     alignSelf: 'center',
-    position: 'absolute',
-    bottom: 30,
+    marginTop: '45%',
   },
 });

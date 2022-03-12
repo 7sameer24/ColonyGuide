@@ -11,6 +11,14 @@ const InputComponent = ({
   inputContainerStyle,
   inputStyle,
   containerStyle,
+  onChangeText,
+  value,
+  keyboardType,
+  maxLength,
+  onSubmitEditing,
+  ref,
+  iconOnpress,
+  secureTextEntry,
 }) => {
   return (
     <Input
@@ -28,7 +36,15 @@ const InputComponent = ({
         type: 'ionicon',
         color: COLORS.secondary,
         size: iconSize,
+        onPress: iconOnpress,
       }}
+      value={value}
+      onChangeText={onChangeText}
+      keyboardType={keyboardType}
+      maxLength={maxLength}
+      onSubmitEditing={onSubmitEditing}
+      ref={ref}
+      secureTextEntry={secureTextEntry}
     />
   );
 };
