@@ -1,64 +1,65 @@
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Button} from 'react-native-elements';
+import axios from 'axios';
+import Spinner from '../../Components/Spinner';
 
 const SignInScreen = ({navigation}) => {
-  const arr = [
-    {
-      name: 'Student',
-      buttonStyle: styles.buttonStyle1,
-      ButtonContainer: styles.ButtonContainer1,
-      titleColor: COLORS.primary,
-      onPress: 'Register',
-      role_id: 1,
-    },
-    {
-      name: 'Service Provider',
-      buttonStyle: styles.buttonStyle,
-      ButtonContainer: styles.ButtonContainer,
-      titleColor: COLORS.white,
-      onPress: 'Register',
-      role_id: 2,
-    },
-    {
-      name: 'House Owners',
-      buttonStyle: styles.buttonStyle1,
-      ButtonContainer: styles.ButtonContainer1,
-      titleColor: COLORS.primary,
-      onPress: 'Register',
-      role_id: 3,
-    },
-    {
-      name: 'Visitor',
-      buttonStyle: styles.buttonStyle,
-      ButtonContainer: styles.ButtonContainer,
-      titleColor: COLORS.white,
-      onPress: 'Register',
-      role_id: 4,
-    },
-  ];
+  const [newData, setNewData] = useState([]);
+  const idx = async () => {
+    try {
+      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
+      const response = await axios.post(URL);
+      setNewData(response.data.data.roles);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    idx();
+  }, []);
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.TouchableOpacity}>
-        <Text style={styles.TouchableText}>Skip to home</Text>
-      </TouchableOpacity>
-      <View style={genericStyles.mb(30)}>
-        <Image source={Images.Sign} style={styles.imageStyle} />
-        <Text style={styles.text}>Select your role</Text>
-      </View>
-      {arr.map(data => (
-        <Button
-          key={data.name}
-          title={data.name}
-          buttonStyle={data.buttonStyle}
-          containerStyle={data.ButtonContainer}
-          titleStyle={{color: data.titleColor, fontFamily: FONTS.InterSemiBold}}
-          onPress={() =>
-            navigation.navigate(data.onPress, {role_id: data.role_id})
-          }
-        />
-      ))}
+      {newData.length > 0 ? (
+        <>
+          <TouchableOpacity style={styles.TouchableOpacity}>
+            <Text style={styles.TouchableText}>Skip to home</Text>
+          </TouchableOpacity>
+          <View style={genericStyles.mb(30)}>
+            <Image source={Images.Sign} style={styles.imageStyle} />
+            <Text style={styles.text}>Select your role</Text>
+          </View>
+          {newData.map(data => (
+            <Button
+              key={data.id}
+              title={data.name}
+              buttonStyle={
+                data.name == 'Service Provider' || data.name == 'Visitor'
+                  ? styles.buttonStyle
+                  : styles.buttonStyle1
+              }
+              containerStyle={
+                data.name == ('Service Provider', 'Visitor')
+                  ? styles.ButtonContainer
+                  : styles.ButtonContainer1
+              }
+              titleStyle={{
+                color:
+                  data.name == 'Service Provider' || data.name == 'Visitor'
+                    ? COLORS.white
+                    : COLORS.primary,
+                fontFamily: FONTS.InterSemiBold,
+              }}
+              onPress={() =>
+                navigation.navigate('Register', {role_id: data.id})
+              }
+            />
+          ))}
+        </>
+      ) : (
+        <Spinner />
+      )}
     </View>
   );
 };

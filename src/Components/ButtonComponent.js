@@ -4,14 +4,16 @@ import {Button} from 'react-native-elements';
 import {COLORS, FONTS} from '../constants';
 
 const ButtonComponent = ({
-  btnType,
-  title,
-  onPress,
+  disabledTitleStyle,
   ButtonContainer,
+  disabledStyle,
   buttonStyle,
   titleStyle,
   disabled,
+  btnType,
+  onPress,
   loading,
+  title,
 }) => {
   return (
     <Button
@@ -23,6 +25,8 @@ const ButtonComponent = ({
       type={btnType}
       disabled={disabled}
       loading={loading}
+      disabledStyle={disabledStyle}
+      disabledTitleStyle={disabledTitleStyle}
     />
   );
 };

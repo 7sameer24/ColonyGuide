@@ -1,14 +1,33 @@
 import {ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import {SliderBox} from 'react-native-image-slider-box';
 import FourList from '../Components/FourList';
 import CategoriesList from './CategoriesList';
 import HeaderBar from '../Components/HeaderBar';
+import axios from 'axios';
 
-const HomeScreen = ({navigation}) => {
+const HomeScreen = ({navigation, route}) => {
+  const {data} = route.params;
+  console.log(data);
   const images = [Images.Slider, Images.Slider2];
+  const [newData, setNewData] = useState([]);
+  const idx = async () => {
+    try {
+      const URL = 'https://colonyguide.garimaartgallery.com/api/home';
+      const response = await axios.post(
+        URL,
+        (headers = {Authorization: `Bearer ${UserData.token}`}),
+      );
+      console.log('response', response);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    idx();
+  }, []);
   return (
     <ScrollView style={genericStyles.Container}>
       <StatusBar backgroundColor={COLORS.primary} />

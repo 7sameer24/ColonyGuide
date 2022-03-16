@@ -5,7 +5,6 @@ import {Button, Icon} from 'react-native-elements';
 
 const BusinessSaved = ({route}) => {
   const {UserDetails} = route.params;
-  // console.log(route);
   return (
     <View style={genericStyles.Container}>
       <View style={styles.radiusView}>

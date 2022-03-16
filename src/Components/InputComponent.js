@@ -19,6 +19,7 @@ const InputComponent = ({
   ref,
   iconOnpress,
   secureTextEntry,
+  iconColor,
 }) => {
   return (
     <Input
@@ -34,7 +35,7 @@ const InputComponent = ({
       rightIcon={{
         name: iconName,
         type: 'ionicon',
-        color: COLORS.secondary,
+        color: COLORS.primary,
         size: iconSize,
         onPress: iconOnpress,
       }}
@@ -58,6 +59,7 @@ const styles = StyleSheet.create({
   },
   inputStyle: {
     fontFamily: FONTS.InterRegular,
+    color: COLORS.third,
     fontSize: 14,
   },
 });

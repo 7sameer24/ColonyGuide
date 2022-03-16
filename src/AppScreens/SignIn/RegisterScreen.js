@@ -14,12 +14,12 @@ import InputComponent from '../../Components/InputComponent';
 import axios from 'axios';
 const RegisterScreen = ({navigation, route}) => {
   const {role_id} = route.params;
-  const [mobileNo, setMobile] = useState('');
   const [visible, setVisible] = useState(true);
   const [visible2, setVisible2] = useState(true);
   const [spinner, setSpinner] = useState(false);
-  const [pass, setPass] = useState('');
-  const [CPASS, setCPASS] = useState('');
+  const [mobileNo, setMobile] = useState('9529106068');
+  const [pass, setPass] = useState('12345678');
+  const [CPASS, setCPASS] = useState('12345678');
   const register = async () => {
     if (mobileNo.length < 10 || mobileNo.length > 10) {
       ToastAndroid.show('Please enter 10 digit number', ToastAndroid.SHORT);
@@ -41,8 +41,12 @@ const RegisterScreen = ({navigation, route}) => {
           role_id: role_id,
         });
         setSpinner(false);
-        ToastAndroid.show('Otp sent successfully', ToastAndroid.SHORT);
-        navigation.navigate('Otp', {DATA: response.data});
+        if (response.data.success == false) {
+          ToastAndroid.show(response.data.message, ToastAndroid.LONG);
+        } else {
+          navigation.navigate('Otp', {DATA: response.data});
+          ToastAndroid.show('Otp sent successfully', ToastAndroid.SHORT);
+        }
       } catch (error) {
         setSpinner(false);
         console.log(error);
@@ -78,6 +82,7 @@ const RegisterScreen = ({navigation, route}) => {
             onChangeText={text => setPass(text)}
             errorStyle={genericStyles.fontSize(5)}
             secureTextEntry={visible2}
+            iconColor={visible2 ? COLORS.primary : COLORS.secondary}
           />
           <InputComponent
             placeholder="Confirm Password"

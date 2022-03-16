@@ -1,23 +1,22 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../constants';
-import Location from './HouseOwners/Location';
 import PersonalDetails from './Student/PersonalDetails';
 import ServiceDetails from './ServiceProvider/ServiceDetails';
+import OwnerLocation from './HouseOwners/OwnerLocation';
 
 const AllRegistration = ({route, navigation}) => {
-  const {UserRole} = route.params;
-  // console.log(UserRole);
+  const {UserData} = route.params;
   return (
     <View style={styles.Container}>
-      {UserRole === 'House Owners' ? (
-        <Location navigation={navigation} />
+      {UserData.app_role_id === 1 ? (
+        <PersonalDetails navigation={navigation} data={UserData} />
       ) : null}
-      {UserRole === 'Student' ? (
-        <PersonalDetails navigation={navigation} />
+      {UserData.app_role_id === 2 ? (
+        <ServiceDetails navigation={navigation} UserNewData={UserData} />
       ) : null}
-      {UserRole === 'Service Provider' ? (
-        <ServiceDetails navigation={navigation} />
+      {UserData.app_role_id === 3 ? (
+        <OwnerLocation navigation={navigation} data={UserData} />
       ) : null}
     </View>
   );

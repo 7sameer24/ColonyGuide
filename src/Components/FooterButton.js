@@ -18,6 +18,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.third,
     alignSelf: 'center',
-    marginTop: '45%',
+    marginBottom: 20,
   },
 });

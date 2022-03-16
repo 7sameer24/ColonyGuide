@@ -39,6 +39,7 @@ import VegetableFruits from '../Tabs/VegetableFruits';
 import RoomsFlats from '../Tabs/RoomsFlats';
 import HeaderBar from '../Components/HeaderBar';
 import Addroom from '../Tabs/Addroom';
+import ServiceDetails from '../AppScreens/SignIn/ServiceProvider/ServiceDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

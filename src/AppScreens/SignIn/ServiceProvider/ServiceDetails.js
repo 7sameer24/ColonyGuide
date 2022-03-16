@@ -1,37 +1,138 @@
-import {StyleSheet, View} from 'react-native';
-import React, {useState} from 'react';
-import HeaderBody from '../../../Components/HeaderBody';
+import {
+  ScrollView,
+  StyleSheet,
+  ToastAndroid,
+  View,
+  Image,
+  TouchableOpacity,
+  Text,
+} from 'react-native';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
 import InputComponent from '../../../Components/InputComponent';
-import {CheckBox} from 'react-native-elements';
 import ButtonComponent from '../../../Components/ButtonComponent';
+import DropDownComponent from '../../../Components/DropDownComponent';
+import {launchImageLibrary} from 'react-native-image-picker';
+import axios from 'axios';
+import Spinner from '../../../Components/Spinner';
 
-const ServiceDetails = ({navigation}) => {
-  const [check1, setCheck1] = useState(false);
+const ServiceDetails = ({navigation, UserNewData}) => {
+  const [imageUp, setImage] = useState(false);
+  const [shopName, setShop] = useState(null);
+  const [fullName, setFullName] = useState(null);
+  const [WhatsappNo, setWhatsappNo] = useState();
+  const [newData, setNewData] = useState([]);
+  const [Category, setCategory] = useState('');
+
+  const validationCheck = () => {
+    if (!WhatsappNo || !fullName || !Category) {
+      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+    } else if (WhatsappNo.length < 10 || WhatsappNo.length > 10) {
+      ToastAndroid.show(
+        'Please check your number and try again',
+        ToastAndroid.SHORT,
+      );
+    } else {
+      navigation.navigate('Your location', {
+        shopName: shopName,
+        fullName: fullName,
+        WhatsappNo: WhatsappNo,
+        category: Category,
+        userData: UserNewData,
+        imageUp: imageUp[0].fileName,
+      });
+    }
+  };
+
+  const openImage = () => {
+    let opetions = {
+      storageOption: {
+        path: 'images',
+        mediaType: 'photo',
+      },
+    };
+    launchImageLibrary(opetions, response => {
+      if (response.didCancel) {
+        console.log('User Cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('Image ErrorCode', response.errorCode);
+      } else if (response.errorMessage) {
+        console.log('Image error Message', response.errorMessage);
+      } else {
+        const source = response.assets;
+        setImage(source);
+      }
+    });
+  };
+
+  const CategoryFetch = async () => {
+    try {
+      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
+      const response = await axios.post(URL);
+      setNewData(response.data.data.categories);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    CategoryFetch();
+  }, []);
   return (
     <View style={genericStyles.Container}>
-      <HeaderBody
-        source={Images.Student}
-        touchableOpacityStyle={genericStyles.mb(30)}
-        title="Service Details"
-        subTitle="Enter the details below to continue"
-        subTitleStyle={genericStyles.mb(0)}
-      />
-      <InputComponent placeholder="Shop Name (Optional)" />
-      <InputComponent placeholder="Select category" />
-      <InputComponent placeholder="Whatsapp number" />
-      <CheckBox
-        title="Same a mobile number"
-        checked={check1}
-        onPress={() => setCheck1(!check1)}
-        checkedColor={COLORS.primary}
-        containerStyle={styles.checkBoxContanier}
-        textStyle={styles.CheckText}
-      />
-      <ButtonComponent
-        title="Next"
-        onPress={() => navigation.navigate('Your location')}
-      />
+      {newData.length > 0 ? (
+        <ScrollView>
+          <View style={genericStyles.mb(20)}>
+            <Text style={styles.text}>Service Details</Text>
+            <Text style={styles.subText}>
+              Enter the details below to continue
+            </Text>
+          </View>
+          <View style={styles.ImageContainer(imageUp)}>
+            <Image
+              resizeMode={imageUp ? null : 'contain'}
+              source={imageUp ? imageUp : Images.BusinessProfile}
+              style={styles.imageStyle(imageUp)}
+            />
+          </View>
+          <TouchableOpacity
+            style={genericStyles.selfCenter}
+            onPress={() => openImage()}>
+            <Text style={styles.AddLogoText}>Add image / logo</Text>
+          </TouchableOpacity>
+          <InputComponent
+            placeholder="Shop Name (Optional)"
+            value={shopName}
+            onChangeText={text => setShop(text)}
+          />
+          <InputComponent
+            placeholder="Full name"
+            value={fullName}
+            onChangeText={text => setFullName(text)}
+          />
+          <DropDownComponent
+            data={newData}
+            labelField="name"
+            valueField="id"
+            value={Category}
+            placeholder="Select category"
+            onChange={item => setCategory(item.id)}
+          />
+          <InputComponent
+            placeholder="Whatsapp number"
+            value={WhatsappNo}
+            onChangeText={num => setWhatsappNo(num)}
+            keyboardType="number-pad"
+          />
+          <ButtonComponent
+            title="Next"
+            onPress={() => validationCheck()}
+            ButtonContainer={styles.ButtonContainer(imageUp)}
+          />
+        </ScrollView>
+      ) : (
+        <Spinner />
+      )}
     </View>
   );
 };
@@ -39,17 +140,40 @@ const ServiceDetails = ({navigation}) => {
 export default ServiceDetails;
 
 const styles = StyleSheet.create({
-  checkBoxContanier: {
-    backgroundColor: COLORS.transparent,
-    borderWidth: 0,
-    marginTop: -5,
-    marginBottom: 30,
-  },
-  CheckText: {
+  imageStyle: imageUp => ({
+    width: imageUp ? 80 : 36,
+    height: imageUp ? 80 : 38,
+    borderRadius: imageUp ? 50 : 0,
+  }),
+  AddLogoText: {
+    fontSize: 12,
     color: COLORS.third,
-    fontSize: 15,
-    marginLeft: 2,
-    fontFamily: FONTS.InterRegular,
-    fontWeight: 'normal',
+    fontFamily: FONTS.InterMedium,
+    marginBottom: 40,
   },
+  ImageContainer: imageUp => ({
+    backgroundColor: imageUp ? COLORS.white : COLORS.secondary,
+    padding: imageUp ? 0 : 15,
+    borderRadius: 50,
+    alignSelf: 'center',
+    marginBottom: 5,
+  }),
+  text: {
+    textAlign: 'center',
+    fontSize: 18,
+    color: COLORS.black,
+    marginTop: 20,
+    fontFamily: FONTS.InterSemiBold,
+  },
+  subText: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: COLORS.third,
+    marginBottom: 20,
+    fontFamily: FONTS.InterRegular,
+  },
+  ButtonContainer: imageUp => ({
+    marginTop: '50%',
+    marginBottom: 20,
+  }),
 });

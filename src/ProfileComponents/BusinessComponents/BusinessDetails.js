@@ -14,7 +14,6 @@ import ButtonComponent from '../../Components/ButtonComponent';
 
 const BusinessDetails = ({navigation, route}) => {
   const {User} = route.params;
-  // console.log(User);
   const [check1, setCheck1] = useState(false);
 
   return (
