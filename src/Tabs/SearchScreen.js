@@ -1,7 +1,8 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {genericStyles, Images} from '../constants';
+import {genericStyles} from '../constants';
 import InputComponent from '../Components/InputComponent';
+import ImgIcon from '../../assets/svg/amico.svg';
 
 const SearchScreen = () => {
   return (
@@ -11,7 +12,9 @@ const SearchScreen = () => {
         iconName="search"
         inputContainerStyle={styles.inputContainerStyle}
       />
-      <Image source={Images.Search} style={styles.imageStyle} />
+      <View style={styles.imageStyle}>
+        <ImgIcon width={304.52} height={268.18} />
+      </View>
     </View>
   );
 };
@@ -20,8 +23,6 @@ export default SearchScreen;
 
 const styles = StyleSheet.create({
   imageStyle: {
-    width: 264.7,
-    height: 222.38,
     alignSelf: 'center',
     marginTop: '40%',
   },

@@ -5,10 +5,9 @@ import ButtonComponent from '../../../Components/ButtonComponent';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 
-const Location = ({navigation, route, data}) => {
+const Location = ({navigation, route}) => {
   const {shopName, fullName, WhatsappNo, category, userData, imageUp} =
     route.params;
-  console.log(data);
   const [latitude, setLatitude] = useState(24.5826);
   const [longitude, setLongitude] = useState(73.7191);
   const [pin, setPin] = useState({
@@ -78,18 +77,16 @@ const Location = ({navigation, route, data}) => {
         title="Enter address"
         ButtonContainer={styles.abb}
         onPress={() =>
-          userData.app_role_id == 3
-            ? navigation.navigate('Address', {UserData: userData})
-            : navigation.navigate('Address', {
-                latitude: latitude,
-                longitude: longitude,
-                ShopName: shopName,
-                FullName: fullName,
-                WhatsappNum: WhatsappNo,
-                CategoryShop: category,
-                UserData: userData,
-                imageLogo: imageUp,
-              })
+          navigation.navigate('Address', {
+            latitude: latitude,
+            longitude: longitude,
+            ShopName: shopName,
+            FullName: fullName,
+            WhatsappNum: WhatsappNo,
+            CategoryShop: category,
+            UserData: userData,
+            imageLogo: imageUp,
+          })
         }
       />
     </View>

@@ -1,22 +1,30 @@
+import {StatusBar, StyleSheet, View} from 'react-native';
+import LottieView from 'lottie-react-native';
 import React from 'react';
-import {StatusBar} from 'react-native';
-import {View, ActivityIndicator, StyleSheet} from 'react-native';
-import {COLORS} from '../constants';
+import {COLORS, genericStyles} from '../constants';
 
-const Spinner = ({barStyle, loader}) => {
+const Spinner = () => {
   return (
-    <View style={[styles.loader, {...loader}]}>
-      <StatusBar barStyle={barStyle} />
-      <ActivityIndicator size="large" color={COLORS.primary} />
+    <View style={styles.container}>
+      <StatusBar backgroundColor={COLORS.primary} />
+      <LottieView
+        source={require('../../assets/animation/loader3.json')}
+        autoPlay
+        loop={true}
+        autoSize
+        style={genericStyles.width('70%')}
+      />
     </View>
   );
 };
+
 export default Spinner;
+
 const styles = StyleSheet.create({
-  loader: {
+  container: {
+    backgroundColor: COLORS.white,
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: COLORS.white,
   },
 });

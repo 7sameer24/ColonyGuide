@@ -11,7 +11,9 @@ import HeaderBody from '../../Components/HeaderBody';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import InputComponent from '../../Components/InputComponent';
+import ImgIcon from '../../../assets/svg/Frame 9.svg';
 import axios from 'axios';
+import Poweredby from '../../Components/Poweredby';
 const RegisterScreen = ({navigation, route}) => {
   const {role_id} = route.params;
   const [visible, setVisible] = useState(true);
@@ -20,6 +22,7 @@ const RegisterScreen = ({navigation, route}) => {
   const [mobileNo, setMobile] = useState('9529106068');
   const [pass, setPass] = useState('12345678');
   const [CPASS, setCPASS] = useState('12345678');
+
   const register = async () => {
     if (mobileNo.length < 10 || mobileNo.length > 10) {
       ToastAndroid.show('Please enter 10 digit number', ToastAndroid.SHORT);
@@ -34,19 +37,27 @@ const RegisterScreen = ({navigation, route}) => {
       try {
         setSpinner(true);
         const URL = 'https://colonyguide.garimaartgallery.com/api/register';
-        const response = await axios.post(URL, {
-          mobile_no: mobileNo,
-          password: pass,
-          c_password: CPASS,
-          role_id: role_id,
-        });
-        setSpinner(false);
-        if (response.data.success == false) {
-          ToastAndroid.show(response.data.message, ToastAndroid.LONG);
-        } else {
-          navigation.navigate('Otp', {DATA: response.data});
-          ToastAndroid.show('Otp sent successfully', ToastAndroid.SHORT);
-        }
+        const response = await axios
+          .post(URL, {
+            mobile_no: mobileNo,
+            password: pass,
+            c_password: CPASS,
+            role_id: role_id,
+          })
+          .then(response => {
+            setSpinner(false);
+            if (response.data.success === true) {
+              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              navigation.navigate('Otp', {DATA: response.data});
+            } else {
+              if (response.data.otp_status === false) {
+                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+                navigation.navigate('Otp', {DATA: response.data});
+              } else {
+                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              }
+            }
+          });
       } catch (error) {
         setSpinner(false);
         console.log(error);
@@ -60,8 +71,9 @@ const RegisterScreen = ({navigation, route}) => {
           title="Create Account"
           subTitle="Sign Up to continue"
           Skip="Skip to home"
-          source={Images.Register}
+          Icon={<ImgIcon width={304.52} height={268.18} />}
           touchableOpacityStyle={genericStyles.mb(0)}
+          subTitleStyle={genericStyles.mb(10)}
         />
         <View style={genericStyles.mb(10)}>
           <InputComponent
@@ -106,6 +118,7 @@ const RegisterScreen = ({navigation, route}) => {
             <Text style={styles.signUpBtn2}>Sign In</Text>
           </TouchableOpacity>
         </View>
+        <Poweredby />
       </ScrollView>
     </View>
   );

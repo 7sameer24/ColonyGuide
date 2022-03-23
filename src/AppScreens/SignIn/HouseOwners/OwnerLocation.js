@@ -4,9 +4,9 @@ import {COLORS, genericStyles, Images} from '../../../constants';
 import ButtonComponent from '../../../Components/ButtonComponent';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
+import Poweredby from '../../../Components/Poweredby';
 
 const OwnerLocation = ({navigation, data}) => {
-  console.log(data);
   const [latitude, setLatitude] = useState(24.5826);
   const [longitude, setLongitude] = useState(73.7191);
   const [pin, setPin] = useState({

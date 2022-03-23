@@ -6,7 +6,9 @@ import ButtonComponent from '../../../Components/ButtonComponent';
 import InputComponent from '../../../Components/InputComponent';
 import axios from 'axios';
 import DropDownComponent from '../../../Components/DropDownComponent';
+import ImgIcon from '../../../../assets/svg/Frame 11.svg';
 import Spinner from '../../../Components/Spinner';
+import Poweredby from '../../../Components/Poweredby';
 
 const AddressScreen = ({route, navigation}) => {
   const {
@@ -19,6 +21,8 @@ const AddressScreen = ({route, navigation}) => {
     UserData,
     imageLogo,
   } = route.params;
+
+  const [HOName, setHOName] = useState('');
   const [house, setHouseNo] = useState();
   const [Address, setAddress] = useState('');
   const [Landmark, setLandmark] = useState('');
@@ -27,8 +31,10 @@ const AddressScreen = ({route, navigation}) => {
   const [LocalityValue, setLocality] = useState('');
 
   const handleOnSubmit = async () => {
-    if (!house || !Address || !Landmark) {
+    if (!house || !Address) {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+    } else if (!LocalityValue) {
+      ToastAndroid.show('Please choose locality!', ToastAndroid.SHORT);
     } else {
       try {
         setSpinner(true);
@@ -40,7 +46,7 @@ const AddressScreen = ({route, navigation}) => {
           data: {
             user_id: UserData.user_id,
             app_role_id: UserData.app_role_id,
-            full_name: FullName,
+            full_name: UserData.app_role_id === 3 ? HOName : FullName,
             geolocation: 'udaipur',
             house_no: house,
             address: Address,
@@ -53,8 +59,13 @@ const AddressScreen = ({route, navigation}) => {
           },
         });
         setSpinner(false);
-        ToastAndroid.show('Registration successful', ToastAndroid.SHORT);
         navigation.navigate('Feed');
+        ToastAndroid.show(
+          UserData.app_role_id === 3
+            ? `Welcome ${HOName}`
+            : `Welcome ${FullName}`,
+          ToastAndroid.SHORT,
+        );
       } catch (error) {
         setSpinner(false);
         alert(error);
@@ -70,7 +81,7 @@ const AddressScreen = ({route, navigation}) => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
       const response = await axios.post(URL);
-      setNewData(response.data.data.localities);
+      setNewData(response.data.localities);
     } catch (error) {
       console.log(error);
     }
@@ -82,13 +93,20 @@ const AddressScreen = ({route, navigation}) => {
         <ScrollView>
           <>
             <HeaderBody
-              source={Images.Address}
+              Icon={<ImgIcon width={266} height={239} />}
               title="Your Address"
-              subTitle="Enter the otp sent to the mobile number
-          +91-xxx-xxxx-xxx"
+              subTitle="Enter the otp sent to the mobile number +91-xxx-xxxx-xxx"
               touchableOpacityStyle={genericStyles.mb(0)}
+              subTitleStyle={genericStyles.mb(0)}
             />
-            <View style={genericStyles.mb('17%')}>
+            <View style={genericStyles.mb('5%')}>
+              {UserData.app_role_id === 3 ? (
+                <InputComponent
+                  placeholder="Full name"
+                  value={HOName}
+                  onChangeText={text => setHOName(text)}
+                />
+              ) : null}
               <InputComponent
                 placeholder="Flat / House No."
                 value={house}
@@ -117,9 +135,10 @@ const AddressScreen = ({route, navigation}) => {
               title="Save"
               onPress={() => handleOnSubmit()}
               loading={spinner ? true : false}
-              ButtonContainer={genericStyles.mb(10)}
+              ButtonContainer={genericStyles.mv(10)}
             />
           </>
+          <Poweredby />
         </ScrollView>
       ) : (
         <Spinner />

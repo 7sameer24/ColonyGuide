@@ -1,5 +1,6 @@
 import {
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -7,88 +8,40 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {COLORS, FONTS, Images} from '../constants';
+import {COLORS, FONTS} from '../constants';
 import {Card} from 'react-native-elements';
+import First from '../../assets/svg/BuildingColor.svg';
 
-const CategoriesList = ({cardContainer, ViewContainer, navigation}) => {
-  const arr = [
-    {
-      image: Images.ListColor,
-      Id: 1,
-      text: 'Rooms / Flats',
-      OnpressText: 'RoomsFlats',
-    },
-    {image: Images.Milk, Id: 2, text: 'Milk man', OnpressText: 'RoomsFlats'},
-    {
-      image: Images.Fruits,
-      Id: 3,
-      text: 'Vegetable\n& fruits',
-      OnpressText: 'Vegetable Fruits',
-    },
-    {image: Images.ListColor, Id: 4, text: 'Rooms / Flats'},
-    {image: Images.Milk, Id: 5, text: 'Milk man', OnpressText: 'RoomsFlats'},
-    {
-      image: Images.Fruits,
-      Id: 6,
-      text: 'Vegetable\n& fruits',
-    },
-    {image: Images.ListColor, Id: 7, text: 'Rooms / Flats'},
-    {image: Images.Milk, Id: 8, text: 'Milk man', OnpressText: 'RoomsFlats'},
-    {
-      image: Images.Fruits,
-      Id: 9,
-      text: 'Vegetable\n& fruits',
-    },
-    {image: Images.ListColor, Id: 10, text: 'Rooms / Flats'},
-    {image: Images.Milk, Id: 11, text: 'Milk man', OnpressText: 'RoomsFlats'},
-    {
-      image: Images.Fruits,
-      Id: 12,
-      text: 'Vegetable\n& fruits',
-    },
-    {image: Images.ListColor, Id: 13, text: 'Rooms / Flats'},
-    {image: Images.Milk, Id: 14, text: 'Milk man', OnpressText: 'RoomsFlats'},
-    {
-      image: Images.Fruits,
-      Id: 15,
-      text: 'Vegetable\n& fruits',
-    },
-    {image: Images.ListColor, Id: 16, text: 'Rooms / Flats'},
-    {image: Images.Milk, Id: 17, text: 'Milk man', OnpressText: 'RoomsFlats'},
-    {
-      image: Images.Fruits,
-      Id: 18,
-      text: 'Vegetable\n& fruits',
-    },
-  ];
+const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
+  // console.log(data[0].id);
+
+  let text = 'Repair \n & \n Maintenance';
   const {width, height} = useWindowDimensions();
 
   return (
-    <View>
-      <View style={[styles.container, {...ViewContainer}]}>
-        {arr.map(data => (
-          <TouchableOpacity
-            key={data.Id}
-            activeOpacity={0.9}
-            onPress={() => navigation.navigate(data.OnpressText)}>
-            <Card
-              containerStyle={[
-                styles.containerStyle(width, height),
-                {...cardContainer},
-              ]}>
-              <Image
-                source={data.image}
-                key={data.Id}
-                style={{width: 42, height: 37}}
-                resizeMode="contain"
-              />
-            </Card>
-            <Text style={styles.text} key={data.Id}>
-              {data.text}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+    <View style={[styles.container, {...ViewContainer}]}>
+      {data.map((data, index) => (
+        <TouchableOpacity
+          key={index}
+          activeOpacity={0.9}
+          onPress={() =>
+            navigation.navigate('Vegetable Fruits', {
+              ID: data.id,
+              Name: data.name,
+            })
+          }>
+          <Card
+            containerStyle={[
+              styles.containerStyle(width, height),
+              {...cardContainer},
+            ]}>
+            {<First width={38} height={32} />}
+          </Card>
+          <Text style={styles.text} key={data.Id}>
+            {data.name === 'Repair and Maintenance' ? text : data.name}
+          </Text>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 };

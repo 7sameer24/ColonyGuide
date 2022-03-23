@@ -16,14 +16,16 @@ const HeaderBar = ({
 }) => {
   return (
     <View style={[styles.iconView, {...iconView}]}>
-      <Icon
-        color={COLORS.textColor}
-        name={firstIcon}
-        type="ionicon"
-        size={25}
-        onPress={firstOnpress}
-      />
-      <Text style={[styles.title, {...titleStyle}]}>{title}</Text>
+      <View style={genericStyles.row}>
+        <Icon
+          color={COLORS.textColor}
+          name={firstIcon}
+          type="ionicon"
+          size={25}
+          onPress={firstOnpress}
+        />
+        <Text style={[styles.title, {...titleStyle}]}>{title}</Text>
+      </View>
       <View style={genericStyles.row}>
         <Icon
           name={searchIcon}
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontFamily: FONTS.InterSemiBold,
-    marginRight: '40%',
+    marginLeft: 30,
     color: COLORS.textColor,
   },
 });

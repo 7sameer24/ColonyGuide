@@ -8,7 +8,6 @@ const BusinessListed = ({navigation}) => {
   return (
     <View style={genericStyles.Container}>
       <HeaderBar
-        titleStyle={genericStyles.mr('25%')}
         firstIcon="arrow-back-outline"
         title="Business listed"
         searchIcon="search"

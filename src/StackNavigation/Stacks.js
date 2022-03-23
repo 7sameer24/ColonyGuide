@@ -15,7 +15,6 @@ import AllRegistration from '../AppScreens/SignIn/AllRegistration';
 import AddressScreen from '../AppScreens/SignIn/HouseOwners/AddressScreen';
 import Location from '../AppScreens/SignIn/HouseOwners/Location';
 import ForgotScreen from '../AppScreens/Login/ForgotScreen';
-import OtpNewPass from '../AppScreens/Login/OtpNewPass';
 import ResetPassScreen from '../AppScreens/Login/ResetPassScreen';
 import HomeScreen from '../Tabs/HomeScreen';
 import CategoriesScreen from '../Tabs/CategoriesScreen';
@@ -62,7 +61,6 @@ const MyStack = () => {
     },
     {name: 'Address', component: AddressScreen, headerShown: false},
     {name: 'ForgotPassword', component: ForgotScreen, headerShown: false},
-    {name: 'OTPNEWPASS', component: OtpNewPass, headerShown: false},
     {name: 'ResetPassword', component: ResetPassScreen, headerShown: false},
     {name: 'Feed', component: MyDrawer, headerShown: false},
     {
@@ -201,6 +199,7 @@ const MyStack = () => {
           headerTintColor: COLORS.textColor,
           headerShadowVisible: false,
           headerShown: false,
+          title: 'Business Information',
         })}
       />
       <Stack.Screen
@@ -210,6 +209,7 @@ const MyStack = () => {
           headerTitleStyle: styles.headerStyle,
           headerTintColor: COLORS.textColor,
           headerShadowVisible: false,
+          title: 'Add Service Provider',
         })}
       />
       <Stack.Screen
@@ -295,6 +295,7 @@ function MyTabs() {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarStyle: styles.tabBarStyle,
+        tabBarActiveBackgroundColor: 'white',
       }}>
       {tabArr.map(data => (
         <Tab.Screen
@@ -364,8 +365,9 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterSemiBold,
   },
   tabBarStyle: {
-    height: '8.5%',
+    height: '9%',
     backgroundColor: COLORS.white,
+    paddingHorizontal: 20,
   },
   drawerLabelStyle: {
     fontSize: 16,

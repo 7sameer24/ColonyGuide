@@ -1,9 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Button} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
+import ImgIcon from '../../../assets/svg/rafiki.svg';
+import Poweredby from '../../Components/Poweredby';
 
 const SignInScreen = ({navigation}) => {
   const [newData, setNewData] = useState([]);
@@ -11,13 +13,16 @@ const SignInScreen = ({navigation}) => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
       const response = await axios.post(URL);
-      setNewData(response.data.data.roles);
+      setNewData(response.data.roles);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
     idx();
+    return () => {
+      setNewData([]);
+    };
   }, []);
   return (
     <View style={styles.container}>
@@ -26,9 +31,10 @@ const SignInScreen = ({navigation}) => {
           <TouchableOpacity style={styles.TouchableOpacity}>
             <Text style={styles.TouchableText}>Skip to home</Text>
           </TouchableOpacity>
-          <View style={genericStyles.mb(30)}>
-            <Image source={Images.Sign} style={styles.imageStyle} />
+          <View style={styles.imageStyle}>
+            <ImgIcon width={304.52} height={226.91} />
             <Text style={styles.text}>Select your role</Text>
+            <Poweredby />
           </View>
           {newData.map(data => (
             <Button
@@ -75,7 +81,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     marginTop: 15,
     marginLeft: 20,
-    marginBottom: 40,
+    marginBottom: 30,
   },
   TouchableText: {
     color: COLORS.secondary,
@@ -85,8 +91,7 @@ const styles = StyleSheet.create({
   },
   imageStyle: {
     alignSelf: 'center',
-    width: 304.52,
-    height: 226.91,
+    marginBottom: 30,
   },
   text: {
     textAlign: 'center',

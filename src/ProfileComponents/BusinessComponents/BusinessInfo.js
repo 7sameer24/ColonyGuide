@@ -1,8 +1,10 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import HeaderBar from '../../Components/HeaderBar';
+import Poweredby from '../../Components/Poweredby';
+import Cuate from '../../../assets/svg/cuate.svg';
 
 const BusinessInfo = ({navigation}) => {
   let title2 = 'You have not added business\ndetails';
@@ -13,11 +15,9 @@ const BusinessInfo = ({navigation}) => {
         title="Business Info"
         firstOnpress={() => navigation.goBack()}
       />
-      <Image
-        source={Images.Cuate}
-        style={styles.imageStyle}
-        resizeMode="contain"
-      />
+      <View style={styles.View}>
+        <Cuate />
+      </View>
       <Text style={styles.title}>{title2}</Text>
       <Text style={styles.subTitle}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
@@ -25,11 +25,12 @@ const BusinessInfo = ({navigation}) => {
       </Text>
       <ButtonComponent
         title="Add Your Business"
-        ButtonContainer={genericStyles.top('25%')}
+        ButtonContainer={genericStyles.mt('50%')}
         onPress={() =>
           navigation.navigate('Business Details', {User: 'Business Info'})
         }
       />
+      <Poweredby textStyle={genericStyles.mt(10)} />
     </View>
   );
 };
@@ -37,12 +38,6 @@ const BusinessInfo = ({navigation}) => {
 export default BusinessInfo;
 
 const styles = StyleSheet.create({
-  imageStyle: {
-    alignSelf: 'center',
-    width: 193.62,
-    height: 208,
-    marginTop: '20%',
-  },
   title: {
     fontSize: 18,
     fontFamily: FONTS.InterMedium,
@@ -59,4 +54,5 @@ const styles = StyleSheet.create({
     width: '80%',
     textAlign: 'left',
   },
+  View: {marginTop: 50, alignSelf: 'center', marginBottom: 20},
 });

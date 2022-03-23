@@ -15,6 +15,7 @@ import DropDownComponent from '../../../Components/DropDownComponent';
 import {launchImageLibrary} from 'react-native-image-picker';
 import axios from 'axios';
 import Spinner from '../../../Components/Spinner';
+import Poweredby from '../../../Components/Poweredby';
 
 const ServiceDetails = ({navigation, UserNewData}) => {
   const [imageUp, setImage] = useState(false);
@@ -39,7 +40,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
         WhatsappNo: WhatsappNo,
         category: Category,
         userData: UserNewData,
-        imageUp: imageUp[0].fileName,
+        imageUp: imageUp === true ? imageUp[0].fileName : '',
       });
     }
   };
@@ -69,7 +70,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
       const response = await axios.post(URL);
-      setNewData(response.data.data.categories);
+      setNewData(response.data.categories);
     } catch (error) {
       console.log(error);
     }
@@ -77,6 +78,9 @@ const ServiceDetails = ({navigation, UserNewData}) => {
 
   useEffect(() => {
     CategoryFetch();
+    return () => {
+      setNewData([]);
+    };
   }, []);
   return (
     <View style={genericStyles.Container}>
@@ -88,16 +92,17 @@ const ServiceDetails = ({navigation, UserNewData}) => {
               Enter the details below to continue
             </Text>
           </View>
-          <View style={styles.ImageContainer(imageUp)}>
-            <Image
-              resizeMode={imageUp ? null : 'contain'}
-              source={imageUp ? imageUp : Images.BusinessProfile}
-              style={styles.imageStyle(imageUp)}
-            />
-          </View>
           <TouchableOpacity
             style={genericStyles.selfCenter}
+            activeOpacity={0.5}
             onPress={() => openImage()}>
+            <View style={styles.ImageContainer(imageUp)}>
+              <Image
+                resizeMode={imageUp ? null : 'contain'}
+                source={imageUp ? imageUp : Images.BusinessProfile}
+                style={styles.imageStyle(imageUp)}
+              />
+            </View>
             <Text style={styles.AddLogoText}>Add image / logo</Text>
           </TouchableOpacity>
           <InputComponent
@@ -129,6 +134,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             onPress={() => validationCheck()}
             ButtonContainer={styles.ButtonContainer(imageUp)}
           />
+          <Poweredby />
         </ScrollView>
       ) : (
         <Spinner />
@@ -141,8 +147,8 @@ export default ServiceDetails;
 
 const styles = StyleSheet.create({
   imageStyle: imageUp => ({
-    width: imageUp ? 80 : 36,
-    height: imageUp ? 80 : 38,
+    width: imageUp ? 70 : 40,
+    height: imageUp ? 70 : 40,
     borderRadius: imageUp ? 50 : 0,
   }),
   AddLogoText: {
@@ -156,7 +162,6 @@ const styles = StyleSheet.create({
     padding: imageUp ? 0 : 15,
     borderRadius: 50,
     alignSelf: 'center',
-    marginBottom: 5,
   }),
   text: {
     textAlign: 'center',
@@ -173,7 +178,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterRegular,
   },
   ButtonContainer: imageUp => ({
-    marginTop: '50%',
-    marginBottom: 20,
+    marginTop: '5%',
+    marginBottom: 10,
   }),
 });

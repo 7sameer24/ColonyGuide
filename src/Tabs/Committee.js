@@ -1,23 +1,56 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../constants';
 import CommiteeList from '../Components/CommitteeList';
 import HeaderBar from '../Components/HeaderBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import Spinner from '../Components/Spinner';
 
 const Committee = ({navigation}) => {
+  const [userData, setData] = useState([]);
+  const [newData, setNewData] = useState([]);
+  // console.log(userData.token);
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('UserLogin');
+      if (value !== null) {
+        setData(JSON.parse(value));
+      }
+    } catch (e) {
+      alert(e);
+    }
+  };
+
+  const idx = async () => {
+    try {
+      const URL = 'https://colonyguide.garimaartgallery.com/api/get-committee';
+      const response = await axios.post(URL);
+      setNewData(response.data.committee);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  useEffect(() => {
+    idx();
+  }, []);
   return (
     <View style={genericStyles.Container}>
       <HeaderBar
-        titleStyle={genericStyles.mr('40%')}
         firstIcon="arrow-back-outline"
         title="Committee"
         searchIcon="search"
         bellIcon="filter"
         firstOnpress={() => navigation.goBack()}
       />
-      <ScrollView style={genericStyles.mt(30)}>
-        <CommiteeList />
-      </ScrollView>
+      {newData.length > 0 ? (
+        <ScrollView style={genericStyles.mt(30)}>
+          <CommiteeList data={newData} />
+        </ScrollView>
+      ) : (
+        <Spinner />
+      )}
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import {Icon} from 'react-native-elements';
@@ -6,7 +6,7 @@ import {Icon} from 'react-native-elements';
 const ProfileComponents = ({
   title,
   titleStyle,
-  source,
+  IconSvg,
   onPress,
   iconName,
   ImageContainer,
@@ -14,7 +14,7 @@ const ProfileComponents = ({
   return (
     <TouchableOpacity style={styles.iconView} onPress={onPress}>
       <View style={[styles.ImageContainer, {...ImageContainer}]}>
-        <Image source={source} resizeMode="contain" style={styles.imageStyle} />
+        {IconSvg}
       </View>
       <Text style={[styles.title, {...titleStyle}]}>{title}</Text>
       <View style={styles.IconContainer}>

@@ -46,6 +46,7 @@ const InputComponent = ({
       onSubmitEditing={onSubmitEditing}
       ref={ref}
       secureTextEntry={secureTextEntry}
+      autoCapitalize="words"
     />
   );
 };

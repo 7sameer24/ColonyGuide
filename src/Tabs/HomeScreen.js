@@ -7,20 +7,17 @@ import FourList from '../Components/FourList';
 import CategoriesList from './CategoriesList';
 import HeaderBar from '../Components/HeaderBar';
 import axios from 'axios';
+import Spinner from '../Components/Spinner';
 
-const HomeScreen = ({navigation, route}) => {
-  const {data} = route.params;
-  console.log(data);
+const HomeScreen = ({navigation}) => {
   const images = [Images.Slider, Images.Slider2];
   const [newData, setNewData] = useState([]);
+
   const idx = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/home';
-      const response = await axios.post(
-        URL,
-        (headers = {Authorization: `Bearer ${UserData.token}`}),
-      );
-      console.log('response', response);
+      const response = await axios.post(URL);
+      setNewData(response.data.categories);
     } catch (error) {
       console.log(error);
     }
@@ -29,32 +26,40 @@ const HomeScreen = ({navigation, route}) => {
     idx();
   }, []);
   return (
-    <ScrollView style={genericStyles.Container}>
+    <View style={genericStyles.Container}>
       <StatusBar backgroundColor={COLORS.primary} />
-      <HeaderBar
-        bellIcon="bell"
-        searchIcon="search"
-        navigation={navigation}
-        firstIcon="menu"
-        firstOnpress={() => navigation.toggleDrawer()}
-        searchTouchable={() => navigation.navigate('Search')}
-      />
-      <SliderBox
-        images={images}
-        sliderBoxHeight={120}
-        dotColor="#fff"
-        inactiveDotColor={COLORS.transparent}
-        autoplay
-        circleLoop
-        ImageComponentStyle={styles.ImageComponentStyle}
-        dotStyle={styles.dotStyle}
-      />
-      <FourList navigation={navigation} />
-      <View style={genericStyles.mh(20)}>
-        <Text style={styles.topText}>Top Categories</Text>
-        <CategoriesList navigation={navigation} />
-      </View>
-    </ScrollView>
+      {newData.length > 0 ? (
+        <ScrollView>
+          <HeaderBar
+            bellIcon="bell"
+            // searchIcon="search"
+            navigation={navigation}
+            firstIcon="menu"
+            firstOnpress={() => navigation.toggleDrawer()}
+            // searchTouchable={() => navigation.navigate('Search')}
+          />
+          <>
+            <SliderBox
+              images={images}
+              sliderBoxHeight={120}
+              dotColor="#fff"
+              inactiveDotColor={COLORS.transparent}
+              autoplay
+              circleLoop
+              ImageComponentStyle={styles.ImageComponentStyle}
+              dotStyle={styles.dotStyle}
+            />
+            <FourList navigation={navigation} />
+            <View style={genericStyles.mh(20)}>
+              <Text style={styles.topText}>Top Categories</Text>
+              <CategoriesList navigation={navigation} data={newData} />
+            </View>
+          </>
+        </ScrollView>
+      ) : (
+        <Spinner />
+      )}
+    </View>
   );
 };
 

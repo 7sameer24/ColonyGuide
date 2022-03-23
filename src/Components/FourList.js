@@ -7,15 +7,35 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {COLORS, Images} from '../constants';
+import {COLORS} from '../constants';
 import {Card} from 'react-native-elements';
+import First from '../../assets/svg/Building.svg';
+import Second from '../../assets/svg/Vector-1.svg';
+import Third from '../../assets/svg/Vector-2.svg';
+import Four from '../../assets/svg/Vector-3.svg';
 
 const FourList = ({navigation}) => {
   const arr = [
-    {image: Images.List1, Id: 1, navigation: 'Business listed'},
-    {image: Images.List3, Id: 2, navigation: 'House Owners'},
-    {image: Images.BusinessBG, Id: 3, navigation: 'Business listed'},
-    {image: Images.List2, Id: 4, navigation: 'Business listed'},
+    {
+      image: <First width={38} height={32} />,
+      Id: 1,
+      navigation: 'Business listed',
+    },
+    {
+      image: <Third width={38} height={32} />,
+      Id: 2,
+      navigation: 'House Owners',
+    },
+    {
+      image: <Four width={32} height={30} />,
+      Id: 3,
+      navigation: 'Business listed',
+    },
+    {
+      image: <Second width={38} height={32} />,
+      Id: 4,
+      navigation: 'Business listed',
+    },
   ];
   const {width, height} = useWindowDimensions();
 
@@ -27,11 +47,7 @@ const FourList = ({navigation}) => {
           activeOpacity={0.9}
           onPress={() => navigation.navigate(data.navigation)}>
           <Card containerStyle={styles.containerStyle(width, height)}>
-            <Image
-              source={data.image}
-              style={styles.imageStyle}
-              resizeMode="contain"
-            />
+            {data.image}
           </Card>
         </TouchableOpacity>
       ))}

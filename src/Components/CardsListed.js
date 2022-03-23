@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   View3: {
     flexDirection: 'row',
-    left: '50%',
+    left: '100%',
   },
   title: {
     fontSize: 14,

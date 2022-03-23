@@ -4,7 +4,9 @@ import HeaderBody from '../../../Components/HeaderBody';
 import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
 import InputComponent from '../../../Components/InputComponent';
 import ButtonComponent from '../../../Components/ButtonComponent';
+import ImgIcon from '../../../../assets/svg/Frame 12.svg';
 import axios from 'axios';
+import Poweredby from '../../../Components/Poweredby';
 
 const PersonalDetails = ({data, navigation}) => {
   const [FullName, setFullName] = useState('');
@@ -39,8 +41,8 @@ const PersonalDetails = ({data, navigation}) => {
           },
         });
         setSpinner(false);
-        ToastAndroid.show('Registration successful', ToastAndroid.SHORT);
         navigation.navigate('Feed');
+        ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
       } catch (error) {
         setSpinner(false);
         alert(error);
@@ -51,7 +53,7 @@ const PersonalDetails = ({data, navigation}) => {
     <View style={genericStyles.Container}>
       <ScrollView>
         <HeaderBody
-          source={Images.Student}
+          Icon={<ImgIcon width={304.52} height={268.18} />}
           touchableOpacityStyle={genericStyles.mb(0)}
           title="Personal Details"
           subTitle="Enter the details below to continue"
@@ -84,6 +86,7 @@ const PersonalDetails = ({data, navigation}) => {
           loading={spinner ? true : false}
           ButtonContainer={genericStyles.mv(20)}
         />
+        <Poweredby textStyle={genericStyles.mt(0)} />
       </ScrollView>
     </View>
   );

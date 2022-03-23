@@ -12,16 +12,18 @@ const HeaderBody = ({
   touchableOpacityStyle,
   Skip,
   onPress,
+  Icon,
 }) => {
   return (
     <View>
       <TouchableOpacity
         style={[styles.TouchableOpacity, {...touchableOpacityStyle}]}
+        activeOpacity={0.5}
         onPress={onPress}>
         <Text style={styles.TouchableText}>{Skip}</Text>
       </TouchableOpacity>
       <View style={genericStyles.mb(30)}>
-        <Image source={source} style={[styles.imageStyle, {...imageStyle}]} />
+        <View style={genericStyles.selfCenter}>{Icon}</View>
         <Text style={[styles.text, {...titleStyle}]}>{title}</Text>
         <Text style={[styles.subText, {...subTitleStyle}]}>{subTitle}</Text>
       </View>

@@ -11,16 +11,20 @@ import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {CheckBox} from 'react-native-elements';
 import HeaderBody from '../../Components/HeaderBody';
 import ButtonComponent from '../../Components/ButtonComponent';
+import Poweredby from '../../Components/Poweredby';
 import InputComponent from '../../Components/InputComponent';
 import {CommonActions} from '@react-navigation/native';
 import axios from 'axios';
+import LoginLogo from '../../../assets/svg/pana.svg';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = ({navigation}) => {
   const [check1, setCheck1] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [MN, setMobile] = useState('9639639639');
-  const [password, setPass] = useState('123456789');
+  const [MN, setMobile] = useState('9529106068');
+  const [password, setPass] = useState('12345678');
+
   const Login = async () => {
     if (MN.length < 10 || MN.length > 10) {
       ToastAndroid.show('Please enter 10 digit number', ToastAndroid.SHORT);
@@ -28,30 +32,32 @@ const LoginScreen = ({navigation}) => {
       try {
         setSpinner(true);
         const URL = 'https://colonyguide.garimaartgallery.com/api/login';
-        const response = await axios.post(URL, {
-          mobile_no: MN,
-          password: password,
-        });
-        setSpinner(false);
-        console.log('response', response.data);
-        if (response.data.success === true) {
-          navigation.dispatch(
-            CommonActions.reset({
-              routes: [{name: 'Feed', params: {data: response.data}}],
-            }),
-          );
-        } else if (response.data.message === 'Validation Error.') {
-          ToastAndroid.show(response.data.data.password[0], ToastAndroid.SHORT);
-        } else {
-          ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
-        }
+        const response = await axios
+          .post(URL, {
+            mobile_no: MN,
+            password: password,
+          })
+          .then(response => {
+            setSpinner(false);
+            if (response.data.success === true) {
+              AsyncStorage.setItem('UserLogin', JSON.stringify(response.data));
+              navigation.dispatch(
+                CommonActions.reset({
+                  routes: [{name: 'Feed'}],
+                }),
+              );
+              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+            } else {
+              if (response.data.otp_status === false) {
+                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              } else {
+                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              }
+            }
+          });
       } catch (error) {
         setSpinner(false);
-        alert('error', JSON.stringify(error));
-        // ToastAndroid.show(
-        //   'These credentials do not match our records',
-        //   ToastAndroid.SHORT,
-        // );
+        alert(error);
       }
     }
   };
@@ -61,7 +67,7 @@ const LoginScreen = ({navigation}) => {
         <HeaderBody
           title="Welcome back!"
           subTitle="Log In to continue"
-          source={Images.Png}
+          Icon={<LoginLogo width={304.52} height={268.18} />}
           Skip="Skip to home"
           onPress={() => navigation.navigate('Feed')}
         />
@@ -113,6 +119,7 @@ const LoginScreen = ({navigation}) => {
             <Text style={styles.signUpBtn2}>Sign Up</Text>
           </TouchableOpacity>
         </View>
+        <Poweredby />
       </ScrollView>
     </View>
   );
