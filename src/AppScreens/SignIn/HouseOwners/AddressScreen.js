@@ -38,34 +38,48 @@ const AddressScreen = ({route, navigation}) => {
     } else {
       try {
         setSpinner(true);
+        const Form = new FormData();
+
+        Form.append('user_id', UserData.user_id);
+        Form.append('app_role_id', UserData.app_role_id);
+        Form.append('full_name', FullName);
+        Form.append('geolocation', 'Udaipur');
+        Form.append('house_no', house);
+        Form.append('address', Address);
+        Form.append('landmark', Landmark);
+        Form.append('shop_name', ShopName);
+        Form.append('category_id', CategoryShop);
+        Form.append('whatsapp_no', WhatsappNum);
+        Form.append('locality_id', LocalityValue);
+        Form.append('logo_image', {
+          uri: imageLogo[0].uri,
+          type: imageLogo[0].type,
+          name: imageLogo[0].fileName,
+        });
+
         const URL = 'https://colonyguide.garimaartgallery.com/api/add-details';
-        const response = await axios({
+
+        const res = await fetch(URL, {
           method: 'post',
-          headers: {Authorization: `Bearer ${UserData.token}`},
-          url: URL,
-          data: {
-            user_id: UserData.user_id,
-            app_role_id: UserData.app_role_id,
-            full_name: UserData.app_role_id === 3 ? HOName : FullName,
-            geolocation: 'udaipur',
-            house_no: house,
-            address: Address,
-            landmark: Landmark,
-            shop_name: ShopName,
-            category_id: CategoryShop,
-            whatsapp_no: WhatsappNum,
-            logo_image: imageLogo,
-            locality_id: LocalityValue,
+          body: Form,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${UserData.token}`,
           },
         });
         setSpinner(false);
-        navigation.navigate('Feed');
-        ToastAndroid.show(
-          UserData.app_role_id === 3
-            ? `Welcome ${HOName}`
-            : `Welcome ${FullName}`,
-          ToastAndroid.SHORT,
-        );
+        const response = await res.json();
+        if (response.success === true) {
+          navigation.navigate('Feed');
+          ToastAndroid.show(
+            UserData.app_role_id === 3
+              ? `Welcome ${HOName}`
+              : `Welcome ${FullName}`,
+            ToastAndroid.SHORT,
+          );
+        } else {
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        }
       } catch (error) {
         setSpinner(false);
         alert(error);
@@ -128,6 +142,7 @@ const AddressScreen = ({route, navigation}) => {
                 valueField="id"
                 placeholder="Locality"
                 value={LocalityValue}
+                maxHeight={200}
                 onChange={item => setLocality(item.id)}
               />
             </View>

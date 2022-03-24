@@ -33,8 +33,8 @@ const BusinessDetails = ({navigation, route}) => {
   const [AL1, setAL1] = useState('');
   const [AL2, setAL2] = useState('');
   const [Landmark, setLandmark] = useState('');
-  const [Userdata, setNewData] = useState({});
-  // console.log(imageUp[0].type);
+  const [Userdata, setNewData] = useState('');
+  // console.log(Userdata);
 
   const idx = async () => {
     try {
@@ -81,8 +81,10 @@ const BusinessDetails = ({navigation, route}) => {
   const SaveDetail = async () => {
     try {
       setSpinner(true);
-      const data = new FormData();
+      const URL =
+        'https://colonyguide.garimaartgallery.com/api/add-service-detail';
 
+      const data = new FormData();
       data.append('user_id', Userdata.user.id);
       data.append('app_role_id', Userdata.user.app_role_id);
       data.append('type', User === 'Service Info' ? 1 : 0);
@@ -93,24 +95,26 @@ const BusinessDetails = ({navigation, route}) => {
       data.append('category_id', Category);
       data.append('about_service', About);
       data.append('business_address', `${buildFL},${AL1},${AL2},${Landmark}`);
-      data.append('logo_image', imageUp[0].uri);
-
-      // console.log(data);
-
-      const config = {
+      data.append('logo_image', {
+        uri: imageUp[0].uri,
+        type: imageUp[0].type,
+        name: imageUp[0].fileName,
+      });
+      const res = await fetch(URL, {
+        method: 'post',
+        body: data,
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${Userdata.token}`,
         },
-      };
-
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/add-service-detail';
-
-      const response = await axios.post(URL, data, config).then(response => {
-        setSpinner(false);
-        console.log(response.data);
       });
+      let response = await res.json();
+      setSpinner(false);
+      if (response.success === true) {
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+      }
     } catch (error) {
       setSpinner(false);
       alert(error);
@@ -123,6 +127,7 @@ const BusinessDetails = ({navigation, route}) => {
     return () => {
       setCategoryData([]);
       setCategoryData('');
+      setNewData('');
     };
   }, []);
 
@@ -183,6 +188,7 @@ const BusinessDetails = ({navigation, route}) => {
               labelField="name"
               valueField="id"
               value={Category}
+              maxHeight={200}
               onChange={item => setCategory(item.id)}
             />
             <InputComponent
@@ -278,6 +284,6 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: {
     marginVertical: 20,
-    marginBottom: 10,
+    marginBottom: 5,
   },
 });

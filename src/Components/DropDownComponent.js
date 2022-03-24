@@ -11,6 +11,7 @@ const DropDownComponent = ({
   onChange,
   labelField,
   valueField,
+  maxHeight,
 }) => {
   return (
     <Dropdown
@@ -21,7 +22,7 @@ const DropDownComponent = ({
       iconStyle={styles.iconStyle}
       data={data}
       search={false}
-      maxHeight={200}
+      maxHeight={maxHeight}
       labelField={labelField}
       valueField={valueField}
       placeholder={placeholder}

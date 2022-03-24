@@ -68,7 +68,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   ImageComponentStyle: {
     width: '87%',
-    marginTop: 20,
+    marginTop: 10,
   },
   dotStyle: {
     width: 10,

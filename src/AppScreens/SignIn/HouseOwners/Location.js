@@ -14,6 +14,7 @@ const Location = ({navigation, route}) => {
     latitude: latitude,
     longitude: longitude,
   });
+
   const idx = () => {
     setLatitude(latitude);
     setLongitude(longitude);

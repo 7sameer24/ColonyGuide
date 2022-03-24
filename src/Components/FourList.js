@@ -19,7 +19,7 @@ const FourList = ({navigation}) => {
     {
       image: <First width={38} height={32} />,
       Id: 1,
-      navigation: 'Business listed',
+      navigation: 'RoomsFlats',
     },
     {
       image: <Third width={38} height={32} />,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    marginVertical: 25,
+    marginVertical: 20,
   },
   containerStyle: (width, height) => ({
     width: width / 6.1,

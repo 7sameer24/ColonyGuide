@@ -9,7 +9,9 @@ const CardsListed = ({category, title, subTitle}) => {
       <View style={genericStyles.row}>
         <Image source={Images.Profile} style={styles.ImageStyle} />
         <View style={styles.View}>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
           <Text style={styles.subTitle}>{subTitle}</Text>
           <View style={styles.View2}>
             <Text style={styles.subTitle}>{category}</Text>
@@ -61,16 +63,18 @@ const styles = StyleSheet.create({
   },
   View2: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     marginTop: 5,
   },
   View3: {
     flexDirection: 'row',
-    left: '100%',
+    marginLeft: '45%',
   },
   title: {
     fontSize: 14,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
+    width: '80%',
   },
   subTitle: {
     fontSize: 12,

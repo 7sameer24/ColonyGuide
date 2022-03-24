@@ -60,6 +60,6 @@ const styles = StyleSheet.create({
   ButtonContainer: {
     position: 'absolute',
     bottom: 10,
-    width: '90%',
+    width: '90.7%',
   },
 });

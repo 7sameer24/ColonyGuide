@@ -18,7 +18,7 @@ import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
 
 const ServiceDetails = ({navigation, UserNewData}) => {
-  const [imageUp, setImage] = useState(false);
+  const [imageUp, setImage] = useState();
   const [shopName, setShop] = useState(null);
   const [fullName, setFullName] = useState(null);
   const [WhatsappNo, setWhatsappNo] = useState();
@@ -40,7 +40,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
         WhatsappNo: WhatsappNo,
         category: Category,
         userData: UserNewData,
-        imageUp: imageUp === true ? imageUp[0].fileName : '',
+        imageUp: imageUp,
       });
     }
   };
@@ -121,6 +121,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             valueField="id"
             value={Category}
             placeholder="Select category"
+            maxHeight={200}
             onChange={item => setCategory(item.id)}
           />
           <InputComponent
