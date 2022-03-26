@@ -35,7 +35,8 @@ const HomeScreen = ({navigation}) => {
             // searchIcon="search"
             navigation={navigation}
             firstIcon="menu"
-            firstOnpress={() => navigation.toggleDrawer()}
+            ThirdType="material-community"
+            firstOnpress={() => navigation.openDrawer()}
             // searchTouchable={() => navigation.navigate('Search')}
           />
           <>

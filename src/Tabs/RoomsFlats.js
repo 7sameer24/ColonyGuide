@@ -1,10 +1,31 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../constants';
 import CardsListed from '../Components/CardsListed';
 import ButtonComponent from '../Components/ButtonComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RoomsFlats = ({navigation}) => {
+  const [Userdata, setNewData] = useState(null);
+
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('UserLogin');
+      if (value !== null) {
+        setNewData(JSON.parse(value));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    return () => {
+      setNewData('');
+    };
+  }, []);
+
   return (
     <View style={genericStyles.Container}>
       <ScrollView style={genericStyles.mt(5)}>
@@ -45,11 +66,15 @@ const RoomsFlats = ({navigation}) => {
         />
         <View style={genericStyles.height(80)} />
       </ScrollView>
-      <ButtonComponent
-        title="Add room"
-        ButtonContainer={styles.ButtonContainer}
-        onPress={() => navigation.navigate('Add room')}
-      />
+      {Userdata !== null ? (
+        Userdata.userData.app_role_id === 3 ? (
+          <ButtonComponent
+            title="Add room"
+            ButtonContainer={styles.ButtonContainer}
+            onPress={() => navigation.navigate('Add room')}
+          />
+        ) : null
+      ) : null}
     </View>
   );
 };

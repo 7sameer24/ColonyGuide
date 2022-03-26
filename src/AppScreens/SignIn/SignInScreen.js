@@ -34,7 +34,6 @@ const SignInScreen = ({navigation}) => {
           <View style={styles.imageStyle}>
             <ImgIcon width={304.52} height={226.91} />
             <Text style={styles.text}>Select your role</Text>
-            <Poweredby />
           </View>
           {newData.map(data => (
             <Button
@@ -62,6 +61,7 @@ const SignInScreen = ({navigation}) => {
               }
             />
           ))}
+          <Poweredby textStyle={genericStyles.mt(0)} />
         </>
       ) : (
         <Spinner />

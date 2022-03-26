@@ -1,5 +1,6 @@
 import {
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -41,6 +42,10 @@ const LoginScreen = ({navigation}) => {
             setSpinner(false);
             if (response.data.success === true) {
               AsyncStorage.setItem('UserLogin', JSON.stringify(response.data));
+              AsyncStorage.setItem(
+                'UserToken',
+                JSON.stringify(response.data.token),
+              );
               navigation.dispatch(
                 CommonActions.reset({
                   routes: [{name: 'Feed'}],
@@ -63,6 +68,7 @@ const LoginScreen = ({navigation}) => {
   };
   return (
     <View style={styles.container}>
+      <StatusBar backgroundColor={COLORS.primary} />
       <ScrollView>
         <HeaderBody
           title="Welcome back!"
@@ -164,7 +170,7 @@ const styles = StyleSheet.create({
   signUpBtn: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: 40,
+    marginTop: 20,
   },
   signUpBtn2: {
     fontSize: 16,

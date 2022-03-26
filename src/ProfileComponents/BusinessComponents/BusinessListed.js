@@ -12,6 +12,7 @@ const BusinessListed = ({navigation}) => {
         title="Business listed"
         searchIcon="search"
         bellIcon="filter"
+        ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
       <ScrollView style={genericStyles.mt(10)}>

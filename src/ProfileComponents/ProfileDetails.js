@@ -1,69 +1,103 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {FONTS, genericStyles, Images} from '../constants';
-import {Icon} from 'react-native-elements';
+import HeaderBar from '../Components/HeaderBar';
+import axios from 'axios';
+import Spinner from '../Components/Spinner';
 
-const ProfileDetails = ({route}) => {
+const ProfileDetails = ({navigation, route}) => {
+  const {userID, userToken} = route.params;
+  const [userData, setUserData] = useState('');
+
+  const idx = async () => {
+    try {
+      const URL =
+        'https://colonyguide.garimaartgallery.com/api/user-profile-data';
+      const response = await axios(URL, {
+        method: 'post',
+        data: {user_id: userID},
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+      setUserData(response.data.profileData);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  useEffect(() => {
+    idx();
+  }, []);
+
   return (
-    <ScrollView style={genericStyles.Container}>
-      <View>
-        <Image source={Images.Profile} style={styles.ImageStyle} />
-        <View style={styles.ImageContainer}>
-          <Image
-            source={Images.Camera}
-            resizeMode="contain"
-            style={styles.ChangeImgStyle}
+    <View style={genericStyles.Container}>
+      {userData !== '' ? (
+        <>
+          <HeaderBar
+            firstIcon="arrow-back-outline"
+            title="Personal Details"
+            bellIcon="create-outline"
+            ThirdType="ionicon"
+            thirdOnpress={() =>
+              navigation.navigate('Edit Personal Details', {
+                data: userData,
+                token: userToken,
+              })
+            }
+            firstOnpress={() => navigation.goBack()}
           />
-        </View>
-      </View>
-      <View style={styles.midd}>
-        <Text style={styles.text}>Your Name</Text>
-        <View style={styles.viewCon}>
-          <Text style={styles.full}>Cameron Williamson</Text>
-          <Icon
-            name="create-outline"
-            type="ionicon"
-            color="#666666"
-            size={20}
-            containerStyle={genericStyles.selfCenter}
-          />
-        </View>
-        <Text style={styles.text}>Mobile Number</Text>
-        <View style={styles.viewCon}>
-          <Text style={styles.full}>987654321</Text>
-          <Icon
-            name="create-outline"
-            type="ionicon"
-            color="#666666"
-            size={20}
-            containerStyle={genericStyles.selfCenter}
-          />
-        </View>
-        <Text style={styles.text}>Email</Text>
-        <View style={styles.viewCon}>
-          <Text style={styles.full}>example@gmail.com</Text>
-          <Icon
-            name="create-outline"
-            type="ionicon"
-            color="#666666"
-            size={20}
-            containerStyle={genericStyles.selfCenter}
-          />
-        </View>
-        <Text style={styles.text}>Address</Text>
-        <View style={styles.viewCon}>
-          <Text style={[styles.full, {width: '85%'}]}>
-            3891 Ranchview Dr. Richardson, California 62639
-          </Text>
-          <Icon
-            name="create-outline"
-            type="ionicon"
-            color="#666666"
-            size={20}
-          />
-        </View>
-      </View>
-    </ScrollView>
+          <ScrollView>
+            <View>
+              <Image
+                source={
+                  userData.profile_image ===
+                  'https://colonyguide.garimaartgallery.com/storage'
+                    ? Images.Ellipse
+                    : {uri: userData.profile_image}
+                }
+                style={styles.ImageStyle}
+              />
+            </View>
+            <View style={styles.midd}>
+              <Text style={styles.text}>Your Name</Text>
+              <View style={styles.viewCon}>
+                <Text style={styles.full}>{userData.name}</Text>
+              </View>
+              <Text style={styles.text}>Mobile Number</Text>
+              <View style={styles.viewCon}>
+                <Text style={styles.full}>{userData.mobile_no}</Text>
+              </View>
+              <Text style={styles.text}>Email</Text>
+              <View style={styles.viewCon}>
+                <Text style={styles.full}>{userData.email}</Text>
+              </View>
+              <Text style={styles.text}>
+                {userData.app_role_id === 1 ? 'Hostel Name' : 'Address'}
+              </Text>
+              <View style={styles.viewCon}>
+                <Text style={[styles.full, {width: '85%'}]}>
+                  {userData.app_role_id === 1
+                    ? userData.hostel_name
+                    : userData.address}
+                </Text>
+              </View>
+              {userData.app_role_id === 1 ? (
+                <>
+                  <Text style={styles.text}>Hostel Address</Text>
+                  <View style={styles.viewCon}>
+                    <Text style={[styles.full, {width: '85%'}]}>
+                      {userData.hostel_address}
+                    </Text>
+                  </View>
+                </>
+              ) : null}
+            </View>
+          </ScrollView>
+        </>
+      ) : (
+        <Spinner />
+      )}
+    </View>
   );
 };
 
@@ -71,10 +105,11 @@ export default ProfileDetails;
 
 const styles = StyleSheet.create({
   ImageStyle: {
-    width: 150,
-    height: 150,
+    width: 130,
+    height: 130,
     alignSelf: 'center',
-    marginTop: 20,
+    marginTop: 40,
+    borderRadius: 60,
   },
   ChangeImgStyle: {
     width: 20,
@@ -98,7 +133,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   midd: {
-    marginTop: 30,
+    marginTop: 10,
     marginHorizontal: 30,
   },
   full: {
@@ -107,8 +142,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterMedium,
   },
   viewCon: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     borderRadius: 8,
     backgroundColor: '#FEF6EF',
     padding: 15,

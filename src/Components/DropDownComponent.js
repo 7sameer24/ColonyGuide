@@ -12,14 +12,16 @@ const DropDownComponent = ({
   labelField,
   valueField,
   maxHeight,
+  iconContainer,
+  dropdownStyle,
+  placeholderStyle,
 }) => {
   return (
     <Dropdown
-      style={styles.dropdown}
-      placeholderStyle={styles.placeholderStyle}
+      style={[styles.dropdown, {...dropdownStyle}]}
+      placeholderStyle={[styles.placeholderStyle, {...placeholderStyle}]}
       selectedTextStyle={styles.selectedTextStyle}
       inputSearchStyle={styles.inputSearchStyle}
-      iconStyle={styles.iconStyle}
       data={data}
       search={false}
       maxHeight={maxHeight}
@@ -34,6 +36,7 @@ const DropDownComponent = ({
           name="chevron-down"
           size={25}
           type="ionicon"
+          containerStyle={iconContainer}
         />
       )}
       dropdownPosition="bottom"
@@ -60,10 +63,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterRegular,
     color: COLORS.third,
     fontSize: 14,
-  },
-  iconStyle: {
-    width: 20,
-    height: 20,
   },
   inputSearchStyle: {
     height: 40,

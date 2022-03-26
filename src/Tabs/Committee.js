@@ -8,20 +8,20 @@ import axios from 'axios';
 import Spinner from '../Components/Spinner';
 
 const Committee = ({navigation}) => {
-  const [userData, setData] = useState([]);
+  // const [userData, setData] = useState([]);
   const [newData, setNewData] = useState([]);
   // console.log(userData.token);
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserLogin');
-      if (value !== null) {
-        setData(JSON.parse(value));
-      }
-    } catch (e) {
-      alert(e);
-    }
-  };
+  // const getData = async () => {
+  //   try {
+  //     const value = await AsyncStorage.getItem('UserLogin');
+  //     if (value !== null) {
+  //       setData(JSON.parse(value));
+  //     }
+  //   } catch (e) {
+  //     alert(e);
+  //   }
+  // };
 
   const idx = async () => {
     try {
@@ -34,6 +34,9 @@ const Committee = ({navigation}) => {
   };
   useEffect(() => {
     idx();
+    return () => {
+      setNewData([]);
+    };
   }, []);
   return (
     <View style={genericStyles.Container}>
@@ -42,6 +45,7 @@ const Committee = ({navigation}) => {
         title="Committee"
         searchIcon="search"
         bellIcon="filter"
+        ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
       {newData.length > 0 ? (

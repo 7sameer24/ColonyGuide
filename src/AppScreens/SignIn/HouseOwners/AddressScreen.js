@@ -9,6 +9,8 @@ import DropDownComponent from '../../../Components/DropDownComponent';
 import ImgIcon from '../../../../assets/svg/Frame 11.svg';
 import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CommonActions} from '@react-navigation/native';
 
 const AddressScreen = ({route, navigation}) => {
   const {
@@ -42,7 +44,10 @@ const AddressScreen = ({route, navigation}) => {
 
         Form.append('user_id', UserData.user_id);
         Form.append('app_role_id', UserData.app_role_id);
-        Form.append('full_name', FullName);
+        Form.append(
+          'full_name',
+          UserData.app_role_id === 3 ? HOName : FullName,
+        );
         Form.append('geolocation', 'Udaipur');
         Form.append('house_no', house);
         Form.append('address', Address);
@@ -51,11 +56,18 @@ const AddressScreen = ({route, navigation}) => {
         Form.append('category_id', CategoryShop);
         Form.append('whatsapp_no', WhatsappNum);
         Form.append('locality_id', LocalityValue);
-        Form.append('logo_image', {
-          uri: imageLogo[0].uri,
-          type: imageLogo[0].type,
-          name: imageLogo[0].fileName,
-        });
+        UserData.app_role_id === 3
+          ? null
+          : Form.append(
+              'logo_image',
+              imageLogo !== ''
+                ? {
+                    uri: imageLogo[0].uri,
+                    type: imageLogo[0].type,
+                    name: imageLogo[0].fileName,
+                  }
+                : '',
+            );
 
         const URL = 'https://colonyguide.garimaartgallery.com/api/add-details';
 
@@ -70,7 +82,13 @@ const AddressScreen = ({route, navigation}) => {
         setSpinner(false);
         const response = await res.json();
         if (response.success === true) {
-          navigation.navigate('Feed');
+          AsyncStorage.setItem('UserLogin', JSON.stringify(response));
+          AsyncStorage.setItem('UserToken', JSON.stringify(UserData.token));
+          navigation.dispatch(
+            CommonActions.reset({
+              routes: [{name: 'Feed'}],
+            }),
+          );
           ToastAndroid.show(
             UserData.app_role_id === 3
               ? `Welcome ${HOName}`
@@ -150,7 +168,7 @@ const AddressScreen = ({route, navigation}) => {
               title="Save"
               onPress={() => handleOnSubmit()}
               loading={spinner ? true : false}
-              ButtonContainer={genericStyles.mv(10)}
+              ButtonContainer={genericStyles.mv(5)}
             />
           </>
           <Poweredby />

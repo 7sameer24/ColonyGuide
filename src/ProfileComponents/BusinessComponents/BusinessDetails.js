@@ -22,7 +22,7 @@ const BusinessDetails = ({navigation, route}) => {
   const {User} = route.params;
   const [CategoryData, setCategoryData] = useState([]);
   const [Category, setCategory] = useState('');
-  const [imageUp, setImage] = useState();
+  const [imageUp, setImage] = useState('');
   const [spinner, setSpinner] = useState(false);
   const [ShopBusName, setShopBusName] = useState('');
   const [PersonName, setPersonName] = useState('');
@@ -95,11 +95,16 @@ const BusinessDetails = ({navigation, route}) => {
       data.append('category_id', Category);
       data.append('about_service', About);
       data.append('business_address', `${buildFL},${AL1},${AL2},${Landmark}`);
-      data.append('logo_image', {
-        uri: imageUp[0].uri,
-        type: imageUp[0].type,
-        name: imageUp[0].fileName,
-      });
+      data.append(
+        'logo_image',
+        imageUp !== ''
+          ? {
+              uri: imageUp[0].uri,
+              type: imageUp[0].type,
+              name: imageUp[0].fileName,
+            }
+          : '',
+      );
       const res = await fetch(URL, {
         method: 'post',
         body: data,

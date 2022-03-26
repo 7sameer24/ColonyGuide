@@ -44,6 +44,7 @@ const VegetableFruits = ({navigation, route}) => {
         title={Name}
         searchIcon="search"
         bellIcon="filter"
+        ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
       {data.length > 0 ? (

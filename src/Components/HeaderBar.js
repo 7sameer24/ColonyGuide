@@ -13,6 +13,8 @@ const HeaderBar = ({
   searchTouchable,
   iconStyle,
   iconView,
+  ThirdType,
+  thirdOnpress,
 }) => {
   return (
     <View style={[styles.iconView, {...iconView}]}>
@@ -37,8 +39,9 @@ const HeaderBar = ({
         <Icon
           color={COLORS.textColor}
           name={bellIcon}
-          type="material-community"
+          type={ThirdType}
           size={25}
+          onPress={thirdOnpress}
           style={[genericStyles.ml(22), {...iconStyle}]}
         />
       </View>

@@ -119,8 +119,7 @@ const Addroom = () => {
       let response = await res.json();
       setSpinner(false);
       if (response.success === true) {
-        console.log(response);
-        // ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {
         console.log(response);
         ToastAndroid.show(response.message, ToastAndroid.SHORT);

@@ -7,6 +7,7 @@ import ButtonComponent from '../../../Components/ButtonComponent';
 import ImgIcon from '../../../../assets/svg/Frame 12.svg';
 import axios from 'axios';
 import Poweredby from '../../../Components/Poweredby';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PersonalDetails = ({data, navigation}) => {
   const [FullName, setFullName] = useState('');
@@ -41,8 +42,14 @@ const PersonalDetails = ({data, navigation}) => {
           },
         });
         setSpinner(false);
-        navigation.navigate('Feed');
-        ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
+        if (response.data.success === true) {
+          AsyncStorage.setItem('UserLogin', JSON.stringify(response.data));
+          AsyncStorage.setItem('UserToken', JSON.stringify(data.token));
+          navigation.navigate('Feed');
+          ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
+        } else {
+          alert(response.data);
+        }
       } catch (error) {
         setSpinner(false);
         alert(error);

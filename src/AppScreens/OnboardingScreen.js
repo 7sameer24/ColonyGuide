@@ -13,6 +13,7 @@ import {FONTS, COLORS, genericStyles} from '../constants/index';
 import Frame from '../../assets/svg/Frame.svg';
 import Frame5 from '../../assets/svg/Frame 5.svg';
 import Frame6 from '../../assets/svg/Frame 6.svg';
+import {CommonActions} from '@react-navigation/native';
 
 const {width, height} = Dimensions.get('window');
 
@@ -101,7 +102,13 @@ const OnboardingScreen = ({navigation}) => {
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.signinContainer}
-              onPress={() => navigation.navigate('Login')}>
+              onPress={() =>
+                navigation.dispatch(
+                  CommonActions.reset({
+                    routes: [{name: 'Loginn'}],
+                  }),
+                )
+              }>
               <Text style={styles.signIn}>Sign In</Text>
             </TouchableOpacity>
           ) : (
@@ -112,7 +119,13 @@ const OnboardingScreen = ({navigation}) => {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.iconCon}
-                onPress={() => navigation.navigate('Login')}>
+                onPress={() =>
+                  navigation.dispatch(
+                    CommonActions.reset({
+                      routes: [{name: 'Loginn'}],
+                    }),
+                  )
+                }>
                 <Text style={styles.signIn}>Sign In</Text>
               </TouchableOpacity>
             </View>

@@ -15,6 +15,7 @@ import FooterButton from '../../Components/FooterButton';
 import {CommonActions} from '@react-navigation/native';
 import ImgIcon from '../../../assets/svg/Frame 10.svg';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const OtpScreen = ({route, navigation}) => {
   const {DATA} = route.params;
@@ -49,6 +50,8 @@ const OtpScreen = ({route, navigation}) => {
           ToastAndroid.show('OTP verified successfully', ToastAndroid.SHORT);
         } else {
           if (4 === DATA.app_role_id) {
+            AsyncStorage.setItem('UserLogin', JSON.stringify(response.data));
+            AsyncStorage.setItem('UserToken', JSON.stringify(DATA.token));
             navigation.dispatch(
               CommonActions.reset({
                 routes: [{name: 'Feed'}],

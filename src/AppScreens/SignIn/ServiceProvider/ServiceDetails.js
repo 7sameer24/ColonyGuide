@@ -18,7 +18,7 @@ import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
 
 const ServiceDetails = ({navigation, UserNewData}) => {
-  const [imageUp, setImage] = useState();
+  const [imageUp, setImage] = useState('');
   const [shopName, setShop] = useState(null);
   const [fullName, setFullName] = useState(null);
   const [WhatsappNo, setWhatsappNo] = useState();

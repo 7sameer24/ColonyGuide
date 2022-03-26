@@ -1,12 +1,11 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {COLORS, FONTS, genericStyles} from '../constants';
+import {COLORS, FONTS} from '../constants';
 import {Icon} from 'react-native-elements';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import OnboardingScreen from '../AppScreens/OnboardingScreen';
 import LoginScreen from '../AppScreens/Login/LoginScreen';
 import SignInScreen from '../AppScreens/SignIn/SignInScreen';
 import RegisterScreen from '../AppScreens/SignIn/RegisterScreen';
@@ -38,16 +37,15 @@ import VegetableFruits from '../Tabs/VegetableFruits';
 import RoomsFlats from '../Tabs/RoomsFlats';
 import HeaderBar from '../Components/HeaderBar';
 import Addroom from '../Tabs/Addroom';
-import ServiceDetails from '../AppScreens/SignIn/ServiceProvider/ServiceDetails';
+import EditProfile from '../ProfileComponents/EditProfile';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-const MyStack = () => {
+const MyStack = ({navigation}) => {
   const arr = [
-    {name: 'Onboarding', component: OnboardingScreen, headerShown: false},
     {name: 'Login', component: LoginScreen, headerShown: false},
     {name: 'Sign in', component: SignInScreen, headerShown: false},
     {name: 'Register', component: RegisterScreen, headerShown: false},
@@ -75,7 +73,7 @@ const MyStack = () => {
       component: ProfileDetails,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
+      headerShown: false,
     },
     {
       name: 'Settings',
@@ -151,21 +149,17 @@ const MyStack = () => {
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
       headerShown: true,
-      headerBackVisible: false,
-      headerTitle: () => (
-        <HeaderBar
-          iconView={genericStyles.mh(0)}
-          titleStyle={styles.titleStyle}
-          firstIcon="arrow-back-outline"
-          title="Rooms / Flats"
-          searchIcon="search"
-          bellIcon="filter"
-        />
-      ),
     },
     {
       name: 'Add room',
       component: Addroom,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Edit Personal Details',
+      component: EditProfile,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
@@ -185,7 +179,6 @@ const MyStack = () => {
             headerTitleStyle: data.headerTitleStyle,
             headerTintColor: data.headerTintColor,
             headerShadowVisible: data.headerShadowVisible,
-            headerTitle: data.headerTitle,
             headerBackVisible: data.headerBackVisible,
             title: data.title,
           })}
@@ -337,14 +330,6 @@ function MyDrawer() {
         component={MyTabs}
         options={{
           headerShown: false,
-          drawerIcon: () => (
-            <Icon
-              name="home"
-              type="material-community"
-              color={COLORS.primary}
-              containerStyle={styles.DrawerIcon}
-            />
-          ),
         }}
       />
     </Drawer.Navigator>
@@ -386,6 +371,6 @@ const styles = StyleSheet.create({
   },
   titleStyle: {
     marginLeft: 15,
-    marginRight: '39%',
+    marginRight: '29%',
   },
 });

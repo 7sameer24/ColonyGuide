@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   signUpBtn: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: 40,
+    marginTop: 20,
   },
   signUpBtn2: {
     fontSize: 16,
