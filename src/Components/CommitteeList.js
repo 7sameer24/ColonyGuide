@@ -3,50 +3,6 @@ import React from 'react';
 import {COLORS, FONTS, Images} from '../constants';
 
 const CommiteeList = ({cardContainer, ViewContainer, data}) => {
-  const arr = [
-    {image: Images.Profile, Id: 1, text: 'Owner Name'},
-    {image: Images.Profile, Id: 2, text: 'Owner Name'},
-    {
-      image: Images.Profile,
-      Id: 3,
-      text: 'Owner Name',
-    },
-    {image: Images.Profile, Id: 4, text: 'Owner Name'},
-    {image: Images.Profile, Id: 5, text: 'Owner Name'},
-    {
-      image: Images.Profile,
-      Id: 6,
-      text: 'Owner Name',
-    },
-    {image: Images.Profile, Id: 7, text: 'Owner Name'},
-    {image: Images.Profile, Id: 8, text: 'Owner Name'},
-    {
-      image: Images.Profile,
-      Id: 9,
-      text: 'Owner Name',
-    },
-    {image: Images.Profile, Id: 10, text: 'Owner Name'},
-    {image: Images.Profile, Id: 11, text: 'Owner Name'},
-    {
-      image: Images.Profile,
-      Id: 12,
-      text: 'Owner Name',
-    },
-    {image: Images.Profile, Id: 13, text: 'Owner Name'},
-    {image: Images.Profile, Id: 14, text: 'Owner Name'},
-    {
-      image: Images.Profile,
-      Id: 15,
-      text: 'Owner Name',
-    },
-    {image: Images.Profile, Id: 16, text: 'Owner Name'},
-    {image: Images.Profile, Id: 17, text: 'Owner Name'},
-    {
-      image: Images.Profile,
-      Id: 18,
-      text: 'Owner Name',
-    },
-  ];
   const {width, height} = useWindowDimensions();
 
   return (

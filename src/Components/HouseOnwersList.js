@@ -3,15 +3,15 @@ import React from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
 
-const HouseOnwersList = () => {
+const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
   return (
     <Card containerStyle={styles.CardContainer}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View style={genericStyles.column}>
-          <Text style={styles.title}>Owner Name</Text>
-          <Text style={styles.subTitle}>Road 21 | House / Flat 2</Text>
-          <Text style={styles.subTitle}>Addres line 1</Text>
-          <Text style={styles.subTitle}>Landmark</Text>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subTitle}>{subTitle}</Text>
+          <Text style={styles.subTitle}>{AddressLine}</Text>
+          <Text style={styles.subTitle}>{Landmark}</Text>
         </View>
         <View style={{flexDirection: 'column', justifyContent: 'space-evenly'}}>
           <Icon

@@ -1,6 +1,7 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {FONTS, genericStyles} from '../constants';
+import Poweredby from '../Components/Poweredby';
 
 const TermsCondition = () => {
   return (
@@ -30,6 +31,7 @@ const TermsCondition = () => {
         feugiat nunc ut. Aenean facilisis vitae ornare arcu, vitae pulvinar eget
         quam augue. Pellentesque mauris, condimentu
       </Text>
+      <Poweredby />
     </View>
   );
 };

@@ -79,8 +79,8 @@ const AddressScreen = ({route, navigation}) => {
             Authorization: `Bearer ${UserData.token}`,
           },
         });
-        setSpinner(false);
         const response = await res.json();
+        setSpinner(false);
         if (response.success === true) {
           AsyncStorage.setItem('UserLogin', JSON.stringify(response));
           AsyncStorage.setItem('UserToken', JSON.stringify(UserData.token));
@@ -168,10 +168,10 @@ const AddressScreen = ({route, navigation}) => {
               title="Save"
               onPress={() => handleOnSubmit()}
               loading={spinner ? true : false}
-              ButtonContainer={genericStyles.mv(5)}
+              ButtonContainer={{marginBottom: 30}}
             />
           </>
-          <Poweredby />
+          <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       ) : (
         <Spinner />

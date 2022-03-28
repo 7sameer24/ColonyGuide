@@ -4,6 +4,7 @@ import {FONTS, genericStyles, Images} from '../constants';
 import HeaderBar from '../Components/HeaderBar';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
+import Poweredby from '../Components/Poweredby';
 
 const ProfileDetails = ({navigation, route}) => {
   const {userID, userToken} = route.params;
@@ -93,6 +94,7 @@ const ProfileDetails = ({navigation, route}) => {
               ) : null}
             </View>
           </ScrollView>
+          <Poweredby />
         </>
       ) : (
         <Spinner />
@@ -105,11 +107,11 @@ export default ProfileDetails;
 
 const styles = StyleSheet.create({
   ImageStyle: {
-    width: 130,
-    height: 130,
+    width: 110,
+    height: 110,
     alignSelf: 'center',
     marginTop: 40,
-    borderRadius: 60,
+    borderRadius: 100,
   },
   ChangeImgStyle: {
     width: 20,

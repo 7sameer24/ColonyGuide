@@ -91,9 +91,9 @@ const PersonalDetails = ({data, navigation}) => {
           title="Done"
           onPress={() => handleOnSubmit()}
           loading={spinner ? true : false}
-          ButtonContainer={genericStyles.mv(20)}
+          ButtonContainer={styles.ButtonContainer}
         />
-        <Poweredby textStyle={genericStyles.mt(0)} />
+        <Poweredby container={genericStyles.mb(0)} />
       </ScrollView>
     </View>
   );
@@ -115,4 +115,5 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterRegular,
     fontWeight: 'normal',
   },
+  ButtonContainer: {marginBottom: 30, marginTop: 20},
 });

@@ -1,10 +1,29 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../constants';
 import HeaderBar from '../../Components/HeaderBar';
 import CardsListed from '../../Components/CardsListed';
+import axios from 'axios';
+import Spinner from '../../Components/Spinner';
 
 const BusinessListed = ({navigation}) => {
+  const [newData, setNewData] = useState([]);
+
+  const idx = async () => {
+    try {
+      const URL = 'https://colonyguide.garimaartgallery.com/api/business-list';
+      const response = await axios.post(URL);
+      setNewData(response.data.business);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    idx();
+    return () => {
+      setNewData([]);
+    };
+  }, []);
   return (
     <View style={genericStyles.Container}>
       <HeaderBar
@@ -15,49 +34,23 @@ const BusinessListed = ({navigation}) => {
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
-      <ScrollView style={genericStyles.mt(10)}>
-        <CardsListed
-          title="BUSINESS  Name"
-          subTitle="Business owner name"
-          category="Wholesaler"
-        />
-        <CardsListed
-          title="BUSINESS  Name"
-          subTitle="Business owner name"
-          category="Wholesaler"
-        />
-        <CardsListed
-          title="BUSINESS  Name"
-          subTitle="Business owner name"
-          category="Wholesaler"
-        />
-        <CardsListed
-          title="BUSINESS  Name"
-          subTitle="Business owner name"
-          category="Wholesaler"
-        />
-        <CardsListed
-          title="BUSINESS  Name"
-          subTitle="Business owner name"
-          category="Wholesaler"
-        />
-        <CardsListed
-          title="BUSINESS  Name"
-          subTitle="Business owner name"
-          category="Wholesaler"
-        />
-        <CardsListed
-          title="BUSINESS  Name"
-          subTitle="Business owner name"
-          category="Wholesaler"
-        />
-        <CardsListed
-          title="BUSINESS  Name"
-          subTitle="Business owner name"
-          category="Wholesaler"
-        />
-        <View style={genericStyles.height(20)} />
-      </ScrollView>
+      {newData.length > 0 ? (
+        <ScrollView style={genericStyles.mt(10)}>
+          {newData.map((data, index) => (
+            <CardsListed
+              source={{uri: data.logo_image}}
+              title={data.name}
+              key={data.id}
+              index={index}
+              subTitle={data.contact_person}
+              category="Wholesaler"
+            />
+          ))}
+          <View style={genericStyles.height(20)} />
+        </ScrollView>
+      ) : (
+        <Spinner />
+      )}
     </View>
   );
 };

@@ -1,15 +1,30 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
-import {COLORS, FONTS, genericStyles, Images} from '../constants';
+import {COLORS, FONTS, genericStyles} from '../constants';
 
-const CardsListed = ({category, title, subTitle}) => {
+const CardsListed = ({category, title, subTitle, source, index}) => {
+  const alternatingColor = [COLORS.white, COLORS.primary];
+  const alternatingTextColor = [COLORS.textColor, COLORS.white];
+
   return (
-    <Card containerStyle={styles.CardContainer}>
+    <Card
+      containerStyle={[
+        styles.CardContainer,
+        {backgroundColor: alternatingColor[index % alternatingColor.length]},
+      ]}>
       <View style={genericStyles.row}>
-        <Image source={Images.Ellipse} style={styles.ImageStyle} />
+        <Image source={source} style={styles.ImageStyle} />
         <View style={styles.View}>
-          <Text style={styles.title} numberOfLines={1}>
+          <Text
+            style={[
+              styles.title,
+              {
+                color:
+                  alternatingTextColor[index % alternatingTextColor.length],
+              },
+            ]}
+            numberOfLines={1}>
             {title}
           </Text>
           <Text style={styles.subTitle}>{subTitle}</Text>

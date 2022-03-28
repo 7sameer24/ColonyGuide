@@ -81,14 +81,14 @@ const ProfileSettings = () => {
           value={CPASS}
           onChangeText={text => setCPASS(text)}
         />
+        <ButtonComponent
+          title="Save"
+          loading={spinner ? true : false}
+          ButtonContainer={genericStyles.mt(20)}
+          onPress={() => ChangePassword()}
+        />
       </View>
-      <ButtonComponent
-        title="Save"
-        loading={spinner ? true : false}
-        ButtonContainer={genericStyles.mt(20)}
-        onPress={() => ChangePassword()}
-      />
-      <Poweredby textStyle={genericStyles.mt(10)} />
+      <Poweredby />
     </View>
   );
 };

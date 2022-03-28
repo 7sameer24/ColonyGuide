@@ -24,6 +24,9 @@ const HomeScreen = ({navigation}) => {
   };
   useEffect(() => {
     idx();
+    return () => {
+      setNewData([]);
+    };
   }, []);
   return (
     <View style={genericStyles.Container}>

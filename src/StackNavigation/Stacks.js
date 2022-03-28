@@ -30,14 +30,13 @@ import CustomDrawer from '../Components/CustomDrawer';
 import Committee from '../Tabs/Committee';
 import HouseOwners from '../Tabs/HouseOwners';
 import Helpline from '../Tabs/Helpline';
-import RateUs from '../Tabs/RateUs';
 import SearchScreen from '../Tabs/SearchScreen';
 import BusinessListed from '../ProfileComponents/BusinessComponents/BusinessListed';
 import VegetableFruits from '../Tabs/VegetableFruits';
 import RoomsFlats from '../Tabs/RoomsFlats';
-import HeaderBar from '../Components/HeaderBar';
 import Addroom from '../Tabs/Addroom';
 import EditProfile from '../ProfileComponents/EditProfile';
+import FeedBacks from '../Tabs/FeedBacks';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -121,8 +120,8 @@ const MyStack = ({navigation}) => {
       headerShadowVisible: false,
     },
     {
-      name: 'Rate Us',
-      component: RateUs,
+      name: 'Feedbacks',
+      component: FeedBacks,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,

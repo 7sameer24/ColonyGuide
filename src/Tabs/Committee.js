@@ -38,6 +38,7 @@ const Committee = ({navigation}) => {
       setNewData([]);
     };
   }, []);
+
   return (
     <View style={genericStyles.Container}>
       <HeaderBar

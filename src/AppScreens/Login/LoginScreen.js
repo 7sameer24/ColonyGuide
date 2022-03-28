@@ -125,7 +125,7 @@ const LoginScreen = ({navigation}) => {
             <Text style={styles.signUpBtn2}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-        <Poweredby />
+        <Poweredby container={genericStyles.mb(0)} />
       </ScrollView>
     </View>
   );
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   signUpBtn: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: 20,
+    marginVertical: 20,
   },
   signUpBtn2: {
     fontSize: 16,

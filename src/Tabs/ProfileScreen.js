@@ -19,8 +19,8 @@ import {useIsFocused} from '@react-navigation/native';
 const ProfileScreen = ({navigation}) => {
   const [Userdata, setNewData] = useState(null);
   const [UserToken, setUserToken] = useState(null);
-  // console.log(Userdata);
   const isFocused = useIsFocused();
+  // console.log(Userdata.userData.profile_image);
 
   // const arr = [
   //   {source:<IconImg />,title:"Personal Details",onPressText:'Personal Details',iconName:"chevron-forward-outline"},
@@ -63,9 +63,8 @@ const ProfileScreen = ({navigation}) => {
             <View style={genericStyles.column}>
               <Image
                 source={
-                  (Userdata.userData.app_role_id === 4 && 1) ||
                   Userdata.userData.profile_image ===
-                    'https://colonyguide.garimaartgallery.com/storage'
+                  'https://colonyguide.garimaartgallery.com/storage'
                     ? Images.Ellipse
                     : {uri: Userdata.userData.profile_image}
                 }
@@ -93,8 +92,8 @@ const ProfileScreen = ({navigation}) => {
             </View>
           </View>
           <Divider style={genericStyles.ml(22)} color="#FFEBD9" width={1} />
-          {Userdata.userData.app_role_id === 4 || 1 ? (
-            Userdata.userData.app_role_id === 1 ? (
+          {Userdata.userData.app_role_id === 4 ? (
+            Userdata.userData.app_role_id == 1 ? (
               <ProfileComponents
                 onPress={() =>
                   navigation.navigate('Personal Details', {
@@ -120,18 +119,23 @@ const ProfileScreen = ({navigation}) => {
                 IconSvg={<IconImg />}
                 title="Personal Details"
               />
-              <ProfileComponents
-                onPress={() => navigation.navigate('Business Infoo')}
-                iconName="chevron-forward-outline"
-                IconSvg={<Group />}
-                title="Business Information"
-              />
-              <ProfileComponents
-                onPress={() => navigation.navigate('Service Info')}
-                iconName="chevron-forward-outline"
-                IconSvg={<Service />}
-                title="Add Service Provider"
-              />
+              {Userdata.userData.app_role_id == 2 ||
+              Userdata.userData.app_role_id == 1 ? null : (
+                <ProfileComponents
+                  onPress={() => navigation.navigate('Business Infoo')}
+                  iconName="chevron-forward-outline"
+                  IconSvg={<Group />}
+                  title="Business Information"
+                />
+              )}
+              {Userdata.userData.app_role_id === 1 ? null : (
+                <ProfileComponents
+                  onPress={() => navigation.navigate('Service Info')}
+                  iconName="chevron-forward-outline"
+                  IconSvg={<Service />}
+                  title="Add Service Provider"
+                />
+              )}
               <Divider style={styles.Divider} color="#FFEBD9" width={1} />
             </>
           )}
@@ -147,6 +151,12 @@ const ProfileScreen = ({navigation}) => {
             iconName="chevron-forward-outline"
             IconSvg={<Feedback />}
             title="Feedbacks"
+            onPress={() =>
+              navigation.navigate('Feedbacks', {
+                ID: Userdata.userData.id,
+                token: UserToken,
+              })
+            }
           />
           <ProfileComponents
             onPress={() => navigation.navigate('Terms & Condition')}
@@ -161,11 +171,11 @@ const ProfileScreen = ({navigation}) => {
             title="Contact Us"
           />
           <Divider style={styles.Divider} color="#FFEBD9" width={1} />
-          <Poweredby textStyle={genericStyles.mt(10)} />
         </ScrollView>
       ) : (
         <Spinner />
       )}
+      <Poweredby />
     </View>
   );
 };

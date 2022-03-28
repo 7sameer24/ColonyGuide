@@ -47,6 +47,7 @@ const InputComponent = ({
       ref={ref}
       secureTextEntry={secureTextEntry}
       autoCapitalize="words"
+      multiline={true}
     />
   );
 };

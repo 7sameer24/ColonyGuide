@@ -135,7 +135,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             onPress={() => validationCheck()}
             ButtonContainer={styles.ButtonContainer(imageUp)}
           />
-          <Poweredby />
+          <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       ) : (
         <Spinner />
@@ -180,6 +180,6 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: imageUp => ({
     marginTop: '5%',
-    marginBottom: 10,
+    marginBottom: 30,
   }),
 });

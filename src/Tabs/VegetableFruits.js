@@ -49,8 +49,10 @@ const VegetableFruits = ({navigation, route}) => {
       />
       {data.length > 0 ? (
         <ScrollView style={genericStyles.mt(20)}>
-          {data.map(data => (
+          {data.map((data, index) => (
             <CardsListed
+              source={{uri: data.logo_image}}
+              index={index}
               key={data.id}
               title={data.about}
               subTitle={data.contact_person}

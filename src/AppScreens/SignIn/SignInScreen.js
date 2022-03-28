@@ -28,7 +28,9 @@ const SignInScreen = ({navigation}) => {
     <View style={styles.container}>
       {newData.length > 0 ? (
         <>
-          <TouchableOpacity style={styles.TouchableOpacity}>
+          <TouchableOpacity
+            style={styles.TouchableOpacity}
+            onPress={() => navigation.navigate('Feed')}>
             <Text style={styles.TouchableText}>Skip to home</Text>
           </TouchableOpacity>
           <View style={styles.imageStyle}>

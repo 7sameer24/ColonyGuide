@@ -74,6 +74,7 @@ const RegisterScreen = ({navigation, route}) => {
           Icon={<ImgIcon width={304.52} height={268.18} />}
           touchableOpacityStyle={genericStyles.mb(0)}
           subTitleStyle={genericStyles.mb(10)}
+          onPress={() => navigation.navigate('Feed')}
         />
         <View style={genericStyles.mb(10)}>
           <InputComponent
@@ -118,7 +119,7 @@ const RegisterScreen = ({navigation, route}) => {
             <Text style={styles.signUpBtn2}>Sign In</Text>
           </TouchableOpacity>
         </View>
-        <Poweredby />
+        <Poweredby container={genericStyles.mb(0)} />
       </ScrollView>
     </View>
   );
@@ -144,7 +145,7 @@ const styles = StyleSheet.create({
   signUpBtn: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: 20,
+    marginVertical: 20,
   },
   signUpBtn2: {
     fontSize: 16,

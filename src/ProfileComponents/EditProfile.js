@@ -34,26 +34,26 @@ const EditProfile = ({route, navigation}) => {
 
   const arr = [
     {
-      placeHolder: 'Your Name',
+      placeHolder: 'Name',
       title: 'Your Name',
       value: PersonName,
       onChagneText: setPersonName,
     },
     {
       title: 'Flat / House number',
-      placeHolder: 'Flat / House number',
+      placeHolder: 'F/H number',
       value: FHN,
       onChagneText: setFHN,
     },
     {
       title: 'Address line',
-      placeHolder: 'Address line',
+      placeHolder: 'Address',
       value: Address,
       onChagneText: setAddress,
     },
     {
       title: 'Landmark',
-      placeHolder: 'Landmark',
+      placeHolder: 'Landmark (optional)',
       value: Landmark,
       onChagneText: setLandmark,
     },
@@ -112,7 +112,6 @@ const EditProfile = ({route, navigation}) => {
       });
       let response = await res.json();
       setSpinner(false);
-      // console.log(response);
       if (response.success === true) {
         AsyncStorage.setItem('UserLogin', JSON.stringify(response));
         navigation.navigate('Profile');
@@ -201,36 +200,39 @@ const EditProfile = ({route, navigation}) => {
                 />
               </View>
             ) : (
-              arr.map(data => (
-                <View key={data.title}>
-                  <Text style={styles.text}>{data.title}</Text>
-                  <InputComponent
-                    placeholder={data.placeHolder}
-                    inputContainerStyle={styles.inputContainerStyle}
-                    inputStyle={genericStyles.ml(16)}
-                    value={data.value}
-                    onChangeText={text => data.onChagneText(text)}
-                  />
-                  <Text style={styles.text}>Locality</Text>
-                  <DropDownComponent
-                    data={localData}
-                    placeholder="Locality"
-                    value={LocalityValue}
-                    labelField="name"
-                    valueField="id"
-                    onChange={item => setLocality(item.id)}
-                    dropdownStyle={styles.dropdownStyle}
-                  />
-                </View>
-              ))
+              <View>
+                {arr.map(data => (
+                  <View key={data.title}>
+                    <Text style={styles.text}>{data.title}</Text>
+                    <InputComponent
+                      placeholder={data.placeHolder}
+                      inputContainerStyle={styles.inputContainerStyle}
+                      inputStyle={genericStyles.ml(16)}
+                      value={data.value}
+                      onChangeText={text => data.onChagneText(text)}
+                    />
+                  </View>
+                ))}
+                <Text style={styles.text}>Locality</Text>
+                <DropDownComponent
+                  data={localData}
+                  placeholder="Locality"
+                  value={LocalityValue}
+                  labelField="name"
+                  valueField="id"
+                  onChange={item => setLocality(item.id)}
+                  dropdownStyle={styles.dropdownStyle}
+                />
+              </View>
             )}
           </View>
           <ButtonComponent
             title="Save"
             loading={spinner ? true : false}
             onPress={() => SaveDetail()}
+            ButtonContainer={genericStyles.mb(30)}
           />
-          <Poweredby />
+          <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       ) : (
         <Spinner />
