@@ -44,7 +44,7 @@ const Committee = ({navigation}) => {
       <HeaderBar
         firstIcon="arrow-back-outline"
         title="Committee"
-        searchIcon="search"
+        // searchIcon="search"
         bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}

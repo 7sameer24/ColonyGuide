@@ -1,6 +1,6 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
-import {COLORS, FONTS, genericStyles, Images} from '../../constants';
+import {COLORS, FONTS, genericStyles} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import HeaderBar from '../../Components/HeaderBar';
 import Poweredby from '../../Components/Poweredby';

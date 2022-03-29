@@ -165,21 +165,25 @@ const BusinessDetails = ({navigation, route}) => {
                   : 'Shop / Service name (Optional)'
               }
               value={ShopBusName}
+              autoCapitalize="words"
               onChangeText={text => setShopBusName(text)}
             />
             <InputComponent
               placeholder="Contact person’s name"
               value={PersonName}
+              autoCapitalize="words"
               onChangeText={text => setPersonName(text)}
             />
             <InputComponent
               placeholder="Contact person’s mobile number"
               value={mobile_no}
+              autoCapitalize="words"
               onChangeText={text => setMobile(text)}
             />
             <InputComponent
               placeholder="Contact person’s whatsapp number"
               value={WhatsappNo}
+              autoCapitalize="words"
               onChangeText={text => setWhatsappNo(text)}
             />
 
@@ -202,6 +206,7 @@ const BusinessDetails = ({navigation, route}) => {
                   ? 'About business (Optional)'
                   : 'About shop or service (Optional)'
               }
+              autoCapitalize="words"
               value={About}
               onChangeText={text => setAbout(text)}
             />
@@ -213,21 +218,25 @@ const BusinessDetails = ({navigation, route}) => {
             <InputComponent
               placeholder="Building / Flat Number"
               value={buildFL}
+              autoCapitalize="words"
               onChangeText={text => setBuildFL(text)}
             />
             <InputComponent
               placeholder="Address Line 1"
               value={AL1}
+              autoCapitalize="words"
               onChangeText={text => setAL1(text)}
             />
             <InputComponent
               placeholder="Address Line 2"
               value={AL2}
+              autoCapitalize="words"
               onChangeText={text => setAL2(text)}
             />
             <InputComponent
               placeholder="Landmark (optional)"
               value={Landmark}
+              autoCapitalize="words"
               onChangeText={text => setLandmark(text)}
             />
           </ScrollView>

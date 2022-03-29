@@ -55,7 +55,7 @@ const ResetPassScreen = ({navigation, route}) => {
       <HeaderBody
         title="Reset Password"
         subTitle="Enter a strong password"
-        Icon={<ImgIcon width={304.52} height={268.18} />}
+        Icon={<ImgIcon />}
       />
       <InputComponent
         placeholder="Enter a strong password"

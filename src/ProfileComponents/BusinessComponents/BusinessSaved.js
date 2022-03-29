@@ -2,20 +2,24 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Button, Icon} from 'react-native-elements';
+import {useIslogin} from '../../../Context/LoginContext';
 
 const BusinessSaved = ({route}) => {
   const {UserDetails} = route.params;
+  const {Userdata} = useIslogin();
+  console.log(Userdata.userData);
   return (
     <View style={genericStyles.Container}>
       <View style={styles.radiusView}>
         <Image source={Images.Ellipse} style={styles.ImageStyle} />
       </View>
       <Text style={styles.title}>
-        {UserDetails === 'Business Info' || UserDetails !== 'Service Info'
+        {UserDetails === 'Business Information' ||
+        UserDetails !== 'Service Information'
           ? 'Name of the company / business'
-          : 'Shop / Service name'}
+          : Userdata.userData.shop_name}
       </Text>
-      <Text style={styles.subTitle}>Nikhil kapoor</Text>
+      <Text style={styles.subTitle}>{Userdata.userData.name}</Text>
       <View style={styles.DetailsContanier}>
         <View style={genericStyles.column}>
           <View style={styles.firstView}>
@@ -25,7 +29,7 @@ const BusinessSaved = ({route}) => {
               color="#407BFF"
               size={20}
             />
-            <Text style={styles.text}>987654321</Text>
+            <Text style={styles.text}>{Userdata.userData.mobile_no}</Text>
           </View>
           <View style={genericStyles.row}>
             <Icon
@@ -35,9 +39,10 @@ const BusinessSaved = ({route}) => {
               color="#A484FF"
             />
             <Text style={styles.text}>
-              {UserDetails === 'Business Info' || UserDetails !== 'Service Info'
+              {UserDetails === 'Business Information' ||
+              UserDetails !== 'Service Information'
                 ? 'Wholesaler'
-                : 'General store'}
+                : Userdata.userData.shop_category}
             </Text>
           </View>
         </View>
@@ -48,12 +53,13 @@ const BusinessSaved = ({route}) => {
             size={20}
             color="#25D366"
           />
-          <Text style={styles.text}>987654321</Text>
+          <Text style={styles.text}>{Userdata.userData.whatsapp_no}</Text>
         </View>
       </View>
       <View style={genericStyles.ml(20)}>
         <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-          {UserDetails === 'Business Info' || UserDetails !== 'Service Info'
+          {UserDetails === 'Business Information' ||
+          UserDetails !== 'Service Information'
             ? 'About business'
             : 'About service'}
         </Text>
@@ -63,12 +69,13 @@ const BusinessSaved = ({route}) => {
           porttitor
         </Text>
         <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-          {UserDetails === 'Business Info' || UserDetails !== 'Service Info'
+          {UserDetails === 'Business Information' ||
+          UserDetails !== 'Service Information'
             ? 'Business address'
             : 'Shop address'}
         </Text>
         <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-          1901 Thornridge Cir. Shiloh, Hawaii 81063
+          {Userdata.userData.address}
         </Text>
       </View>
       <View style={styles.buttonView}>
@@ -130,7 +137,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   SubText: {
-    fontSize: 10,
+    fontSize: 13,
     fontFamily: FONTS.InterRegular,
     color: '#A1A1A1',
     marginTop: 10,

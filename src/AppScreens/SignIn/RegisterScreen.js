@@ -71,8 +71,8 @@ const RegisterScreen = ({navigation, route}) => {
           title="Create Account"
           subTitle="Sign Up to continue"
           Skip="Skip to home"
-          Icon={<ImgIcon width={304.52} height={268.18} />}
-          touchableOpacityStyle={genericStyles.mb(0)}
+          Icon={<ImgIcon />}
+          touchableOpacityStyle={genericStyles.mb(30)}
           subTitleStyle={genericStyles.mb(10)}
           onPress={() => navigation.navigate('Feed')}
         />
@@ -145,7 +145,8 @@ const styles = StyleSheet.create({
   signUpBtn: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 25,
   },
   signUpBtn2: {
     fontSize: 16,

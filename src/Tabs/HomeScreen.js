@@ -10,14 +10,15 @@ import axios from 'axios';
 import Spinner from '../Components/Spinner';
 
 const HomeScreen = ({navigation}) => {
-  const images = [Images.Slider, Images.Slider2];
   const [newData, setNewData] = useState([]);
+  const [SliderImage, setSliderImg] = useState([]);
 
   const idx = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/home';
       const response = await axios.post(URL);
       setNewData(response.data.categories);
+      setSliderImg(response.data.banners);
     } catch (error) {
       console.log(error);
     }
@@ -26,8 +27,12 @@ const HomeScreen = ({navigation}) => {
     idx();
     return () => {
       setNewData([]);
+      setSliderImg([]);
     };
   }, []);
+
+  const images = SliderImage.map(data => data.banner_image);
+
   return (
     <View style={genericStyles.Container}>
       <StatusBar backgroundColor={COLORS.primary} />

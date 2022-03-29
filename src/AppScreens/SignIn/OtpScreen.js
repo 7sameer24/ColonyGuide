@@ -50,8 +50,11 @@ const OtpScreen = ({route, navigation}) => {
           ToastAndroid.show('OTP verified successfully', ToastAndroid.SHORT);
         } else {
           if (4 === DATA.app_role_id) {
-            AsyncStorage.setItem('UserLogin', JSON.stringify(response.data));
-            AsyncStorage.setItem('UserToken', JSON.stringify(DATA.token));
+            await AsyncStorage.setItem(
+              'UserLogin',
+              JSON.stringify(response.data),
+            );
+            await AsyncStorage.setItem('UserToken', JSON.stringify(DATA.token));
             navigation.dispatch(
               CommonActions.reset({
                 routes: [{name: 'Feed'}],
@@ -74,7 +77,7 @@ const OtpScreen = ({route, navigation}) => {
     <View style={styles.Container}>
       <ScrollView>
         <View style={styles.ViewContainer}>
-          <ImgIcon width={304.52} height={268.18} />
+          <ImgIcon />
           <Text style={styles.text}>OTP Verification</Text>
           <Text style={styles.subText}>
             Enter the otp sent to the mobile number

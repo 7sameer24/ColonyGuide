@@ -142,7 +142,7 @@ const MyStack = ({navigation}) => {
       headerShown: false,
     },
     {
-      name: 'RoomsFlats',
+      name: 'Rooms/Flats',
       component: MyTopTabs,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
@@ -230,11 +230,11 @@ const MyStack = ({navigation}) => {
 };
 function MyTopTabs() {
   const TopTabsArr = [
-    {component: RoomsFlats, name: 'All'},
-    {component: RoomsFlats, name: 'Hostel'},
-    {component: RoomsFlats, name: '1 BHK'},
-    {component: RoomsFlats, name: '2 BHK'},
-    {component: RoomsFlats, name: '3 BHK'},
+    {component: RoomsFlats, name: 'All', ID: '1'},
+    {component: RoomsFlats, name: 'Hostel', ID: '2'},
+    {component: RoomsFlats, name: '1 BHK', ID: '3'},
+    {component: RoomsFlats, name: '2 BHK', ID: '4'},
+    {component: RoomsFlats, name: '3 BHK', ID: '5'},
   ];
   return (
     <TopTab.Navigator>
@@ -242,7 +242,7 @@ function MyTopTabs() {
         return (
           <TopTab.Screen
             key={data.name}
-            name={data.name}
+            name={data.ID}
             component={data.component}
             options={{
               tabBarActiveTintColor: COLORS.primary,
@@ -252,6 +252,7 @@ function MyTopTabs() {
               tabBarPressColor: '#f2f2f2',
               tabBarItemStyle: {width: 90},
               tabBarScrollEnabled: true,
+              title: data.name,
             }}
           />
         );

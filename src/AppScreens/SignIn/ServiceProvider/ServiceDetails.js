@@ -109,11 +109,13 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             placeholder="Shop Name (Optional)"
             value={shopName}
             onChangeText={text => setShop(text)}
+            autoCapitalize="words"
           />
           <InputComponent
             placeholder="Full name"
             value={fullName}
             onChangeText={text => setFullName(text)}
+            autoCapitalize="words"
           />
           <DropDownComponent
             data={newData}
@@ -129,6 +131,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             value={WhatsappNo}
             onChangeText={num => setWhatsappNo(num)}
             keyboardType="number-pad"
+            autoCapitalize="words"
           />
           <ButtonComponent
             title="Next"

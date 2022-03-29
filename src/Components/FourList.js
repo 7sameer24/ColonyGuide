@@ -19,7 +19,7 @@ const FourList = ({navigation}) => {
     {
       image: <First width={38} height={32} />,
       Id: 1,
-      navigation: 'RoomsFlats',
+      navigation: 'Rooms/Flats',
     },
     {
       image: <Third width={38} height={32} />,
@@ -34,7 +34,7 @@ const FourList = ({navigation}) => {
     {
       image: <Second width={38} height={32} />,
       Id: 4,
-      navigation: 'Business listed',
+      navigation: 'Helpline',
     },
   ];
   const {width, height} = useWindowDimensions();

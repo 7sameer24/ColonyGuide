@@ -3,42 +3,27 @@ import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../constants';
 import CardsListed from '../Components/CardsListed';
 import ButtonComponent from '../Components/ButtonComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
+import {useIslogin} from '../../Context/LoginContext';
 
-const RoomsFlats = ({navigation}) => {
-  const [Userdata, setNewData] = useState(null);
+const RoomsFlats = ({navigation, route}) => {
+  const {Userdata, UserToken} = useIslogin();
   const [newData, setData] = useState([]);
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserLogin');
-      if (value === null) {
-        return alert('22');
-      } else {
-        setNewData(JSON.parse(value));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const idx = async () => {
     try {
       const URL =
-        'https://colonyguide.garimaartgallery.com/api/room-hostel-list';
-      const response = await axios.post(URL);
+        'https://colonyguide.garimaartgallery.com/api/filtered-room-hostel-list';
+      const response = await axios.post(URL, {room_type_id: route.name});
       setData(response.data.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    getData();
     idx();
     return () => {
-      setNewData(null);
       setData([]);
     };
   }, []);

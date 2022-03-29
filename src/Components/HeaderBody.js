@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     marginTop: 15,
     marginLeft: 20,
-    marginBottom: 40,
+    marginBottom: 60,
   },
   TouchableText: {
     color: COLORS.secondary,

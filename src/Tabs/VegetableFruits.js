@@ -42,7 +42,7 @@ const VegetableFruits = ({navigation, route}) => {
       <HeaderBar
         firstIcon="arrow-back-outline"
         title={Name}
-        searchIcon="search"
+        // searchIcon="search"
         bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}

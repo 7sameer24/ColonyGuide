@@ -1,14 +1,14 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import LoginContext, {useIslogin} from './Context/LoginContext';
 import OnboardingScreen from './src/AppScreens/OnboardingScreen';
 import MyStack from './src/StackNavigation/Stacks';
 import Dashboard from './src/StackNavigation/TabNavigation';
 
 const App = () => {
   const [isFirstLaunch, setIsFirstLaunch] = useState(null);
-  // const [isLogin, setIsLogin] = useState(null);
 
   const Stack = createNativeStackNavigator();
 
@@ -21,9 +21,6 @@ const App = () => {
         setIsFirstLaunch(false);
       }
     });
-    // AsyncStorage.getItem('UserLogin').then(value => {
-    //   setIsLogin(value);
-    // });
   }, []);
 
   if (isFirstLaunch === null) {
@@ -51,9 +48,11 @@ const App = () => {
     );
   } else {
     return (
-      <NavigationContainer>
-        <MyStack />
-      </NavigationContainer>
+      <LoginContext>
+        <NavigationContainer>
+          <MyStack />
+        </NavigationContainer>
+      </LoginContext>
     );
   }
 };

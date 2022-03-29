@@ -60,7 +60,7 @@ const PersonalDetails = ({data, navigation}) => {
     <View style={genericStyles.Container}>
       <ScrollView>
         <HeaderBody
-          Icon={<ImgIcon width={304.52} height={268.18} />}
+          Icon={<ImgIcon />}
           touchableOpacityStyle={genericStyles.mb(0)}
           title="Personal Details"
           subTitle="Enter the details below to continue"
@@ -69,21 +69,25 @@ const PersonalDetails = ({data, navigation}) => {
         <InputComponent
           placeholder="Full Name"
           value={FullName}
+          autoCapitalize="words"
           onChangeText={text => setFullName(text)}
         />
         <InputComponent
           placeholder="Hostel Name"
           value={hostelName}
+          autoCapitalize="words"
           onChangeText={text => setHostelName(text)}
         />
         <InputComponent
           placeholder="Hostel Address"
           value={hostelAdd}
+          autoCapitalize="words"
           onChangeText={text => setHostelAdd(text)}
         />
         <InputComponent
           placeholder="Whatsapp number"
           value={WhatsappNo}
+          autoCapitalize="words"
           onChangeText={num => setWhatsappNo(num)}
           keyboardType="number-pad"
         />

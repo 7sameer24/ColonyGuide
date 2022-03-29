@@ -13,7 +13,7 @@ const SearchScreen = () => {
         inputContainerStyle={styles.inputContainerStyle}
       />
       <View style={styles.imageStyle}>
-        <ImgIcon width={304.52} height={268.18} />
+        <ImgIcon />
       </View>
     </View>
   );

@@ -29,7 +29,7 @@ const BusinessListed = ({navigation}) => {
       <HeaderBar
         firstIcon="arrow-back-outline"
         title="Business listed"
-        searchIcon="search"
+        // searchIcon="search"
         bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}

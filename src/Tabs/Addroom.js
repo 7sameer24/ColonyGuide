@@ -156,11 +156,13 @@ const Addroom = () => {
           placeholder="Building / Hostel Name"
           value={building_name}
           onChangeText={text => setBN(text)}
+          autoCapitalize="words"
         />
         <InputComponent
           placeholder="Contact person’s name"
           value={PersonName}
           onChangeText={text => setPersonName(text)}
+          autoCapitalize="words"
         />
         <DropDownComponent
           placeholder="Select category"
@@ -211,20 +213,24 @@ const Addroom = () => {
           placeholder="Building / Flat Number"
           value={buildFL}
           onChangeText={text => setBuildFL(text)}
+          autoCapitalize="words"
         />
         <InputComponent
           placeholder="Address Line 1"
           value={AL1}
+          autoCapitalize="words"
           onChangeText={text => setAL1(text)}
         />
         <InputComponent
           placeholder="Address Line 2"
           value={AL2}
+          autoCapitalize="words"
           onChangeText={text => setAL2(text)}
         />
         <InputComponent
           placeholder="Landmark (optional)"
           value={Landmark}
+          autoCapitalize="words"
           onChangeText={text => setLandmark(text)}
         />
       </ScrollView>

@@ -82,8 +82,11 @@ const AddressScreen = ({route, navigation}) => {
         const response = await res.json();
         setSpinner(false);
         if (response.success === true) {
-          AsyncStorage.setItem('UserLogin', JSON.stringify(response));
-          AsyncStorage.setItem('UserToken', JSON.stringify(UserData.token));
+          await AsyncStorage.setItem('UserLogin', JSON.stringify(response));
+          await AsyncStorage.setItem(
+            'UserToken',
+            JSON.stringify(UserData.token),
+          );
           navigation.dispatch(
             CommonActions.reset({
               routes: [{name: 'Feed'}],
@@ -137,22 +140,26 @@ const AddressScreen = ({route, navigation}) => {
                   placeholder="Full name"
                   value={HOName}
                   onChangeText={text => setHOName(text)}
+                  autoCapitalize="words"
                 />
               ) : null}
               <InputComponent
                 placeholder="Flat / House No."
                 value={house}
                 onChangeText={num => setHouseNo(num)}
+                autoCapitalize="words"
               />
               <InputComponent
                 placeholder="Address Line"
                 value={Address}
                 onChangeText={text => setAddress(text)}
+                autoCapitalize="words"
               />
               <InputComponent
                 placeholder="Landmark (optional)"
                 value={Landmark}
                 onChangeText={text => setLandmark(text)}
+                autoCapitalize="words"
               />
               <DropDownComponent
                 data={newData}

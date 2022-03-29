@@ -18,14 +18,15 @@ import {CommonActions} from '@react-navigation/native';
 import axios from 'axios';
 import LoginLogo from '../../../assets/svg/pana.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useIslogin} from '../../../Context/LoginContext';
 
 const LoginScreen = ({navigation}) => {
   const [check1, setCheck1] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [visible, setVisible] = useState(false);
   const [MN, setMobile] = useState('9529106068');
-  const [password, setPass] = useState('12345678');
-
+  const [password, setPass] = useState('123456789');
+  const {setNewData, setUserToken} = useIslogin();
   const Login = async () => {
     if (MN.length < 10 || MN.length > 10) {
       ToastAndroid.show('Please enter 10 digit number', ToastAndroid.SHORT);
@@ -38,14 +39,11 @@ const LoginScreen = ({navigation}) => {
             mobile_no: MN,
             password: password,
           })
-          .then(response => {
+          .then(async response => {
             setSpinner(false);
             if (response.data.success === true) {
-              AsyncStorage.setItem('UserLogin', JSON.stringify(response.data));
-              AsyncStorage.setItem(
-                'UserToken',
-                JSON.stringify(response.data.token),
-              );
+              setNewData(response.data);
+              setUserToken(response.data.token);
               navigation.dispatch(
                 CommonActions.reset({
                   routes: [{name: 'Feed'}],
@@ -73,7 +71,7 @@ const LoginScreen = ({navigation}) => {
         <HeaderBody
           title="Welcome back!"
           subTitle="Log In to continue"
-          Icon={<LoginLogo width={304.52} height={268.18} />}
+          Icon={<LoginLogo />}
           Skip="Skip to home"
           onPress={() => navigation.navigate('Feed')}
         />
@@ -170,7 +168,8 @@ const styles = StyleSheet.create({
   signUpBtn: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 25,
   },
   signUpBtn2: {
     fontSize: 16,

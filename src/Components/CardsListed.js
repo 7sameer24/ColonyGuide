@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   ImageStyle: {
     width: 64,
     height: 64,
+    borderRadius: 10,
   },
   View: {
     flexDirection: 'column',

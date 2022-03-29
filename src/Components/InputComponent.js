@@ -19,7 +19,9 @@ const InputComponent = ({
   ref,
   iconOnpress,
   secureTextEntry,
+  multiline,
   iconColor,
+  autoCapitalize,
 }) => {
   return (
     <Input
@@ -46,8 +48,8 @@ const InputComponent = ({
       onSubmitEditing={onSubmitEditing}
       ref={ref}
       secureTextEntry={secureTextEntry}
-      autoCapitalize="words"
-      multiline={true}
+      autoCapitalize={autoCapitalize}
+      multiline={multiline}
     />
   );
 };

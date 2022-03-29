@@ -46,7 +46,7 @@ const ForgotScreen = ({navigation}) => {
         title="Forgot Password"
         subTitle="Please enter your mobile number associated 
 with your account"
-        Icon={<ImgIcon width={304.52} height={268.18} />}
+        Icon={<ImgIcon />}
       />
       <InputComponent
         placeholder="Mobile Number"

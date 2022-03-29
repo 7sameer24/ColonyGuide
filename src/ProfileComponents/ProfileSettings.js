@@ -1,29 +1,17 @@
 import {Keyboard, StyleSheet, Text, ToastAndroid, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import InputComponent from '../Components/InputComponent';
 import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Poweredby from '../Components/Poweredby';
 
-const ProfileSettings = () => {
+const ProfileSettings = ({route}) => {
+  const {userID, userToken} = route.params;
   const [spinner, setSpinner] = useState(false);
   const [Password, setPassword] = useState('');
   const [OLPass, setOLPass] = useState('');
-  const [data, setNewData] = useState('');
   const [CPASS, setCPASS] = useState('');
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserLogin');
-      if (value !== null) {
-        setNewData(JSON.parse(value));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const ChangePassword = async () => {
     try {
@@ -33,9 +21,9 @@ const ProfileSettings = () => {
       const response = await axios({
         url: URL,
         method: 'post',
-        headers: {Authorization: `Bearer ${data.token}`},
+        headers: {Authorization: `Bearer ${userToken}`},
         data: {
-          user_id: data.user.id,
+          user_id: userID,
           old_password: OLPass,
           password: Password,
           c_password: CPASS,
@@ -43,7 +31,6 @@ const ProfileSettings = () => {
       });
       setSpinner(false);
       Keyboard.dismiss();
-      // console.log(response.data);
       if (response.data.success === true) {
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
       } else {
@@ -55,9 +42,6 @@ const ProfileSettings = () => {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
   return (
     <View style={genericStyles.Container}>
       <View>

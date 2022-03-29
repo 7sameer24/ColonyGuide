@@ -1,12 +1,5 @@
-import {
-  Image,
-  StyleSheet,
-  Text,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import React from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import {
   DrawerContentScrollView,
@@ -14,7 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import ProfileComponents from './ProfileComponents';
 import {Divider} from 'react-native-elements';
-import {CommonActions, useIsFocused} from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 import Group from '../../assets/ProfileSvg/Group.svg';
 import Settings from '../../assets/ProfileSvg/settings.svg';
 import Feedback from '../../assets/ProfileSvg/feedback.svg';
@@ -23,26 +16,11 @@ import Committe from '../../assets/ProfileSvg/committe.svg';
 import Help from '../../assets/ProfileSvg/help.svg';
 import HouseOwners from '../../assets/ProfileSvg/HouseOwners.svg';
 import Logout from '../../assets/ProfileSvg/logout.svg';
-import RateStar from '../../assets/ProfileSvg/star.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useIslogin} from '../../Context/LoginContext';
 
 const CustomDrawer = props => {
-  const [Userdata, setNewData] = useState(null);
-  const [UserToken, setUserToken] = useState(null);
-  const isFocused = useIsFocused();
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserLogin');
-      const token = await AsyncStorage.getItem('UserToken');
-      if (value !== null) {
-        setNewData(JSON.parse(value));
-        setUserToken(JSON.parse(token));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const {Userdata, UserToken} = useIslogin();
 
   const removeValue = async () => {
     const keys = ['UserLogin', 'UserToken'];
@@ -52,10 +30,6 @@ const CustomDrawer = props => {
       alert(e);
     }
   };
-
-  useEffect(() => {
-    isFocused ? getData() : null;
-  }, [isFocused]);
 
   return (
     <View style={genericStyles.fill}>
@@ -80,11 +54,9 @@ const CustomDrawer = props => {
                         ? styles.Vtitle
                         : styles.title
                     }>
-                    {isFocused
-                      ? Userdata.userData.app_role_id === 4
-                        ? Userdata.userData.mobile_no
-                        : Userdata.userData.name
-                      : 'Loading..'}
+                    {Userdata.userData.app_role_id === 4
+                      ? Userdata.userData.mobile_no
+                      : Userdata.userData.name}
                   </Text>
                   {Userdata.userData.app_role_id === 4 ? null : (
                     <TouchableOpacity
@@ -141,12 +113,6 @@ const CustomDrawer = props => {
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Contact />}
               onPress={() => props.navigation.navigate('Contact Us')}
-            />
-            <ProfileComponents
-              title="Rate Us"
-              ImageContainer={styles.DrawerIcon}
-              IconSvg={<RateStar />}
-              onPress={() => props.navigation.navigate('Rate Us')}
             />
             <ProfileComponents
               title="Feedbacks"

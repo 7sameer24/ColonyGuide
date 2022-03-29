@@ -1,5 +1,5 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import HeaderBar from '../Components/HeaderBar';
 import {Divider} from 'react-native-elements';
@@ -12,14 +12,11 @@ import Feedback from '../../assets/ProfileSvg/feedback.svg';
 import Terms from '../../assets/ProfileSvg/TC.svg';
 import Contact from '../../assets/ProfileSvg/contact.svg';
 import Poweredby from '../Components/Poweredby';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from '../Components/Spinner';
-import {useIsFocused} from '@react-navigation/native';
+import {useIslogin} from '../../Context/LoginContext';
 
 const ProfileScreen = ({navigation}) => {
-  const [Userdata, setNewData] = useState(null);
-  const [UserToken, setUserToken] = useState(null);
-  const isFocused = useIsFocused();
+  const {Userdata, UserToken} = useIslogin();
   // console.log(Userdata.userData.profile_image);
 
   // const arr = [
@@ -31,23 +28,6 @@ const ProfileScreen = ({navigation}) => {
   //   {source:<Terms />,title:"Terms & Condition",onPressText:'Terms & Condition',iconName:"chevron-forward-outline"},
   //   {source:<Contact />,title:"Contact Us",onPressText:'Contact Us',iconName:"chevron-forward-outline"},
   // ]
-
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserLogin');
-      const token = await AsyncStorage.getItem('UserToken');
-      if (value !== null) {
-        setNewData(JSON.parse(value));
-        setUserToken(JSON.parse(token));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    isFocused ? getData() : null;
-  }, [isFocused]);
 
   return (
     <View style={genericStyles.Container}>
@@ -77,15 +57,13 @@ const ProfileScreen = ({navigation}) => {
                       ? styles.Vtitle
                       : styles.title
                   }>
-                  {isFocused
-                    ? Userdata.userData.app_role_id === 4
-                      ? Userdata.userData.mobile_no
-                      : Userdata.userData.name
-                    : 'Loading..'}
+                  {Userdata.userData.app_role_id === 4
+                    ? Userdata.userData.mobile_no
+                    : Userdata.userData.name}
                 </Text>
                 {Userdata.userData.app_role_id === 4 || 1 ? null : (
                   <Text style={styles.subTitle}>
-                    {isFocused ? Userdata.userData.shop_name : 'Loading..'}
+                    {Userdata.userData.shop_name}
                   </Text>
                 )}
               </View>
@@ -130,10 +108,20 @@ const ProfileScreen = ({navigation}) => {
               )}
               {Userdata.userData.app_role_id === 1 ? null : (
                 <ProfileComponents
-                  onPress={() => navigation.navigate('Service Info')}
+                  onPress={() =>
+                    Userdata.userData.app_role_id === 2
+                      ? navigation.navigate('Business Saved', {
+                          UserDetails: 'Service Information',
+                        })
+                      : navigation.navigate('Service Info')
+                  }
                   iconName="chevron-forward-outline"
                   IconSvg={<Service />}
-                  title="Add Service Provider"
+                  title={
+                    Userdata.userData.app_role_id === 2
+                      ? 'Service Information'
+                      : 'Add Service Provider'
+                  }
                 />
               )}
               <Divider style={styles.Divider} color="#FFEBD9" width={1} />
@@ -141,7 +129,12 @@ const ProfileScreen = ({navigation}) => {
           )}
 
           <ProfileComponents
-            onPress={() => navigation.navigate('Settings')}
+            onPress={() =>
+              navigation.navigate('Settings', {
+                userID: Userdata.userData.id,
+                userToken: UserToken,
+              })
+            }
             iconName="chevron-forward-outline"
             IconSvg={<Settings />}
             title="Settings"
@@ -165,7 +158,12 @@ const ProfileScreen = ({navigation}) => {
             title="Terms & Condition"
           />
           <ProfileComponents
-            onPress={() => navigation.navigate('Contact Us')}
+            onPress={() =>
+              navigation.navigate('Contact Us', {
+                userID: Userdata.userData.id,
+                userToken: UserToken,
+              })
+            }
             iconName="chevron-forward-outline"
             IconSvg={<Contact />}
             title="Contact Us"

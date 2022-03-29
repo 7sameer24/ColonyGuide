@@ -17,6 +17,7 @@ import axios from 'axios';
 import Spinner from '../Components/Spinner';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useIslogin} from '../../Context/LoginContext';
 
 const EditProfile = ({route, navigation}) => {
   const {data, token} = route.params;
@@ -30,6 +31,7 @@ const EditProfile = ({route, navigation}) => {
   const [hostel_address, setHostelAdd] = useState(data.hostel_address);
   const [FHN, setFHN] = useState(data.house_no);
   const [imageUp, setImage] = useState('');
+  const {setNewData} = useIslogin();
   // console.log(data.profile_image);
 
   const arr = [
@@ -113,7 +115,7 @@ const EditProfile = ({route, navigation}) => {
       let response = await res.json();
       setSpinner(false);
       if (response.success === true) {
-        AsyncStorage.setItem('UserLogin', JSON.stringify(response));
+        setNewData(response);
         navigation.navigate('Profile');
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {
@@ -181,6 +183,7 @@ const EditProfile = ({route, navigation}) => {
                   inputStyle={genericStyles.ml(16)}
                   value={PersonName}
                   onChangeText={text => setPersonName(text)}
+                  autoCapitalize="words"
                 />
                 <Text style={styles.text}>Hostel Name</Text>
                 <InputComponent
@@ -189,6 +192,7 @@ const EditProfile = ({route, navigation}) => {
                   inputStyle={genericStyles.ml(16)}
                   value={HostelName}
                   onChangeText={text => setHostelName(text)}
+                  autoCapitalize="words"
                 />
                 <Text style={styles.text}>Hostel Address</Text>
                 <InputComponent
@@ -197,6 +201,7 @@ const EditProfile = ({route, navigation}) => {
                   inputStyle={genericStyles.ml(16)}
                   value={hostel_address}
                   onChangeText={text => setHostelAdd(text)}
+                  autoCapitalize="words"
                 />
               </View>
             ) : (
@@ -210,6 +215,7 @@ const EditProfile = ({route, navigation}) => {
                       inputStyle={genericStyles.ml(16)}
                       value={data.value}
                       onChangeText={text => data.onChagneText(text)}
+                      autoCapitalize="words"
                     />
                   </View>
                 ))}

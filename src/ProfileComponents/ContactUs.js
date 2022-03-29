@@ -1,18 +1,17 @@
 import {Keyboard, StyleSheet, Text, ToastAndroid, View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import InputComponent from '../Components/InputComponent';
 import ButtonComponent from '../Components/ButtonComponent';
 import {Icon} from 'react-native-elements';
 import Poweredby from '../Components/Poweredby';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const ContactUs = () => {
+const ContactUs = ({route}) => {
+  const {userID, userToken} = route.params;
   const [spinner, setSpinner] = useState(false);
   const [message, setMessage] = useState('');
   const [mobile, setMobile] = useState('');
-  const [data, setNewData] = useState('');
   const [name, setName] = useState('');
 
   const text =
@@ -25,17 +24,6 @@ const ContactUs = () => {
     {name: 'logo-linkedin'},
   ];
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserLogin');
-      if (value !== null) {
-        setNewData(JSON.parse(value));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const SendContact = async () => {
     try {
       setSpinner(true);
@@ -43,9 +31,9 @@ const ContactUs = () => {
       const response = await axios({
         url: URL,
         method: 'post',
-        headers: {Authorization: `Bearer ${data.token}`},
+        headers: {Authorization: `Bearer ${userToken}`},
         data: {
-          user_id: data.user.id,
+          user_id: userID,
           mobile_no: mobile,
           message: message,
           name: name,
@@ -63,10 +51,6 @@ const ContactUs = () => {
       alert(error);
     }
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <View style={genericStyles.Container}>

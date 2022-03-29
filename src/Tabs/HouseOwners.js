@@ -31,7 +31,7 @@ const HouseOwners = ({navigation}) => {
       <HeaderBar
         firstIcon="arrow-back-outline"
         title="House Owners"
-        searchIcon="search"
+        // searchIcon="search"
         bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
