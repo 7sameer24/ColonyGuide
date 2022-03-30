@@ -14,7 +14,6 @@ const ResetPassScreen = ({navigation, route}) => {
   const [password, setPassword] = useState('');
   const [c_password, setC_password] = useState('');
   const [spinner, setSpinner] = useState(false);
-  // console.log(user_id);
 
   const idx = async () => {
     if (!password || !c_password) {

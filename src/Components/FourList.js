@@ -13,8 +13,11 @@ import First from '../../assets/svg/Building.svg';
 import Second from '../../assets/svg/Vector-1.svg';
 import Third from '../../assets/svg/Vector-2.svg';
 import Four from '../../assets/svg/Vector-3.svg';
+import {useIslogin} from '../../Context/LoginContext';
 
 const FourList = ({navigation}) => {
+  const {Userdata} = useIslogin();
+
   const arr = [
     {
       image: <First width={38} height={32} />,
@@ -45,7 +48,9 @@ const FourList = ({navigation}) => {
         <TouchableOpacity
           key={data.Id}
           activeOpacity={0.9}
-          onPress={() => navigation.navigate(data.navigation)}>
+          onPress={() =>
+            Userdata !== null ? navigation.navigate(data.navigation) : null
+          }>
           <Card containerStyle={styles.containerStyle(width, height)}>
             {data.image}
           </Card>

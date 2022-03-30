@@ -37,6 +37,8 @@ import RoomsFlats from '../Tabs/RoomsFlats';
 import Addroom from '../Tabs/Addroom';
 import EditProfile from '../ProfileComponents/EditProfile';
 import FeedBacks from '../Tabs/FeedBacks';
+import LoginContext from '../../Context/LoginContext';
+import ServiceEdit from '../ProfileComponents/BusinessComponents/ServiceEdit';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -163,69 +165,79 @@ const MyStack = ({navigation}) => {
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
     },
+    {
+      name: 'ServiceEdit',
+      component: ServiceEdit,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      title: '',
+    },
   ];
 
   return (
-    <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
-      {arr.map(data => (
+    <LoginContext>
+      <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
+        {arr.map(data => (
+          <Stack.Screen
+            key={data.name}
+            name={data.name}
+            component={data.component}
+            options={({route}) => ({
+              headerShown: data.headerShown,
+              headerTransparent: data.headerTransparent,
+              headerTitleStyle: data.headerTitleStyle,
+              headerTintColor: data.headerTintColor,
+              headerShadowVisible: data.headerShadowVisible,
+              headerBackVisible: data.headerBackVisible,
+              title: data.title,
+            })}
+          />
+        ))}
         <Stack.Screen
-          key={data.name}
-          name={data.name}
-          component={data.component}
+          name="Business Infoo"
+          component={BusinessInfo}
           options={({route}) => ({
-            headerShown: data.headerShown,
-            headerTransparent: data.headerTransparent,
-            headerTitleStyle: data.headerTitleStyle,
-            headerTintColor: data.headerTintColor,
-            headerShadowVisible: data.headerShadowVisible,
-            headerBackVisible: data.headerBackVisible,
-            title: data.title,
+            headerTitleStyle: styles.headerStyle,
+            headerTintColor: COLORS.textColor,
+            headerShadowVisible: false,
+            headerShown: false,
+            title: 'Business Information',
           })}
         />
-      ))}
-      <Stack.Screen
-        name="Business Infoo"
-        component={BusinessInfo}
-        options={({route}) => ({
-          headerTitleStyle: styles.headerStyle,
-          headerTintColor: COLORS.textColor,
-          headerShadowVisible: false,
-          headerShown: false,
-          title: 'Business Information',
-        })}
-      />
-      <Stack.Screen
-        name="Service Info"
-        component={ServiceInfo}
-        options={({route}) => ({
-          headerTitleStyle: styles.headerStyle,
-          headerTintColor: COLORS.textColor,
-          headerShadowVisible: false,
-          title: 'Add Service Provider',
-        })}
-      />
-      <Stack.Screen
-        name="Business Details"
-        component={BusinessDetails}
-        options={({route}) => ({
-          title: route.params.User,
-          headerTitleStyle: styles.headerStyle,
-          headerTintColor: COLORS.textColor,
-          headerShadowVisible: false,
-        })}
-      />
-      <Stack.Screen
-        name="Business Saved"
-        component={BusinessSaved}
-        options={({route}) => ({
-          title: route.params.UserDetails,
-          headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
-          headerTintColor: COLORS.white,
-          headerStyle: {backgroundColor: COLORS.primary},
-          headerShadowVisible: false,
-        })}
-      />
-    </Stack.Navigator>
+        <Stack.Screen
+          name="Service Info"
+          component={ServiceInfo}
+          options={({route}) => ({
+            headerTitleStyle: styles.headerStyle,
+            headerTintColor: COLORS.textColor,
+            headerShadowVisible: false,
+            title: 'Add Service Provider',
+          })}
+        />
+        <Stack.Screen
+          name="Business Details"
+          component={BusinessDetails}
+          options={({route}) => ({
+            title: route.params.User,
+            headerTitleStyle: styles.headerStyle,
+            headerTintColor: COLORS.textColor,
+            headerShadowVisible: false,
+          })}
+        />
+        <Stack.Screen
+          name="Business Saved"
+          component={BusinessSaved}
+          options={({route}) => ({
+            title: route.params.UserDetails,
+            headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
+            headerTintColor: COLORS.white,
+            headerStyle: {backgroundColor: COLORS.primary},
+            headerShadowVisible: false,
+          })}
+        />
+      </Stack.Navigator>
+    </LoginContext>
   );
 };
 function MyTopTabs() {

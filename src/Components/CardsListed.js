@@ -27,9 +27,27 @@ const CardsListed = ({category, title, subTitle, source, index}) => {
             numberOfLines={1}>
             {title}
           </Text>
-          <Text style={styles.subTitle}>{subTitle}</Text>
+          <Text
+            style={[
+              styles.subTitle,
+              {
+                color:
+                  alternatingTextColor[index % alternatingTextColor.length],
+              },
+            ]}>
+            {subTitle}
+          </Text>
           <View style={styles.View2}>
-            <Text style={styles.subTitle}>{category}</Text>
+            <Text
+              style={[
+                styles.subTitle,
+                {
+                  color:
+                    alternatingTextColor[index % alternatingTextColor.length],
+                },
+              ]}>
+              {category}
+            </Text>
             <View style={styles.View3}>
               <Icon
                 name="phone-outgoing"

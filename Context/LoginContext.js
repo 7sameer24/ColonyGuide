@@ -3,25 +3,25 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Note = createContext();
 const LoginContext = ({children}) => {
-  const [Userdata, setNewData] = useState([]);
-  const [UserToken, setUserToken] = useState([]);
+  const [Userdata, setNewData] = useState(null);
+  const [UserToken, setUserToken] = useState(null);
   // console.log(Userdata);
-  // const getData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('UserLogin');
-  //     const token = await AsyncStorage.getItem('UserToken');
-  //     if (value !== null) {
-  //       setNewData(JSON.parse(value));
-  //       setUserToken(JSON.parse(token));
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  const getData = async () => {
+    try {
+      const value = await AsyncStorage.getItem('UserLogin');
+      const token = await AsyncStorage.getItem('UserToken');
+      if (value !== null) {
+        setNewData(JSON.parse(value));
+        setUserToken(JSON.parse(token));
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
   return (
     <Note.Provider value={{Userdata, UserToken, setNewData, setUserToken}}>

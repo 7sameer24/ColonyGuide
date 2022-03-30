@@ -43,8 +43,11 @@ const PersonalDetails = ({data, navigation}) => {
         });
         setSpinner(false);
         if (response.data.success === true) {
-          AsyncStorage.setItem('UserLogin', JSON.stringify(response.data));
-          AsyncStorage.setItem('UserToken', JSON.stringify(data.token));
+          await AsyncStorage.setItem(
+            'UserLogin',
+            JSON.stringify(response.data),
+          );
+          await AsyncStorage.setItem('UserToken', JSON.stringify(data.token));
           navigation.navigate('Feed');
           ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
         } else {

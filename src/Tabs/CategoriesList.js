@@ -11,11 +11,10 @@ import React from 'react';
 import {COLORS, FONTS} from '../constants';
 import {Card} from 'react-native-elements';
 import First from '../../assets/svg/BuildingColor.svg';
+import {useIslogin} from '../../Context/LoginContext';
 
 const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
-  // console.log(data[0].id);
-
-  let text = 'Repair \n & \n Maintenance';
+  const {Userdata} = useIslogin();
   const {width, height} = useWindowDimensions();
 
   return (
@@ -25,10 +24,12 @@ const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
           key={index}
           activeOpacity={0.9}
           onPress={() =>
-            navigation.navigate('Vegetable Fruits', {
-              ID: data.id,
-              Name: data.name,
-            })
+            Userdata === null
+              ? null
+              : navigation.navigate('Vegetable Fruits', {
+                  ID: data.id,
+                  Name: data.name,
+                })
           }>
           <Card
             containerStyle={[
@@ -38,7 +39,7 @@ const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
             {<First width={38} height={32} />}
           </Card>
           <Text style={styles.text} key={data.Id}>
-            {data.name === 'Repair and Maintenance' ? text : data.name}
+            {data.name}
           </Text>
         </TouchableOpacity>
       ))}

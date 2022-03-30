@@ -1,4 +1,11 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import HeaderBar from '../Components/HeaderBar';
@@ -17,7 +24,7 @@ import {useIslogin} from '../../Context/LoginContext';
 
 const ProfileScreen = ({navigation}) => {
   const {Userdata, UserToken} = useIslogin();
-  // console.log(Userdata.userData.profile_image);
+  // console.log(Userdata);
 
   // const arr = [
   //   {source:<IconImg />,title:"Personal Details",onPressText:'Personal Details',iconName:"chevron-forward-outline"},
@@ -171,7 +178,60 @@ const ProfileScreen = ({navigation}) => {
           <Divider style={styles.Divider} color="#FFEBD9" width={1} />
         </ScrollView>
       ) : (
-        <Spinner />
+        <ScrollView>
+          <View style={styles.ProfileContanier}>
+            <View style={genericStyles.column}>
+              <Image source={Images.Ellipse} style={styles.ImageStyle} />
+              <View style={[genericStyles.column, {alignSelf: 'center'}]}>
+                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                  <Text style={styles.subTitle}>Login</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          <Divider style={genericStyles.ml(22)} color="#FFEBD9" width={1} />
+          <ProfileComponents
+            iconName="chevron-forward-outline"
+            IconSvg={<IconImg />}
+            title="Personal Details"
+          />
+
+          <ProfileComponents
+            iconName="chevron-forward-outline"
+            IconSvg={<Group />}
+            title="Business Information"
+          />
+
+          <ProfileComponents
+            iconName="chevron-forward-outline"
+            IconSvg={<Service />}
+            title={'Add Service Provider'}
+          />
+          <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+
+          <ProfileComponents
+            iconName="chevron-forward-outline"
+            IconSvg={<Settings />}
+            title="Settings"
+          />
+          <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+          <ProfileComponents
+            iconName="chevron-forward-outline"
+            IconSvg={<Feedback />}
+            title="Feedbacks"
+          />
+          <ProfileComponents
+            iconName="chevron-forward-outline"
+            IconSvg={<Terms />}
+            title="Terms & Condition"
+          />
+          <ProfileComponents
+            iconName="chevron-forward-outline"
+            IconSvg={<Contact />}
+            title="Contact Us"
+          />
+          <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+        </ScrollView>
       )}
       <Poweredby />
     </View>

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {CheckBox} from 'react-native-elements';
 import HeaderBody from '../../Components/HeaderBody';
@@ -24,8 +24,8 @@ const LoginScreen = ({navigation}) => {
   const [check1, setCheck1] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [MN, setMobile] = useState('9529106068');
-  const [password, setPass] = useState('123456789');
+  const [MN, setMobile] = useState('9529102536');
+  const [password, setPass] = useState('12345678');
   const {setNewData, setUserToken} = useIslogin();
   const Login = async () => {
     if (MN.length < 10 || MN.length > 10) {
@@ -64,6 +64,53 @@ const LoginScreen = ({navigation}) => {
       }
     }
   };
+
+  const toggleRememberMe = value => {
+    setCheck1(value);
+    if (value === true) {
+      //user wants to be remembered.
+      rememberUser();
+    } else {
+      forgetUser();
+    }
+  };
+
+  const rememberUser = async () => {
+    try {
+      await AsyncStorage.setItem('Remember', JSON.stringify(MN));
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const getRememberedUser = async () => {
+    try {
+      const username = await AsyncStorage.getItem('Remember');
+      if (username !== null) {
+        // We have username!!
+        return username;
+      }
+    } catch (error) {}
+  };
+
+  const forgetUser = async () => {
+    try {
+      await AsyncStorage.removeItem('Remember');
+    } catch (error) {
+      // Error removing
+      alert(error);
+    }
+  };
+
+  useEffect(() => {
+    async () => {
+      const username = await getRememberedUser();
+      setMobile(username || '');
+      setPass(username || '');
+      setCheck1(username ? true : false);
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} />
@@ -100,7 +147,7 @@ const LoginScreen = ({navigation}) => {
           <CheckBox
             title="Remember me"
             checked={check1}
-            onPress={() => setCheck1(!check1)}
+            onPress={() => toggleRememberMe(!check1)}
             checkedColor={COLORS.primary}
             containerStyle={styles.checkBoxContanier}
             textStyle={styles.CheckText}

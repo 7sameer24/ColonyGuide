@@ -20,7 +20,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIslogin} from '../../Context/LoginContext';
 
 const CustomDrawer = props => {
-  const {Userdata, UserToken} = useIslogin();
+  const {Userdata, UserToken, setNewData} = useIslogin();
+  // console.log(Userdata);
 
   const removeValue = async () => {
     const keys = ['UserLogin', 'UserToken'];
@@ -123,16 +124,65 @@ const CustomDrawer = props => {
               title="Log Out"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Logout />}
-              onPress={() =>
-                props.navigation.dispatch(
-                  CommonActions.reset({
-                    routes: [{name: 'Login'}],
-                  }),
-                )
-              }
+              onPress={() => {
+                removeValue(), setNewData(null);
+              }}
             />
           </>
-        ) : null}
+        ) : (
+          <>
+            <View style={styles.ProfileContanier}>
+              <View style={genericStyles.column}>
+                <Image source={Images.Ellipse} style={styles.ImageStyle} />
+                <View style={genericStyles.column}>
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('Login')}>
+                    <Text style={styles.subTitle}>Login</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+            <ProfileComponents
+              title="Business Information"
+              ImageContainer={styles.DrawerIcon}
+              IconSvg={<Group />}
+            />
+            <ProfileComponents
+              title="Committee"
+              ImageContainer={styles.DrawerIcon}
+              IconSvg={<Committe />}
+            />
+
+            <ProfileComponents
+              title="House Owners"
+              ImageContainer={styles.DrawerIcon}
+              IconSvg={<HouseOwners />}
+            />
+
+            <ProfileComponents
+              title="Helpline"
+              ImageContainer={styles.DrawerIcon}
+              IconSvg={<Help />}
+            />
+            <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+            <ProfileComponents
+              title="Settings"
+              ImageContainer={styles.DrawerIcon}
+              IconSvg={<Settings />}
+            />
+            <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+            <ProfileComponents
+              title="Contact Us"
+              ImageContainer={styles.DrawerIcon}
+              IconSvg={<Contact />}
+            />
+            <ProfileComponents
+              title="Feedbacks"
+              ImageContainer={styles.DrawerIcon}
+              IconSvg={<Feedback />}
+            />
+          </>
+        )}
       </DrawerContentScrollView>
     </View>
   );

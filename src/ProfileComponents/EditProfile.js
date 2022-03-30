@@ -32,7 +32,6 @@ const EditProfile = ({route, navigation}) => {
   const [FHN, setFHN] = useState(data.house_no);
   const [imageUp, setImage] = useState('');
   const {setNewData} = useIslogin();
-  // console.log(data.profile_image);
 
   const arr = [
     {

@@ -4,10 +4,10 @@ import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Button, Icon} from 'react-native-elements';
 import {useIslogin} from '../../../Context/LoginContext';
 
-const BusinessSaved = ({route}) => {
+const BusinessSaved = ({route, navigation}) => {
   const {UserDetails} = route.params;
-  const {Userdata} = useIslogin();
-  console.log(Userdata.userData);
+  const {Userdata, UserToken} = useIslogin();
+  console.log(Userdata);
   return (
     <View style={genericStyles.Container}>
       <View style={styles.radiusView}>
@@ -85,6 +85,16 @@ const BusinessSaved = ({route}) => {
           titleStyle={styles.titleStyle}
           type="outline"
           title="Edit"
+          onPress={() =>
+            navigation.navigate('ServiceEdit', {
+              User:
+                Userdata.userData.app_role_id == 2
+                  ? 'Service Info'
+                  : 'Business Info',
+              data: Userdata.userData,
+              token: UserToken,
+            })
+          }
         />
       </View>
     </View>

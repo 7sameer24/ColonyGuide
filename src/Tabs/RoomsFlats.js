@@ -8,7 +8,7 @@ import Spinner from '../Components/Spinner';
 import {useIslogin} from '../../Context/LoginContext';
 
 const RoomsFlats = ({navigation, route}) => {
-  const {Userdata, UserToken} = useIslogin();
+  const {Userdata} = useIslogin();
   const [newData, setData] = useState([]);
 
   const idx = async () => {
