@@ -13,10 +13,10 @@ import First from '../../assets/svg/Building.svg';
 import Second from '../../assets/svg/Vector-1.svg';
 import Third from '../../assets/svg/Vector-2.svg';
 import Four from '../../assets/svg/Vector-3.svg';
-import {useIslogin} from '../../Context/LoginContext';
+import {useApp} from '../../Context/AppContext';
 
 const FourList = ({navigation}) => {
-  const {Userdata} = useIslogin();
+  const {Userdata} = useApp();
 
   const arr = [
     {

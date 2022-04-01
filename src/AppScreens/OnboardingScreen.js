@@ -14,6 +14,7 @@ import Frame from '../../assets/svg/Frame.svg';
 import Frame5 from '../../assets/svg/Frame 5.svg';
 import Frame6 from '../../assets/svg/Frame 6.svg';
 import {CommonActions} from '@react-navigation/native';
+import {navigationStateType, useApp} from '../../Context/AppContext';
 
 const {width, height} = Dimensions.get('window');
 
@@ -52,6 +53,8 @@ const Slide = ({item}) => {
 };
 
 const OnboardingScreen = ({navigation}) => {
+  const {setNavigationState} = useApp();
+
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
   const ref = React.useRef();
   const updateCurrentSlideIndex = e => {
@@ -74,6 +77,10 @@ const OnboardingScreen = ({navigation}) => {
     const offset = lastSlideIndex * width;
     ref?.current.scrollToOffset({offset});
     setCurrentSlideIndex(lastSlideIndex);
+  };
+
+  const signIn = () => {
+    setNavigationState(navigationStateType.AUTH);
   };
 
   const Footer = () => {
@@ -102,13 +109,7 @@ const OnboardingScreen = ({navigation}) => {
             <TouchableOpacity
               activeOpacity={0.8}
               style={styles.signinContainer}
-              onPress={() =>
-                navigation.dispatch(
-                  CommonActions.reset({
-                    routes: [{name: 'Loginn'}],
-                  }),
-                )
-              }>
+              onPress={() => signIn()}>
               <Text style={styles.signIn}>Sign In</Text>
             </TouchableOpacity>
           ) : (
@@ -119,13 +120,7 @@ const OnboardingScreen = ({navigation}) => {
               <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.iconCon}
-                onPress={() =>
-                  navigation.dispatch(
-                    CommonActions.reset({
-                      routes: [{name: 'Loginn'}],
-                    }),
-                  )
-                }>
+                onPress={() => signIn()}>
                 <Text style={styles.signIn}>Sign In</Text>
               </TouchableOpacity>
             </View>

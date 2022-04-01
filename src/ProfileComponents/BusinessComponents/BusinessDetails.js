@@ -17,9 +17,11 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
+import {useApp} from '../../../Context/AppContext';
 
 const BusinessDetails = ({navigation, route}) => {
   const {User} = route.params;
+  const {Userdata, UserToken} = useApp();
   const [CategoryData, setCategoryData] = useState([]);
   const [Category, setCategory] = useState('');
   const [imageUp, setImage] = useState('');
@@ -33,9 +35,9 @@ const BusinessDetails = ({navigation, route}) => {
   const [AL1, setAL1] = useState('');
   const [AL2, setAL2] = useState('');
   const [Landmark, setLandmark] = useState('');
-  const [Userdata, setNewData] = useState('');
-  // console.log(Userdata);
+  const {setIsBusAdd} = useApp();
 
+  // console.log(Userdata.userData);
   const idx = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
@@ -43,16 +45,6 @@ const BusinessDetails = ({navigation, route}) => {
       setCategoryData(response.data.categories);
     } catch (error) {
       console.log(error);
-    }
-  };
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserLogin');
-      if (value !== null) {
-        setNewData(JSON.parse(value));
-      }
-    } catch (e) {
-      console.log(e);
     }
   };
 
@@ -85,8 +77,8 @@ const BusinessDetails = ({navigation, route}) => {
         'https://colonyguide.garimaartgallery.com/api/add-service-detail';
 
       const data = new FormData();
-      data.append('user_id', Userdata.user.id);
-      data.append('app_role_id', Userdata.user.app_role_id);
+      data.append('user_id', Userdata.userData.id);
+      data.append('app_role_id', Userdata.userData.app_role_id);
       data.append('type', User === 'Service Info' ? 1 : 0);
       data.append('service_name', ShopBusName);
       data.append('contact_person', PersonName);
@@ -94,7 +86,7 @@ const BusinessDetails = ({navigation, route}) => {
       data.append('contact_person_whatsapp', WhatsappNo);
       data.append('category_id', Category);
       data.append('about_service', About);
-      data.append('business_address', `${buildFL},${AL1},${AL2},${Landmark}`);
+      data.append('business_address', `${buildFL} ${AL1} ${AL2} ${Landmark}`);
       data.append(
         'logo_image',
         imageUp !== ''
@@ -110,12 +102,15 @@ const BusinessDetails = ({navigation, route}) => {
         body: data,
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${Userdata.token}`,
+          Authorization: `Bearer ${UserToken}`,
         },
       });
       let response = await res.json();
       setSpinner(false);
       if (response.success === true) {
+        Userdata.userData.app_role_id === 3 ? setIsBusAdd(true) : null;
+
+        navigation.navigate('Profile');
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
@@ -128,11 +123,9 @@ const BusinessDetails = ({navigation, route}) => {
 
   useEffect(() => {
     idx();
-    getData();
     return () => {
       setCategoryData([]);
       setCategoryData('');
-      setNewData('');
     };
   }, []);
 
@@ -178,12 +171,14 @@ const BusinessDetails = ({navigation, route}) => {
               placeholder="Contact person’s mobile number"
               value={mobile_no}
               autoCapitalize="words"
+              keyboardType="number-pad"
               onChangeText={text => setMobile(text)}
             />
             <InputComponent
               placeholder="Contact person’s whatsapp number"
               value={WhatsappNo}
               autoCapitalize="words"
+              keyboardType="number-pad"
               onChangeText={text => setWhatsappNo(text)}
             />
 
@@ -246,7 +241,7 @@ const BusinessDetails = ({navigation, route}) => {
             loading={spinner ? true : false}
             onPress={() => SaveDetail()}
           />
-          <Poweredby />
+          <Poweredby container={genericStyles.mb(5)} />
         </>
       ) : (
         <Spinner />
@@ -297,7 +292,7 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
   },
   ButtonContainer: {
-    marginVertical: 20,
-    marginBottom: 5,
+    marginTop: 10,
+    marginBottom: 30,
   },
 });

@@ -11,10 +11,10 @@ import React from 'react';
 import {COLORS, FONTS} from '../constants';
 import {Card} from 'react-native-elements';
 import First from '../../assets/svg/BuildingColor.svg';
-import {useIslogin} from '../../Context/LoginContext';
+import {useApp} from '../../Context/AppContext';
 
 const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
-  const {Userdata} = useIslogin();
+  const {Userdata} = useApp();
   const {width, height} = useWindowDimensions();
 
   return (

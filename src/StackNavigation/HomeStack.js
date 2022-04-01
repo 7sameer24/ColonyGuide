@@ -6,15 +6,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import LoginScreen from '../AppScreens/Login/LoginScreen';
-import SignInScreen from '../AppScreens/SignIn/SignInScreen';
-import RegisterScreen from '../AppScreens/SignIn/RegisterScreen';
-import OtpScreen from '../AppScreens/SignIn/OtpScreen';
-import AllRegistration from '../AppScreens/SignIn/AllRegistration';
-import AddressScreen from '../AppScreens/SignIn/HouseOwners/AddressScreen';
-import Location from '../AppScreens/SignIn/HouseOwners/Location';
-import ForgotScreen from '../AppScreens/Login/ForgotScreen';
-import ResetPassScreen from '../AppScreens/Login/ResetPassScreen';
 import HomeScreen from '../Tabs/HomeScreen';
 import CategoriesScreen from '../Tabs/CategoriesScreen';
 import ProfileScreen from '../Tabs/ProfileScreen';
@@ -37,30 +28,17 @@ import RoomsFlats from '../Tabs/RoomsFlats';
 import Addroom from '../Tabs/Addroom';
 import EditProfile from '../ProfileComponents/EditProfile';
 import FeedBacks from '../Tabs/FeedBacks';
-import LoginContext from '../../Context/LoginContext';
 import ServiceEdit from '../ProfileComponents/BusinessComponents/ServiceEdit';
+import ServiceSaved from '../ProfileComponents/BusinessComponents/ServiceSaved';
+import Notification from '../Tabs/Notification';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-const MyStack = ({navigation}) => {
+const HomeStack = ({navigation}) => {
   const arr = [
-    {name: 'Login', component: LoginScreen, headerShown: false},
-    {name: 'Sign in', component: SignInScreen, headerShown: false},
-    {name: 'Register', component: RegisterScreen, headerShown: false},
-    {name: 'Otp', component: OtpScreen, headerTransparent: true, title: null},
-    {name: 'Registration', component: AllRegistration, headerShown: false},
-    {
-      name: 'Your location',
-      component: Location,
-      headerShown: true,
-      headerShadowVisible: false,
-    },
-    {name: 'Address', component: AddressScreen, headerShown: false},
-    {name: 'ForgotPassword', component: ForgotScreen, headerShown: false},
-    {name: 'ResetPassword', component: ResetPassScreen, headerShown: false},
     {name: 'Feed', component: MyDrawer, headerShown: false},
     {
       name: 'Terms & Condition',
@@ -144,7 +122,7 @@ const MyStack = ({navigation}) => {
       headerShown: false,
     },
     {
-      name: 'Rooms/Flats',
+      name: 'RoomsFlats',
       component: MyTopTabs,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
@@ -171,82 +149,98 @@ const MyStack = ({navigation}) => {
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
-      title: '',
+      title: 'Edit Service',
+    },
+    {
+      name: 'Notification',
+      component: Notification,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
     },
   ];
 
   return (
-    <LoginContext>
-      <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
-        {arr.map(data => (
-          <Stack.Screen
-            key={data.name}
-            name={data.name}
-            component={data.component}
-            options={({route}) => ({
-              headerShown: data.headerShown,
-              headerTransparent: data.headerTransparent,
-              headerTitleStyle: data.headerTitleStyle,
-              headerTintColor: data.headerTintColor,
-              headerShadowVisible: data.headerShadowVisible,
-              headerBackVisible: data.headerBackVisible,
-              title: data.title,
-            })}
-          />
-        ))}
+    <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
+      {arr.map(data => (
         <Stack.Screen
-          name="Business Infoo"
-          component={BusinessInfo}
-          options={({route}) => ({
-            headerTitleStyle: styles.headerStyle,
-            headerTintColor: COLORS.textColor,
-            headerShadowVisible: false,
-            headerShown: false,
-            title: 'Business Information',
+          key={data.name}
+          name={data.name}
+          component={data.component}
+          options={() => ({
+            headerShown: data.headerShown,
+            headerTransparent: data.headerTransparent,
+            headerTitleStyle: data.headerTitleStyle,
+            headerTintColor: data.headerTintColor,
+            headerShadowVisible: data.headerShadowVisible,
+            headerBackVisible: data.headerBackVisible,
+            title: data.title,
           })}
         />
-        <Stack.Screen
-          name="Service Info"
-          component={ServiceInfo}
-          options={({route}) => ({
-            headerTitleStyle: styles.headerStyle,
-            headerTintColor: COLORS.textColor,
-            headerShadowVisible: false,
-            title: 'Add Service Provider',
-          })}
-        />
-        <Stack.Screen
-          name="Business Details"
-          component={BusinessDetails}
-          options={({route}) => ({
-            title: route.params.User,
-            headerTitleStyle: styles.headerStyle,
-            headerTintColor: COLORS.textColor,
-            headerShadowVisible: false,
-          })}
-        />
-        <Stack.Screen
-          name="Business Saved"
-          component={BusinessSaved}
-          options={({route}) => ({
-            title: route.params.UserDetails,
-            headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
-            headerTintColor: COLORS.white,
-            headerStyle: {backgroundColor: COLORS.primary},
-            headerShadowVisible: false,
-          })}
-        />
-      </Stack.Navigator>
-    </LoginContext>
+      ))}
+      <Stack.Screen
+        name="Business Infoo"
+        component={BusinessInfo}
+        options={() => ({
+          headerTitleStyle: styles.headerStyle,
+          headerTintColor: COLORS.textColor,
+          headerShadowVisible: false,
+          headerShown: false,
+          title: 'Business Information',
+        })}
+      />
+      <Stack.Screen
+        name="Service Info"
+        component={ServiceInfo}
+        options={() => ({
+          headerTitleStyle: styles.headerStyle,
+          headerTintColor: COLORS.textColor,
+          headerShadowVisible: false,
+          title: 'Add Service Provider',
+        })}
+      />
+      <Stack.Screen
+        name="Business Details"
+        component={BusinessDetails}
+        options={() => ({
+          title: route.params.User,
+          headerTitleStyle: styles.headerStyle,
+          headerTintColor: COLORS.textColor,
+          headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="Business Saved"
+        component={BusinessSaved}
+        options={() => ({
+          title: route.params.UserDetails,
+          headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
+          headerTintColor: COLORS.white,
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="ServiceSaved"
+        component={ServiceSaved}
+        options={() => ({
+          title: 'Service Information',
+          headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
+          headerTintColor: COLORS.white,
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerShadowVisible: false,
+        })}
+      />
+    </Stack.Navigator>
   );
 };
 function MyTopTabs() {
   const TopTabsArr = [
-    {component: RoomsFlats, name: 'All', ID: '1'},
-    {component: RoomsFlats, name: 'Hostel', ID: '2'},
-    {component: RoomsFlats, name: '1 BHK', ID: '3'},
-    {component: RoomsFlats, name: '2 BHK', ID: '4'},
-    {component: RoomsFlats, name: '3 BHK', ID: '5'},
+    {component: RoomsFlats, name: 'All'},
+    {component: RoomsFlats, name: 'Hostel'},
+    {component: RoomsFlats, name: '1 BHK'},
+    {component: RoomsFlats, name: '2 BHK'},
+    {component: RoomsFlats, name: '3 BHK'},
   ];
   return (
     <TopTab.Navigator>
@@ -254,7 +248,7 @@ function MyTopTabs() {
         return (
           <TopTab.Screen
             key={data.name}
-            name={data.ID}
+            name={data.name}
             component={data.component}
             options={{
               tabBarActiveTintColor: COLORS.primary,
@@ -264,7 +258,6 @@ function MyTopTabs() {
               tabBarPressColor: '#f2f2f2',
               tabBarItemStyle: {width: 90},
               tabBarScrollEnabled: true,
-              title: data.name,
             }}
           />
         );
@@ -348,7 +341,7 @@ function MyDrawer() {
   );
 }
 
-export default MyStack;
+export default HomeStack;
 
 const styles = StyleSheet.create({
   iconContainer: focused => ({

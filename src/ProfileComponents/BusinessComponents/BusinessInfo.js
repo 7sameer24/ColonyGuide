@@ -30,7 +30,7 @@ const BusinessInfo = ({navigation}) => {
           navigation.navigate('Business Details', {User: 'Business Info'})
         }
       />
-      <Poweredby textStyle={genericStyles.mt(10)} />
+      <Poweredby container={genericStyles.mb(20)} />
     </View>
   );
 };

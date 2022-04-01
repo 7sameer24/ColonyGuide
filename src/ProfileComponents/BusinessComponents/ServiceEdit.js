@@ -17,7 +17,7 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
-import {useIslogin} from '../../../Context/LoginContext';
+import {useApp} from '../../../Context/AppContext';
 
 const ServiceEdit = ({navigation, route}) => {
   const {User, data, token} = route.params;
@@ -28,12 +28,12 @@ const ServiceEdit = ({navigation, route}) => {
   const [ShopBusName, setShopBusName] = useState(data.shop_name);
   const [PersonName, setPersonName] = useState(data.name);
   const [WhatsappNo, setWhatsappNo] = useState(data.whatsapp_no);
-  const [About, setAbout] = useState('');
-  const [buildFL, setBuildFL] = useState(data.house_no);
-  const [AL1, setAL1] = useState(data.address);
-  const [AL2, setAL2] = useState(data.address);
-  const [Landmark, setLandmark] = useState(data.landmark);
-  const {setNewData} = useIslogin();
+  const [About, setAbout] = useState(data.about);
+  const [buildFL, setBuildFL] = useState('');
+  const [AL1, setAL1] = useState('');
+  const [AL2, setAL2] = useState('');
+  const [Landmark, setLandmark] = useState('');
+  const {setNewData} = useApp();
 
   const idx = async () => {
     try {
@@ -80,7 +80,7 @@ const ServiceEdit = ({navigation, route}) => {
       SaveData.append('whatsapp_no', WhatsappNo);
       SaveData.append('category_id', Category);
       SaveData.append('about', About);
-      SaveData.append('address', `${buildFL},${AL1},${AL2},${Landmark}`);
+      SaveData.append('address', `${buildFL} ${AL1} ${AL2} ${Landmark}`);
       SaveData.append(
         'logo_image',
         imageUp !== ''
@@ -91,6 +91,7 @@ const ServiceEdit = ({navigation, route}) => {
             }
           : '',
       );
+
       const res = await fetch(URL, {
         method: 'post',
         body: SaveData,
@@ -103,6 +104,58 @@ const ServiceEdit = ({navigation, route}) => {
       setSpinner(false);
       if (response.success === true) {
         setNewData(response);
+
+        navigation.navigate('Profile');
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      setSpinner(false);
+      alert(error);
+    }
+  };
+
+  const businessUpdate = async () => {
+    try {
+      setSpinner(true);
+      const URL =
+        'https://colonyguide.garimaartgallery.com/api/update-service-detail';
+
+      const SaveData = new FormData();
+      SaveData.append('user_id', data.user_id);
+      SaveData.append('service_name', ShopBusName);
+      SaveData.append('contact_person', PersonName);
+      SaveData.append('contact_person_mobile', 9909292999);
+      SaveData.append('contact_person_whatsapp', WhatsappNo);
+      SaveData.append('category_id', Category);
+      SaveData.append('about_service', About);
+      SaveData.append(
+        'business_address',
+        `${buildFL} ${AL1} ${AL2} ${Landmark}`,
+      );
+      SaveData.append(
+        'logo_image',
+        imageUp
+          ? {
+              uri: imageUp[0].uri,
+              type: imageUp[0].type,
+              name: imageUp[0].fileName,
+            }
+          : '',
+      );
+
+      const res = await fetch(URL, {
+        method: 'post',
+        body: SaveData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let response = await res.json();
+      setSpinner(false);
+      if (response.success === true) {
         navigation.navigate('Profile');
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {
@@ -136,10 +189,10 @@ const ServiceEdit = ({navigation, route}) => {
                   source={
                     data.logo_image ===
                     'https://colonyguide.garimaartgallery.com/storage'
-                      ? imageUp !== ''
+                      ? imageUp
                         ? imageUp
-                        : Images.BusinessProfile
-                      : {uri: data.log0_image}
+                        : Images.Ellipse
+                      : {uri: data.logo_image}
                   }
                   style={styles.imageStyle(imageUp)}
                 />
@@ -231,7 +284,9 @@ const ServiceEdit = ({navigation, route}) => {
             title="Save"
             ButtonContainer={styles.ButtonContainer}
             loading={spinner ? true : false}
-            onPress={() => SaveDetail()}
+            onPress={() =>
+              data.app_role_id === 3 ? businessUpdate() : SaveDetail()
+            }
           />
           <Poweredby container={genericStyles.mb(5)} />
         </>
@@ -246,20 +301,19 @@ export default ServiceEdit;
 
 const styles = StyleSheet.create({
   imageConatiner: imageUp => ({
-    backgroundColor: imageUp ? COLORS.white : COLORS.secondary,
-    padding: imageUp ? 0 : 15,
+    backgroundColor: imageUp ? COLORS.secondary : COLORS.white,
     borderRadius: 50,
     alignSelf: 'center',
   }),
   imageStyle: imageUp => ({
-    width: imageUp ? 70 : 40,
-    height: imageUp ? 70 : 40,
-    borderRadius: imageUp ? 50 : 0,
+    width: imageUp ? 70 : 70,
+    height: imageUp ? 70 : 70,
+    borderRadius: imageUp ? 50 : 50,
   }),
   AddLogoText: {
     fontSize: 12,
     color: COLORS.third,
-    marginBottom: 10,
+    marginVertical: 5,
     fontFamily: FONTS.InterMedium,
   },
   BusinessDetails: {

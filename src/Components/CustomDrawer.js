@@ -17,21 +17,28 @@ import Help from '../../assets/ProfileSvg/help.svg';
 import HouseOwners from '../../assets/ProfileSvg/HouseOwners.svg';
 import Logout from '../../assets/ProfileSvg/logout.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useIslogin} from '../../Context/LoginContext';
+import {navigationStateType, useApp} from '../../Context/AppContext';
 
 const CustomDrawer = props => {
-  const {Userdata, UserToken, setNewData} = useIslogin();
-  // console.log(Userdata);
+  const {Userdata, UserToken, setNewData, setUserToken, setNavigationState} =
+    useApp();
 
   const removeValue = async () => {
-    const keys = ['UserLogin', 'UserToken'];
+    const keys = ['UserLogin', 'UserToken', 'BuisnessSaved'];
     try {
       await AsyncStorage.multiRemove(keys);
     } catch (e) {
       alert(e);
     }
   };
-
+  const backToLogin = () => {
+    setNavigationState(navigationStateType.AUTH);
+  };
+  const clearLogin = () => {
+    removeValue(), setNewData(null);
+    setUserToken(null);
+    setNavigationState(navigationStateType.AUTH);
+  };
   return (
     <View style={genericStyles.fill}>
       <DrawerContentScrollView>
@@ -124,9 +131,7 @@ const CustomDrawer = props => {
               title="Log Out"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Logout />}
-              onPress={() => {
-                removeValue(), setNewData(null);
-              }}
+              onPress={() => clearLogin()}
             />
           </>
         ) : (
@@ -135,8 +140,7 @@ const CustomDrawer = props => {
               <View style={genericStyles.column}>
                 <Image source={Images.Ellipse} style={styles.ImageStyle} />
                 <View style={genericStyles.column}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('Login')}>
+                  <TouchableOpacity onPress={() => backToLogin()}>
                     <Text style={styles.subTitle}>Login</Text>
                   </TouchableOpacity>
                 </View>

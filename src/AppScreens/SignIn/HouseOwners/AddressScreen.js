@@ -11,6 +11,7 @@ import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {CommonActions} from '@react-navigation/native';
+import {navigationStateType, useApp} from '../../../../Context/AppContext';
 
 const AddressScreen = ({route, navigation}) => {
   const {
@@ -29,8 +30,9 @@ const AddressScreen = ({route, navigation}) => {
   const [Address, setAddress] = useState('');
   const [Landmark, setLandmark] = useState('');
   const [spinner, setSpinner] = useState(false);
-  const [newData, setNewData] = useState([]);
+  const [newData, setData] = useState([]);
   const [LocalityValue, setLocality] = useState('');
+  const {setNewData, setUserToken, setNavigationState} = useApp();
 
   const handleOnSubmit = async () => {
     if (!house || !Address) {
@@ -82,16 +84,9 @@ const AddressScreen = ({route, navigation}) => {
         const response = await res.json();
         setSpinner(false);
         if (response.success === true) {
-          await AsyncStorage.setItem('UserLogin', JSON.stringify(response));
-          await AsyncStorage.setItem(
-            'UserToken',
-            JSON.stringify(UserData.token),
-          );
-          navigation.dispatch(
-            CommonActions.reset({
-              routes: [{name: 'Feed'}],
-            }),
-          );
+          setNewData(response);
+          setUserToken(UserData.token);
+          setNavigationState(navigationStateType.HOME);
           ToastAndroid.show(
             UserData.app_role_id === 3
               ? `Welcome ${HOName}`
@@ -108,20 +103,22 @@ const AddressScreen = ({route, navigation}) => {
     }
   };
 
-  useEffect(() => {
-    idx();
-  }, []);
-
   const idx = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
       const response = await axios.post(URL);
-      setNewData(response.data.localities);
+      setData(response.data.localities);
     } catch (error) {
       console.log(error);
     }
   };
 
+  useEffect(() => {
+    idx();
+    return () => {
+      setData([]);
+    };
+  }, []);
   return (
     <View style={genericStyles.Container}>
       {newData.length > 0 ? (

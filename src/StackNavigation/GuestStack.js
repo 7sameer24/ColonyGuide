@@ -6,15 +6,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
-import LoginScreen from '../AppScreens/Login/LoginScreen';
-import SignInScreen from '../AppScreens/SignIn/SignInScreen';
-import RegisterScreen from '../AppScreens/SignIn/RegisterScreen';
-import OtpScreen from '../AppScreens/SignIn/OtpScreen';
-import AllRegistration from '../AppScreens/SignIn/AllRegistration';
-import AddressScreen from '../AppScreens/SignIn/HouseOwners/AddressScreen';
-import Location from '../AppScreens/SignIn/HouseOwners/Location';
-import ForgotScreen from '../AppScreens/Login/ForgotScreen';
-import ResetPassScreen from '../AppScreens/Login/ResetPassScreen';
 import HomeScreen from '../Tabs/HomeScreen';
 import CategoriesScreen from '../Tabs/CategoriesScreen';
 import ProfileScreen from '../Tabs/ProfileScreen';
@@ -37,13 +28,15 @@ import RoomsFlats from '../Tabs/RoomsFlats';
 import Addroom from '../Tabs/Addroom';
 import EditProfile from '../ProfileComponents/EditProfile';
 import FeedBacks from '../Tabs/FeedBacks';
+import ServiceEdit from '../ProfileComponents/BusinessComponents/ServiceEdit';
+import ServiceSaved from '../ProfileComponents/BusinessComponents/ServiceSaved';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-const Dashboard = ({navigation}) => {
+const GuestStack = ({navigation}) => {
   const arr = [
     {name: 'Feed', component: MyDrawer, headerShown: false},
     {
@@ -149,6 +142,14 @@ const Dashboard = ({navigation}) => {
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
     },
+    {
+      name: 'ServiceEdit',
+      component: ServiceEdit,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      title: 'Edit Service',
+    },
   ];
 
   return (
@@ -205,6 +206,17 @@ const Dashboard = ({navigation}) => {
         component={BusinessSaved}
         options={({route}) => ({
           title: route.params.UserDetails,
+          headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
+          headerTintColor: COLORS.white,
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="ServiceSaved"
+        component={ServiceSaved}
+        options={({route}) => ({
+          title: 'Service Information',
           headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
           headerTintColor: COLORS.white,
           headerStyle: {backgroundColor: COLORS.primary},
@@ -321,7 +333,7 @@ function MyDrawer() {
   );
 }
 
-export default Dashboard;
+export default GuestStack;
 
 const styles = StyleSheet.create({
   iconContainer: focused => ({

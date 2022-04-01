@@ -8,6 +8,7 @@ import ImgIcon from '../../../../assets/svg/Frame 12.svg';
 import axios from 'axios';
 import Poweredby from '../../../Components/Poweredby';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {navigationStateType, useApp} from '../../../../Context/AppContext';
 
 const PersonalDetails = ({data, navigation}) => {
   const [FullName, setFullName] = useState('');
@@ -15,6 +16,7 @@ const PersonalDetails = ({data, navigation}) => {
   const [hostelAdd, setHostelAdd] = useState('');
   const [WhatsappNo, setWhatsappNo] = useState();
   const [spinner, setSpinner] = useState(false);
+  const {setNewData, setUserToken, setNavigationState} = useApp();
 
   const handleOnSubmit = async () => {
     if (!FullName || !hostelName || !hostelAdd) {
@@ -43,12 +45,9 @@ const PersonalDetails = ({data, navigation}) => {
         });
         setSpinner(false);
         if (response.data.success === true) {
-          await AsyncStorage.setItem(
-            'UserLogin',
-            JSON.stringify(response.data),
-          );
-          await AsyncStorage.setItem('UserToken', JSON.stringify(data.token));
-          navigation.navigate('Feed');
+          setNewData(response.data);
+          setUserToken(data.token);
+          setNavigationState(navigationStateType.HOME);
           ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
         } else {
           alert(response.data);

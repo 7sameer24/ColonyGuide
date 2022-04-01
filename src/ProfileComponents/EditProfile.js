@@ -17,7 +17,7 @@ import axios from 'axios';
 import Spinner from '../Components/Spinner';
 import {launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useIslogin} from '../../Context/LoginContext';
+import {useApp} from '../../Context/AppContext';
 
 const EditProfile = ({route, navigation}) => {
   const {data, token} = route.params;
@@ -29,10 +29,10 @@ const EditProfile = ({route, navigation}) => {
   const [Address, setAddress] = useState(data.address);
   const [HostelName, setHostelName] = useState(data.hostel_name);
   const [hostel_address, setHostelAdd] = useState(data.hostel_address);
-  const [FHN, setFHN] = useState(data.house_no);
+  // const [FHN, setFHN] = useState(data.house_no);
   const [imageUp, setImage] = useState('');
-  const {setNewData} = useIslogin();
-
+  const {setNewData} = useApp();
+  // console.log(data.house_no);
   const arr = [
     {
       placeHolder: 'Name',
@@ -40,12 +40,12 @@ const EditProfile = ({route, navigation}) => {
       value: PersonName,
       onChagneText: setPersonName,
     },
-    {
-      title: 'Flat / House number',
-      placeHolder: 'F/H number',
-      value: FHN,
-      onChagneText: setFHN,
-    },
+    // {
+    //   title: 'Flat / House number',
+    //   placeHolder: 'F/H number',
+    //   value: FHN,
+    //   onChagneText: setFHN,
+    // },
     {
       title: 'Address line',
       placeHolder: 'Address',
@@ -83,7 +83,6 @@ const EditProfile = ({route, navigation}) => {
       const SaveData = new FormData();
       SaveData.append('user_id', data.id);
       SaveData.append('full_name', PersonName);
-      SaveData.append('house_no', FHN);
       SaveData.append('address', Address);
       SaveData.append('landmark', Landmark);
       SaveData.append('locality_id', LocalityValue);
@@ -94,7 +93,7 @@ const EditProfile = ({route, navigation}) => {
       SaveData.append('hostel_address', hostel_address);
       SaveData.append(
         'profile_image',
-        imageUp !== ''
+        imageUp
           ? {
               uri: imageUp[0].uri,
               type: imageUp[0].type,
@@ -157,9 +156,9 @@ const EditProfile = ({route, navigation}) => {
               source={
                 data.profile_image ===
                 'https://colonyguide.garimaartgallery.com/storage'
-                  ? imageUp !== ''
-                    ? imageUp
-                    : Images.Ellipse
+                  ? Images.Ellipse
+                  : imageUp
+                  ? imageUp
                   : {uri: data.profile_image}
               }
               style={styles.ImageStyle}

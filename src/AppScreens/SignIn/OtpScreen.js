@@ -16,6 +16,7 @@ import {CommonActions} from '@react-navigation/native';
 import ImgIcon from '../../../assets/svg/Frame 10.svg';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {navigationStateType, useApp} from '../../../Context/AppContext';
 
 const OtpScreen = ({route, navigation}) => {
   const {DATA} = route.params;
@@ -27,6 +28,7 @@ const OtpScreen = ({route, navigation}) => {
   const secondInput = useRef(null);
   const thirdInput = useRef(null);
   const LastInput = useRef(null);
+  const {setNewData, setUserToken, setNavigationState} = useApp();
 
   const checkOtp = async () => {
     let idx = `${first}${second}${third}${last}`;
@@ -50,16 +52,9 @@ const OtpScreen = ({route, navigation}) => {
           ToastAndroid.show('OTP verified successfully', ToastAndroid.SHORT);
         } else {
           if (4 === DATA.app_role_id) {
-            await AsyncStorage.setItem(
-              'UserLogin',
-              JSON.stringify(response.data),
-            );
-            await AsyncStorage.setItem('UserToken', JSON.stringify(DATA.token));
-            navigation.dispatch(
-              CommonActions.reset({
-                routes: [{name: 'Feed'}],
-              }),
-            );
+            setNewData(response.data);
+            setUserToken(DATA.token);
+            setNavigationState(navigationStateType.HOME);
           } else {
             navigation.navigate('Registration', {UserData: DATA});
           }

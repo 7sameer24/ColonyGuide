@@ -20,11 +20,10 @@ import Terms from '../../assets/ProfileSvg/TC.svg';
 import Contact from '../../assets/ProfileSvg/contact.svg';
 import Poweredby from '../Components/Poweredby';
 import Spinner from '../Components/Spinner';
-import {useIslogin} from '../../Context/LoginContext';
+import {navigationStateType, useApp} from '../../Context/AppContext';
 
 const ProfileScreen = ({navigation}) => {
-  const {Userdata, UserToken} = useIslogin();
-  // console.log(Userdata);
+  const {Userdata, UserToken, BusAdd, setNavigationState} = useApp();
 
   // const arr = [
   //   {source:<IconImg />,title:"Personal Details",onPressText:'Personal Details',iconName:"chevron-forward-outline"},
@@ -36,6 +35,9 @@ const ProfileScreen = ({navigation}) => {
   //   {source:<Contact />,title:"Contact Us",onPressText:'Contact Us',iconName:"chevron-forward-outline"},
   // ]
 
+  const backToLogin = () => {
+    setNavigationState(navigationStateType.AUTH);
+  };
   return (
     <View style={genericStyles.Container}>
       <HeaderBar
@@ -107,7 +109,15 @@ const ProfileScreen = ({navigation}) => {
               {Userdata.userData.app_role_id == 2 ||
               Userdata.userData.app_role_id == 1 ? null : (
                 <ProfileComponents
-                  onPress={() => navigation.navigate('Business Infoo')}
+                  onPress={() =>
+                    BusAdd !== null
+                      ? navigation.navigate('Business Infoo')
+                      : navigation.navigate('Business Saved', {
+                          userID: Userdata.userData.id,
+                          userToken: UserToken,
+                          Role: Userdata.userData.app_role_id,
+                        })
+                  }
                   iconName="chevron-forward-outline"
                   IconSvg={<Group />}
                   title="Business Information"
@@ -117,10 +127,15 @@ const ProfileScreen = ({navigation}) => {
                 <ProfileComponents
                   onPress={() =>
                     Userdata.userData.app_role_id === 2
-                      ? navigation.navigate('Business Saved', {
-                          UserDetails: 'Service Information',
+                      ? navigation.navigate('ServiceSaved', {
+                          userID: Userdata.userData.id,
+                          userToken: UserToken,
                         })
-                      : navigation.navigate('Service Info')
+                      : navigation.navigate('Service Info', {
+                          userID: Userdata.userData.id,
+                          Role: Userdata.userData.app_role_id,
+                          token: UserToken,
+                        })
                   }
                   iconName="chevron-forward-outline"
                   IconSvg={<Service />}
@@ -183,7 +198,7 @@ const ProfileScreen = ({navigation}) => {
             <View style={genericStyles.column}>
               <Image source={Images.Ellipse} style={styles.ImageStyle} />
               <View style={[genericStyles.column, {alignSelf: 'center'}]}>
-                <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <TouchableOpacity onPress={() => backToLogin()}>
                   <Text style={styles.subTitle}>Login</Text>
                 </TouchableOpacity>
               </View>

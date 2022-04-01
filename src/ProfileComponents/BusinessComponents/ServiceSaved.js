@@ -2,25 +2,26 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Button, Icon} from 'react-native-elements';
+import {useApp} from '../../../Context/AppContext';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 
-const BusinessSaved = ({route, navigation}) => {
-  const {userID, userToken, Role} = route.params;
+const ServiceSaved = ({route, navigation}) => {
+  const {userID, userToken} = route.params;
   const [Userdata, setUserData] = useState('');
-
+  // console.log(Userdata);
   const idx = async () => {
     try {
       const URL =
-        'https://colonyguide.garimaartgallery.com/api/business-details';
+        'https://colonyguide.garimaartgallery.com/api/user-profile-data';
       const response = await axios(URL, {
         method: 'post',
-        data: {user_id: userID, app_role_id: Role},
+        data: {user_id: userID},
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       });
-      setUserData(response.data.data);
+      setUserData(response.data.profileData);
     } catch (error) {
       alert(error);
     }
@@ -38,16 +39,16 @@ const BusinessSaved = ({route, navigation}) => {
           <View style={styles.radiusView}>
             <Image
               source={
-                Userdata.logo_image ===
+                Userdata.profile_image ===
                 'https://colonyguide.garimaartgallery.com/storage'
                   ? Images.Ellipse
                   : {uri: Userdata.logo_image}
               }
-              fadeDuration={0}
               style={styles.ImageStyle}
+              fadeDuration={0}
             />
           </View>
-          <Text style={styles.title}>{Userdata.contact_person}</Text>
+          <Text style={styles.title}>{Userdata.shop_name}</Text>
           <Text style={styles.subTitle}>{Userdata.name}</Text>
           <View style={styles.DetailsContanier}>
             <View style={genericStyles.column}>
@@ -58,9 +59,7 @@ const BusinessSaved = ({route, navigation}) => {
                   color="#407BFF"
                   size={20}
                 />
-                <Text style={styles.text}>
-                  {Userdata.contact_person_mobile}
-                </Text>
+                <Text style={styles.text}>{Userdata.mobile_no}</Text>
               </View>
               <View style={genericStyles.row}>
                 <Icon
@@ -69,7 +68,7 @@ const BusinessSaved = ({route, navigation}) => {
                   size={20}
                   color="#A484FF"
                 />
-                <Text style={styles.text}>{Userdata.category_id}</Text>
+                <Text style={styles.text}>{Userdata.shop_category}</Text>
               </View>
             </View>
             <View style={genericStyles.row}>
@@ -79,18 +78,16 @@ const BusinessSaved = ({route, navigation}) => {
                 size={20}
                 color="#25D366"
               />
-              <Text style={styles.text}>
-                {Userdata.contact_person_whatsapp}
-              </Text>
+              <Text style={styles.text}>{Userdata.whatsapp_no}</Text>
             </View>
           </View>
           <View style={genericStyles.ml(20)}>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              About business
+              About service
             </Text>
             <Text style={styles.SubText}>{Userdata.about}</Text>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              Business address
+              Shop address
             </Text>
             <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
               {Userdata.address}
@@ -123,7 +120,7 @@ const BusinessSaved = ({route, navigation}) => {
   );
 };
 
-export default BusinessSaved;
+export default ServiceSaved;
 
 const styles = StyleSheet.create({
   radiusView: {

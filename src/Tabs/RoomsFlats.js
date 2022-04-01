@@ -5,10 +5,10 @@ import CardsListed from '../Components/CardsListed';
 import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
-import {useIslogin} from '../../Context/LoginContext';
+import {useApp} from '../../Context/AppContext';
 
 const RoomsFlats = ({navigation, route}) => {
-  const {Userdata} = useIslogin();
+  const {Userdata} = useApp();
   const [newData, setData] = useState([]);
 
   const idx = async () => {
@@ -16,7 +16,11 @@ const RoomsFlats = ({navigation, route}) => {
       const URL =
         'https://colonyguide.garimaartgallery.com/api/filtered-room-hostel-list';
       const response = await axios.post(URL, {room_type_id: route.name});
-      setData(response.data.data);
+      if (response.data.success === true) {
+        setData(response.data.data);
+      } else {
+        alert(response.data.message);
+      }
     } catch (error) {
       console.log(error);
     }

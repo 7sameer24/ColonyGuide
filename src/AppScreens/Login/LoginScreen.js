@@ -18,7 +18,7 @@ import {CommonActions} from '@react-navigation/native';
 import axios from 'axios';
 import LoginLogo from '../../../assets/svg/pana.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useIslogin} from '../../../Context/LoginContext';
+import {navigationStateType, useApp} from '../../../Context/AppContext';
 
 const LoginScreen = ({navigation}) => {
   const [check1, setCheck1] = useState(false);
@@ -26,7 +26,8 @@ const LoginScreen = ({navigation}) => {
   const [visible, setVisible] = useState(false);
   const [MN, setMobile] = useState('9529102536');
   const [password, setPass] = useState('12345678');
-  const {setNewData, setUserToken} = useIslogin();
+  const {setNewData, setUserToken, setNavigationState} = useApp();
+
   const Login = async () => {
     if (MN.length < 10 || MN.length > 10) {
       ToastAndroid.show('Please enter 10 digit number', ToastAndroid.SHORT);
@@ -44,11 +45,6 @@ const LoginScreen = ({navigation}) => {
             if (response.data.success === true) {
               setNewData(response.data);
               setUserToken(response.data.token);
-              navigation.dispatch(
-                CommonActions.reset({
-                  routes: [{name: 'Feed'}],
-                }),
-              );
               ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
             } else {
               if (response.data.otp_status === false) {
@@ -111,6 +107,10 @@ const LoginScreen = ({navigation}) => {
     };
   }, []);
 
+  const skipToHome = () => {
+    setNavigationState(navigationStateType.GUEST);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} />
@@ -120,7 +120,7 @@ const LoginScreen = ({navigation}) => {
           subTitle="Log In to continue"
           Icon={<LoginLogo />}
           Skip="Skip to home"
-          onPress={() => navigation.navigate('Feed')}
+          onPress={() => skipToHome()}
         />
         <View style={genericStyles.mb(10)}>
           <InputComponent

@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import InputComponent from '../Components/InputComponent';
 import {CheckBox} from 'react-native-elements';
@@ -15,15 +15,14 @@ import ButtonComponent from '../Components/ButtonComponent';
 import Poweredby from '../Components/Poweredby';
 import {launchImageLibrary} from 'react-native-image-picker';
 import DropDownComponent from '../Components/DropDownComponent';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useApp} from '../../Context/AppContext';
 
-const Addroom = () => {
+const Addroom = ({navigation}) => {
   const [spinner, setSpinner] = useState(false);
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(false);
   const [check3, setCheck3] = useState(false);
   const [check4, setCheck4] = useState(false);
-  const [Userdata, setNewData] = useState('');
   const [Category, setCategory] = useState('');
   const [roomType, setRoomType] = useState('');
   const [imageUp, setImage] = useState('');
@@ -33,15 +32,17 @@ const Addroom = () => {
   const [AL1, setAL1] = useState('');
   const [AL2, setAL2] = useState('');
   const [Landmark, setLandmark] = useState('');
+  const {Userdata, UserToken} = useApp();
 
   const CategoryData = [
     {label: 'Hostel', value: '0'},
     {label: 'Rooms/Flates', value: '1'},
   ];
   const RoomType = [
-    {label: '1 BHk', value: '0'},
-    {label: '2 BHK', value: '1'},
-    {label: '3 BHk', value: '2'},
+    {label: '1 BHk', value: '1'},
+    {label: '2 BHK', value: '2'},
+    {label: '3 BHk', value: '3'},
+    {label: '4 BHk', value: '4'},
   ];
 
   const checkBoxArr = [
@@ -72,17 +73,6 @@ const Addroom = () => {
     });
   };
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('UserLogin');
-      if (value !== null) {
-        setNewData(JSON.parse(value));
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   const SaveDetail = async () => {
     try {
       setSpinner(true);
@@ -90,8 +80,8 @@ const Addroom = () => {
         'https://colonyguide.garimaartgallery.com/api/add-room-hostel';
 
       const data = new FormData();
-      data.append('user_id', Userdata.user.id);
-      data.append('building_name', Userdata.user.app_role_id);
+      data.append('user_id', Userdata.userData.id);
+      data.append('building_name', Userdata.userData.app_role_id);
       data.append('contact_person', PersonName);
       data.append('category', Category);
       data.append('room_type_id', Category === 1 ? roomType : '');
@@ -113,12 +103,13 @@ const Addroom = () => {
         body: data,
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${Userdata.token}`,
+          Authorization: `Bearer ${UserToken}`,
         },
       });
       let response = await res.json();
       setSpinner(false);
       if (response.success === true) {
+        navigation.navigate('Feed');
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {
         console.log(response);
@@ -130,12 +121,6 @@ const Addroom = () => {
     }
   };
 
-  useEffect(() => {
-    getData();
-    return () => {
-      setNewData('');
-    };
-  }, []);
   return (
     <View style={genericStyles.Container}>
       <ScrollView>
@@ -231,16 +216,17 @@ const Addroom = () => {
           placeholder="Landmark (optional)"
           value={Landmark}
           autoCapitalize="words"
+          containerStyle={genericStyles.mb(10)}
           onChangeText={text => setLandmark(text)}
         />
+        <ButtonComponent
+          title="Save"
+          ButtonContainer={genericStyles.mb(30)}
+          loading={spinner ? true : false}
+          onPress={() => SaveDetail()}
+        />
+        <Poweredby container={genericStyles.mb(5)} />
       </ScrollView>
-      <ButtonComponent
-        title="Save"
-        ButtonContainer={genericStyles.mt(10)}
-        loading={spinner ? true : false}
-        onPress={() => SaveDetail()}
-      />
-      <Poweredby />
     </View>
   );
 };

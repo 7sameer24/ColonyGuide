@@ -1,10 +1,35 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../src/constants';
 import ButtonComponent from '../../src/Components/ButtonComponent';
 import Poweredby from '../Components/Poweredby';
 import Cuate from '../../assets/svg/cuate.svg';
-const BusinessInfo = ({navigation}) => {
+import axios from 'axios';
+const ServiceInfo = ({navigation, route}) => {
+  const {userID, Role, token} = route.params;
+  console.log(userID, Role, token);
+
+  const idx = async () => {
+    try {
+      const URL =
+        'https://colonyguide.garimaartgallery.com/api/houseowner-service-list';
+      const response = await axios.post(URL, {
+        user_id: 149,
+        app_role_id: 3,
+      });
+      console(response.data);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  useEffect(() => {
+    idx();
+    // return () => {
+    //   setUserData('');
+    // };
+  }, []);
+
   let title = 'You have not added service\ndetails';
   return (
     <View style={genericStyles.Container}>
@@ -23,12 +48,12 @@ const BusinessInfo = ({navigation}) => {
           navigation.navigate('Business Details', {User: 'Service Info'})
         }
       />
-      <Poweredby />
+      <Poweredby container={genericStyles.mb(20)} />
     </View>
   );
 };
 
-export default BusinessInfo;
+export default ServiceInfo;
 
 const styles = StyleSheet.create({
   View: {marginTop: 50, alignSelf: 'center', marginBottom: 20},

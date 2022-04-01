@@ -28,6 +28,9 @@ const ProfileDetails = ({navigation, route}) => {
   };
   useEffect(() => {
     idx();
+    return () => {
+      setUserData('');
+    };
   }, []);
 
   return (

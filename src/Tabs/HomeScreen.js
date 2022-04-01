@@ -1,6 +1,5 @@
 import {ScrollView, StatusBar, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import {SliderBox} from 'react-native-image-slider-box';
 import FourList from '../Components/FourList';
@@ -39,6 +38,7 @@ const HomeScreen = ({navigation}) => {
         <ScrollView>
           <HeaderBar
             bellIcon="bell"
+            thirdOnpress={() => navigation.navigate('Notification')}
             // searchIcon="search"
             navigation={navigation}
             firstIcon="menu"

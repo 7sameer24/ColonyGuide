@@ -36,7 +36,7 @@ const RegisterScreen = ({navigation, route}) => {
     } else {
       try {
         setSpinner(true);
-        const URL = 'https://colonyguide.garimaartgallery.com/api/register';
+        const URL = 'https://colonyguide.garimaartgallery.com/api/registers';
         const response = await axios
           .post(URL, {
             mobile_no: mobileNo,
@@ -60,7 +60,7 @@ const RegisterScreen = ({navigation, route}) => {
           });
       } catch (error) {
         setSpinner(false);
-        console.log(error);
+        alert(error);
       }
     }
   };
