@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -13,8 +14,7 @@ import InputComponent from '../../Components/InputComponent';
 import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
 import DropDownComponent from '../../Components/DropDownComponent';
-import {launchImageLibrary} from 'react-native-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
 import {useApp} from '../../../Context/AppContext';
@@ -35,9 +35,7 @@ const BusinessDetails = ({navigation, route}) => {
   const [AL1, setAL1] = useState('');
   const [AL2, setAL2] = useState('');
   const [Landmark, setLandmark] = useState('');
-  const {setIsBusAdd} = useApp();
 
-  // console.log(Userdata.userData);
   const idx = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
@@ -48,14 +46,15 @@ const BusinessDetails = ({navigation, route}) => {
     }
   };
 
-  const openImage = () => {
+  const openGallery = () => {
     let opetions = {
-      storageOption: {
-        path: 'images',
-        mediaType: 'photo',
-      },
-      includeExtra: true,
+      mediaType: 'photo',
+      path: 'images',
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 1,
     };
+
     launchImageLibrary(opetions, response => {
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -69,6 +68,42 @@ const BusinessDetails = ({navigation, route}) => {
       }
     });
   };
+  const openCamera = () => {
+    let opetions = {
+      mediaType: 'photo',
+      path: 'images',
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 1,
+    };
+
+    launchCamera(opetions, response => {
+      if (response.didCancel) {
+        console.log('User Cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('Image ErrorCode', response.errorCode);
+      } else if (response.errorMessage) {
+        console.log('Image error Message', response.errorMessage);
+      } else {
+        const source = response.assets;
+        setImage(source);
+      }
+    });
+  };
+
+  const createThreeButtonAlert = () =>
+    Alert.alert(null, 'Please Select Image/logo', [
+      {
+        text: 'Camera',
+        onPress: () => openCamera(),
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'Gallery', onPress: () => openGallery()},
+    ]);
 
   const SaveDetail = async () => {
     try {
@@ -108,8 +143,6 @@ const BusinessDetails = ({navigation, route}) => {
       let response = await res.json();
       setSpinner(false);
       if (response.success === true) {
-        Userdata.userData.app_role_id === 3 ? setIsBusAdd(true) : null;
-
         navigation.navigate('Profile');
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {
@@ -137,7 +170,7 @@ const BusinessDetails = ({navigation, route}) => {
             <TouchableOpacity
               style={genericStyles.selfCenter}
               activeOpacity={0.5}
-              onPress={() => openImage()}>
+              onPress={() => createThreeButtonAlert()}>
               <View style={styles.imageConatiner(imageUp)}>
                 <Image
                   source={imageUp ? imageUp : Images.BusinessProfile}

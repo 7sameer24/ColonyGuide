@@ -99,7 +99,7 @@ const ContactUs = ({route}) => {
           />
         ))}
       </View>
-      <Poweredby />
+      <Poweredby container={genericStyles.selfCenter} />
     </View>
   );
 };

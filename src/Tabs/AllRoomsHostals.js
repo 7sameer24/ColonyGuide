@@ -8,15 +8,15 @@ import Spinner from '../Components/Spinner';
 import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
 
-const RoomsFlats = ({navigation, route}) => {
+const AllRoomsHostals = ({navigation}) => {
   const {Userdata} = useApp();
   const [newData, setData] = useState([]);
 
   const idx = async () => {
     try {
       const URL =
-        'https://colonyguide.garimaartgallery.com/api/filtered-room-hostel-list';
-      const response = await axios.post(URL, {room_type_id: route.name});
+        'https://colonyguide.garimaartgallery.com/api/room-hostel-list';
+      const response = await axios.post(URL);
       if (response.data.success === true) {
         setData(response.data.data);
       } else {
@@ -65,7 +65,7 @@ const RoomsFlats = ({navigation, route}) => {
   );
 };
 
-export default RoomsFlats;
+export default AllRoomsHostals;
 
 const styles = StyleSheet.create({
   ButtonContainer: {

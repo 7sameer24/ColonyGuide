@@ -69,7 +69,7 @@ const BusinessSaved = ({route, navigation}) => {
                   size={20}
                   color="#A484FF"
                 />
-                <Text style={styles.text}>{Userdata.category_id}</Text>
+                <Text style={styles.text}>{Userdata.categoryName}</Text>
               </View>
             </View>
             <View style={genericStyles.row}>

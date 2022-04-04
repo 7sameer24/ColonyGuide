@@ -1,54 +1,86 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect} from 'react';
-import {COLORS, FONTS, genericStyles, Images} from '../../src/constants';
+import React, {useEffect, useState} from 'react';
+import {COLORS, FONTS, genericStyles} from '../../src/constants';
 import ButtonComponent from '../../src/Components/ButtonComponent';
 import Poweredby from '../Components/Poweredby';
 import Cuate from '../../assets/svg/cuate.svg';
 import axios from 'axios';
+import CardsListed from '../Components/CardsListed';
+import Spinner from '../Components/Spinner';
+import {ScrollView} from 'react-native-gesture-handler';
+
 const ServiceInfo = ({navigation, route}) => {
-  const {userID, Role, token} = route.params;
-  console.log(userID, Role, token);
+  const {userID, Role} = route.params;
+  const [data, setUserData] = useState('');
 
   const idx = async () => {
     try {
       const URL =
         'https://colonyguide.garimaartgallery.com/api/houseowner-service-list';
       const response = await axios.post(URL, {
-        user_id: 149,
-        app_role_id: 3,
+        user_id: userID,
+        app_role_id: Role,
       });
-      console(response.data);
+      if (response.data.success === true) {
+        setUserData(response.data.data);
+      } else {
+        alert(response.data);
+      }
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
-
   useEffect(() => {
     idx();
-    // return () => {
-    //   setUserData('');
-    // };
+    return () => {
+      setUserData('');
+    };
   }, []);
 
   let title = 'You have not added service\ndetails';
   return (
     <View style={genericStyles.Container}>
-      <View style={styles.View}>
-        <Cuate />
-      </View>
-      <Text style={styles.title}>{title}</Text>
-      <Text style={styles.subTitle}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-        purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor
-      </Text>
+      {data === [] ? (
+        <View>
+          <View style={styles.View}>
+            <Cuate />
+          </View>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subTitle}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
+            purus sit amet luctus venenatis, lectus magna fringilla urna,
+            porttitor
+          </Text>
+        </View>
+      ) : (
+        <>
+          {data.length > 0 ? (
+            <ScrollView>
+              {data.map((newData, index) => (
+                <CardsListed
+                  key={newData.id}
+                  index={index}
+                  category={newData.category_id}
+                  subTitle={newData.address}
+                  title={newData.name}
+                  source={{uri: newData.logo_image}}
+                />
+              ))}
+              <View style={genericStyles.mb(10)} />
+            </ScrollView>
+          ) : (
+            <Spinner />
+          )}
+        </>
+      )}
       <ButtonComponent
         title="Add Your Service"
-        ButtonContainer={genericStyles.mt('50%')}
+        ButtonContainer={{position: 'absolute', bottom: 40, width: '90%'}}
         onPress={() =>
           navigation.navigate('Business Details', {User: 'Service Info'})
         }
       />
-      <Poweredby container={genericStyles.mb(20)} />
+      <Poweredby />
     </View>
   );
 };

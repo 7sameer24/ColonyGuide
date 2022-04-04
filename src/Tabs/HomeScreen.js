@@ -7,10 +7,13 @@ import CategoriesList from './CategoriesList';
 import HeaderBar from '../Components/HeaderBar';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
+import {useApp} from '../../Context/AppContext';
 
 const HomeScreen = ({navigation}) => {
   const [newData, setData] = useState([]);
   const [SliderImage, setSliderImg] = useState([]);
+  const {Userdata} = useApp();
+
   const idx = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/home';
@@ -38,7 +41,11 @@ const HomeScreen = ({navigation}) => {
         <ScrollView>
           <HeaderBar
             bellIcon="bell"
-            thirdOnpress={() => navigation.navigate('Notification')}
+            thirdOnpress={() =>
+              Userdata === null
+                ? alert('Please Login')
+                : navigation.navigate('Notification')
+            }
             // searchIcon="search"
             navigation={navigation}
             firstIcon="menu"

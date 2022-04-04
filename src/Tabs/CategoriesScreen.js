@@ -20,6 +20,9 @@ const CategoriesScreen = ({navigation}) => {
   };
   useEffect(() => {
     idx();
+    return () => {
+      setNewData([]);
+    };
   }, []);
   return (
     <View style={genericStyles.Container}>

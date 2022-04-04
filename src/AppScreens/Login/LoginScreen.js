@@ -8,13 +8,12 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {COLORS, FONTS, genericStyles, Images} from '../../constants';
+import {COLORS, FONTS, genericStyles} from '../../constants';
 import {CheckBox} from 'react-native-elements';
 import HeaderBody from '../../Components/HeaderBody';
 import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
 import InputComponent from '../../Components/InputComponent';
-import {CommonActions} from '@react-navigation/native';
 import axios from 'axios';
 import LoginLogo from '../../../assets/svg/pana.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -23,9 +22,9 @@ import {navigationStateType, useApp} from '../../../Context/AppContext';
 const LoginScreen = ({navigation}) => {
   const [check1, setCheck1] = useState(false);
   const [spinner, setSpinner] = useState(false);
-  const [visible, setVisible] = useState(false);
-  const [MN, setMobile] = useState('9529102536');
-  const [password, setPass] = useState('12345678');
+  const [visible, setVisible] = useState(true);
+  const [MN, setMobile] = useState('');
+  const [password, setPass] = useState('');
   const {setNewData, setUserToken, setNavigationState} = useApp();
 
   const Login = async () => {
@@ -138,7 +137,7 @@ const LoginScreen = ({navigation}) => {
             iconOnpress={() => setVisible(!visible)}
             iconSize={25}
             value={password}
-            secureTextEntry={visible ? true : false}
+            secureTextEntry={visible}
             onChangeText={text => setPass(text)}
             errorStyle={genericStyles.fontSize(5)}
           />

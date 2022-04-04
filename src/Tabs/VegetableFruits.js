@@ -4,12 +4,11 @@ import HeaderBar from '../Components/HeaderBar';
 import {genericStyles} from '../constants';
 import CardsListed from '../Components/CardsListed';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
+import ListedAnimation from '../Components/ListedAnimation';
 
 const VegetableFruits = ({navigation, route}) => {
   const {ID, Name} = route.params;
   const [data, setData] = useState([]);
-  // console.log(data);
 
   const ServiceList = async id => {
     try {
@@ -56,13 +55,15 @@ const VegetableFruits = ({navigation, route}) => {
               key={data.id}
               title={data.about}
               subTitle={data.contact_person}
-              category="Hostel"
+              category={data.categoryName}
+              phoneNumber={data.contact_person_mobile}
+              WhatsAppNumber={data.contact_person_whatsapp}
             />
           ))}
           <View style={genericStyles.height(20)} />
         </ScrollView>
       ) : (
-        <Spinner />
+        <ListedAnimation />
       )}
     </View>
   );

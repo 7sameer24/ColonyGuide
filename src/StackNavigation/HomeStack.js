@@ -31,6 +31,7 @@ import FeedBacks from '../Tabs/FeedBacks';
 import ServiceEdit from '../ProfileComponents/BusinessComponents/ServiceEdit';
 import ServiceSaved from '../ProfileComponents/BusinessComponents/ServiceSaved';
 import Notification from '../Tabs/Notification';
+import AllRoomsHostals from '../Tabs/AllRoomsHostals';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -122,7 +123,7 @@ const HomeStack = ({navigation}) => {
       headerShown: false,
     },
     {
-      name: 'RoomsFlats',
+      name: 'Rooms/Flats',
       component: MyTopTabs,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
@@ -142,14 +143,6 @@ const HomeStack = ({navigation}) => {
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
-    },
-    {
-      name: 'ServiceEdit',
-      component: ServiceEdit,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
-      title: 'Edit Service',
     },
     {
       name: 'Notification',
@@ -202,7 +195,17 @@ const HomeStack = ({navigation}) => {
       <Stack.Screen
         name="Business Details"
         component={BusinessDetails}
-        options={() => ({
+        options={({route}) => ({
+          title: route.params.User,
+          headerTitleStyle: styles.headerStyle,
+          headerTintColor: COLORS.textColor,
+          headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="ServiceEdit"
+        component={ServiceEdit}
+        options={({route}) => ({
           title: route.params.User,
           headerTitleStyle: styles.headerStyle,
           headerTintColor: COLORS.textColor,
@@ -213,7 +216,7 @@ const HomeStack = ({navigation}) => {
         name="Business Saved"
         component={BusinessSaved}
         options={() => ({
-          title: route.params.UserDetails,
+          title: 'Business Information',
           headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
           headerTintColor: COLORS.white,
           headerStyle: {backgroundColor: COLORS.primary},
@@ -236,11 +239,11 @@ const HomeStack = ({navigation}) => {
 };
 function MyTopTabs() {
   const TopTabsArr = [
-    {component: RoomsFlats, name: 'All'},
-    {component: RoomsFlats, name: 'Hostel'},
-    {component: RoomsFlats, name: '1 BHK'},
-    {component: RoomsFlats, name: '2 BHK'},
-    {component: RoomsFlats, name: '3 BHK'},
+    {component: AllRoomsHostals, name: 'All', ID: '1'},
+    {component: RoomsFlats, name: 'Hostel', ID: '2'},
+    {component: RoomsFlats, name: '1 BHK', ID: '3'},
+    {component: RoomsFlats, name: '2 BHK', ID: '4'},
+    {component: RoomsFlats, name: '3 BHK', ID: '5'},
   ];
   return (
     <TopTab.Navigator>
@@ -248,7 +251,7 @@ function MyTopTabs() {
         return (
           <TopTab.Screen
             key={data.name}
-            name={data.name}
+            name={data.ID}
             component={data.component}
             options={{
               tabBarActiveTintColor: COLORS.primary,
@@ -258,6 +261,7 @@ function MyTopTabs() {
               tabBarPressColor: '#f2f2f2',
               tabBarItemStyle: {width: 90},
               tabBarScrollEnabled: true,
+              title: data.name,
             }}
           />
         );

@@ -1,4 +1,11 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import {
@@ -18,6 +25,7 @@ import HouseOwners from '../../assets/ProfileSvg/HouseOwners.svg';
 import Logout from '../../assets/ProfileSvg/logout.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {navigationStateType, useApp} from '../../Context/AppContext';
+import Terms from '../../assets/ProfileSvg/TC.svg';
 
 const CustomDrawer = props => {
   const {Userdata, UserToken, setNewData, setUserToken, setNavigationState} =
@@ -38,6 +46,7 @@ const CustomDrawer = props => {
     removeValue(), setNewData(null);
     setUserToken(null);
     setNavigationState(navigationStateType.AUTH);
+    ToastAndroid.show('Logout Successfully', ToastAndroid.SHORT);
   };
   return (
     <View style={genericStyles.fill}>
@@ -57,6 +66,7 @@ const CustomDrawer = props => {
                 />
                 <View style={genericStyles.column}>
                   <Text
+                    numberOfLines={1}
                     style={
                       Userdata.userData.app_role_id === 4
                         ? styles.Vtitle
@@ -113,19 +123,40 @@ const CustomDrawer = props => {
               title="Settings"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Settings />}
-              onPress={() => props.navigation.navigate('Settings')}
+              onPress={() =>
+                props.navigation.navigate('Settings', {
+                  userID: Userdata.userData.id,
+                  userToken: UserToken,
+                })
+              }
             />
             <Divider style={styles.Divider} color="#FFEBD9" width={1} />
-            <ProfileComponents
-              title="Contact Us"
-              ImageContainer={styles.DrawerIcon}
-              IconSvg={<Contact />}
-              onPress={() => props.navigation.navigate('Contact Us')}
-            />
             <ProfileComponents
               title="Feedbacks"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Feedback />}
+              onPress={() =>
+                props.navigation.navigate('Feedbacks', {
+                  ID: Userdata.userData.id,
+                  token: UserToken,
+                })
+              }
+            />
+            <ProfileComponents
+              onPress={() => props.navigation.navigate('Terms & Condition')}
+              IconSvg={<Terms />}
+              title="Terms & Condition"
+            />
+            <ProfileComponents
+              title="Contact Us"
+              ImageContainer={styles.DrawerIcon}
+              IconSvg={<Contact />}
+              onPress={() =>
+                props.navigation.navigate('Contact Us', {
+                  userID: Userdata.userData.id,
+                  userToken: UserToken,
+                })
+              }
             />
             <ProfileComponents
               title="Log Out"
@@ -150,40 +181,47 @@ const CustomDrawer = props => {
               title="Business Information"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Group />}
+              onPress={() => alert('Please Login')}
             />
             <ProfileComponents
               title="Committee"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Committe />}
+              onPress={() => alert('Please Login')}
             />
 
             <ProfileComponents
               title="House Owners"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<HouseOwners />}
+              onPress={() => alert('Please Login')}
             />
 
             <ProfileComponents
               title="Helpline"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Help />}
+              onPress={() => alert('Please Login')}
             />
             <Divider style={styles.Divider} color="#FFEBD9" width={1} />
             <ProfileComponents
               title="Settings"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Settings />}
+              onPress={() => alert('Please Login')}
             />
             <Divider style={styles.Divider} color="#FFEBD9" width={1} />
             <ProfileComponents
               title="Contact Us"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Contact />}
+              onPress={() => alert('Please Login')}
             />
             <ProfileComponents
               title="Feedbacks"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Feedback />}
+              onPress={() => alert('Please Login')}
             />
           </>
         )}

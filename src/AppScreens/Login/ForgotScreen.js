@@ -7,10 +7,12 @@ import ButtonComponent from '../../Components/ButtonComponent';
 import FooterButton from '../../Components/FooterButton';
 import ImgIcon from '../../../assets/svg/Frame 7.svg';
 import axios from 'axios';
+import {navigationStateType, useApp} from '../../../Context/AppContext';
 
 const ForgotScreen = ({navigation}) => {
   const [mobile_no, setMobile] = useState('');
   const [spinner, setSpinner] = useState(false);
+  const {setNavigationState} = useApp();
 
   const idx = async () => {
     if (!mobile_no) {
@@ -39,6 +41,10 @@ const ForgotScreen = ({navigation}) => {
     }
   };
 
+  const skipToHome = () => {
+    setNavigationState(navigationStateType.GUEST);
+  };
+
   return (
     <ScrollView style={genericStyles.Container}>
       <HeaderBody
@@ -46,6 +52,7 @@ const ForgotScreen = ({navigation}) => {
         title="Forgot Password"
         subTitle="Please enter your mobile number associated 
 with your account"
+        onPress={() => skipToHome()}
         Icon={<ImgIcon />}
       />
       <InputComponent

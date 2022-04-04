@@ -1,13 +1,12 @@
 import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
 import React, {useState} from 'react';
 import HeaderBody from '../../../Components/HeaderBody';
-import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
+import {COLORS, FONTS, genericStyles} from '../../../constants';
 import InputComponent from '../../../Components/InputComponent';
 import ButtonComponent from '../../../Components/ButtonComponent';
 import ImgIcon from '../../../../assets/svg/Frame 12.svg';
 import axios from 'axios';
 import Poweredby from '../../../Components/Poweredby';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
 
 const PersonalDetails = ({data, navigation}) => {

@@ -1,11 +1,53 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  StyleSheet,
+  Text,
+  View,
+  Linking,
+  ToastAndroid,
+  Platform,
+} from 'react-native';
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
 
-const CardsListed = ({category, title, subTitle, source, index}) => {
+const CardsListed = ({
+  category,
+  title,
+  subTitle,
+  source,
+  index,
+  phoneNumber,
+  WhatsAppNumber,
+}) => {
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
+
+  const sendWhatsApp = () => {
+    let msg = 'Hello';
+    let phoneWithCountryCode = `91${WhatsAppNumber}`;
+    let mobile =
+      Platform.OS == 'ios' ? phoneWithCountryCode : '+' + phoneWithCountryCode;
+    if (mobile) {
+      if (msg) {
+        let url = 'whatsapp://send?text=' + msg + '&phone=' + mobile;
+        Linking.openURL(url)
+          .then(() => {
+            ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
+          })
+          .catch(() => {
+            ToastAndroid.show(
+              'Make sure WhatsApp installed on your device',
+              ToastAndroid.SHORT,
+            );
+          });
+      } else {
+        ToastAndroid.show('Please insert message to send', ToastAndroid.SHORT);
+      }
+    } else {
+      ToastAndroid.show('Please insert mobile no', ToastAndroid.SHORT);
+    }
+  };
 
   return (
     <Card
@@ -14,7 +56,7 @@ const CardsListed = ({category, title, subTitle, source, index}) => {
         {backgroundColor: alternatingColor[index % alternatingColor.length]},
       ]}>
       <View style={genericStyles.row}>
-        <Image source={source} style={styles.ImageStyle} />
+        <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
         <View style={styles.View}>
           <Text
             style={[
@@ -54,6 +96,7 @@ const CardsListed = ({category, title, subTitle, source, index}) => {
                 type="material-community"
                 color="#407BFF"
                 size={17}
+                onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
                 containerStyle={genericStyles.mr(20)}
               />
               <Icon
@@ -61,6 +104,7 @@ const CardsListed = ({category, title, subTitle, source, index}) => {
                 type="material-community"
                 size={17}
                 color="#25D366"
+                onPress={() => sendWhatsApp()}
                 containerStyle={genericStyles.mr(20)}
               />
               <Icon

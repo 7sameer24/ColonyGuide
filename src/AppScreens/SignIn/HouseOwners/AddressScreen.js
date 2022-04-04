@@ -1,7 +1,7 @@
 import {ScrollView, ToastAndroid, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBody from '../../../Components/HeaderBody';
-import {genericStyles, Images} from '../../../constants';
+import {genericStyles} from '../../../constants';
 import ButtonComponent from '../../../Components/ButtonComponent';
 import InputComponent from '../../../Components/InputComponent';
 import axios from 'axios';
@@ -9,8 +9,6 @@ import DropDownComponent from '../../../Components/DropDownComponent';
 import ImgIcon from '../../../../assets/svg/Frame 11.svg';
 import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CommonActions} from '@react-navigation/native';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
 
 const AddressScreen = ({route, navigation}) => {
@@ -58,18 +56,18 @@ const AddressScreen = ({route, navigation}) => {
         Form.append('category_id', CategoryShop);
         Form.append('whatsapp_no', WhatsappNum);
         Form.append('locality_id', LocalityValue);
-        UserData.app_role_id === 3
-          ? null
-          : Form.append(
-              'logo_image',
-              imageLogo !== ''
-                ? {
-                    uri: imageLogo[0].uri,
-                    type: imageLogo[0].type,
-                    name: imageLogo[0].fileName,
-                  }
-                : '',
-            );
+        Form.append(
+          'logo_image',
+          UserData.app_role_id === 3
+            ? ''
+            : imageLogo
+            ? {
+                uri: imageLogo[0].uri,
+                type: imageLogo[0].type,
+                name: imageLogo[0].fileName,
+              }
+            : '',
+        );
 
         const URL = 'https://colonyguide.garimaartgallery.com/api/add-details';
 

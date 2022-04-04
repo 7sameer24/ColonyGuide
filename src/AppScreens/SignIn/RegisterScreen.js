@@ -8,20 +8,22 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import HeaderBody from '../../Components/HeaderBody';
-import {COLORS, FONTS, genericStyles, Images} from '../../constants';
+import {COLORS, FONTS, genericStyles} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import InputComponent from '../../Components/InputComponent';
 import ImgIcon from '../../../assets/svg/Frame 9.svg';
 import axios from 'axios';
 import Poweredby from '../../Components/Poweredby';
+import {navigationStateType, useApp} from '../../../Context/AppContext';
 const RegisterScreen = ({navigation, route}) => {
   const {role_id} = route.params;
   const [visible, setVisible] = useState(true);
   const [visible2, setVisible2] = useState(true);
   const [spinner, setSpinner] = useState(false);
-  const [mobileNo, setMobile] = useState('9529106068');
-  const [pass, setPass] = useState('12345678');
-  const [CPASS, setCPASS] = useState('12345678');
+  const [mobileNo, setMobile] = useState('');
+  const [pass, setPass] = useState('');
+  const [CPASS, setCPASS] = useState('');
+  const {setNavigationState} = useApp();
 
   const register = async () => {
     if (mobileNo.length < 10 || mobileNo.length > 10) {
@@ -64,6 +66,11 @@ const RegisterScreen = ({navigation, route}) => {
       }
     }
   };
+
+  const skipToHome = () => {
+    setNavigationState(navigationStateType.GUEST);
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView>
@@ -74,7 +81,7 @@ const RegisterScreen = ({navigation, route}) => {
           Icon={<ImgIcon />}
           touchableOpacityStyle={genericStyles.mb(30)}
           subTitleStyle={genericStyles.mb(10)}
-          onPress={() => navigation.navigate('Feed')}
+          onPress={() => skipToHome()}
         />
         <View style={genericStyles.mb(10)}>
           <InputComponent

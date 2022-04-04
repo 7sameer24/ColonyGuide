@@ -13,7 +13,6 @@ import {FONTS, COLORS, genericStyles} from '../constants/index';
 import Frame from '../../assets/svg/Frame.svg';
 import Frame5 from '../../assets/svg/Frame 5.svg';
 import Frame6 from '../../assets/svg/Frame 6.svg';
-import {CommonActions} from '@react-navigation/native';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 
 const {width, height} = Dimensions.get('window');

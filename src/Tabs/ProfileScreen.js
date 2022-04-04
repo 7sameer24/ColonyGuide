@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import HeaderBar from '../Components/HeaderBar';
 import {Divider} from 'react-native-elements';
@@ -19,11 +19,46 @@ import Feedback from '../../assets/ProfileSvg/feedback.svg';
 import Terms from '../../assets/ProfileSvg/TC.svg';
 import Contact from '../../assets/ProfileSvg/contact.svg';
 import Poweredby from '../Components/Poweredby';
-import Spinner from '../Components/Spinner';
 import {navigationStateType, useApp} from '../../Context/AppContext';
+import axios from 'axios';
+import {useIsFocused} from '@react-navigation/native';
 
 const ProfileScreen = ({navigation}) => {
-  const {Userdata, UserToken, BusAdd, setNavigationState} = useApp();
+  const {Userdata, UserToken, setNavigationState} = useApp();
+  const [checkStatus, setCheckStatus] = useState('');
+  const isFocused = useIsFocused();
+  console.log(isFocused);
+  const checkBusinessStauts = async () => {
+    try {
+      const URL = 'https://colonyguide.garimaartgallery.com/api/check-business';
+      const response = await axios(URL, {
+        method: 'post',
+        data: {user_id: Userdata.userData.id},
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      setCheckStatus(response.data.businessStatus);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  Userdata
+    ? isFocused
+      ? useEffect(() => {
+          checkBusinessStauts();
+          return () => {
+            setCheckStatus('');
+          };
+        }, [])
+      : useEffect(() => {
+          checkBusinessStauts();
+          return () => {
+            setCheckStatus('');
+          };
+        }, [])
+    : null;
 
   // const arr = [
   //   {source:<IconImg />,title:"Personal Details",onPressText:'Personal Details',iconName:"chevron-forward-outline"},
@@ -110,7 +145,7 @@ const ProfileScreen = ({navigation}) => {
               Userdata.userData.app_role_id == 1 ? null : (
                 <ProfileComponents
                   onPress={() =>
-                    BusAdd !== null
+                    checkStatus === 0
                       ? navigation.navigate('Business Infoo')
                       : navigation.navigate('Business Saved', {
                           userID: Userdata.userData.id,
@@ -134,7 +169,6 @@ const ProfileScreen = ({navigation}) => {
                       : navigation.navigate('Service Info', {
                           userID: Userdata.userData.id,
                           Role: Userdata.userData.app_role_id,
-                          token: UserToken,
                         })
                   }
                   iconName="chevron-forward-outline"
@@ -209,18 +243,21 @@ const ProfileScreen = ({navigation}) => {
             iconName="chevron-forward-outline"
             IconSvg={<IconImg />}
             title="Personal Details"
+            onPress={() => alert('Please Login')}
           />
 
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Group />}
             title="Business Information"
+            onPress={() => alert('Please Login')}
           />
 
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Service />}
             title={'Add Service Provider'}
+            onPress={() => alert('Please Login')}
           />
           <Divider style={styles.Divider} color="#FFEBD9" width={1} />
 
@@ -228,22 +265,26 @@ const ProfileScreen = ({navigation}) => {
             iconName="chevron-forward-outline"
             IconSvg={<Settings />}
             title="Settings"
+            onPress={() => alert('Please Login')}
           />
           <Divider style={styles.Divider} color="#FFEBD9" width={1} />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Feedback />}
             title="Feedbacks"
+            onPress={() => alert('Please Login')}
           />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Terms />}
             title="Terms & Condition"
+            onPress={() => alert('Please Login')}
           />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Contact />}
             title="Contact Us"
+            onPress={() => alert('Please Login')}
           />
           <Divider style={styles.Divider} color="#FFEBD9" width={1} />
         </ScrollView>

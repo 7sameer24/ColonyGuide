@@ -1,13 +1,13 @@
-import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
+import {ScrollView, StatusBar, StyleSheet, ToastAndroid} from 'react-native';
 import React, {useState} from 'react';
-import {genericStyles, Images} from '../../constants';
+import {COLORS, genericStyles} from '../../constants';
 import HeaderBody from '../../Components/HeaderBody';
 import InputComponent from '../../Components/InputComponent';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ImgIcon from '../../../assets/svg/Frame 8.svg';
 import axios from 'axios';
-import {CommonActions} from '@react-navigation/native';
 import Poweredby from '../../Components/Poweredby';
+import {CommonActions} from '@react-navigation/native';
 
 const ResetPassScreen = ({navigation, route}) => {
   const {user_id} = route.params.data;
@@ -51,6 +51,8 @@ const ResetPassScreen = ({navigation, route}) => {
   };
   return (
     <ScrollView style={genericStyles.Container}>
+      <StatusBar backgroundColor={COLORS.primary} />
+
       <HeaderBody
         title="Reset Password"
         subTitle="Enter a strong password"
@@ -72,13 +74,18 @@ const ResetPassScreen = ({navigation, route}) => {
         title="Continue"
         loading={spinner ? true : false}
         onPress={() => idx()}
-        ButtonContainer={{marginTop: 25, marginBottom: 20}}
+        ButtonContainer={styles.ButtonContainer}
       />
-      <Poweredby textStyle={genericStyles.mt(0)} />
+      <Poweredby textStyle={genericStyles.mb(0)} />
     </ScrollView>
   );
 };
 
 export default ResetPassScreen;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  ButtonContainer: {
+    marginTop: 25,
+    marginBottom: 40,
+  },
+});

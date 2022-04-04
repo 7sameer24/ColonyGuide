@@ -1,21 +1,12 @@
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  ToastAndroid,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {ScrollView, StyleSheet, Text, ToastAndroid, View} from 'react-native';
 import React, {useRef, useState} from 'react';
-import {COLORS, FONTS, genericStyles, Images} from '../../constants';
+import {COLORS, FONTS, genericStyles} from '../../constants';
 import {Input} from 'react-native-elements';
 import ButtonComponent from '../../Components/ButtonComponent';
 import FooterButton from '../../Components/FooterButton';
 import {CommonActions} from '@react-navigation/native';
 import ImgIcon from '../../../assets/svg/Frame 10.svg';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 
 const OtpScreen = ({route, navigation}) => {

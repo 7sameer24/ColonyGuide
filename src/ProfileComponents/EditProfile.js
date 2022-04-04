@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -15,8 +16,7 @@ import InputComponent from '../Components/InputComponent';
 import DropDownComponent from '../Components/DropDownComponent';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
-import {launchImageLibrary} from 'react-native-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useApp} from '../../Context/AppContext';
 
 const EditProfile = ({route, navigation}) => {
@@ -32,7 +32,7 @@ const EditProfile = ({route, navigation}) => {
   // const [FHN, setFHN] = useState(data.house_no);
   const [imageUp, setImage] = useState('');
   const {setNewData} = useApp();
-  // console.log(data.house_no);
+
   const arr = [
     {
       placeHolder: 'Name',
@@ -72,6 +72,9 @@ const EditProfile = ({route, navigation}) => {
 
   useEffect(() => {
     idx();
+    return () => {
+      setLocalData('');
+    };
   }, []);
 
   const SaveDetail = async () => {
@@ -125,14 +128,16 @@ const EditProfile = ({route, navigation}) => {
       alert(error);
     }
   };
-  const openImage = () => {
+
+  const openGallery = () => {
     let opetions = {
-      storageOption: {
-        path: 'images',
-        mediaType: 'photo',
-      },
-      includeExtra: true,
+      mediaType: 'photo',
+      path: 'images',
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 1,
     };
+
     launchImageLibrary(opetions, response => {
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -146,21 +151,52 @@ const EditProfile = ({route, navigation}) => {
       }
     });
   };
+  const openCamera = () => {
+    let opetions = {
+      mediaType: 'photo',
+      path: 'images',
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 1,
+    };
+
+    launchCamera(opetions, response => {
+      if (response.didCancel) {
+        console.log('User Cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('Image ErrorCode', response.errorCode);
+      } else if (response.errorMessage) {
+        console.log('Image error Message', response.errorMessage);
+      } else {
+        const source = response.assets;
+        setImage(source);
+      }
+    });
+  };
+
+  const createThreeButtonAlert = () =>
+    Alert.alert(null, 'Please Select Image/logo', [
+      {
+        text: 'Camera',
+        onPress: () => openCamera(),
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'Gallery', onPress: () => openGallery()},
+    ]);
 
   return (
     <View style={genericStyles.Container}>
       {localData !== '' ? (
         <ScrollView>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => openImage()}>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => createThreeButtonAlert()}>
             <Image
-              source={
-                data.profile_image ===
-                'https://colonyguide.garimaartgallery.com/storage'
-                  ? Images.Ellipse
-                  : imageUp
-                  ? imageUp
-                  : {uri: data.profile_image}
-              }
+              source={imageUp ? imageUp : {uri: data.profile_image}}
               style={styles.ImageStyle}
             />
             <View style={styles.ImageContainer}>

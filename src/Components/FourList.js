@@ -49,7 +49,9 @@ const FourList = ({navigation}) => {
           key={data.Id}
           activeOpacity={0.9}
           onPress={() =>
-            Userdata !== null ? navigation.navigate(data.navigation) : null
+            Userdata !== null
+              ? navigation.navigate(data.navigation)
+              : alert('Please Login')
           }>
           <Card containerStyle={styles.containerStyle(width, height)}>
             {data.image}

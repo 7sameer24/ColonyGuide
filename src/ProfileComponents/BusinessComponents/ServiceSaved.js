@@ -9,7 +9,6 @@ import Spinner from '../../Components/Spinner';
 const ServiceSaved = ({route, navigation}) => {
   const {userID, userToken} = route.params;
   const [Userdata, setUserData] = useState('');
-  // console.log(Userdata);
   const idx = async () => {
     try {
       const URL =
@@ -39,7 +38,7 @@ const ServiceSaved = ({route, navigation}) => {
           <View style={styles.radiusView}>
             <Image
               source={
-                Userdata.profile_image ===
+                Userdata.logo_image ===
                 'https://colonyguide.garimaartgallery.com/storage'
                   ? Images.Ellipse
                   : {uri: Userdata.logo_image}

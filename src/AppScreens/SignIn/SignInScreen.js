@@ -1,14 +1,18 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {COLORS, FONTS, genericStyles, Images} from '../../constants';
+import {COLORS, FONTS, genericStyles} from '../../constants';
 import {Button} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import ImgIcon from '../../../assets/svg/rafiki.svg';
 import Poweredby from '../../Components/Poweredby';
+import {navigationStateType, useApp} from '../../../Context/AppContext';
 
 const SignInScreen = ({navigation}) => {
   const [newData, setNewData] = useState([]);
+
+  const {setNavigationState} = useApp();
+
   const idx = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
@@ -24,13 +28,18 @@ const SignInScreen = ({navigation}) => {
       setNewData([]);
     };
   }, []);
+
+  const skipToHome = () => {
+    setNavigationState(navigationStateType.GUEST);
+  };
+
   return (
     <View style={styles.container}>
       {newData.length > 0 ? (
         <>
           <TouchableOpacity
             style={styles.TouchableOpacity}
-            onPress={() => navigation.navigate('Feed')}>
+            onPress={() => skipToHome()}>
             <Text style={styles.TouchableText}>Skip to home</Text>
           </TouchableOpacity>
           <View style={styles.imageStyle}>

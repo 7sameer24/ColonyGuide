@@ -6,13 +6,14 @@ import {
   Image,
   TouchableOpacity,
   Text,
+  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
 import InputComponent from '../../../Components/InputComponent';
 import ButtonComponent from '../../../Components/ButtonComponent';
 import DropDownComponent from '../../../Components/DropDownComponent';
-import {launchImageLibrary} from 'react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import axios from 'axios';
 import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
@@ -45,14 +46,39 @@ const ServiceDetails = ({navigation, UserNewData}) => {
     }
   };
 
-  const openImage = () => {
+  const openGallery = () => {
     let opetions = {
-      storageOption: {
-        path: 'images',
-        mediaType: 'photo',
-      },
+      mediaType: 'photo',
+      path: 'images',
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 1,
     };
+
     launchImageLibrary(opetions, response => {
+      if (response.didCancel) {
+        console.log('User Cancelled image picker');
+      } else if (response.errorCode) {
+        console.log('Image ErrorCode', response.errorCode);
+      } else if (response.errorMessage) {
+        console.log('Image error Message', response.errorMessage);
+      } else {
+        const source = response.assets;
+        setImage(source);
+      }
+    });
+  };
+
+  const openCamera = () => {
+    let opetions = {
+      mediaType: 'photo',
+      path: 'images',
+      maxWidth: 500,
+      maxHeight: 500,
+      quality: 1,
+    };
+
+    launchCamera(opetions, response => {
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -82,6 +108,21 @@ const ServiceDetails = ({navigation, UserNewData}) => {
       setNewData([]);
     };
   }, []);
+
+  const createThreeButtonAlert = () =>
+    Alert.alert(null, 'Please Select Image/logo', [
+      {
+        text: 'Camera',
+        onPress: () => openCamera(),
+      },
+      {
+        text: 'Cancel',
+        onPress: () => console.log('Cancel Pressed'),
+        style: 'cancel',
+      },
+      {text: 'Gallery', onPress: () => openGallery()},
+    ]);
+
   return (
     <View style={genericStyles.Container}>
       {newData.length > 0 ? (
@@ -95,7 +136,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
           <TouchableOpacity
             style={genericStyles.selfCenter}
             activeOpacity={0.5}
-            onPress={() => openImage()}>
+            onPress={() => createThreeButtonAlert()}>
             <View style={styles.ImageContainer(imageUp)}>
               <Image
                 resizeMode={imageUp ? null : 'contain'}
