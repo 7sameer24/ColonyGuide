@@ -16,6 +16,7 @@ const OtpScreen = ({route, navigation}) => {
   const [third, setThird] = useState('');
   const [last, setLast] = useState('');
   const [spinner, setSpinner] = useState(false);
+  const FirstInput = useRef(null);
   const secondInput = useRef(null);
   const thirdInput = useRef(null);
   const LastInput = useRef(null);
@@ -85,6 +86,7 @@ const OtpScreen = ({route, navigation}) => {
                 secondInput.current.focus();
               }
             }}
+            ref={FirstInput}
             autoFocus={true}
             onSubmitEditing={() => (first ? secondInput.current.focus() : null)}
           />
@@ -101,6 +103,11 @@ const OtpScreen = ({route, navigation}) => {
               }
             }}
             ref={secondInput}
+            onKeyPress={({nativeEvent}) => {
+              nativeEvent.key === 'Backspace'
+                ? FirstInput.current.focus()
+                : null;
+            }}
             onSubmitEditing={() => (second ? thirdInput.current.focus() : null)}
           />
           <Input
@@ -116,6 +123,11 @@ const OtpScreen = ({route, navigation}) => {
               }
             }}
             ref={thirdInput}
+            onKeyPress={({nativeEvent}) => {
+              nativeEvent.key === 'Backspace'
+                ? secondInput.current.focus()
+                : null;
+            }}
             onSubmitEditing={() => (third ? LastInput.current.focus() : null)}
           />
           <Input
@@ -126,6 +138,12 @@ const OtpScreen = ({route, navigation}) => {
             value={last}
             onChangeText={num => setLast(num)}
             ref={LastInput}
+            clearButtonMode="always"
+            onKeyPress={({nativeEvent}) => {
+              nativeEvent.key === 'Backspace'
+                ? thirdInput.current.focus()
+                : null;
+            }}
           />
         </View>
         <ButtonComponent

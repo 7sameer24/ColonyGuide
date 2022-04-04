@@ -17,6 +17,7 @@ const AppContext = ({children}) => {
   const [Userdata, setNewData] = useState(null);
   const [UserToken, setUserToken] = useState(null);
   const [BusAdd, setIsBusAdd] = useState(null);
+  const [checkStatus, setCheckStatus] = useState('');
 
   useEffect(() => {
     const saveDetail = async () => {
@@ -40,7 +41,9 @@ const AppContext = ({children}) => {
         UserToken,
         BusAdd,
         navigationState,
+        checkStatus,
         setNavigationState,
+        setCheckStatus,
         setIsBusAdd,
         setNewData,
         setUserToken,

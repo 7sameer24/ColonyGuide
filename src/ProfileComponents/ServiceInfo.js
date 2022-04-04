@@ -24,7 +24,7 @@ const ServiceInfo = ({navigation, route}) => {
       if (response.data.success === true) {
         setUserData(response.data.data);
       } else {
-        alert(response.data);
+        alert(response.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -40,39 +40,27 @@ const ServiceInfo = ({navigation, route}) => {
   let title = 'You have not added service\ndetails';
   return (
     <View style={genericStyles.Container}>
-      {data === [] ? (
-        <View>
-          <View style={styles.View}>
-            <Cuate />
-          </View>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subTitle}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-            purus sit amet luctus venenatis, lectus magna fringilla urna,
-            porttitor
-          </Text>
-        </View>
-      ) : (
-        <>
-          {data.length > 0 ? (
-            <ScrollView>
-              {data.map((newData, index) => (
-                <CardsListed
-                  key={newData.id}
-                  index={index}
-                  category={newData.category_id}
-                  subTitle={newData.address}
-                  title={newData.name}
-                  source={{uri: newData.logo_image}}
-                />
-              ))}
-              <View style={genericStyles.mb(10)} />
-            </ScrollView>
-          ) : (
-            <Spinner />
-          )}
-        </>
-      )}
+      <>
+        {data.length > 0 ? (
+          <ScrollView>
+            {data.map((newData, index) => (
+              <CardsListed
+                key={newData.id}
+                index={index}
+                category={newData.category_id}
+                subTitle={newData.address}
+                title={newData.name}
+                phoneNumber={data.contact_person_mobile}
+                WhatsAppNumber={data.contact_person_whatsapp}
+                source={{uri: newData.logo_image}}
+              />
+            ))}
+            <View style={genericStyles.mb(10)} />
+          </ScrollView>
+        ) : (
+          <Spinner />
+        )}
+      </>
       <ButtonComponent
         title="Add Your Service"
         ButtonContainer={{position: 'absolute', bottom: 40, width: '90%'}}

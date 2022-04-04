@@ -21,7 +21,7 @@ import {useApp} from '../../../Context/AppContext';
 
 const BusinessDetails = ({navigation, route}) => {
   const {User} = route.params;
-  const {Userdata, UserToken} = useApp();
+  const {Userdata, UserToken, setCheckStatus} = useApp();
   const [CategoryData, setCategoryData] = useState([]);
   const [Category, setCategory] = useState('');
   const [imageUp, setImage] = useState('');
@@ -40,7 +40,7 @@ const BusinessDetails = ({navigation, route}) => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
       const response = await axios.post(URL);
-      setCategoryData(response.data.categories);
+      setCategoryData(response.data.businessCategory);
     } catch (error) {
       console.log(error);
     }
@@ -143,6 +143,7 @@ const BusinessDetails = ({navigation, route}) => {
       let response = await res.json();
       setSpinner(false);
       if (response.success === true) {
+        setCheckStatus(1);
         navigation.navigate('Profile');
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {

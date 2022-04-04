@@ -45,7 +45,7 @@ const Committee = ({navigation}) => {
         firstIcon="arrow-back-outline"
         title="Committee"
         // searchIcon="search"
-        bellIcon="filter"
+        // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />

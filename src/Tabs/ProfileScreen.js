@@ -21,13 +21,11 @@ import Contact from '../../assets/ProfileSvg/contact.svg';
 import Poweredby from '../Components/Poweredby';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 import axios from 'axios';
-import {useIsFocused} from '@react-navigation/native';
 
 const ProfileScreen = ({navigation}) => {
-  const {Userdata, UserToken, setNavigationState} = useApp();
-  const [checkStatus, setCheckStatus] = useState('');
-  const isFocused = useIsFocused();
-  console.log(isFocused);
+  const {Userdata, UserToken, setNavigationState, setCheckStatus, checkStatus} =
+    useApp();
+
   const checkBusinessStauts = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/check-business';
@@ -44,31 +42,12 @@ const ProfileScreen = ({navigation}) => {
     }
   };
 
-  Userdata
-    ? isFocused
-      ? useEffect(() => {
-          checkBusinessStauts();
-          return () => {
-            setCheckStatus('');
-          };
-        }, [])
-      : useEffect(() => {
-          checkBusinessStauts();
-          return () => {
-            setCheckStatus('');
-          };
-        }, [])
-    : null;
-
-  // const arr = [
-  //   {source:<IconImg />,title:"Personal Details",onPressText:'Personal Details',iconName:"chevron-forward-outline"},
-  //   {source:<Group />,title:"Business Info",onPressText:'Business Infoo',iconName:"chevron-forward-outline"},
-  //   {source:<Service />,title:"Service Info",onPressText:'Service Info',iconName:"chevron-forward-outline"},
-  //   {source:<Settings />,title:"Settings",onPressText:'Settings',iconName:"chevron-forward-outline"},
-  //   {source:<Feedback />,title:"Feedbacks",iconName:"chevron-forward-outline"},
-  //   {source:<Terms />,title:"Terms & Condition",onPressText:'Terms & Condition',iconName:"chevron-forward-outline"},
-  //   {source:<Contact />,title:"Contact Us",onPressText:'Contact Us',iconName:"chevron-forward-outline"},
-  // ]
+  useEffect(() => {
+    checkBusinessStauts();
+    return () => {
+      setCheckStatus('');
+    };
+  }, []);
 
   const backToLogin = () => {
     setNavigationState(navigationStateType.AUTH);

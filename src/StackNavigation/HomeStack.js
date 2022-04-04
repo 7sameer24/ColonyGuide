@@ -32,6 +32,7 @@ import ServiceEdit from '../ProfileComponents/BusinessComponents/ServiceEdit';
 import ServiceSaved from '../ProfileComponents/BusinessComponents/ServiceSaved';
 import Notification from '../Tabs/Notification';
 import AllRoomsHostals from '../Tabs/AllRoomsHostals';
+import BusinessEdit from '../ProfileComponents/BusinessComponents/BusinessEdit';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -205,8 +206,18 @@ const HomeStack = ({navigation}) => {
       <Stack.Screen
         name="ServiceEdit"
         component={ServiceEdit}
-        options={({route}) => ({
-          title: route.params.User,
+        options={() => ({
+          title: 'Service Edit',
+          headerTitleStyle: styles.headerStyle,
+          headerTintColor: COLORS.textColor,
+          headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="BusinessEdit"
+        component={BusinessEdit}
+        options={() => ({
+          title: 'Business Edit',
           headerTitleStyle: styles.headerStyle,
           headerTintColor: COLORS.textColor,
           headerShadowVisible: false,
@@ -239,11 +250,11 @@ const HomeStack = ({navigation}) => {
 };
 function MyTopTabs() {
   const TopTabsArr = [
-    {component: AllRoomsHostals, name: 'All', ID: '1'},
-    {component: RoomsFlats, name: 'Hostel', ID: '2'},
-    {component: RoomsFlats, name: '1 BHK', ID: '3'},
-    {component: RoomsFlats, name: '2 BHK', ID: '4'},
-    {component: RoomsFlats, name: '3 BHK', ID: '5'},
+    {component: AllRoomsHostals, name: 'All', ID: '0'},
+    {component: RoomsFlats, name: 'Hostel', ID: '4'},
+    {component: RoomsFlats, name: '1 BHK', ID: '1'},
+    {component: RoomsFlats, name: '2 BHK', ID: '2'},
+    {component: RoomsFlats, name: '3 BHK', ID: '3'},
   ];
   return (
     <TopTab.Navigator>

@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {Alert, ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBar from '../Components/HeaderBar';
 import {genericStyles} from '../constants';
@@ -21,7 +21,12 @@ const VegetableFruits = ({navigation, route}) => {
           if (response.data.success === true) {
             setData(response.data.service);
           } else {
-            alert(response.data.message);
+            Alert.alert(null, response.data.message, [
+              {
+                text: 'Ok',
+                onPress: () => navigation.goBack(),
+              },
+            ]);
           }
         });
     } catch (error) {
@@ -42,7 +47,7 @@ const VegetableFruits = ({navigation, route}) => {
         firstIcon="arrow-back-outline"
         title={Name}
         // searchIcon="search"
-        bellIcon="filter"
+        // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
@@ -53,8 +58,8 @@ const VegetableFruits = ({navigation, route}) => {
               source={{uri: data.logo_image}}
               index={index}
               key={data.id}
-              title={data.about}
-              subTitle={data.contact_person}
+              title={data.name}
+              subTitle={data.address}
               category={data.categoryName}
               phoneNumber={data.contact_person_mobile}
               WhatsAppNumber={data.contact_person_whatsapp}

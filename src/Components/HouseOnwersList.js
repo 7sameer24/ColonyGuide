@@ -1,9 +1,28 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Share, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
 
 const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `${title} ${subTitle} ${AddressLine} ${Landmark}`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
   return (
     <Card containerStyle={styles.CardContainer}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -19,6 +38,7 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
             type="ionicon"
             color={COLORS.textColor}
             size={20}
+            onPress={() => onShare()}
           />
           <Icon
             name="map-marker-radius"

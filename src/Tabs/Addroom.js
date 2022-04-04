@@ -119,9 +119,9 @@ const Addroom = ({navigation}) => {
       data.append('building_name', Userdata.userData.app_role_id);
       data.append('contact_person', PersonName);
       data.append('category', Category);
-      data.append('room_type_id', Category === 0 ? '' : roomType);
+      data.append('room_type_id', Category === 1 ? 4 : roomType);
       data.append('is_veg', check1 === true ? 1 : 0);
-      data.append('renter_type', 2);
+      data.append('renter_type', 1);
       data.append('address', `${buildFL},${AL1},${AL2},${Landmark}`);
       data.append(
         'logo_image',
@@ -171,6 +171,16 @@ const Addroom = ({navigation}) => {
       setRoomData('');
     };
   }, []);
+
+  const radioHandler = targetState => {
+    const activeState = checkBoxArr.filter(state => state.value === true);
+
+    if (activeState.length !== 0) {
+      activeState[0].setValue(false);
+    }
+
+    targetState(true);
+  };
   return (
     <View style={genericStyles.Container}>
       {roomTypeData.length > 0 ? (
@@ -239,7 +249,9 @@ const Addroom = ({navigation}) => {
                 checkedIcon="dot-circle-o"
                 uncheckedIcon="circle-o"
                 checked={data.value}
-                onPress={() => data.setValue(!data.value)}
+                onPress={() => {
+                  radioHandler(data.setValue);
+                }}
                 checkedColor={COLORS.primary}
                 containerStyle={styles.checkBoxContanier}
                 textStyle={styles.CheckText}

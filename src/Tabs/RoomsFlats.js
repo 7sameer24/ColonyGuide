@@ -4,7 +4,6 @@ import {genericStyles} from '../constants';
 import CardsListed from '../Components/CardsListed';
 import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
 import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
 

@@ -33,7 +33,6 @@ const FeedBacks = ({route}) => {
       });
       setSpinner(false);
       Keyboard.dismiss();
-      // console.log(response.data);
       if (response.data.success === true) {
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
       } else {
@@ -74,6 +73,7 @@ const FeedBacks = ({route}) => {
         <InputComponent
           placeholder="Write here..."
           value={message}
+          multiline={true}
           onChangeText={text => setMessage(text)}
         />
         <ButtonComponent

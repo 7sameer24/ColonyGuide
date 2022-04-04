@@ -4,7 +4,7 @@ import {genericStyles} from '../constants';
 import HeaderBar from '../Components/HeaderBar';
 import HouseOnwersList from '../Components/HouseOnwersList';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
+import ListedAnimation from '../Components/ListedAnimation';
 
 const HouseOwners = ({navigation}) => {
   const [newData, setData] = useState([]);
@@ -32,7 +32,7 @@ const HouseOwners = ({navigation}) => {
         firstIcon="arrow-back-outline"
         title="House Owners"
         // searchIcon="search"
-        bellIcon="filter"
+        // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
@@ -50,7 +50,7 @@ const HouseOwners = ({navigation}) => {
           <View style={genericStyles.height(20)} />
         </ScrollView>
       ) : (
-        <Spinner />
+        <ListedAnimation />
       )}
     </View>
   );

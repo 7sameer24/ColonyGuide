@@ -104,11 +104,7 @@ const BusinessSaved = ({route, navigation}) => {
               type="outline"
               title="Edit"
               onPress={() =>
-                navigation.navigate('ServiceEdit', {
-                  User:
-                    Userdata.app_role_id == 2
-                      ? 'Service Info'
-                      : 'Business Info',
+                navigation.navigate('BusinessEdit', {
                   data: Userdata,
                   token: userToken,
                 })

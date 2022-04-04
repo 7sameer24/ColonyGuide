@@ -2,7 +2,6 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Button, Icon} from 'react-native-elements';
-import {useApp} from '../../../Context/AppContext';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 
@@ -101,10 +100,6 @@ const ServiceSaved = ({route, navigation}) => {
               title="Edit"
               onPress={() =>
                 navigation.navigate('ServiceEdit', {
-                  User:
-                    Userdata.app_role_id == 2
-                      ? 'Service Info'
-                      : 'Business Info',
                   data: Userdata,
                   token: userToken,
                 })

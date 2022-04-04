@@ -1,8 +1,9 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Linking, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
+import Spinner from '../Components/Spinner';
 
 const Helpline = () => {
   const [helpData, setHelpData] = useState('');
@@ -11,7 +12,7 @@ const Helpline = () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-helpline';
       const response = await axios.post(URL);
-      setHelpData(response.data.helpline);
+      setHelpData(response.data.medical);
     } catch (error) {
       console.log(error);
     }
@@ -25,65 +26,67 @@ const Helpline = () => {
 
   return (
     <View style={genericStyles.Container}>
-      <ScrollView>
-        <View style={styles.topTexConyainer}>
-          <Text style={styles.topText}>Medical</Text>
-        </View>
-        <View style={[styles.middComen, {marginBottom: 10}]}>
-          <View style={genericStyles.row}>
-            <Text style={[styles.topText2]}>1.</Text>
-            <Text style={[styles.topText2, {marginRight: 0}]}>Name</Text>
+      {helpData.length > 0 ? (
+        <ScrollView>
+          <View style={styles.topTexConyainer}>
+            <Text style={styles.topText}>Medical</Text>
           </View>
-          <Text style={[styles.topText2, {marginRight: 0}]}>
-            {helpData.department}
-          </Text>
-          <Icon
-            name="phone-outgoing"
-            type="material-community"
-            color="#407BFF"
-            size={20}
-          />
-        </View>
-        <View style={styles.topTexConyainer}>
-          <Text style={styles.topText}>Police</Text>
-        </View>
-        <View style={[styles.middComen, {marginBottom: 10}]}>
-          <View style={genericStyles.row}>
-            <Text style={[styles.topText2]}>1.</Text>
-            <Text style={[styles.topText2, {marginRight: 0}]}>Name</Text>
+          {helpData.map(data => (
+            <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
+              <View style={genericStyles.row}>
+                <Text style={[styles.topText2]}>{data.id}</Text>
+                <Text style={[styles.topText2, {marginRight: 0}]}>
+                  {data.name}
+                </Text>
+              </View>
+              <Text style={[styles.topText2, {marginRight: 0}]}>
+                {data.department}
+              </Text>
+              <Icon
+                name="phone-outgoing"
+                type="material-community"
+                color="#407BFF"
+                size={20}
+                onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
+              />
+            </View>
+          ))}
+          <View style={styles.topTexConyainer}>
+            <Text style={styles.topText}>Police</Text>
           </View>
-          <Text style={[styles.topText2, {marginRight: 0}]}>Department</Text>
-          <Icon
-            name="phone-outgoing"
-            type="material-community"
-            color="#407BFF"
-            size={20}
-          />
-        </View>
-        <View style={styles.topTexConyainer}>
-          <Text style={styles.topText}>Medical</Text>
-        </View>
-        <View style={[styles.midd, {justifyContent: 'flex-start'}]}>
-          <View style={[genericStyles.row, {marginLeft: 40}]}>
-            <Text style={styles.topText2}>SL.</Text>
-            <Text style={[styles.topText2, {marginRight: '19%'}]}>Name</Text>
+          <View style={[styles.middComen, {marginBottom: 10}]}>
+            <View style={genericStyles.row}>
+              <Text style={[styles.topText2]}>1.</Text>
+              <Text style={[styles.topText2, {marginRight: 0}]}>Name</Text>
+            </View>
+            <Text style={[styles.topText2, {marginRight: 0}]}>Department</Text>
+            <Icon
+              name="phone-outgoing"
+              type="material-community"
+              color="#407BFF"
+              size={20}
+            />
           </View>
-          <Text style={[styles.topText2, {marginRight: 0}]}>Department</Text>
-        </View>
-        <View style={styles.middComen}>
-          <View style={genericStyles.row}>
-            <Text style={styles.topText2}>1.</Text>
-            <Text style={[styles.topText2, {marginRight: 0}]}>Name</Text>
+          <View style={styles.topTexConyainer}>
+            <Text style={styles.topText}>Medical</Text>
           </View>
-          <Text style={[styles.topText2, {marginRight: 0}]}>Department</Text>
-          <Icon
-            name="phone-outgoing"
-            type="material-community"
-            color="#407BFF"
-            size={20}
-          />
-        </View>
-      </ScrollView>
+          <View style={styles.middComen}>
+            <View style={genericStyles.row}>
+              <Text style={styles.topText2}>1.</Text>
+              <Text style={[styles.topText2, {marginRight: 0}]}>Name</Text>
+            </View>
+            <Text style={[styles.topText2, {marginRight: 0}]}>Department</Text>
+            <Icon
+              name="phone-outgoing"
+              type="material-community"
+              color="#407BFF"
+              size={20}
+            />
+          </View>
+        </ScrollView>
+      ) : (
+        <Spinner />
+      )}
     </View>
   );
 };

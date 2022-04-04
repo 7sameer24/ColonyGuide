@@ -1,6 +1,4 @@
 import {
-  Image,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,8 +8,8 @@ import {
 import React from 'react';
 import {COLORS, FONTS} from '../constants';
 import {Card} from 'react-native-elements';
-import First from '../../assets/svg/BuildingColor.svg';
 import {useApp} from '../../Context/AppContext';
+import {SvgUri} from 'react-native-svg';
 
 const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
   const {Userdata} = useApp();
@@ -36,7 +34,7 @@ const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
               styles.containerStyle(width, height),
               {...cardContainer},
             ]}>
-            {<First width={38} height={32} />}
+            <SvgUri uri={data.icon} width={30} height={30} />
           </Card>
           <Text style={styles.text} key={data.Id}>
             {data.name}

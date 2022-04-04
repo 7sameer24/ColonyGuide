@@ -25,30 +25,34 @@ const ContactUs = ({route}) => {
   ];
 
   const SendContact = async () => {
-    try {
-      setSpinner(true);
-      const URL = 'https://colonyguide.garimaartgallery.com/api/contact-us';
-      const response = await axios({
-        url: URL,
-        method: 'post',
-        headers: {Authorization: `Bearer ${userToken}`},
-        data: {
-          user_id: userID,
-          mobile_no: mobile,
-          message: message,
-          name: name,
-        },
-      });
-      setSpinner(false);
-      Keyboard.dismiss();
-      if (response.data.success === true) {
-        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+    if (mobile.length < 10 || mobile.length > 10) {
+      ToastAndroid.show('Please check your mobile number. ');
+    } else {
+      try {
+        setSpinner(true);
+        const URL = 'https://colonyguide.garimaartgallery.com/api/contact-us';
+        const response = await axios({
+          url: URL,
+          method: 'post',
+          headers: {Authorization: `Bearer ${userToken}`},
+          data: {
+            user_id: userID,
+            mobile_no: mobile,
+            message: message,
+            name: name,
+          },
+        });
+        setSpinner(false);
+        Keyboard.dismiss();
+        if (response.data.success === true) {
+          ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        setSpinner(false);
+        alert(error);
       }
-    } catch (error) {
-      setSpinner(false);
-      alert(error);
     }
   };
 

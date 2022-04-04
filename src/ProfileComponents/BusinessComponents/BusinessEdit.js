@@ -17,29 +17,27 @@ import DropDownComponent from '../../Components/DropDownComponent';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
-import {useApp} from '../../../Context/AppContext';
 
-const ServiceEdit = ({navigation, route}) => {
+const BusinessEdit = ({navigation, route}) => {
   const {data, token} = route.params;
   const [CategoryData, setCategoryData] = useState('');
-  const [Category, setCategory] = useState(parseInt(data.shop_category));
+  const [Category, setCategory] = useState(parseInt(data.category_id));
   const [imageUp, setImage] = useState('');
   const [spinner, setSpinner] = useState(false);
-  const [ShopBusName, setShopBusName] = useState(data.shop_name);
-  const [PersonName, setPersonName] = useState(data.name);
-  const [WhatsappNo, setWhatsappNo] = useState(data.whatsapp_no);
+  const [ShopBusName, setShopBusName] = useState(data.name);
+  const [PersonName, setPersonName] = useState(data.contact_person);
+  const [WhatsappNo, setWhatsappNo] = useState(data.contact_person_whatsapp);
   const [About, setAbout] = useState(data.about);
   const [buildFL, setBuildFL] = useState('');
   const [AL1, setAL1] = useState('');
   const [AL2, setAL2] = useState('');
   const [Landmark, setLandmark] = useState('');
-  const {setNewData} = useApp();
 
   const idx = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
       const response = await axios.post(URL);
-      setCategoryData(response.data.categories);
+      setCategoryData(response.data.businessCategory);
     } catch (error) {
       console.log(error);
     }
@@ -104,23 +102,27 @@ const ServiceEdit = ({navigation, route}) => {
       {text: 'Gallery', onPress: () => openGallery()},
     ]);
 
-  const SaveDetail = async () => {
+  const businessUpdate = async () => {
     try {
       setSpinner(true);
       const URL =
-        'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
+        'https://colonyguide.garimaartgallery.com/api/update-service-detail';
 
       const SaveData = new FormData();
-      SaveData.append('user_id', data.id);
-      SaveData.append('shop_name', ShopBusName);
-      SaveData.append('full_name', PersonName);
-      SaveData.append('whatsapp_no', WhatsappNo);
+      SaveData.append('user_id', data.user_id);
+      SaveData.append('service_name', ShopBusName);
+      SaveData.append('contact_person', PersonName);
+      SaveData.append('contact_person_mobile', data.contact_person_mobile);
+      SaveData.append('contact_person_whatsapp', WhatsappNo);
       SaveData.append('category_id', Category);
-      SaveData.append('about', About);
-      SaveData.append('address', `${buildFL} ${AL1} ${AL2} ${Landmark}`);
+      SaveData.append('about_service', About);
+      SaveData.append(
+        'business_address',
+        `${buildFL} ${AL1} ${AL2} ${Landmark}`,
+      );
       SaveData.append(
         'logo_image',
-        imageUp !== ''
+        imageUp
           ? {
               uri: imageUp[0].uri,
               type: imageUp[0].type,
@@ -140,7 +142,6 @@ const ServiceEdit = ({navigation, route}) => {
       let response = await res.json();
       setSpinner(false);
       if (response.success === true) {
-        setNewData(response);
         navigation.navigate('Profile');
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {
@@ -177,9 +178,9 @@ const ServiceEdit = ({navigation, route}) => {
               </View>
               <Text style={styles.AddLogoText}>Add image / logo</Text>
             </TouchableOpacity>
-            <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
+            <Text style={styles.BusinessDetails}>Business Details</Text>
             <InputComponent
-              placeholder="Shop / Service name (Optional)"
+              placeholder="Name of business"
               value={ShopBusName}
               autoCapitalize="words"
               onChangeText={text => setShopBusName(text)}
@@ -198,7 +199,7 @@ const ServiceEdit = ({navigation, route}) => {
             />
 
             <DropDownComponent
-              placeholder="Select category"
+              placeholder="Select business type"
               data={CategoryData}
               labelField="name"
               valueField="id"
@@ -207,12 +208,12 @@ const ServiceEdit = ({navigation, route}) => {
               onChange={item => setCategory(item.id)}
             />
             <InputComponent
-              placeholder="About shop or service (Optional)"
+              placeholder="About business (Optional)"
               autoCapitalize="words"
               value={About}
               onChangeText={text => setAbout(text)}
             />
-            <Text style={styles.BusinessDetails}>Shop address</Text>
+            <Text style={styles.BusinessDetails}>Business address</Text>
             <InputComponent
               placeholder="Building / Flat Number"
               value={buildFL}
@@ -242,7 +243,7 @@ const ServiceEdit = ({navigation, route}) => {
             title="Save"
             ButtonContainer={styles.ButtonContainer}
             loading={spinner ? true : false}
-            onPress={() => SaveDetail()}
+            onPress={() => businessUpdate()}
           />
           <Poweredby container={genericStyles.mb(5)} />
         </>
@@ -253,7 +254,7 @@ const ServiceEdit = ({navigation, route}) => {
   );
 };
 
-export default ServiceEdit;
+export default BusinessEdit;
 
 const styles = StyleSheet.create({
   imageConatiner: imageUp => ({

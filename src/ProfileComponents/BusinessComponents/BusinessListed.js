@@ -4,7 +4,7 @@ import {genericStyles} from '../../constants';
 import HeaderBar from '../../Components/HeaderBar';
 import CardsListed from '../../Components/CardsListed';
 import axios from 'axios';
-import Spinner from '../../Components/Spinner';
+import ListedAnimation from '../../Components/ListedAnimation';
 
 const BusinessListed = ({navigation}) => {
   const [newData, setNewData] = useState([]);
@@ -30,7 +30,7 @@ const BusinessListed = ({navigation}) => {
         firstIcon="arrow-back-outline"
         title="Business listed"
         // searchIcon="search"
-        bellIcon="filter"
+        // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
@@ -43,13 +43,15 @@ const BusinessListed = ({navigation}) => {
               key={data.id}
               index={index}
               subTitle={data.contact_person}
-              category="Wholesaler"
+              phoneNumber={data.contact_person_mobile}
+              WhatsAppNumber={data.contact_person_whatsapp}
+              category={data.categoryName}
             />
           ))}
           <View style={genericStyles.height(20)} />
         </ScrollView>
       ) : (
-        <Spinner />
+        <ListedAnimation />
       )}
     </View>
   );
