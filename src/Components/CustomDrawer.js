@@ -8,13 +8,9 @@ import {
 } from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-} from '@react-navigation/drawer';
+import {DrawerContentScrollView} from '@react-navigation/drawer';
 import ProfileComponents from './ProfileComponents';
 import {Divider} from 'react-native-elements';
-import {CommonActions} from '@react-navigation/native';
 import Group from '../../assets/ProfileSvg/Group.svg';
 import Settings from '../../assets/ProfileSvg/settings.svg';
 import Feedback from '../../assets/ProfileSvg/feedback.svg';
@@ -32,7 +28,7 @@ const CustomDrawer = props => {
     useApp();
 
   const removeValue = async () => {
-    const keys = ['UserLogin', 'UserToken', 'BuisnessSaved'];
+    const keys = ['UserLogin', 'UserToken'];
     try {
       await AsyncStorage.multiRemove(keys);
     } catch (e) {
@@ -120,7 +116,7 @@ const CustomDrawer = props => {
             />
             <Divider style={styles.Divider} color="#FFEBD9" width={1} />
             <ProfileComponents
-              title="Settings"
+              title="Change Password"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Settings />}
               onPress={() =>
@@ -205,7 +201,7 @@ const CustomDrawer = props => {
             />
             <Divider style={styles.Divider} color="#FFEBD9" width={1} />
             <ProfileComponents
-              title="Settings"
+              title="Change Password"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Settings />}
               onPress={() => alert('Please Login')}
@@ -262,7 +258,7 @@ const styles = StyleSheet.create({
     borderRadius: 40,
   },
   DrawerIcon: {
-    backgroundColor: '#FEF6EF',
+    backgroundColor: '#F3EBF9',
     padding: 10,
     borderRadius: 7,
   },

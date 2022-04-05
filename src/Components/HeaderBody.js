@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
   TouchableText: {
-    color: COLORS.secondary,
+    color: COLORS.primary,
     fontSize: 16,
     fontFamily: FONTS.InterRegular,
     lineHeight: 19.36,

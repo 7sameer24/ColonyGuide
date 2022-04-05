@@ -1,11 +1,15 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {FONTS} from '../constants';
 
 const Poweredby = ({textStyle, container}) => {
   return (
     <View style={[styles.container, {...container}]}>
-      <Text style={[styles.text, {...textStyle}]}>powered by PHP POETS</Text>
+      <TouchableOpacity
+        style={[styles.text, {...textStyle}]}
+        onPress={() => Linking.openURL('https://www.phppoets.com/')}>
+        <Text>Designed by PHP POETS</Text>
+      </TouchableOpacity>
     </View>
   );
 };

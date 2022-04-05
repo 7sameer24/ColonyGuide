@@ -1,4 +1,11 @@
-import {Keyboard, StyleSheet, Text, ToastAndroid, View} from 'react-native';
+import {
+  Keyboard,
+  Linking,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import InputComponent from '../Components/InputComponent';
@@ -7,7 +14,7 @@ import {Icon} from 'react-native-elements';
 import Poweredby from '../Components/Poweredby';
 import axios from 'axios';
 
-const ContactUs = ({route}) => {
+const ContactUs = ({route, navigation}) => {
   const {userID, userToken} = route.params;
   const [spinner, setSpinner] = useState(false);
   const [message, setMessage] = useState('');
@@ -16,17 +23,20 @@ const ContactUs = ({route}) => {
 
   const text =
     'Please feel free to contact us for any\nquery we will get back to you as soon\nas possible.';
-  const text2 = '73, PHP poets IT solution\nSubhash Nagar 23987';
+  const text2 = '73, PHP POETS IT solution\nSubhash Nagar 23987';
   const arr = [
-    {name: 'logo-facebook'},
-    {name: 'logo-instagram'},
-    {name: 'logo-twitter'},
-    {name: 'logo-linkedin'},
+    {name: 'logo-facebook', url: 'https://www.facebook.com/phppoets/'},
+    {name: 'logo-instagram', url: 'https://www.instagram.com/phppoets/'},
+    {name: 'logo-twitter', url: 'https://www.instagram.com/phppoets/'},
+    {name: 'logo-linkedin', url: 'https://www.linkedin.com/company/phppoets/'},
   ];
 
   const SendContact = async () => {
     if (mobile.length < 10 || mobile.length > 10) {
-      ToastAndroid.show('Please check your mobile number. ');
+      ToastAndroid.show(
+        'Please check your number and try again',
+        ToastAndroid.SHORT,
+      );
     } else {
       try {
         setSpinner(true);
@@ -45,6 +55,7 @@ const ContactUs = ({route}) => {
         setSpinner(false);
         Keyboard.dismiss();
         if (response.data.success === true) {
+          navigation.navigate('Homee');
           ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
         } else {
           ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
@@ -99,11 +110,12 @@ const ContactUs = ({route}) => {
             color={COLORS.primary}
             key={data.name}
             raised
+            onPress={() => Linking.openURL(data.url)}
             containerStyle={genericStyles.shadow}
           />
         ))}
       </View>
-      <Poweredby container={genericStyles.selfCenter} />
+      <Poweredby />
     </View>
   );
 };
@@ -117,14 +129,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     color: COLORS.textColor,
     textAlign: 'left',
-    marginBottom: 20,
+    marginBottom: 15,
   },
   Container: {
     marginTop: 10,
-    marginBottom: 40,
+    marginBottom: 20,
   },
   Container2: {
-    marginTop: 50,
+    marginTop: 30,
     marginBottom: 20,
     marginHorizontal: 20,
   },
@@ -145,6 +157,5 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: 20,
   },
 });

@@ -12,6 +12,9 @@ import {ScrollView} from 'react-native-gesture-handler';
 const ServiceInfo = ({navigation, route}) => {
   const {userID, Role} = route.params;
   const [data, setUserData] = useState('');
+  const [check, setCheck] = useState('');
+
+  console.log(check);
 
   const idx = async () => {
     try {
@@ -24,7 +27,7 @@ const ServiceInfo = ({navigation, route}) => {
       if (response.data.success === true) {
         setUserData(response.data.data);
       } else {
-        alert(response.data.message);
+        setCheck(response.data.success);
       }
     } catch (error) {
       console.log(error);
@@ -41,24 +44,33 @@ const ServiceInfo = ({navigation, route}) => {
   return (
     <View style={genericStyles.Container}>
       <>
-        {data.length > 0 ? (
-          <ScrollView>
-            {data.map((newData, index) => (
-              <CardsListed
-                key={newData.id}
-                index={index}
-                category={newData.category_id}
-                subTitle={newData.address}
-                title={newData.name}
-                phoneNumber={data.contact_person_mobile}
-                WhatsAppNumber={data.contact_person_whatsapp}
-                source={{uri: newData.logo_image}}
-              />
-            ))}
-            <View style={genericStyles.mb(10)} />
-          </ScrollView>
+        {check === false ? (
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            <Text style={styles.text}>Data not found</Text>
+          </View>
         ) : (
-          <Spinner />
+          <>
+            {data.length > 0 ? (
+              <ScrollView>
+                {data.map((newData, index) => (
+                  <CardsListed
+                    key={newData.id}
+                    index={index}
+                    category={newData.categoryName}
+                    subTitle={newData.address}
+                    title={newData.name}
+                    phoneNumber={data.contact_person_mobile}
+                    WhatsAppNumber={data.contact_person_whatsapp}
+                    source={{uri: newData.logo_image}}
+                  />
+                ))}
+                <View style={genericStyles.mb(10)} />
+              </ScrollView>
+            ) : (
+              <Spinner />
+            )}
+          </>
         )}
       </>
       <ButtonComponent
@@ -92,5 +104,10 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     width: '80%',
     textAlign: 'left',
+  },
+  text: {
+    fontSize: 14,
+    color: '#666666',
+    fontFamily: FONTS.InterMedium,
   },
 });

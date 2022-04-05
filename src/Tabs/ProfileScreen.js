@@ -42,12 +42,14 @@ const ProfileScreen = ({navigation}) => {
     }
   };
 
-  useEffect(() => {
-    checkBusinessStauts();
-    return () => {
-      setCheckStatus('');
-    };
-  }, []);
+  Userdata === null
+    ? null
+    : useEffect(() => {
+        checkBusinessStauts();
+        return () => {
+          setCheckStatus('');
+        };
+      }, []);
 
   const backToLogin = () => {
     setNavigationState(navigationStateType.AUTH);
@@ -172,7 +174,7 @@ const ProfileScreen = ({navigation}) => {
             }
             iconName="chevron-forward-outline"
             IconSvg={<Settings />}
-            title="Settings"
+            title="Change Password"
           />
           <Divider style={styles.Divider} color="#FFEBD9" width={1} />
           <ProfileComponents
@@ -203,7 +205,8 @@ const ProfileScreen = ({navigation}) => {
             IconSvg={<Contact />}
             title="Contact Us"
           />
-          <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+          <Divider style={styles.Divider2} color="#FFEBD9" width={1} />
+          <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       ) : (
         <ScrollView>
@@ -224,14 +227,12 @@ const ProfileScreen = ({navigation}) => {
             title="Personal Details"
             onPress={() => alert('Please Login')}
           />
-
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Group />}
             title="Business Information"
             onPress={() => alert('Please Login')}
           />
-
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Service />}
@@ -239,11 +240,10 @@ const ProfileScreen = ({navigation}) => {
             onPress={() => alert('Please Login')}
           />
           <Divider style={styles.Divider} color="#FFEBD9" width={1} />
-
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Settings />}
-            title="Settings"
+            title="Change Password"
             onPress={() => alert('Please Login')}
           />
           <Divider style={styles.Divider} color="#FFEBD9" width={1} />
@@ -265,10 +265,10 @@ const ProfileScreen = ({navigation}) => {
             title="Contact Us"
             onPress={() => alert('Please Login')}
           />
-          <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+          <Divider style={styles.Divider2} color="#FFEBD9" width={1} />
+          <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       )}
-      <Poweredby />
     </View>
   );
 };
@@ -277,7 +277,7 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   ProfileContanier: {
-    marginTop: 10,
+    // marginTop: 10,
   },
   title: {
     color: COLORS.textColor,
@@ -294,12 +294,17 @@ const styles = StyleSheet.create({
     color: '#666666',
     fontSize: 14,
     fontFamily: FONTS.InterMedium,
-    marginBottom: 25,
+    marginBottom: 15,
     alignSelf: 'center',
   },
   Divider: {
     marginLeft: 22,
     marginTop: 20,
+  },
+  Divider2: {
+    marginLeft: 22,
+    marginTop: 20,
+    marginBottom: 30,
   },
   ImageStyle: {
     width: 70,

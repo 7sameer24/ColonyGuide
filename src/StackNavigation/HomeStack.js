@@ -33,6 +33,7 @@ import ServiceSaved from '../ProfileComponents/BusinessComponents/ServiceSaved';
 import Notification from '../Tabs/Notification';
 import AllRoomsHostals from '../Tabs/AllRoomsHostals';
 import BusinessEdit from '../ProfileComponents/BusinessComponents/BusinessEdit';
+import HostelListed from '../Tabs/HostelListed';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -62,6 +63,7 @@ const HomeStack = ({navigation}) => {
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
+      title: 'Change Password',
     },
     {
       name: 'Contact Us',
@@ -251,7 +253,7 @@ const HomeStack = ({navigation}) => {
 function MyTopTabs() {
   const TopTabsArr = [
     {component: AllRoomsHostals, name: 'All', ID: '0'},
-    {component: RoomsFlats, name: 'Hostel', ID: '4'},
+    {component: HostelListed, name: 'Hostel', ID: '4'},
     {component: RoomsFlats, name: '1 BHK', ID: '1'},
     {component: RoomsFlats, name: '2 BHK', ID: '2'},
     {component: RoomsFlats, name: '3 BHK', ID: '3'},

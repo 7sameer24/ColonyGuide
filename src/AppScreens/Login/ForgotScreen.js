@@ -48,7 +48,7 @@ const ForgotScreen = ({navigation}) => {
   return (
     <ScrollView style={genericStyles.Container}>
       <HeaderBody
-        Skip="Skip to home"
+        Skip="Skip"
         title="Forgot Password"
         subTitle="Please enter your mobile number associated 
 with your account"

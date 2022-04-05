@@ -56,7 +56,7 @@ const HomeScreen = ({navigation}) => {
           <>
             <SliderBox
               images={images}
-              sliderBoxHeight={120}
+              sliderBoxHeight={150}
               dotColor="#fff"
               inactiveDotColor={COLORS.transparent}
               autoplay

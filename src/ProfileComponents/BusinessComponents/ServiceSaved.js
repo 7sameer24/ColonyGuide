@@ -8,6 +8,7 @@ import Spinner from '../../Components/Spinner';
 const ServiceSaved = ({route, navigation}) => {
   const {userID, userToken} = route.params;
   const [Userdata, setUserData] = useState('');
+
   const idx = async () => {
     try {
       const URL =
@@ -66,7 +67,7 @@ const ServiceSaved = ({route, navigation}) => {
                   size={20}
                   color="#A484FF"
                 />
-                <Text style={styles.text}>{Userdata.shop_category}</Text>
+                <Text style={styles.text}>{Userdata.categoryName}</Text>
               </View>
             </View>
             <View style={genericStyles.row}>

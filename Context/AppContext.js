@@ -16,13 +16,11 @@ const AppContext = ({children}) => {
 
   const [Userdata, setNewData] = useState(null);
   const [UserToken, setUserToken] = useState(null);
-  const [BusAdd, setIsBusAdd] = useState(null);
   const [checkStatus, setCheckStatus] = useState('');
 
   useEffect(() => {
     const saveDetail = async () => {
       await AsyncStorage.setItem('UserLogin', JSON.stringify(Userdata));
-      await AsyncStorage.setItem('BuisnessSaved', JSON.stringify(BusAdd));
       await AsyncStorage.setItem('UserToken', JSON.stringify(UserToken));
     };
     saveDetail();
@@ -32,19 +30,17 @@ const AppContext = ({children}) => {
     } else if (navigationStateType.LOADING !== navigationState) {
       setNavigationState(navigationStateType.AUTH);
     }
-  }, [Userdata, UserToken, BusAdd]);
+  }, [Userdata, UserToken]);
 
   return (
     <App.Provider
       value={{
         Userdata,
         UserToken,
-        BusAdd,
         navigationState,
         checkStatus,
         setNavigationState,
         setCheckStatus,
-        setIsBusAdd,
         setNewData,
         setUserToken,
       }}>

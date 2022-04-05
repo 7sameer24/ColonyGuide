@@ -1,16 +1,16 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {genericStyles} from '../constants';
+import {FONTS, genericStyles} from '../constants';
 import CardsListed from '../Components/CardsListed';
 import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
 import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
 
 const AllRoomsHostals = ({navigation}) => {
   const {Userdata} = useApp();
   const [newData, setData] = useState([]);
+  const [check, setCheck] = useState('');
 
   const idx = async () => {
     try {
@@ -20,7 +20,8 @@ const AllRoomsHostals = ({navigation}) => {
       if (response.data.success === true) {
         setData(response.data.data);
       } else {
-        alert(response.data.message);
+        setCheck(response.data.success);
+        console.log(response.data);
       }
     } catch (error) {
       console.log(error);
@@ -35,23 +36,34 @@ const AllRoomsHostals = ({navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
-      {newData.length > 0 ? (
-        <ScrollView style={genericStyles.mt(5)}>
-          {newData.map((data, index) => (
-            <CardsListed
-              key={data.id}
-              title={data.building_name}
-              subTitle={data.contact_person}
-              category={data.category}
-              source={{uri: data.logo_image}}
-              index={index}
-            />
-          ))}
-          <View style={genericStyles.height(80)} />
-        </ScrollView>
-      ) : (
-        <ListedAnimation />
-      )}
+      <>
+        {check === false ? (
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            <Text style={styles.text}>Data not found</Text>
+          </View>
+        ) : (
+          <ScrollView style={genericStyles.mt(5)}>
+            {newData.length > 0 ? (
+              <>
+                {newData.map((data, index) => (
+                  <CardsListed
+                    key={data.id}
+                    title={data.building_name}
+                    subTitle={data.contact_person}
+                    category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
+                    source={{uri: data.logo_image}}
+                    index={index}
+                  />
+                ))}
+              </>
+            ) : (
+              <ListedAnimation />
+            )}
+            <View style={genericStyles.height(80)} />
+          </ScrollView>
+        )}
+      </>
       {Userdata !== null ? (
         Userdata.userData.app_role_id === 3 ? (
           <ButtonComponent
@@ -72,5 +84,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 10,
     width: '90.7%',
+  },
+  text: {
+    fontSize: 14,
+    color: '#666666',
+    fontFamily: FONTS.InterMedium,
   },
 });

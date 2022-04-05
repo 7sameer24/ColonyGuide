@@ -45,8 +45,6 @@ const ProfileSettings = ({route}) => {
   return (
     <View style={genericStyles.Container}>
       <View>
-        <Text style={styles.title}>Change Password</Text>
-        <Text style={styles.subTitle}>Enter a strong password</Text>
         <InputComponent
           placeholder="Old password"
           iconName="lock-closed"

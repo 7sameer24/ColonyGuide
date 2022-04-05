@@ -52,11 +52,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginTop: 25,
+    marginTop: 20,
   },
   containerStyle: (width, height) => ({
     width: width / 6.3,
-    height: height / 13,
+    height: height / 15,
     borderRadius: 10,
     borderWidth: 1,
     marginHorizontal: 15,

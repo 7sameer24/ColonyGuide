@@ -44,6 +44,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.InterRegular,
     marginHorizontal: 30,
-    marginTop: 30,
+    marginTop: 10,
   },
 });

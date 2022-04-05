@@ -253,7 +253,10 @@ const Addroom = ({navigation}) => {
                   radioHandler(data.setValue);
                 }}
                 checkedColor={COLORS.primary}
-                containerStyle={styles.checkBoxContanier}
+                containerStyle={[
+                  styles.checkBoxContanier,
+                  {marginLeft: 10, marginRight: 0},
+                ]}
                 textStyle={styles.CheckText}
               />
             ))}

@@ -196,7 +196,7 @@ const EditProfile = ({route, navigation}) => {
             activeOpacity={0.8}
             onPress={() => createThreeButtonAlert()}>
             <Image
-              source={imageUp ? imageUp : {uri: data.profile_image}}
+              source={imageUp ? Images.Ellipse : {uri: data.profile_image}}
               style={styles.ImageStyle}
             />
             <View style={styles.ImageContainer}>
@@ -255,6 +255,7 @@ const EditProfile = ({route, navigation}) => {
                 ))}
                 <Text style={styles.text}>Locality</Text>
                 <DropDownComponent
+                  maxHeight={60}
                   data={localData}
                   placeholder="Locality"
                   value={LocalityValue}

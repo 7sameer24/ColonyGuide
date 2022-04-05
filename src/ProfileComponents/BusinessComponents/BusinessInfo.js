@@ -25,12 +25,12 @@ const BusinessInfo = ({navigation}) => {
       </Text>
       <ButtonComponent
         title="Add Your Business"
-        ButtonContainer={genericStyles.mt('50%')}
+        ButtonContainer={{position: 'absolute', bottom: 40, width: '90%'}}
         onPress={() =>
           navigation.navigate('Business Details', {User: 'Business Info'})
         }
       />
-      <Poweredby container={genericStyles.mb(20)} />
+      <Poweredby />
     </View>
   );
 };

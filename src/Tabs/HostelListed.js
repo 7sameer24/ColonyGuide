@@ -7,20 +7,18 @@ import axios from 'axios';
 import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
 
-const RoomsFlats = ({navigation, route}) => {
+const HostelListed = ({navigation, route}) => {
   const {Userdata} = useApp();
   const [newData, setData] = useState([]);
   const [check, setCheck] = useState('');
-  console.log(check);
 
   const idx = async () => {
     try {
       const URL =
-        'https://colonyguide.garimaartgallery.com/api/filtered-room-hostel-list';
+        'https://colonyguide.garimaartgallery.com/api/filtered-by-hostel';
       const response = await axios.post(URL, {room_type_id: route.name});
       if (response.data.success === true) {
         setData(response.data.data);
-        // setCheck(response.data.success);
       } else {
         setCheck(response.data.success);
         console.log(response.data);
@@ -39,27 +37,34 @@ const RoomsFlats = ({navigation, route}) => {
 
   return (
     <View style={genericStyles.Container}>
-      {check === false ? (
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Text style={styles.text}>Data not found</Text>
-        </View>
-      ) : (
-        <>
+      <>
+        {check === false ? (
+          <View
+            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
+            <Text style={styles.text}>Data not found</Text>
+          </View>
+        ) : (
           <ScrollView style={genericStyles.mt(5)}>
-            {newData.map((data, index) => (
-              <CardsListed
-                key={data.id}
-                title={data.building_name}
-                subTitle={data.contact_person}
-                category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
-                source={{uri: data.logo_image}}
-                index={index}
-              />
-            ))}
+            {newData.length > 0 ? (
+              <>
+                {newData.map((data, index) => (
+                  <CardsListed
+                    key={data.id}
+                    title={data.building_name}
+                    subTitle={data.contact_person}
+                    category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
+                    source={{uri: data.logo_image}}
+                    index={index}
+                  />
+                ))}
+              </>
+            ) : (
+              <ListedAnimation />
+            )}
             <View style={genericStyles.height(80)} />
           </ScrollView>
-        </>
-      )}
+        )}
+      </>
 
       {Userdata !== null ? (
         Userdata.userData.app_role_id === 3 ? (
@@ -74,7 +79,7 @@ const RoomsFlats = ({navigation, route}) => {
   );
 };
 
-export default RoomsFlats;
+export default HostelListed;
 
 const styles = StyleSheet.create({
   ButtonContainer: {

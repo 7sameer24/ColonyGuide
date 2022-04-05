@@ -1,4 +1,4 @@
-import {Alert, ScrollView, StyleSheet, View} from 'react-native';
+import {Alert, ScrollView, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBar from '../Components/HeaderBar';
 import {genericStyles} from '../constants';
@@ -75,5 +75,3 @@ const VegetableFruits = ({navigation, route}) => {
 };
 
 export default VegetableFruits;
-
-const styles = StyleSheet.create({});

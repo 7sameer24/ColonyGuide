@@ -7,7 +7,7 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {COLORS} from '../constants';
+import {COLORS, FONTS} from '../constants';
 import {Card} from 'react-native-elements';
 import First from '../../assets/svg/Building.svg';
 import Second from '../../assets/svg/Vector-1.svg';
@@ -20,24 +20,28 @@ const FourList = ({navigation}) => {
 
   const arr = [
     {
-      image: <First width={38} height={32} />,
+      image: <First width={30} height={30} />,
       Id: 1,
       navigation: 'Rooms/Flats',
+      name: 'Rooms/Flats',
     },
     {
-      image: <Third width={38} height={32} />,
+      image: <Third width={30} height={30} />,
       Id: 2,
       navigation: 'House Owners',
+      name: 'House Owners',
     },
     {
-      image: <Four width={32} height={30} />,
+      image: <Four width={30} height={30} />,
       Id: 3,
       navigation: 'Business listed',
+      name: 'Business listed',
     },
     {
-      image: <Second width={38} height={32} />,
+      image: <Second width={30} height={30} />,
       Id: 4,
       navigation: 'Helpline',
+      name: 'Helpline',
     },
   ];
   const {width, height} = useWindowDimensions();
@@ -56,6 +60,9 @@ const FourList = ({navigation}) => {
           <Card containerStyle={styles.containerStyle(width, height)}>
             {data.image}
           </Card>
+          <Text style={styles.text} key={data.Id}>
+            {data.name}
+          </Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
   },
   containerStyle: (width, height) => ({
     width: width / 6.1,
-    height: height / 12.5,
+    height: height / 15,
     borderRadius: 10,
     borderWidth: 0,
     marginHorizontal: 14,
@@ -86,5 +93,13 @@ const styles = StyleSheet.create({
   imageStyle: {
     width: 30,
     height: 30,
+  },
+  text: {
+    textAlign: 'center',
+    fontSize: 11,
+    fontFamily: FONTS.InterMedium,
+    color: COLORS.textColor,
+    marginTop: 5,
+    alignSelf: 'center',
   },
 });

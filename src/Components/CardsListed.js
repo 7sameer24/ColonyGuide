@@ -97,7 +97,7 @@ const CardsListed = ({
                 color="#407BFF"
                 size={17}
                 onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
-                containerStyle={genericStyles.mr(20)}
+                containerStyle={genericStyles.mr(15)}
               />
               <Icon
                 name="whatsapp"
@@ -105,12 +105,13 @@ const CardsListed = ({
                 size={17}
                 color="#25D366"
                 onPress={() => sendWhatsApp()}
-                containerStyle={genericStyles.mr(20)}
+                containerStyle={genericStyles.mr(15)}
               />
               <Icon
                 name="map-marker-radius"
                 type="material-community"
                 size={17}
+                containerStyle={genericStyles.mr(15)}
                 color={COLORS.textColor}
               />
             </View>
@@ -129,11 +130,13 @@ const styles = StyleSheet.create({
     elevation: 5,
     borderRadius: 10,
     marginHorizontal: 20,
+    paddingHorizontal: 10,
   },
   ImageStyle: {
-    width: 64,
-    height: 64,
+    width: 54,
+    height: 54,
     borderRadius: 10,
+    alignSelf: 'center',
   },
   View: {
     flexDirection: 'column',

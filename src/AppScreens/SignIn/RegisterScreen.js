@@ -50,11 +50,17 @@ const RegisterScreen = ({navigation, route}) => {
             setSpinner(false);
             if (response.data.success === true) {
               ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
-              navigation.navigate('Otp', {DATA: response.data});
+              navigation.navigate('Otp', {
+                DATA: response.data,
+                userMobile: mobileNo,
+              });
             } else {
               if (response.data.otp_status === false) {
                 ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
-                navigation.navigate('Otp', {DATA: response.data});
+                navigation.navigate('Otp', {
+                  DATA: response.data,
+                  userMobile: mobileNo,
+                });
               } else {
                 ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
               }
@@ -77,7 +83,7 @@ const RegisterScreen = ({navigation, route}) => {
         <HeaderBody
           title="Create Account"
           subTitle="Sign Up to continue"
-          Skip="Skip to home"
+          Skip="Skip"
           Icon={<ImgIcon />}
           touchableOpacityStyle={genericStyles.mb(30)}
           subTitleStyle={genericStyles.mb(10)}

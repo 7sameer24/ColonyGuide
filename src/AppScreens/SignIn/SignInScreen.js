@@ -1,4 +1,10 @@
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Dimensions,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {Button} from 'react-native-elements';
@@ -10,6 +16,7 @@ import {navigationStateType, useApp} from '../../../Context/AppContext';
 
 const SignInScreen = ({navigation}) => {
   const [newData, setNewData] = useState([]);
+  const {width, height} = Dimensions.get('window');
 
   const {setNavigationState} = useApp();
 
@@ -40,10 +47,10 @@ const SignInScreen = ({navigation}) => {
           <TouchableOpacity
             style={styles.TouchableOpacity}
             onPress={() => skipToHome()}>
-            <Text style={styles.TouchableText}>Skip to home</Text>
+            <Text style={styles.TouchableText}>Skip</Text>
           </TouchableOpacity>
           <View style={styles.imageStyle}>
-            <ImgIcon width={304.52} height={226.91} />
+            <ImgIcon height={height / 3.5} />
             <Text style={styles.text}>Select your role</Text>
           </View>
           {newData.map(data => (
@@ -72,7 +79,7 @@ const SignInScreen = ({navigation}) => {
               }
             />
           ))}
-          <Poweredby textStyle={genericStyles.mt(0)} />
+          <Poweredby />
         </>
       ) : (
         <Spinner />
@@ -95,7 +102,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   TouchableText: {
-    color: COLORS.secondary,
+    color: COLORS.primary,
     fontSize: 16,
     fontFamily: FONTS.InterRegular,
     lineHeight: 19.36,
@@ -112,7 +119,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterSemiBold,
   },
   buttonStyle1: {
-    paddingVertical: 20,
+    paddingVertical: 15,
     backgroundColor: COLORS.transparent,
   },
   ButtonContainer1: {
@@ -124,7 +131,7 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     backgroundColor: COLORS.primary,
-    paddingVertical: 20,
+    paddingVertical: 15,
   },
   ButtonContainer: {
     marginHorizontal: 20,

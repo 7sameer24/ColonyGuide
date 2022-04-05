@@ -1,4 +1,5 @@
 import {
+  Dimensions,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -20,6 +21,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 
 const LoginScreen = ({navigation}) => {
+  const {width, height} = Dimensions.get('window');
+
   const [check1, setCheck1] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -116,9 +119,9 @@ const LoginScreen = ({navigation}) => {
       <ScrollView>
         <HeaderBody
           title="Welcome back!"
-          subTitle="Log In to continue"
-          Icon={<LoginLogo />}
-          Skip="Skip to home"
+          subTitle="Log in to continue"
+          Icon={<LoginLogo height={height / 3.5} />}
+          Skip="Skip"
           onPress={() => skipToHome()}
         />
         <View style={genericStyles.mb(10)}>

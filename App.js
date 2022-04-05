@@ -6,6 +6,7 @@ import axios from 'axios';
 
 const App = () => {
   const [checkVersion, setVersion] = useState('');
+  console.log(checkVersion.android_v);
 
   const fetchVersion = async () => {
     try {
@@ -23,7 +24,7 @@ const App = () => {
 
   return (
     <AppContext>
-      {checkVersion.force_update === 0 ? alert('Please Update') : <MainStack />}
+      {checkVersion.android_v === '1' ? <MainStack /> : alert('Please Update')}
     </AppContext>
   );
 };

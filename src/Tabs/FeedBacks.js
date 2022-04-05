@@ -7,7 +7,7 @@ import ButtonComponent from '../Components/ButtonComponent';
 import Poweredby from '../Components/Poweredby';
 import axios from 'axios';
 
-const FeedBacks = ({route}) => {
+const FeedBacks = ({route, navigation}) => {
   const {ID, token} = route.params;
   const [star, setStar] = useState(null);
   const [PersonName, setPersonName] = useState('');
@@ -34,6 +34,7 @@ const FeedBacks = ({route}) => {
       setSpinner(false);
       Keyboard.dismiss();
       if (response.data.success === true) {
+        navigation.navigate('Homee');
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
       } else {
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT);

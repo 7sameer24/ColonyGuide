@@ -10,7 +10,7 @@ import axios from 'axios';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 
 const OtpScreen = ({route, navigation}) => {
-  const {DATA} = route.params;
+  const {DATA, userMobile} = route.params;
   const [first, setFirst] = useState('');
   const [second, setSecond] = useState('');
   const [third, setThird] = useState('');
@@ -21,7 +21,7 @@ const OtpScreen = ({route, navigation}) => {
   const thirdInput = useRef(null);
   const LastInput = useRef(null);
   const {setNewData, setUserToken, setNavigationState} = useApp();
-
+  console.log(userMobile);
   const checkOtp = async () => {
     let idx = `${first}${second}${third}${last}`;
     try {
@@ -60,17 +60,32 @@ const OtpScreen = ({route, navigation}) => {
       alert(error);
     }
   };
+
+  const resendOtp = async () => {
+    try {
+      const URL = 'https://colonyguide.garimaartgallery.com/api/resend-otp';
+      const response = await axios.post(URL, {
+        mobile_no: userMobile,
+      });
+      console.log(response.data);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <View style={styles.Container}>
       <ScrollView>
         <View style={styles.ViewContainer}>
-          <ImgIcon />
+          <View style={genericStyles.selfCenter}>
+            <ImgIcon />
+          </View>
           <Text style={styles.text}>OTP Verification</Text>
           <Text style={styles.subText}>
-            Enter the otp sent to the mobile number
+            Enter the OTP sent to the mobile number
           </Text>
           <Text style={styles.subText}>+91-xxx-xxxx-xxx</Text>
-          <Text style={styles.subText}>Your Otp : {DATA.otp}</Text>
+          <Text style={styles.subText}>Your OTP : {DATA.otp}</Text>
         </View>
 
         <View style={styles.InputView}>
@@ -151,7 +166,7 @@ const OtpScreen = ({route, navigation}) => {
           onPress={() => checkOtp()}
           loading={spinner ? true : false}
         />
-        <FooterButton title="Resend OTP" />
+        <FooterButton title="Resend OTP" onPress={() => resendOtp()} />
       </ScrollView>
     </View>
   );
