@@ -19,6 +19,7 @@ const CardsListed = ({
   index,
   phoneNumber,
   WhatsAppNumber,
+  GeoLocation,
 }) => {
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
@@ -49,11 +50,13 @@ const CardsListed = ({
     }
   };
 
+  const geolocation = GeoLocation.split(',');
+
   return (
     <Card
       containerStyle={[
         styles.CardContainer,
-        {backgroundColor: alternatingColor[index % alternatingColor.length]},
+        // {backgroundColor: alternatingColor[index % alternatingColor.length]},
       ]}>
       <View style={genericStyles.row}>
         <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
@@ -61,32 +64,34 @@ const CardsListed = ({
           <Text
             style={[
               styles.title,
-              {
-                color:
-                  alternatingTextColor[index % alternatingTextColor.length],
-              },
+              // {
+              //   color:
+              //     alternatingTextColor[index % alternatingTextColor.length],
+              // },
             ]}
             numberOfLines={1}>
             {title}
           </Text>
           <Text
             style={[
-              styles.subTitle,
-              {
-                color:
-                  alternatingTextColor[index % alternatingTextColor.length],
-              },
-            ]}>
+              styles.subTitle1,
+              // {
+              //   color:
+              //     alternatingTextColor[index % alternatingTextColor.length],
+              // },
+            ]}
+            numberOfLines={1}>
             {subTitle}
           </Text>
           <View style={styles.View2}>
             <Text
+              numberOfLines={1}
               style={[
                 styles.subTitle,
-                {
-                  color:
-                    alternatingTextColor[index % alternatingTextColor.length],
-                },
+                // {
+                //   color:
+                //     alternatingTextColor[index % alternatingTextColor.length],
+                // },
               ]}>
               {category}
             </Text>
@@ -111,6 +116,9 @@ const CardsListed = ({
                 name="map-marker-radius"
                 type="material-community"
                 size={17}
+                onPress={() =>
+                  Linking.openURL(`geo:${geolocation[0]},${geolocation[1]}`)
+                }
                 containerStyle={genericStyles.mr(15)}
                 color={COLORS.textColor}
               />
@@ -157,6 +165,12 @@ const styles = StyleSheet.create({
     width: 250,
   },
   subTitle: {
+    fontSize: 12,
+    fontFamily: FONTS.InterRegular,
+    color: '#7D7D7D',
+  },
+  subTitle1: {
+    width: 250,
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',

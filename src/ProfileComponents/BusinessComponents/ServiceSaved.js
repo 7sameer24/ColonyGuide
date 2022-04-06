@@ -31,6 +31,7 @@ const ServiceSaved = ({route, navigation}) => {
       setUserData('');
     };
   }, []);
+
   return (
     <View style={genericStyles.Container}>
       {Userdata !== '' ? (
@@ -89,7 +90,7 @@ const ServiceSaved = ({route, navigation}) => {
               Shop address
             </Text>
             <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-              {Userdata.address}
+              {`${Userdata.house_no} ${Userdata.address} ${Userdata.landmark}`}
             </Text>
           </View>
           <View style={styles.buttonView}>

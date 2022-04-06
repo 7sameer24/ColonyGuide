@@ -58,7 +58,7 @@ const ServiceInfo = ({navigation, route}) => {
                     key={newData.id}
                     index={index}
                     category={newData.categoryName}
-                    subTitle={newData.address}
+                    subTitle={`${newData.house_no} ${newData.address} ${newData.landmark}`}
                     title={newData.name}
                     phoneNumber={data.contact_person_mobile}
                     WhatsAppNumber={data.contact_person_whatsapp}

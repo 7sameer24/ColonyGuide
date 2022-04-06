@@ -17,6 +17,7 @@ const AppContext = ({children}) => {
   const [Userdata, setNewData] = useState(null);
   const [UserToken, setUserToken] = useState(null);
   const [checkStatus, setCheckStatus] = useState('');
+  const [checkVersion, setVersion] = useState([]);
 
   useEffect(() => {
     const saveDetail = async () => {
@@ -24,7 +25,6 @@ const AppContext = ({children}) => {
       await AsyncStorage.setItem('UserToken', JSON.stringify(UserToken));
     };
     saveDetail();
-
     if (UserToken) {
       setNavigationState(navigationStateType.HOME);
     } else if (navigationStateType.LOADING !== navigationState) {
@@ -39,8 +39,10 @@ const AppContext = ({children}) => {
         UserToken,
         navigationState,
         checkStatus,
+        checkVersion,
         setNavigationState,
         setCheckStatus,
+        setVersion,
         setNewData,
         setUserToken,
       }}>

@@ -93,7 +93,7 @@ const BusinessSaved = ({route, navigation}) => {
               Business address
             </Text>
             <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-              {Userdata.address}
+              {`${Userdata.house_no} ${Userdata.address} ${Userdata.landmark}`}
             </Text>
           </View>
           <View style={styles.buttonView}>

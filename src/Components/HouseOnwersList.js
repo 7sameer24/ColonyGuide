@@ -7,7 +7,7 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: `${title} ${subTitle} ${AddressLine} ${Landmark}`,
+        message: `Colony Guide Sharing This ${title} ${subTitle} ${AddressLine} ${Landmark}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -27,10 +27,18 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
     <Card containerStyle={styles.CardContainer}>
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View style={genericStyles.column}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subTitle}>{subTitle}</Text>
-          <Text style={styles.subTitle}>{AddressLine}</Text>
-          <Text style={styles.subTitle}>{Landmark}</Text>
+          <Text style={styles.title} numberOfLines={1}>
+            {title}
+          </Text>
+          <Text style={styles.subTitle} numberOfLines={1}>
+            {subTitle}
+          </Text>
+          <Text style={styles.subTitle} numberOfLines={1}>
+            {AddressLine}
+          </Text>
+          <Text style={styles.subTitle} numberOfLines={1}>
+            {Landmark}
+          </Text>
         </View>
         <View style={{flexDirection: 'column', justifyContent: 'space-evenly'}}>
           <Icon
@@ -66,11 +74,13 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
+    width: 250,
   },
   subTitle: {
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
     marginTop: 2,
+    width: 250,
   },
 });

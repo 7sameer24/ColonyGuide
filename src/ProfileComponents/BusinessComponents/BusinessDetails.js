@@ -33,7 +33,6 @@ const BusinessDetails = ({navigation, route}) => {
   const [About, setAbout] = useState('');
   const [buildFL, setBuildFL] = useState('');
   const [AL1, setAL1] = useState('');
-  const [AL2, setAL2] = useState('');
   const [Landmark, setLandmark] = useState('');
 
   const idx = async () => {
@@ -121,7 +120,9 @@ const BusinessDetails = ({navigation, route}) => {
       data.append('contact_person_whatsapp', WhatsappNo);
       data.append('category_id', Category);
       data.append('about_service', About);
-      data.append('business_address', `${buildFL} ${AL1} ${AL2} ${Landmark}`);
+      data.append('house_no', buildFL);
+      data.append('landmark', Landmark);
+      data.append('business_address', AL1);
       data.append(
         'logo_image',
         imageUp !== ''
@@ -226,7 +227,7 @@ const BusinessDetails = ({navigation, route}) => {
               labelField="name"
               valueField="id"
               value={Category}
-              maxHeight={200}
+              maxHeight={100}
               onChange={item => setCategory(item.id)}
             />
             <InputComponent
@@ -255,12 +256,6 @@ const BusinessDetails = ({navigation, route}) => {
               value={AL1}
               autoCapitalize="words"
               onChangeText={text => setAL1(text)}
-            />
-            <InputComponent
-              placeholder="Address Line 2"
-              value={AL2}
-              autoCapitalize="words"
-              onChangeText={text => setAL2(text)}
             />
             <InputComponent
               placeholder="Landmark (optional)"

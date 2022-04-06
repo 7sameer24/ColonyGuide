@@ -6,6 +6,7 @@ import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
 import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
+import Poweredby from '../Components/Poweredby';
 
 const RoomsFlats = ({navigation, route}) => {
   const {Userdata} = useApp();
@@ -70,6 +71,7 @@ const RoomsFlats = ({navigation, route}) => {
           />
         ) : null
       ) : null}
+      <Poweredby />
     </View>
   );
 };
@@ -80,7 +82,8 @@ const styles = StyleSheet.create({
   ButtonContainer: {
     position: 'absolute',
     bottom: 10,
-    width: '90.7%',
+    width: '90%',
+    marginBottom: 25,
   },
   text: {
     fontSize: 14,

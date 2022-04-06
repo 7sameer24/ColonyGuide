@@ -82,7 +82,7 @@ const ProfileDetails = ({navigation, route}) => {
                 <Text style={[styles.full, {width: '85%'}]}>
                   {userData.app_role_id === 1
                     ? userData.hostel_name
-                    : userData.address}
+                    : `${userData.house_no} ${userData.address} ${userData.landmark}`}
                 </Text>
               </View>
               {userData.app_role_id === 1 ? (
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   },
   viewCon: {
     borderRadius: 8,
-    backgroundColor: '#FEF6EF',
+    backgroundColor: '#F3EBF9',
     padding: 15,
     marginTop: 10,
     marginBottom: 10,

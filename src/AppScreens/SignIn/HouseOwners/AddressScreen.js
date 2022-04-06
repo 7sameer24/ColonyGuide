@@ -48,7 +48,7 @@ const AddressScreen = ({route, navigation}) => {
           'full_name',
           UserData.app_role_id === 3 ? HOName : FullName,
         );
-        Form.append('geolocation', latitude, longitude);
+        Form.append('geolocation', `${latitude},${longitude}`);
         Form.append('house_no', house);
         Form.append('address', Address);
         Form.append('landmark', Landmark);
@@ -162,7 +162,7 @@ const AddressScreen = ({route, navigation}) => {
                 valueField="id"
                 placeholder="Locality"
                 value={LocalityValue}
-                maxHeight={200}
+                maxHeight={50}
                 onChange={item => setLocality(item.id)}
               />
             </View>

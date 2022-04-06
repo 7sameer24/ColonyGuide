@@ -25,11 +25,12 @@ const EditProfile = ({route, navigation}) => {
   const [LocalityValue, setLocality] = useState(data.locality_id);
   const [localData, setLocalData] = useState('');
   const [PersonName, setPersonName] = useState(`${data.name}`);
+  const [Email, setEmail] = useState(data.email);
   const [Landmark, setLandmark] = useState(data.landmark);
   const [Address, setAddress] = useState(data.address);
   const [HostelName, setHostelName] = useState(data.hostel_name);
   const [hostel_address, setHostelAdd] = useState(data.hostel_address);
-  // const [FHN, setFHN] = useState(data.house_no);
+  const [FHN, setFHN] = useState(data.house_no);
   const [imageUp, setImage] = useState('');
   const {setNewData} = useApp();
 
@@ -40,12 +41,18 @@ const EditProfile = ({route, navigation}) => {
       value: PersonName,
       onChagneText: setPersonName,
     },
-    // {
-    //   title: 'Flat / House number',
-    //   placeHolder: 'F/H number',
-    //   value: FHN,
-    //   onChagneText: setFHN,
-    // },
+    {
+      placeHolder: 'Email',
+      title: 'Your Email',
+      value: Email,
+      onChagneText: setEmail,
+    },
+    {
+      title: 'Flat / House number',
+      placeHolder: 'F/H number',
+      value: FHN,
+      onChagneText: setFHN,
+    },
     {
       title: 'Address line',
       placeHolder: 'Address',
@@ -86,7 +93,9 @@ const EditProfile = ({route, navigation}) => {
       const SaveData = new FormData();
       SaveData.append('user_id', data.id);
       SaveData.append('full_name', PersonName);
+      SaveData.append('email', Email);
       SaveData.append('address', Address);
+      SaveData.append('house_no', FHN);
       SaveData.append('landmark', Landmark);
       SaveData.append('locality_id', LocalityValue);
       SaveData.append('shop_name', data.shop_name);
@@ -196,7 +205,7 @@ const EditProfile = ({route, navigation}) => {
             activeOpacity={0.8}
             onPress={() => createThreeButtonAlert()}>
             <Image
-              source={imageUp ? Images.Ellipse : {uri: data.profile_image}}
+              source={imageUp ? imageUp : {uri: data.profile_image}}
               style={styles.ImageStyle}
             />
             <View style={styles.ImageContainer}>
@@ -217,6 +226,15 @@ const EditProfile = ({route, navigation}) => {
                   inputStyle={genericStyles.ml(16)}
                   value={PersonName}
                   onChangeText={text => setPersonName(text)}
+                  autoCapitalize="words"
+                />
+                <Text style={styles.text}>Your Email</Text>
+                <InputComponent
+                  placeholder="Email"
+                  inputContainerStyle={styles.inputContainerStyle}
+                  inputStyle={genericStyles.ml(16)}
+                  value={Email}
+                  onChangeText={text => setEmail(text)}
                   autoCapitalize="words"
                 />
                 <Text style={styles.text}>Hostel Name</Text>

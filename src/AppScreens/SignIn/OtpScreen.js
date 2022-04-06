@@ -21,7 +21,7 @@ const OtpScreen = ({route, navigation}) => {
   const thirdInput = useRef(null);
   const LastInput = useRef(null);
   const {setNewData, setUserToken, setNavigationState} = useApp();
-  console.log(userMobile);
+
   const checkOtp = async () => {
     let idx = `${first}${second}${third}${last}`;
     try {
@@ -34,7 +34,7 @@ const OtpScreen = ({route, navigation}) => {
       setSpinner(false);
       if (response.data.success === true) {
         if (
-          DATA.message === 'We have sent an otp on your registered mobile no.'
+          DATA.message === 'We have sent an OTP on your registered mobile no.'
         ) {
           navigation.dispatch(
             CommonActions.reset({
@@ -72,6 +72,8 @@ const OtpScreen = ({route, navigation}) => {
       alert(error);
     }
   };
+  const start = userMobile.slice(0, 2);
+  const end = userMobile.slice(8, 10);
 
   return (
     <View style={styles.Container}>
@@ -84,7 +86,7 @@ const OtpScreen = ({route, navigation}) => {
           <Text style={styles.subText}>
             Enter the OTP sent to the mobile number
           </Text>
-          <Text style={styles.subText}>+91-xxx-xxxx-xxx</Text>
+          <Text style={styles.subText}>+91-{`${start}x-xxxx-x${end}`}</Text>
           <Text style={styles.subText}>Your OTP : {DATA.otp}</Text>
         </View>
 

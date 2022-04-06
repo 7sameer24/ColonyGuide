@@ -7,11 +7,17 @@ import Spinner from '../Components/Spinner';
 
 const Helpline = () => {
   const [helpData, setHelpData] = useState('');
+  const [fire_brigade, setFB] = useState('');
+  const [other, setOther] = useState('');
+  const [policeData, setPolice] = useState('');
 
   const HelplineData = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/get-helpline';
       const response = await axios.post(URL);
+      setFB(response.data.fire_brigade);
+      setOther(response.data.other);
+      setPolice(response.data.police);
       setHelpData(response.data.medical);
     } catch (error) {
       console.log(error);
@@ -54,35 +60,72 @@ const Helpline = () => {
           <View style={styles.topTexConyainer}>
             <Text style={styles.topText}>Police</Text>
           </View>
-          <View style={[styles.middComen, {marginBottom: 10}]}>
-            <View style={genericStyles.row}>
-              <Text style={[styles.topText2]}>1.</Text>
-              <Text style={[styles.topText2, {marginRight: 0}]}>Name</Text>
+          {policeData.map(data => (
+            <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
+              <View style={genericStyles.row}>
+                <Text style={[styles.topText2]}>{data.id}</Text>
+                <Text style={[styles.topText2, {marginRight: 0}]}>
+                  {data.name}
+                </Text>
+              </View>
+              <Text style={[styles.topText2, {marginRight: 0}]}>
+                {data.department}
+              </Text>
+              <Icon
+                name="phone-outgoing"
+                type="material-community"
+                color="#407BFF"
+                size={20}
+                onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
+              />
             </View>
-            <Text style={[styles.topText2, {marginRight: 0}]}>Department</Text>
-            <Icon
-              name="phone-outgoing"
-              type="material-community"
-              color="#407BFF"
-              size={20}
-            />
-          </View>
+          ))}
           <View style={styles.topTexConyainer}>
-            <Text style={styles.topText}>Medical</Text>
+            <Text style={styles.topText}>Fire Brigade</Text>
           </View>
-          <View style={styles.middComen}>
-            <View style={genericStyles.row}>
-              <Text style={styles.topText2}>1.</Text>
-              <Text style={[styles.topText2, {marginRight: 0}]}>Name</Text>
+          {fire_brigade.map(data => (
+            <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
+              <View style={genericStyles.row}>
+                <Text style={[styles.topText2]}>{data.id}</Text>
+                <Text style={[styles.topText2, {marginRight: 0}]}>
+                  {data.name}
+                </Text>
+              </View>
+              <Text style={[styles.topText2, {marginRight: 0}]}>
+                {data.department}
+              </Text>
+              <Icon
+                name="phone-outgoing"
+                type="material-community"
+                color="#407BFF"
+                size={20}
+                onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
+              />
             </View>
-            <Text style={[styles.topText2, {marginRight: 0}]}>Department</Text>
-            <Icon
-              name="phone-outgoing"
-              type="material-community"
-              color="#407BFF"
-              size={20}
-            />
+          ))}
+          <View style={styles.topTexConyainer}>
+            <Text style={styles.topText}>Other</Text>
           </View>
+          {other.map(data => (
+            <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
+              <View style={genericStyles.row}>
+                <Text style={[styles.topText2]}>{data.id}</Text>
+                <Text style={[styles.topText2, {marginRight: 0}]}>
+                  {data.name}
+                </Text>
+              </View>
+              <Text style={[styles.topText2, {marginRight: 0}]}>
+                {data.department}
+              </Text>
+              <Icon
+                name="phone-outgoing"
+                type="material-community"
+                color="#407BFF"
+                size={20}
+                onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
+              />
+            </View>
+          ))}
         </ScrollView>
       ) : (
         <Spinner />

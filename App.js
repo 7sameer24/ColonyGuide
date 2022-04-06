@@ -1,30 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import AppContext from './Context/AppContext';
 import MainStack from './src/StackNavigation/MainStack';
-import {version as app_version} from './package.json';
-import axios from 'axios';
+import RNBootSplash from 'react-native-bootsplash';
 
 const App = () => {
-  const [checkVersion, setVersion] = useState('');
-  console.log(checkVersion.android_v);
-
-  const fetchVersion = async () => {
-    try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/app-version';
-      const response = await axios.post(URL);
-      setVersion(response.data.AppVersion);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchVersion();
-  }, []);
-
+  RNBootSplash.hide({fade: true}); // fade
   return (
     <AppContext>
-      {checkVersion.android_v === '1' ? <MainStack /> : alert('Please Update')}
+      <MainStack />
     </AppContext>
   );
 };

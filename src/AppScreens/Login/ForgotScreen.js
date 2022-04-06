@@ -27,7 +27,10 @@ const ForgotScreen = ({navigation}) => {
           .then(response => {
             setSpinner(false);
             if (response.data.success === true) {
-              navigation.navigate('Otp', {DATA: response.data});
+              navigation.navigate('Otp', {
+                DATA: response.data,
+                userMobile: mobile_no,
+              });
               ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
             } else {
               setSpinner(false);

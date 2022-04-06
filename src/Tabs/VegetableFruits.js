@@ -9,7 +9,7 @@ import ListedAnimation from '../Components/ListedAnimation';
 const VegetableFruits = ({navigation, route}) => {
   const {ID, Name} = route.params;
   const [data, setData] = useState([]);
-
+  console.log(data);
   const ServiceList = async id => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/service-list';
@@ -59,8 +59,9 @@ const VegetableFruits = ({navigation, route}) => {
               index={index}
               key={data.id}
               title={data.name}
-              subTitle={data.address}
+              subTitle={`${data.house_no} ${data.address} ${data.landmark}`}
               category={data.categoryName}
+              GeoLocation={data.geolocation}
               phoneNumber={data.contact_person_mobile}
               WhatsAppNumber={data.contact_person_whatsapp}
             />

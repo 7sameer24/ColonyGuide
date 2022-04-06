@@ -96,7 +96,7 @@ def enableSeparateBuildPerCPUArchitecture = false
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -138,6 +138,9 @@ android {
         versionName "1.0"
         multiDexEnabled true
     }
+     lintOptions {
+        checkReleaseBuilds false
+    }
     splits {
         abi {
             reset()
@@ -174,7 +177,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
@@ -207,8 +210,9 @@ dependencies {
    }
    implementation 'com.google.android.gms:play-services-base:17.2.1'
    implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation 'com.android.support:multidex:2.0.1'
+   implementation "androidx.core:core-splashscreen:1.0.0-beta01" // Add this line
+   implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+   implementation 'com.android.support:multidex:2.0.1'
     
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

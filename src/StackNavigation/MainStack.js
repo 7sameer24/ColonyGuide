@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingStack from './OnboardingStack';
 import {NavigationContainer} from '@react-navigation/native';
@@ -7,10 +7,26 @@ import {navigationStateType, useApp} from '../../Context/AppContext';
 import AuthStack from './AuthStack';
 import GuestStack from './GuestStack';
 import HomeStack from './HomeStack';
+import axios from 'axios';
 
 const MainStack = () => {
-  const {navigationState, setNavigationState, setNewData, setUserToken} =
-    useApp();
+  const {
+    navigationState,
+    setVersion,
+    setNavigationState,
+    setNewData,
+    setUserToken,
+  } = useApp();
+
+  const fetchVersion = async () => {
+    try {
+      const URL = 'https://colonyguide.garimaartgallery.com/api/app-version';
+      const response = await axios.post(URL);
+      setVersion(response.data.AppVersion);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
     const setUserDetail = async () => {
@@ -28,6 +44,7 @@ const MainStack = () => {
       }
     };
     setUserDetail();
+    fetchVersion();
   }, []);
 
   const renderStack = () => {

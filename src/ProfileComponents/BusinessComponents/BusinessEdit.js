@@ -28,10 +28,9 @@ const BusinessEdit = ({navigation, route}) => {
   const [PersonName, setPersonName] = useState(data.contact_person);
   const [WhatsappNo, setWhatsappNo] = useState(data.contact_person_whatsapp);
   const [About, setAbout] = useState(data.about);
-  const [buildFL, setBuildFL] = useState('');
-  const [AL1, setAL1] = useState('');
-  const [AL2, setAL2] = useState('');
-  const [Landmark, setLandmark] = useState('');
+  const [buildFL, setBuildFL] = useState(data.house_no);
+  const [AL1, setAL1] = useState(data.address);
+  const [Landmark, setLandmark] = useState(data.landmark);
 
   const idx = async () => {
     try {
@@ -116,10 +115,9 @@ const BusinessEdit = ({navigation, route}) => {
       SaveData.append('contact_person_whatsapp', WhatsappNo);
       SaveData.append('category_id', Category);
       SaveData.append('about_service', About);
-      SaveData.append(
-        'business_address',
-        `${buildFL} ${AL1} ${AL2} ${Landmark}`,
-      );
+      SaveData.append('house_no', buildFL);
+      SaveData.append('landmark', Landmark);
+      SaveData.append('business_address', AL1);
       SaveData.append(
         'logo_image',
         imageUp
@@ -225,12 +223,6 @@ const BusinessEdit = ({navigation, route}) => {
               value={AL1}
               autoCapitalize="words"
               onChangeText={text => setAL1(text)}
-            />
-            <InputComponent
-              placeholder="Address Line 2"
-              value={AL2}
-              autoCapitalize="words"
-              onChangeText={text => setAL2(text)}
             />
             <InputComponent
               placeholder="Landmark (optional)"

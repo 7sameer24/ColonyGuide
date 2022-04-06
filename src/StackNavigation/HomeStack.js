@@ -132,6 +132,7 @@ const HomeStack = ({navigation}) => {
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
       headerShown: true,
+      title: 'Rooms/PG',
     },
     {
       name: 'Add room',

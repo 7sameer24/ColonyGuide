@@ -23,7 +23,7 @@ const FourList = ({navigation}) => {
       image: <First width={30} height={30} />,
       Id: 1,
       navigation: 'Rooms/Flats',
-      name: 'Rooms/Flats',
+      name: 'Rooms/PG',
     },
     {
       image: <Third width={30} height={30} />,
@@ -35,7 +35,7 @@ const FourList = ({navigation}) => {
       image: <Four width={30} height={30} />,
       Id: 3,
       navigation: 'Business listed',
-      name: 'Business listed',
+      name: 'Business Listed',
     },
     {
       image: <Second width={30} height={30} />,
