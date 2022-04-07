@@ -34,13 +34,14 @@ const Addroom = ({navigation}) => {
   const [PersonName, setPersonName] = useState('');
   const [buildFL, setBuildFL] = useState('');
   const [AL1, setAL1] = useState('');
-  const [AL2, setAL2] = useState('');
   const [Landmark, setLandmark] = useState('');
+  const [mobile_no, setMobile] = useState('');
+  const [WhatsappNo, setWhatsappNo] = useState('');
   const {Userdata, UserToken} = useApp();
 
   const CategoryData = [
-    {label: 'Hostel', value: '1'},
-    {label: 'Rooms/Flates', value: '2'},
+    {label: 'Hostel', value: '0'},
+    {label: 'Rooms/Flates', value: '1'},
   ];
 
   const checkBoxArr = [
@@ -119,10 +120,13 @@ const Addroom = ({navigation}) => {
       data.append('building_name', Userdata.userData.app_role_id);
       data.append('contact_person', PersonName);
       data.append('category', Category);
-      data.append('room_type_id', Category === 1 ? 4 : roomType);
+      data.append('room_type_id', roomType);
       data.append('is_veg', check1 === true ? 1 : 0);
-      data.append('renter_type', 1);
-      data.append('address', `${buildFL},${AL1},${AL2},${Landmark}`);
+      data.append(
+        'renter_type',
+        check2 === true ? 1 : check3 === true ? 2 : check4 === true ? 3 : null,
+      );
+      data.append('address', `${buildFL},${AL1},${Landmark}`);
       data.append(
         'logo_image',
         imageUp !== ''
@@ -210,6 +214,20 @@ const Addroom = ({navigation}) => {
             onChangeText={text => setPersonName(text)}
             autoCapitalize="words"
           />
+          <InputComponent
+            placeholder="Contact person’s mobile number"
+            value={mobile_no}
+            autoCapitalize="words"
+            keyboardType="number-pad"
+            onChangeText={text => setMobile(text)}
+          />
+          <InputComponent
+            placeholder="Contact person’s whatsapp number"
+            value={WhatsappNo}
+            autoCapitalize="words"
+            keyboardType="number-pad"
+            onChangeText={text => setWhatsappNo(text)}
+          />
           <DropDownComponent
             placeholder="Select category"
             labelField="label"
@@ -219,7 +237,7 @@ const Addroom = ({navigation}) => {
             maxHeight={110}
             onChange={item => setCategory(item.value)}
           />
-          {Category == 1 ? null : (
+          {Category == 0 ? null : (
             <>
               <DropDownComponent
                 placeholder="Room type"
@@ -275,29 +293,23 @@ const Addroom = ({navigation}) => {
             onChangeText={text => setAL1(text)}
           />
           <InputComponent
-            placeholder="Address Line 2"
-            value={AL2}
-            autoCapitalize="words"
-            onChangeText={text => setAL2(text)}
-          />
-          <InputComponent
             placeholder="Landmark (optional)"
             value={Landmark}
             autoCapitalize="words"
             containerStyle={genericStyles.mb(10)}
             onChangeText={text => setLandmark(text)}
           />
-          <ButtonComponent
-            title="Save"
-            ButtonContainer={genericStyles.mb(30)}
-            loading={spinner ? true : false}
-            onPress={() => SaveDetail()}
-          />
-          <Poweredby container={genericStyles.mb(5)} />
         </ScrollView>
       ) : (
         <Spinner />
       )}
+      <ButtonComponent
+        title="Save"
+        ButtonContainer={genericStyles.mb(30)}
+        loading={spinner ? true : false}
+        onPress={() => SaveDetail()}
+      />
+      <Poweredby container={genericStyles.mb(5)} />
     </View>
   );
 };

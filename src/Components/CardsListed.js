@@ -50,7 +50,7 @@ const CardsListed = ({
     }
   };
 
-  const geolocation = GeoLocation.split(',');
+  // const geolocation = GeoLocation.split(',');
 
   return (
     <Card
@@ -100,19 +100,19 @@ const CardsListed = ({
                 name="phone-outgoing"
                 type="material-community"
                 color="#407BFF"
-                size={17}
+                size={18}
                 onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
-                containerStyle={genericStyles.mr(15)}
+                containerStyle={genericStyles.mr(25)}
               />
               <Icon
                 name="whatsapp"
                 type="material-community"
-                size={17}
+                size={18}
                 color="#25D366"
                 onPress={() => sendWhatsApp()}
                 containerStyle={genericStyles.mr(15)}
               />
-              <Icon
+              {/* <Icon
                 name="map-marker-radius"
                 type="material-community"
                 size={17}
@@ -121,7 +121,7 @@ const CardsListed = ({
                 }
                 containerStyle={genericStyles.mr(15)}
                 color={COLORS.textColor}
-              />
+              /> */}
             </View>
           </View>
         </View>

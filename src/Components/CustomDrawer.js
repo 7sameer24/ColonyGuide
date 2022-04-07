@@ -102,7 +102,7 @@ const CustomDrawer = props => {
             />
             {Userdata.userData.app_role_id === 4 ? null : (
               <ProfileComponents
-                title="House Owners"
+                title="Residence"
                 ImageContainer={styles.DrawerIcon}
                 IconSvg={<HouseOwners />}
                 onPress={() => props.navigation.navigate('House Owners')}
@@ -187,7 +187,7 @@ const CustomDrawer = props => {
             />
 
             <ProfileComponents
-              title="House Owners"
+              title="Residence"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<HouseOwners />}
               onPress={() => alert('Please Login')}

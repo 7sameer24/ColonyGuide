@@ -8,11 +8,11 @@ const Spinner = () => {
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} />
       <LottieView
-        source={require('../../assets/animation/LoaderPurFast.json')}
+        source={require('../../assets/animation/Loader8.json')}
         autoPlay
         loop={true}
         autoSize
-        style={genericStyles.width('70%')}
+        style={genericStyles.width('50%')}
       />
     </View>
   );

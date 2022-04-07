@@ -205,14 +205,12 @@ const BusinessDetails = ({navigation, route}) => {
             <InputComponent
               placeholder="Contact person’s mobile number"
               value={mobile_no}
-              autoCapitalize="words"
               keyboardType="number-pad"
               onChangeText={text => setMobile(text)}
             />
             <InputComponent
               placeholder="Contact person’s whatsapp number"
               value={WhatsappNo}
-              autoCapitalize="words"
               keyboardType="number-pad"
               onChangeText={text => setWhatsappNo(text)}
             />

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -8,51 +8,71 @@ import {
   StatusBar,
   TouchableOpacity,
   Dimensions,
+  ActivityIndicator,
 } from 'react-native';
 import {FONTS, COLORS, genericStyles} from '../constants/index';
 import Frame from '../../assets/svg/Frame.svg';
 import Frame5 from '../../assets/svg/Frame 5.svg';
 import Frame6 from '../../assets/svg/Frame 6.svg';
 import {navigationStateType, useApp} from '../../Context/AppContext';
+import axios from 'axios';
+import BaseURL from '../constants/BaseURL';
 
-const {width, height} = Dimensions.get('window');
-
-const slides = [
-  {
-    id: '1',
-    image: <Frame height="45%" width={width} />,
-    title: 'Look for the service',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  },
-  {
-    id: '2',
-    image: <Frame5 height="45%" width={width} />,
-    title: 'Call the service provider',
-    subtitle:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam',
-  },
-  {
-    id: '3',
-    image: <Frame6 height="45%" width={width} />,
-    title: 'Get direction for the same',
-    subtitle: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  },
-];
-
-const Slide = ({item}) => {
-  return (
-    <View style={[genericStyles.ai('center'), {justifyContent: 'center'}]}>
-      {item.image}
-      <View>
-        <Text style={styles.title}>{item?.title}</Text>
-        <Text style={styles.subtitle}>{item?.subtitle}</Text>
-      </View>
-    </View>
-  );
-};
-
-const OnboardingScreen = ({navigation}) => {
+const OnboardingScreen = () => {
+  const {width, height} = Dimensions.get('window');
   const {setNavigationState} = useApp();
+  const [data, setData] = useState([]);
+
+  const slides = [
+    {
+      id: '1',
+      image: <Frame height="45%" width={width} />,
+      title: data.title1,
+      subtitle: data.title1,
+    },
+    {
+      id: '2',
+      image: <Frame5 height="45%" width={width} />,
+      title: data.title2,
+      subtitle: data.title2,
+    },
+    {
+      id: '3',
+      image: <Frame6 height="45%" width={width} />,
+      title: data.title3,
+      subtitle: data.title3,
+    },
+  ];
+
+  const Slide = ({item}) => {
+    return (
+      <View style={[genericStyles.ai('center'), {justifyContent: 'center'}]}>
+        {item.image}
+        <View>
+          <>
+            <Text style={styles.title}>{item?.title}</Text>
+            <Text style={styles.subtitle}>{item?.subtitle}</Text>
+          </>
+        </View>
+      </View>
+    );
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.post(BaseURL('app-setting'));
+      setData(response.data.appSetting);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+    return () => {
+      setData([]);
+    };
+  }, []);
 
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
   const ref = React.useRef();
@@ -84,7 +104,7 @@ const OnboardingScreen = ({navigation}) => {
 
   const Footer = () => {
     return (
-      <View style={styles.FooterCon}>
+      <View style={styles.FooterCon(height)}>
         {/* Indicator container */}
         <View style={styles.indicatorContainer}>
           {/* Render indicator */}
@@ -173,11 +193,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 3,
     borderRadius: 2,
   },
-  FooterCon: {
+  FooterCon: height => ({
     height: height * 0.25,
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-  },
+  }),
   indicatorContainer: {
     flexDirection: 'row',
     justifyContent: 'center',

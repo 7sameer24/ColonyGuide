@@ -12,7 +12,6 @@ const RoomsFlats = ({navigation, route}) => {
   const {Userdata} = useApp();
   const [newData, setData] = useState([]);
   const [check, setCheck] = useState('');
-  console.log(check);
 
   const idx = async () => {
     try {
@@ -21,10 +20,8 @@ const RoomsFlats = ({navigation, route}) => {
       const response = await axios.post(URL, {room_type_id: route.name});
       if (response.data.success === true) {
         setData(response.data.data);
-        // setCheck(response.data.success);
       } else {
         setCheck(response.data.success);
-        console.log(response.data);
       }
     } catch (error) {
       console.log(error);

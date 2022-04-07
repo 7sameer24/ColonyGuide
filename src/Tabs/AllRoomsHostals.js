@@ -22,7 +22,6 @@ const AllRoomsHostals = ({navigation}) => {
         setData(response.data.data);
       } else {
         setCheck(response.data.success);
-        console.log(response.data);
       }
     } catch (error) {
       console.log(error);

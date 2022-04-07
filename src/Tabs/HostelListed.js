@@ -7,6 +7,7 @@ import axios from 'axios';
 import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
 import Poweredby from '../Components/Poweredby';
+import BaseURL from '../constants/BaseURL';
 
 const HostelListed = ({navigation, route}) => {
   const {Userdata} = useApp();
@@ -15,14 +16,11 @@ const HostelListed = ({navigation, route}) => {
 
   const idx = async () => {
     try {
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/filtered-by-hostel';
-      const response = await axios.post(URL, {room_type_id: route.name});
+      const response = await axios.post(BaseURL('filtered-by-hostel'));
       if (response.data.success === true) {
         setData(response.data.data);
       } else {
         setCheck(response.data.success);
-        console.log(response.data);
       }
     } catch (error) {
       console.log(error);

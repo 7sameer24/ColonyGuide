@@ -29,7 +29,7 @@ const FourList = ({navigation}) => {
       image: <Third width={30} height={30} />,
       Id: 2,
       navigation: 'House Owners',
-      name: 'House Owners',
+      name: 'Residence',
     },
     {
       image: <Four width={30} height={30} />,

@@ -25,10 +25,16 @@ const ContactUs = ({route, navigation}) => {
     'Please feel free to contact us for any\nquery we will get back to you as soon\nas possible.';
   const text2 = '73, PHP POETS IT solution\nSubhash Nagar 23987';
   const arr = [
-    {name: 'logo-facebook', url: 'https://www.facebook.com/phppoets/'},
-    {name: 'logo-instagram', url: 'https://www.instagram.com/phppoets/'},
-    {name: 'logo-twitter', url: 'https://www.instagram.com/phppoets/'},
-    {name: 'logo-linkedin', url: 'https://www.linkedin.com/company/phppoets/'},
+    {
+      name: 'logo-facebook',
+      url: 'https://www.facebook.com/profile.php?id=100080150563442',
+    },
+    {name: 'logo-instagram', url: 'https://www.instagram.com/colonyguide/'},
+    {name: 'logo-twitter', url: 'https://twitter.com/colonyguide'},
+    {
+      name: 'logo-linkedin',
+      url: 'https://www.linkedin.com/in/colony-guide-99a16a237/',
+    },
   ];
 
   const SendContact = async () => {

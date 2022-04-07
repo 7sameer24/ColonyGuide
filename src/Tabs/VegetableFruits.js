@@ -9,8 +9,8 @@ import ListedAnimation from '../Components/ListedAnimation';
 const VegetableFruits = ({navigation, route}) => {
   const {ID, Name} = route.params;
   const [data, setData] = useState([]);
-  console.log(data);
-  const ServiceList = async id => {
+
+  const ServiceList = async () => {
     try {
       const URL = 'https://colonyguide.garimaartgallery.com/api/service-list';
       const response = await axios

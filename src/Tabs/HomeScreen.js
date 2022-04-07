@@ -61,6 +61,7 @@ const HomeScreen = ({navigation}) => {
               inactiveDotColor={COLORS.transparent}
               autoplay
               circleLoop
+              imageLoadingColor={COLORS.primary}
               ImageComponentStyle={styles.ImageComponentStyle}
               dotStyle={styles.dotStyle}
             />
@@ -83,7 +84,6 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   ImageComponentStyle: {
     width: '87%',
-    marginTop: 10,
   },
   dotStyle: {
     width: 10,

@@ -48,12 +48,12 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
             size={20}
             onPress={() => onShare()}
           />
-          <Icon
+          {/* <Icon
             name="map-marker-radius"
             type="material-community"
             size={20}
             color={COLORS.textColor}
-          />
+          /> */}
         </View>
       </View>
     </Card>

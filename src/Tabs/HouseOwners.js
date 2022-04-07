@@ -30,7 +30,7 @@ const HouseOwners = ({navigation}) => {
     <View style={genericStyles.Container}>
       <HeaderBar
         firstIcon="arrow-back-outline"
-        title="House Owners"
+        title="Residence"
         // searchIcon="search"
         // bellIcon="filter"
         ThirdType="material-community"
