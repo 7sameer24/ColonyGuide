@@ -49,10 +49,17 @@ const OnboardingScreen = () => {
       <View style={[genericStyles.ai('center'), {justifyContent: 'center'}]}>
         {item.image}
         <View>
-          <>
-            <Text style={styles.title}>{item?.title}</Text>
-            <Text style={styles.subtitle}>{item?.subtitle}</Text>
-          </>
+          {item.title || item.subtitle ? (
+            <>
+              <Text style={styles.title}>{item?.title}</Text>
+              <Text style={styles.subtitle}>{item?.subtitle}</Text>
+            </>
+          ) : (
+            <ActivityIndicator
+              color={COLORS.primary}
+              style={genericStyles.mt(20)}
+            />
+          )}
         </View>
       </View>
     );

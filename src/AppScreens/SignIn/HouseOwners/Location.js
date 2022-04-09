@@ -6,8 +6,15 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 
 const Location = ({navigation, route}) => {
-  const {shopName, fullName, WhatsappNo, category, userData, imageUp} =
-    route.params;
+  const {
+    shopName,
+    fullName,
+    WhatsappNo,
+    category,
+    userData,
+    imageUp,
+    shortDes,
+  } = route.params;
   const [latitude, setLatitude] = useState(24.5826);
   const [longitude, setLongitude] = useState(73.7191);
   const [pin, setPin] = useState({
@@ -87,6 +94,7 @@ const Location = ({navigation, route}) => {
             CategoryShop: category,
             UserData: userData,
             imageLogo: imageUp,
+            ShortDescription: shortDes,
           })
         }
       />

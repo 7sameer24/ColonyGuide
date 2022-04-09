@@ -21,6 +21,7 @@ import Contact from '../../assets/ProfileSvg/contact.svg';
 import Poweredby from '../Components/Poweredby';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 import axios from 'axios';
+import BaseURL from '../constants/BaseURL';
 
 const ProfileScreen = ({navigation}) => {
   const {Userdata, UserToken, setNavigationState, setCheckStatus, checkStatus} =
@@ -28,8 +29,7 @@ const ProfileScreen = ({navigation}) => {
 
   const checkBusinessStauts = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/check-business';
-      const response = await axios(URL, {
+      const response = await axios(BaseURL('check-business'), {
         method: 'post',
         data: {user_id: Userdata.userData.id},
         headers: {

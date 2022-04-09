@@ -5,6 +5,7 @@ import HeaderBar from '../Components/HeaderBar';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
 import Poweredby from '../Components/Poweredby';
+import BaseURL from '../constants/BaseURL';
 
 const ProfileDetails = ({navigation, route}) => {
   const {userID, userToken} = route.params;
@@ -12,9 +13,7 @@ const ProfileDetails = ({navigation, route}) => {
 
   const idx = async () => {
     try {
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/user-profile-data';
-      const response = await axios(URL, {
+      const response = await axios(BaseURL('user-profile-data'), {
         method: 'post',
         data: {user_id: userID},
         headers: {

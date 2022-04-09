@@ -17,6 +17,7 @@ import DropDownComponent from '../../Components/DropDownComponent';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
+import BaseURL from '../../constants/BaseURL';
 
 const BusinessEdit = ({navigation, route}) => {
   const {data, token} = route.params;
@@ -34,8 +35,7 @@ const BusinessEdit = ({navigation, route}) => {
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-all-master'));
       setCategoryData(response.data.businessCategory);
     } catch (error) {
       console.log(error);
@@ -104,8 +104,6 @@ const BusinessEdit = ({navigation, route}) => {
   const businessUpdate = async () => {
     try {
       setSpinner(true);
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/update-service-detail';
 
       const SaveData = new FormData();
       SaveData.append('user_id', data.user_id);
@@ -129,7 +127,7 @@ const BusinessEdit = ({navigation, route}) => {
           : '',
       );
 
-      const res = await fetch(URL, {
+      const res = await fetch(BaseURL('update-service-detail'), {
         method: 'post',
         body: SaveData,
         headers: {

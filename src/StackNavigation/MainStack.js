@@ -8,6 +8,8 @@ import AuthStack from './AuthStack';
 import GuestStack from './GuestStack';
 import HomeStack from './HomeStack';
 import axios from 'axios';
+import BaseURL from '../constants/BaseURL';
+import MaintenanceStack from './MaintenanceStack';
 
 const MainStack = () => {
   const {
@@ -17,16 +19,6 @@ const MainStack = () => {
     setNewData,
     setUserToken,
   } = useApp();
-
-  const fetchVersion = async () => {
-    try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/app-version';
-      const response = await axios.post(URL);
-      setVersion(response.data.AppVersion);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     const setUserDetail = async () => {
@@ -44,7 +36,6 @@ const MainStack = () => {
       }
     };
     setUserDetail();
-    fetchVersion();
   }, []);
 
   const renderStack = () => {
@@ -60,6 +51,9 @@ const MainStack = () => {
 
       case navigationStateType.HOME:
         return <HomeStack />;
+
+      case navigationStateType.MAINTENANCE:
+        return <MaintenanceStack />;
 
       default:
         return <LoadingStack />;

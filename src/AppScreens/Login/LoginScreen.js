@@ -19,6 +19,7 @@ import axios from 'axios';
 import LoginLogo from '../../../assets/svg/pana.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
+import BaseURL from '../../constants/BaseURL';
 
 const LoginScreen = ({navigation}) => {
   const {width, height} = Dimensions.get('window');
@@ -36,9 +37,8 @@ const LoginScreen = ({navigation}) => {
     } else {
       try {
         setSpinner(true);
-        const URL = 'https://colonyguide.garimaartgallery.com/api/login';
         const response = await axios
-          .post(URL, {
+          .post(BaseURL('login'), {
             mobile_no: MN,
             password: password,
           })

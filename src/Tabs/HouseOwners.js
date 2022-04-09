@@ -5,15 +5,14 @@ import HeaderBar from '../Components/HeaderBar';
 import HouseOnwersList from '../Components/HouseOnwersList';
 import axios from 'axios';
 import ListedAnimation from '../Components/ListedAnimation';
+import BaseURL from '../constants/BaseURL';
 
 const HouseOwners = ({navigation}) => {
   const [newData, setData] = useState([]);
 
   const idx = async () => {
     try {
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/house-owner-list';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('house-owner-list'));
       setData(response.data.houseowner);
     } catch (error) {
       alert(error);

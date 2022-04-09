@@ -4,6 +4,7 @@ import {COLORS, FONTS, genericStyles} from '../constants';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
+import BaseURL from '../constants/BaseURL';
 
 const Helpline = () => {
   const [helpData, setHelpData] = useState('');
@@ -13,8 +14,7 @@ const Helpline = () => {
 
   const HelplineData = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-helpline';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-helpline'));
       setFB(response.data.fire_brigade);
       setOther(response.data.other);
       setPolice(response.data.police);

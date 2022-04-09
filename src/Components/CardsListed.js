@@ -10,6 +10,7 @@ import {
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
+import ReadMore from '@fawazahmed/react-native-read-more';
 
 const CardsListed = ({
   category,
@@ -20,6 +21,7 @@ const CardsListed = ({
   phoneNumber,
   WhatsAppNumber,
   GeoLocation,
+  ShortDescription,
 }) => {
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
@@ -83,6 +85,16 @@ const CardsListed = ({
             numberOfLines={1}>
             {subTitle}
           </Text>
+          {ShortDescription ? (
+            <ReadMore
+              numberOfLines={1}
+              style={styles.readMoreText}
+              wrapperStyle={genericStyles.mb(5)}
+              seeLessStyle={genericStyles.color(COLORS.primary)}
+              seeMoreStyle={genericStyles.color(COLORS.primary)}>
+              {ShortDescription}
+            </ReadMore>
+          ) : null}
           <View style={styles.View2}>
             <Text
               numberOfLines={1}
@@ -153,7 +165,6 @@ const styles = StyleSheet.create({
   View2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 5,
   },
   View3: {
     flexDirection: 'row',
@@ -174,5 +185,12 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
+  },
+  readMoreText: {
+    fontSize: 12,
+    fontFamily: FONTS.InterRegular,
+    color: '#7D7D7D',
+    width: 160,
+    marginRight: -85,
   },
 });

@@ -1,5 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const App = createContext();
 export const navigationStateType = {
@@ -8,6 +9,7 @@ export const navigationStateType = {
   GUEST: 'GUEST',
   HOME: 'HOME',
   LOADING: 'LOADING',
+  MAINTENANCE: 'MAINTENANCE',
 };
 const AppContext = ({children}) => {
   const [navigationState, setNavigationState] = useState(
@@ -19,12 +21,24 @@ const AppContext = ({children}) => {
   const [checkStatus, setCheckStatus] = useState('');
   const [checkVersion, setVersion] = useState([]);
 
+  const fetchVersion = async () => {
+    try {
+      const response = await axios.post(
+        'https://colonyguide.garimaartgallery.com/api/app-version',
+      );
+      setVersion(response.data.AppVersion);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     const saveDetail = async () => {
       await AsyncStorage.setItem('UserLogin', JSON.stringify(Userdata));
       await AsyncStorage.setItem('UserToken', JSON.stringify(UserToken));
     };
     saveDetail();
+    fetchVersion();
     if (UserToken) {
       setNavigationState(navigationStateType.HOME);
     } else if (navigationStateType.LOADING !== navigationState) {

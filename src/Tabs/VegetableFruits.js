@@ -5,6 +5,7 @@ import {genericStyles} from '../constants';
 import CardsListed from '../Components/CardsListed';
 import axios from 'axios';
 import ListedAnimation from '../Components/ListedAnimation';
+import BaseURL from '../constants/BaseURL';
 
 const VegetableFruits = ({navigation, route}) => {
   const {ID, Name} = route.params;
@@ -12,9 +13,8 @@ const VegetableFruits = ({navigation, route}) => {
 
   const ServiceList = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/service-list';
       const response = await axios
-        .post(URL, {
+        .post(BaseURL('service-list'), {
           category_id: ID,
         })
         .then(response => {
@@ -64,6 +64,7 @@ const VegetableFruits = ({navigation, route}) => {
               GeoLocation={data.geolocation}
               phoneNumber={data.contact_person_mobile}
               WhatsAppNumber={data.contact_person_whatsapp}
+              ShortDescription={data.about}
             />
           ))}
           <View style={genericStyles.height(20)} />

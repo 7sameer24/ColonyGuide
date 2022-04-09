@@ -15,6 +15,7 @@ import ImgIcon from '../../../assets/svg/Frame 9.svg';
 import axios from 'axios';
 import Poweredby from '../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
+import BaseURL from '../../constants/BaseURL';
 const RegisterScreen = ({navigation, route}) => {
   const {role_id} = route.params;
   const [visible, setVisible] = useState(true);
@@ -38,9 +39,8 @@ const RegisterScreen = ({navigation, route}) => {
     } else {
       try {
         setSpinner(true);
-        const URL = 'https://colonyguide.garimaartgallery.com/api/registers';
         const response = await axios
-          .post(URL, {
+          .post(BaseURL('registers'), {
             mobile_no: mobileNo,
             password: pass,
             c_password: CPASS,

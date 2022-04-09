@@ -8,6 +8,7 @@ import ImgIcon from '../../../../assets/svg/Frame 12.svg';
 import axios from 'axios';
 import Poweredby from '../../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
+import BaseURL from '../../../constants/BaseURL';
 
 const PersonalDetails = ({data, navigation}) => {
   const [FullName, setFullName] = useState('');
@@ -28,11 +29,10 @@ const PersonalDetails = ({data, navigation}) => {
     } else {
       try {
         setSpinner(true);
-        const URL = 'https://colonyguide.garimaartgallery.com/api/add-details';
         const response = await axios({
           method: 'post',
           headers: {Authorization: `Bearer ${data.token}`},
-          url: URL,
+          url: BaseURL('add-details'),
           data: {
             user_id: data.user_id,
             app_role_id: data.app_role_id,

@@ -7,6 +7,7 @@ import axios from 'axios';
 import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
 import Poweredby from '../Components/Poweredby';
+import BaseURL from '../constants/BaseURL';
 
 const RoomsFlats = ({navigation, route}) => {
   const {Userdata} = useApp();
@@ -15,9 +16,9 @@ const RoomsFlats = ({navigation, route}) => {
 
   const idx = async () => {
     try {
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/filtered-room-hostel-list';
-      const response = await axios.post(URL, {room_type_id: route.name});
+      const response = await axios.post(BaseURL('filtered-room-hostel-list'), {
+        room_type_id: route.name,
+      });
       if (response.data.success === true) {
         setData(response.data.data);
       } else {
@@ -44,16 +45,24 @@ const RoomsFlats = ({navigation, route}) => {
       ) : (
         <>
           <ScrollView style={genericStyles.mt(5)}>
-            {newData.map((data, index) => (
-              <CardsListed
-                key={data.id}
-                title={data.building_name}
-                subTitle={data.contact_person}
-                category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
-                source={{uri: data.logo_image}}
-                index={index}
-              />
-            ))}
+            {newData.length > 0 ? (
+              <>
+                {newData.map((data, index) => (
+                  <CardsListed
+                    key={data.id}
+                    title={data.building_name}
+                    subTitle={data.contact_person}
+                    category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
+                    source={{uri: data.logo_image}}
+                    index={index}
+                    phoneNumber={data.mobile_no}
+                    WhatsAppNumber={data.whatsapp_no}
+                  />
+                ))}
+              </>
+            ) : (
+              <ListedAnimation />
+            )}
             <View style={genericStyles.height(80)} />
           </ScrollView>
         </>
@@ -61,14 +70,16 @@ const RoomsFlats = ({navigation, route}) => {
 
       {Userdata !== null ? (
         Userdata.userData.app_role_id === 3 ? (
-          <ButtonComponent
-            title="Add room"
-            ButtonContainer={styles.ButtonContainer}
-            onPress={() => navigation.navigate('Add room')}
-          />
+          <>
+            <ButtonComponent
+              title="Add room"
+              ButtonContainer={styles.ButtonContainer}
+              onPress={() => navigation.navigate('Add room')}
+            />
+            <Poweredby />
+          </>
         ) : null
       ) : null}
-      <Poweredby />
     </View>
   );
 };

@@ -18,6 +18,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
 import {useApp} from '../../../Context/AppContext';
+import BaseURL from '../../constants/BaseURL';
 
 const ServiceEdit = ({navigation, route}) => {
   const {data, token} = route.params;
@@ -36,8 +37,7 @@ const ServiceEdit = ({navigation, route}) => {
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-all-master'));
       setCategoryData(response.data.categories);
     } catch (error) {
       console.log(error);

@@ -17,12 +17,14 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import axios from 'axios';
 import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
+import BaseURL from '../../../constants/BaseURL';
 
 const ServiceDetails = ({navigation, UserNewData}) => {
   const [imageUp, setImage] = useState('');
   const [shopName, setShop] = useState(null);
   const [fullName, setFullName] = useState(null);
   const [WhatsappNo, setWhatsappNo] = useState();
+  const [shortDes, setShortDes] = useState('');
   const [newData, setNewData] = useState([]);
   const [Category, setCategory] = useState('');
 
@@ -42,6 +44,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
         category: Category,
         userData: UserNewData,
         imageUp: imageUp,
+        shortDes: shortDes,
       });
     }
   };
@@ -94,8 +97,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
 
   const CategoryFetch = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-all-master'));
       setNewData(response.data.categories);
     } catch (error) {
       console.log(error);
@@ -173,6 +175,14 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             onChangeText={num => setWhatsappNo(num)}
             keyboardType="number-pad"
             autoCapitalize="words"
+          />
+          <InputComponent
+            placeholder="Short Description"
+            value={shortDes}
+            onChangeText={text => setShortDes(text)}
+            autoCapitalize="words"
+            multiline={true}
+            maxLength={70}
           />
           <ButtonComponent
             title="Next"

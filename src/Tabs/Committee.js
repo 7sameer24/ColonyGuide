@@ -6,32 +6,20 @@ import HeaderBar from '../Components/HeaderBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
+import BaseURL from '../constants/BaseURL';
 
 const Committee = ({navigation}) => {
-  // const [userData, setData] = useState([]);
   const [newData, setNewData] = useState([]);
-  // console.log(userData.token);
-
-  // const getData = async () => {
-  //   try {
-  //     const value = await AsyncStorage.getItem('UserLogin');
-  //     if (value !== null) {
-  //       setData(JSON.parse(value));
-  //     }
-  //   } catch (e) {
-  //     alert(e);
-  //   }
-  // };
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-committee';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-committee'));
       setNewData(response.data.committee);
     } catch (error) {
       alert(error);
     }
   };
+
   useEffect(() => {
     idx();
     return () => {

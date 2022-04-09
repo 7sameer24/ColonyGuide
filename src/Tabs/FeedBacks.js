@@ -6,6 +6,7 @@ import InputComponent from '../Components/InputComponent';
 import ButtonComponent from '../Components/ButtonComponent';
 import Poweredby from '../Components/Poweredby';
 import axios from 'axios';
+import BaseURL from '../constants/BaseURL';
 
 const FeedBacks = ({route, navigation}) => {
   const {ID, token} = route.params;
@@ -18,9 +19,8 @@ const FeedBacks = ({route, navigation}) => {
   const handleOnSubmit = async () => {
     try {
       setSpinner(true);
-      const URL = 'https://colonyguide.garimaartgallery.com/api/feedback';
       const response = await axios({
-        url: URL,
+        url: BaseURL('feedback'),
         method: 'post',
         headers: {Authorization: `Bearer ${token}`},
         data: {

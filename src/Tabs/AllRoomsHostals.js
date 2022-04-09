@@ -7,6 +7,7 @@ import axios from 'axios';
 import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
 import Poweredby from '../Components/Poweredby';
+import BaseURL from '../constants/BaseURL';
 
 const AllRoomsHostals = ({navigation}) => {
   const {Userdata} = useApp();
@@ -15,9 +16,7 @@ const AllRoomsHostals = ({navigation}) => {
 
   const idx = async () => {
     try {
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/room-hostel-list';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('room-hostel-list'));
       if (response.data.success === true) {
         setData(response.data.data);
       } else {
@@ -54,6 +53,8 @@ const AllRoomsHostals = ({navigation}) => {
                     category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
                     source={{uri: data.logo_image}}
                     index={index}
+                    phoneNumber={data.mobile_no}
+                    WhatsAppNumber={data.whatsapp_no}
                   />
                 ))}
               </>
@@ -66,14 +67,16 @@ const AllRoomsHostals = ({navigation}) => {
       </>
       {Userdata !== null ? (
         Userdata.userData.app_role_id === 3 ? (
-          <ButtonComponent
-            title="Add room"
-            ButtonContainer={styles.ButtonContainer}
-            onPress={() => navigation.navigate('Add room')}
-          />
+          <>
+            <ButtonComponent
+              title="Add room"
+              ButtonContainer={styles.ButtonContainer}
+              onPress={() => navigation.navigate('Add room')}
+            />
+            <Poweredby />
+          </>
         ) : null
       ) : null}
-      <Poweredby />
     </View>
   );
 };

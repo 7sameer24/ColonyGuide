@@ -8,6 +8,7 @@ import {CommonActions} from '@react-navigation/native';
 import ImgIcon from '../../../assets/svg/Frame 10.svg';
 import axios from 'axios';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
+import BaseURL from '../../constants/BaseURL';
 
 const OtpScreen = ({route, navigation}) => {
   const {DATA, userMobile} = route.params;
@@ -26,8 +27,7 @@ const OtpScreen = ({route, navigation}) => {
     let idx = `${first}${second}${third}${last}`;
     try {
       setSpinner(true);
-      const URL = 'https://colonyguide.garimaartgallery.com/api/verify-otp';
-      const response = await axios.post(URL, {
+      const response = await axios.post(BaseURL('verify-otp'), {
         user_id: DATA.user_id,
         otp: idx,
       });
@@ -63,8 +63,7 @@ const OtpScreen = ({route, navigation}) => {
 
   const resendOtp = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/resend-otp';
-      const response = await axios.post(URL, {
+      const response = await axios.post(BaseURL('resend-otp'), {
         mobile_no: userMobile,
       });
       console.log(response.data);

@@ -5,6 +5,7 @@ import InputComponent from '../Components/InputComponent';
 import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
 import Poweredby from '../Components/Poweredby';
+import BaseURL from '../constants/BaseURL';
 
 const ProfileSettings = ({route}) => {
   const {userID, userToken} = route.params;
@@ -16,10 +17,8 @@ const ProfileSettings = ({route}) => {
   const ChangePassword = async () => {
     try {
       setSpinner(true);
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/change-password';
       const response = await axios({
-        url: URL,
+        url: BaseURL('change-password'),
         method: 'post',
         headers: {Authorization: `Bearer ${userToken}`},
         data: {

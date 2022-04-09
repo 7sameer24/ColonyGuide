@@ -3,14 +3,14 @@ import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {genericStyles} from '../constants';
 import Spinner from '../Components/Spinner';
+import BaseURL from '../constants/BaseURL';
 
 const Notification = () => {
   const [data, setData] = useState('');
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/notification';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('notification'));
       setData(response.data.notification);
     } catch (error) {
       console.log(error);

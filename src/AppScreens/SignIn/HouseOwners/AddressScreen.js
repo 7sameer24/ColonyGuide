@@ -10,6 +10,7 @@ import ImgIcon from '../../../../assets/svg/Frame 11.svg';
 import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
+import BaseURL from '../../../constants/BaseURL';
 
 const AddressScreen = ({route, navigation}) => {
   const {
@@ -21,6 +22,7 @@ const AddressScreen = ({route, navigation}) => {
     CategoryShop,
     UserData,
     imageLogo,
+    ShortDescription,
   } = route.params;
 
   const [HOName, setHOName] = useState('');
@@ -53,6 +55,7 @@ const AddressScreen = ({route, navigation}) => {
         Form.append('address', Address);
         Form.append('landmark', Landmark);
         Form.append('shop_name', ShopName);
+        Form.append('about', ShortDescription);
         Form.append('category_id', CategoryShop);
         Form.append('whatsapp_no', WhatsappNum);
         Form.append('locality_id', LocalityValue);
@@ -69,9 +72,7 @@ const AddressScreen = ({route, navigation}) => {
             : '',
         );
 
-        const URL = 'https://colonyguide.garimaartgallery.com/api/add-details';
-
-        const res = await fetch(URL, {
+        const res = await fetch(BaseURL('add-details'), {
           method: 'post',
           body: Form,
           headers: {
@@ -103,8 +104,7 @@ const AddressScreen = ({route, navigation}) => {
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-all-master'));
       setData(response.data.localities);
     } catch (error) {
       console.log(error);

@@ -13,6 +13,7 @@ import Spinner from '../../Components/Spinner';
 import ImgIcon from '../../../assets/svg/rafiki.svg';
 import Poweredby from '../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
+import BaseURL from '../../constants/BaseURL';
 
 const SignInScreen = ({navigation}) => {
   const [newData, setNewData] = useState([]);
@@ -22,8 +23,7 @@ const SignInScreen = ({navigation}) => {
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-all-master'));
       setNewData(response.data.roles);
     } catch (error) {
       console.log(error);

@@ -4,6 +4,7 @@ import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Button, Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
+import BaseURL from '../../constants/BaseURL';
 
 const ServiceSaved = ({route, navigation}) => {
   const {userID, userToken} = route.params;
@@ -11,9 +12,7 @@ const ServiceSaved = ({route, navigation}) => {
 
   const idx = async () => {
     try {
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/user-profile-data';
-      const response = await axios(URL, {
+      const response = await axios(BaseURL('user-profile-data'), {
         method: 'post',
         data: {user_id: userID},
         headers: {

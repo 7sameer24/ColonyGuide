@@ -19,6 +19,7 @@ import DropDownComponent from '../Components/DropDownComponent';
 import {useApp} from '../../Context/AppContext';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
+import BaseURL from '../constants/BaseURL';
 
 const Addroom = ({navigation}) => {
   const [spinner, setSpinner] = useState(false);
@@ -112,13 +113,12 @@ const Addroom = ({navigation}) => {
   const SaveDetail = async () => {
     try {
       setSpinner(true);
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/add-room-hostel';
-
       const data = new FormData();
       data.append('user_id', Userdata.userData.id);
       data.append('building_name', Userdata.userData.app_role_id);
       data.append('contact_person', PersonName);
+      data.append('mobile_no', mobile_no);
+      data.append('whatsapp_no', WhatsappNo);
       data.append('category', Category);
       data.append('room_type_id', roomType);
       data.append('is_veg', check1 === true ? 1 : 0);
@@ -137,7 +137,7 @@ const Addroom = ({navigation}) => {
             }
           : '',
       );
-      const res = await fetch(URL, {
+      const res = await fetch(BaseURL('add-room-hostel'), {
         method: 'post',
         body: data,
         headers: {
@@ -162,13 +162,13 @@ const Addroom = ({navigation}) => {
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-all-master'));
       setRoomData(response.data.room_type);
     } catch (error) {
       console.log(error);
     }
   };
+
   useEffect(() => {
     idx();
     return () => {

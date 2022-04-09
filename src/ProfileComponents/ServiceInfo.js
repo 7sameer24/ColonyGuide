@@ -8,6 +8,7 @@ import axios from 'axios';
 import CardsListed from '../Components/CardsListed';
 import Spinner from '../Components/Spinner';
 import {ScrollView} from 'react-native-gesture-handler';
+import BaseURL from '../constants/BaseURL';
 
 const ServiceInfo = ({navigation, route}) => {
   const {userID, Role} = route.params;
@@ -18,9 +19,7 @@ const ServiceInfo = ({navigation, route}) => {
 
   const idx = async () => {
     try {
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/houseowner-service-list';
-      const response = await axios.post(URL, {
+      const response = await axios.post(BaseURL('houseowner-service-list'), {
         user_id: userID,
         app_role_id: Role,
       });

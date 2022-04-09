@@ -22,7 +22,6 @@ const images = [
 ];
 
 const ImageZoom = () => {
-  alert('jjjj');
   return (
     <Modal visible={true} transparent={true}>
       <ImageViewer imageUrls={images} />

@@ -1,18 +1,18 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../constants';
 import HeaderBar from '../../Components/HeaderBar';
 import CardsListed from '../../Components/CardsListed';
 import axios from 'axios';
 import ListedAnimation from '../../Components/ListedAnimation';
+import BaseURL from '../../constants/BaseURL';
 
 const BusinessListed = ({navigation}) => {
   const [newData, setNewData] = useState([]);
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/business-list';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('business-list'));
       setNewData(response.data.business);
     } catch (error) {
       console.log(error);

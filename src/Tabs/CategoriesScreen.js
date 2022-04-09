@@ -5,14 +5,14 @@ import {genericStyles} from '../constants';
 import CategoriesList from './CategoriesList';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
+import BaseURL from '../constants/BaseURL';
 
 const CategoriesScreen = ({navigation}) => {
   const [newData, setNewData] = useState([]);
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-all-master'));
       setNewData(response.data.categories);
     } catch (error) {
       console.log(error);

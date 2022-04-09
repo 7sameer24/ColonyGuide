@@ -13,6 +13,7 @@ import ButtonComponent from '../Components/ButtonComponent';
 import {Icon} from 'react-native-elements';
 import Poweredby from '../Components/Poweredby';
 import axios from 'axios';
+import BaseURL from '../constants/BaseURL';
 
 const ContactUs = ({route, navigation}) => {
   const {userID, userToken} = route.params;
@@ -46,9 +47,8 @@ const ContactUs = ({route, navigation}) => {
     } else {
       try {
         setSpinner(true);
-        const URL = 'https://colonyguide.garimaartgallery.com/api/contact-us';
         const response = await axios({
-          url: URL,
+          url: BaseURL('contact-us'),
           method: 'post',
           headers: {Authorization: `Bearer ${userToken}`},
           data: {

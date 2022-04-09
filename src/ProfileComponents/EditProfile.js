@@ -18,6 +18,7 @@ import axios from 'axios';
 import Spinner from '../Components/Spinner';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useApp} from '../../Context/AppContext';
+import BaseURL from '../constants/BaseURL';
 
 const EditProfile = ({route, navigation}) => {
   const {data, token} = route.params;
@@ -69,8 +70,7 @@ const EditProfile = ({route, navigation}) => {
 
   const idx = async () => {
     try {
-      const URL = 'https://colonyguide.garimaartgallery.com/api/get-all-master';
-      const response = await axios.post(URL);
+      const response = await axios.post(BaseURL('get-all-master'));
       setLocalData(response.data.localities);
     } catch (error) {
       console.log(error);
