@@ -34,6 +34,7 @@ import Notification from '../Tabs/Notification';
 import AllRoomsHostals from '../Tabs/AllRoomsHostals';
 import BusinessEdit from '../ProfileComponents/BusinessComponents/BusinessEdit';
 import HostelListed from '../Tabs/HostelListed';
+import ServiceAddDetails from '../ProfileComponents/BusinessComponents/ServiceAddDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -155,6 +156,14 @@ const HomeStack = ({navigation}) => {
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
     },
+    {
+      name: 'ServiceAddDetails',
+      component: ServiceAddDetails,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      title: 'Service Details',
+    },
   ];
 
   return (
@@ -200,7 +209,6 @@ const HomeStack = ({navigation}) => {
         name="Business Details"
         component={BusinessDetails}
         options={({route}) => ({
-          title: route.params.User,
           headerTitleStyle: styles.headerStyle,
           headerTintColor: COLORS.textColor,
           headerShadowVisible: false,

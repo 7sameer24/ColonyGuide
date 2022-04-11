@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "640562065295",
+    "project_id": "colonyguide",
+    "storage_bucket": "colonyguide.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:640562065295:android:b9841219385b67909c65fa",
+        "android_client_info": {
+          "package_name": "com.colonyguide"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "640562065295-7v649eaj7657l9kh6l8d044aocafqve4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.colonyguide",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "640562065295-vvt2cqlst82nkpj072fnttjv2a66lhpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwsQadwuIDf2AfWGE-x90sq7j0omd80_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "640562065295-vvt2cqlst82nkpj072fnttjv2a66lhpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

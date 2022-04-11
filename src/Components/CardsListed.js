@@ -85,7 +85,7 @@ const CardsListed = ({
             numberOfLines={1}>
             {subTitle}
           </Text>
-          {ShortDescription ? (
+          {/* {ShortDescription ? (
             <ReadMore
               numberOfLines={1}
               style={styles.readMoreText}
@@ -94,7 +94,7 @@ const CardsListed = ({
               seeMoreStyle={genericStyles.color(COLORS.primary)}>
               {ShortDescription}
             </ReadMore>
-          ) : null}
+          ) : null} */}
           <View style={styles.View2}>
             <Text
               numberOfLines={1}
@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
-    width: 160,
+    width: 120,
     marginRight: -85,
   },
 });

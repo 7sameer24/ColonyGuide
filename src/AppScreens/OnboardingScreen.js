@@ -26,7 +26,7 @@ const OnboardingScreen = () => {
   const slides = [
     {
       id: '1',
-      image: <Frame height="45%" width={width} />,
+      image: <Frame height="43%" width={width} />,
       title: data.title1,
       subtitle: data.title1,
     },

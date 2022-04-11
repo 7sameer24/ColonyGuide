@@ -1,4 +1,4 @@
-import {Alert, ScrollView, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBar from '../Components/HeaderBar';
 import {genericStyles} from '../constants';
@@ -6,10 +6,12 @@ import CardsListed from '../Components/CardsListed';
 import axios from 'axios';
 import ListedAnimation from '../Components/ListedAnimation';
 import BaseURL from '../constants/BaseURL';
+import NoDataAni from '../Components/NoDataAni';
 
 const VegetableFruits = ({navigation, route}) => {
   const {ID, Name} = route.params;
   const [data, setData] = useState([]);
+  const [check, setCheck] = useState('');
 
   const ServiceList = async () => {
     try {
@@ -21,12 +23,7 @@ const VegetableFruits = ({navigation, route}) => {
           if (response.data.success === true) {
             setData(response.data.service);
           } else {
-            Alert.alert(null, response.data.message, [
-              {
-                text: 'Ok',
-                onPress: () => navigation.goBack(),
-              },
-            ]);
+            setCheck(response.data.success);
           }
         });
     } catch (error) {
@@ -51,26 +48,32 @@ const VegetableFruits = ({navigation, route}) => {
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
-      {data.length > 0 ? (
-        <ScrollView style={genericStyles.mt(20)}>
-          {data.map((data, index) => (
-            <CardsListed
-              source={{uri: data.logo_image}}
-              index={index}
-              key={data.id}
-              title={data.name}
-              subTitle={`${data.house_no} ${data.address} ${data.landmark}`}
-              category={data.categoryName}
-              GeoLocation={data.geolocation}
-              phoneNumber={data.contact_person_mobile}
-              WhatsAppNumber={data.contact_person_whatsapp}
-              ShortDescription={data.about}
-            />
-          ))}
-          <View style={genericStyles.height(20)} />
-        </ScrollView>
+      {check === false ? (
+        <NoDataAni />
       ) : (
-        <ListedAnimation />
+        <>
+          {data.length > 0 ? (
+            <ScrollView style={genericStyles.mt(20)}>
+              {data.map((data, index) => (
+                <CardsListed
+                  source={{uri: data.logo_image}}
+                  index={index}
+                  key={data.id}
+                  title={data.name}
+                  subTitle={`${data.house_no} ${data.address} ${data.landmark}`}
+                  category={data.categoryName}
+                  GeoLocation={data.geolocation}
+                  phoneNumber={data.contact_person_mobile}
+                  WhatsAppNumber={data.contact_person_whatsapp}
+                  ShortDescription={data.about}
+                />
+              ))}
+              <View style={genericStyles.height(20)} />
+            </ScrollView>
+          ) : (
+            <ListedAnimation />
+          )}
+        </>
       )}
     </View>
   );

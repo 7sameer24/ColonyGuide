@@ -26,9 +26,7 @@ const BusinessInfo = ({navigation}) => {
       <ButtonComponent
         title="Add Your Business"
         ButtonContainer={{position: 'absolute', bottom: 40, width: '90%'}}
-        onPress={() =>
-          navigation.navigate('Business Details', {User: 'Business Info'})
-        }
+        onPress={() => navigation.navigate('Business Details')}
       />
       <Poweredby />
     </View>

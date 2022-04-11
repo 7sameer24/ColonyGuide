@@ -20,9 +20,8 @@ import Poweredby from '../../Components/Poweredby';
 import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 
-const BusinessDetails = ({navigation, route}) => {
-  const {User} = route.params;
-  const {Userdata, UserToken, setCheckStatus} = useApp();
+const ServiceAddDetails = ({navigation, route}) => {
+  const {Userdata, UserToken} = useApp();
   const [CategoryData, setCategoryData] = useState([]);
   const [Category, setCategory] = useState('');
   const [imageUp, setImage] = useState('');
@@ -39,7 +38,7 @@ const BusinessDetails = ({navigation, route}) => {
   const idx = async () => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
-      setCategoryData(response.data.businessCategory);
+      setCategoryData(response.data.categories);
     } catch (error) {
       console.log(error);
     }
@@ -113,7 +112,7 @@ const BusinessDetails = ({navigation, route}) => {
       const data = new FormData();
       data.append('user_id', Userdata.userData.id);
       data.append('app_role_id', Userdata.userData.app_role_id);
-      data.append('type', User === 'Service Info' ? 1 : 0);
+      data.append('type', 1);
       data.append('service_name', ShopBusName);
       data.append('contact_person', PersonName);
       data.append('contact_person_mobile', mobile_no);
@@ -144,7 +143,6 @@ const BusinessDetails = ({navigation, route}) => {
       let response = await res.json();
       setSpinner(false);
       if (response.success === true) {
-        setCheckStatus(1);
         navigation.navigate('Profile');
         ToastAndroid.show(response.message, ToastAndroid.SHORT);
       } else {
@@ -181,9 +179,9 @@ const BusinessDetails = ({navigation, route}) => {
               </View>
               <Text style={styles.AddLogoText}>Add image / logo</Text>
             </TouchableOpacity>
-            <Text style={styles.BusinessDetails}>Business Details</Text>
+            <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
             <InputComponent
-              placeholder="Name of business"
+              placeholder="Shop / Service name (Optional)"
               value={ShopBusName}
               autoCapitalize="words"
               onChangeText={text => setShopBusName(text)}
@@ -208,21 +206,21 @@ const BusinessDetails = ({navigation, route}) => {
             />
 
             <DropDownComponent
-              placeholder="Select business type"
+              placeholder="Select category"
               data={CategoryData}
               labelField="name"
               valueField="id"
               value={Category}
-              maxHeight={100}
+              maxHeight={200}
               onChange={item => setCategory(item.id)}
             />
             <InputComponent
-              placeholder="About business (Optional)"
+              placeholder="About shop or service (Optional)"
               autoCapitalize="words"
               value={About}
               onChangeText={text => setAbout(text)}
             />
-            <Text style={styles.BusinessDetails}>Business address</Text>
+            <Text style={styles.BusinessDetails}>Shop address</Text>
             <InputComponent
               placeholder="Building / Flat Number"
               value={buildFL}
@@ -257,7 +255,7 @@ const BusinessDetails = ({navigation, route}) => {
   );
 };
 
-export default BusinessDetails;
+export default ServiceAddDetails;
 
 const styles = StyleSheet.create({
   imageConatiner: imageUp => ({

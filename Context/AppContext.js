@@ -26,7 +26,7 @@ const AppContext = ({children}) => {
       const response = await axios.post(
         'https://colonyguide.garimaartgallery.com/api/app-version',
       );
-      setVersion(response.data.AppVersion);
+      setVersion(response.data);
     } catch (error) {
       console.log(error);
     }

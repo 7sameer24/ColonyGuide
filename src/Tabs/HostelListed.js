@@ -1,6 +1,6 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {FONTS, genericStyles} from '../constants';
+import {genericStyles} from '../constants';
 import CardsListed from '../Components/CardsListed';
 import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
@@ -8,6 +8,7 @@ import {useApp} from '../../Context/AppContext';
 import ListedAnimation from '../Components/ListedAnimation';
 import Poweredby from '../Components/Poweredby';
 import BaseURL from '../constants/BaseURL';
+import NoDataAni from '../Components/NoDataAni';
 
 const HostelListed = ({navigation, route}) => {
   const {Userdata} = useApp();
@@ -38,14 +39,11 @@ const HostelListed = ({navigation, route}) => {
     <View style={genericStyles.Container}>
       <>
         {check === false ? (
-          <View
-            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Text style={styles.text}>Data not found</Text>
-          </View>
+          <NoDataAni />
         ) : (
-          <ScrollView style={genericStyles.mt(5)}>
+          <>
             {newData.length > 0 ? (
-              <>
+              <ScrollView style={genericStyles.mt(5)}>
                 {newData.map((data, index) => (
                   <CardsListed
                     key={data.id}
@@ -58,15 +56,14 @@ const HostelListed = ({navigation, route}) => {
                     WhatsAppNumber={data.whatsapp_no}
                   />
                 ))}
-              </>
+                <View style={genericStyles.height(20)} />
+              </ScrollView>
             ) : (
               <ListedAnimation />
             )}
-            <View style={genericStyles.height(80)} />
-          </ScrollView>
+          </>
         )}
       </>
-
       {Userdata !== null ? (
         Userdata.userData.app_role_id === 3 ? (
           <>
@@ -75,7 +72,7 @@ const HostelListed = ({navigation, route}) => {
               ButtonContainer={styles.ButtonContainer}
               onPress={() => navigation.navigate('Add room')}
             />
-            <Poweredby />
+            <Poweredby container={genericStyles.mb(0)} />
           </>
         ) : null
       ) : null}
@@ -87,14 +84,7 @@ export default HostelListed;
 
 const styles = StyleSheet.create({
   ButtonContainer: {
-    position: 'absolute',
-    bottom: 10,
     width: '90%',
     marginBottom: 25,
-  },
-  text: {
-    fontSize: 14,
-    color: '#666666',
-    fontFamily: FONTS.InterMedium,
   },
 });

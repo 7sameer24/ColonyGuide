@@ -1,21 +1,19 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../src/constants';
 import ButtonComponent from '../../src/Components/ButtonComponent';
 import Poweredby from '../Components/Poweredby';
-import Cuate from '../../assets/svg/cuate.svg';
 import axios from 'axios';
 import CardsListed from '../Components/CardsListed';
 import Spinner from '../Components/Spinner';
 import {ScrollView} from 'react-native-gesture-handler';
 import BaseURL from '../constants/BaseURL';
+import NoDataAni from '../Components/NoDataAni';
 
 const ServiceInfo = ({navigation, route}) => {
   const {userID, Role} = route.params;
   const [data, setUserData] = useState('');
   const [check, setCheck] = useState('');
-
-  console.log(check);
 
   const idx = async () => {
     try {
@@ -44,10 +42,7 @@ const ServiceInfo = ({navigation, route}) => {
     <View style={genericStyles.Container}>
       <>
         {check === false ? (
-          <View
-            style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-            <Text style={styles.text}>Data not found</Text>
-          </View>
+          <NoDataAni />
         ) : (
           <>
             {data.length > 0 ? (
@@ -64,7 +59,7 @@ const ServiceInfo = ({navigation, route}) => {
                     source={{uri: newData.logo_image}}
                   />
                 ))}
-                <View style={genericStyles.mb(10)} />
+                <View style={genericStyles.mb(20)} />
               </ScrollView>
             ) : (
               <Spinner />
@@ -74,12 +69,10 @@ const ServiceInfo = ({navigation, route}) => {
       </>
       <ButtonComponent
         title="Add Your Service"
-        ButtonContainer={{position: 'absolute', bottom: 40, width: '90%'}}
-        onPress={() =>
-          navigation.navigate('Business Details', {User: 'Service Info'})
-        }
+        ButtonContainer={styles.ButtonContainer}
+        onPress={() => navigation.navigate('ServiceAddDetails')}
       />
-      <Poweredby />
+      <Poweredby container={genericStyles.mb(0)} />
     </View>
   );
 };
@@ -104,9 +97,8 @@ const styles = StyleSheet.create({
     width: '80%',
     textAlign: 'left',
   },
-  text: {
-    fontSize: 14,
-    color: '#666666',
-    fontFamily: FONTS.InterMedium,
+  ButtonContainer: {
+    width: '90%',
+    marginBottom: 25,
   },
 });
