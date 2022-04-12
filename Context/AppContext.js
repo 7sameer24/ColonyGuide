@@ -20,6 +20,7 @@ const AppContext = ({children}) => {
   const [UserToken, setUserToken] = useState(null);
   const [checkStatus, setCheckStatus] = useState('');
   const [checkVersion, setVersion] = useState([]);
+  const [notificationToken, setNotificationToken] = useState('');
 
   const fetchVersion = async () => {
     try {
@@ -54,7 +55,9 @@ const AppContext = ({children}) => {
         navigationState,
         checkStatus,
         checkVersion,
+        notificationToken,
         setNavigationState,
+        setNotificationToken,
         setCheckStatus,
         setVersion,
         setNewData,

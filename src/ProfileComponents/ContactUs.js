@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   ToastAndroid,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useState} from 'react';
@@ -24,7 +25,8 @@ const ContactUs = ({route, navigation}) => {
 
   const text =
     'Please feel free to contact us for any\nquery we will get back to you as soon\nas possible.';
-  const text2 = '73, PHP POETS IT solution\nSubhash Nagar 23987';
+  const text2 =
+    '193, near Passport office, Subhash Nagar, Udaipur, Rajasthan 313001';
   const arr = [
     {
       name: 'logo-facebook',
@@ -101,12 +103,24 @@ const ContactUs = ({route, navigation}) => {
       />
       <View style={styles.Container2}>
         <Text style={styles.VisitTex}>Visit Us</Text>
-        <Text style={styles.VisitTitle}>{text2}</Text>
+        <TouchableOpacity
+          onPress={() =>
+            Linking.openURL('geo:24.583972309751147, 73.71816321121639')
+          }>
+          <Text style={styles.VisitTitle}>{text2}</Text>
+        </TouchableOpacity>
         <Text style={styles.VisitTex}>Talk to us</Text>
-        <Text style={[styles.VisitTitle, {marginTop: 10}]}>+91-987654321</Text>
-        <Text style={[styles.VisitTitle, {marginTop: 2}]}>
-          exampple@gmail.com
-        </Text>
+        <TouchableOpacity onPress={() => Linking.openURL('tel:	9549993335')}>
+          <Text style={[styles.VisitTitle, {marginTop: 10}]}>
+            +91-9549993335
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => Linking.openURL('mailto:ankit@phppoets.com')}>
+          <Text style={[styles.VisitTitle, {marginTop: 2}]}>
+            ankit@phppoets.com
+          </Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.iconContainer}>
         {arr.map(data => (
@@ -151,14 +165,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.textColor,
     textAlign: 'left',
-    marginTop: 15,
+    marginTop: 10,
   },
   VisitTitle: {
     fontFamily: FONTS.InterRegular,
     fontSize: 14,
     color: '#7E7E7E',
     textAlign: 'left',
-    marginTop: 15,
+    marginTop: 10,
   },
   iconContainer: {
     flexDirection: 'row',

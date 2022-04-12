@@ -54,9 +54,14 @@ const ServiceInfo = ({navigation, route}) => {
                     category={newData.categoryName}
                     subTitle={`${newData.house_no} ${newData.address} ${newData.landmark}`}
                     title={newData.name}
-                    phoneNumber={data.contact_person_mobile}
-                    WhatsAppNumber={data.contact_person_whatsapp}
-                    source={{uri: newData.logo_image}}
+                    phoneNumber={newData.contact_person_mobile}
+                    WhatsAppNumber={newData.contact_person_whatsapp}
+                    source={
+                      newData.logo_image ===
+                      'https://colonyguide.garimaartgallery.com/storage'
+                        ? require('../../assets/Image_not_available.png')
+                        : {uri: newData.logo_image}
+                    }
                   />
                 ))}
                 <View style={genericStyles.mb(20)} />

@@ -85,56 +85,60 @@ const EditProfile = ({route, navigation}) => {
   }, []);
 
   const SaveDetail = async () => {
-    try {
-      setSpinner(true);
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
+    if (!LocalityValue) {
+      ToastAndroid.show('Please enter locality', ToastAndroid.SHORT);
+    } else {
+      try {
+        setSpinner(true);
+        const URL =
+          'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
 
-      const SaveData = new FormData();
-      SaveData.append('user_id', data.id);
-      SaveData.append('full_name', PersonName);
-      SaveData.append('email', Email);
-      SaveData.append('address', Address);
-      SaveData.append('house_no', FHN);
-      SaveData.append('landmark', Landmark);
-      SaveData.append('locality_id', LocalityValue);
-      SaveData.append('shop_name', data.shop_name);
-      SaveData.append('category_id', data.shop_category);
-      SaveData.append('whatsapp_no', data.whatsapp_no);
-      SaveData.append('hostel_name', HostelName);
-      SaveData.append('hostel_address', hostel_address);
-      SaveData.append(
-        'profile_image',
-        imageUp
-          ? {
-              uri: imageUp[0].uri,
-              type: imageUp[0].type,
-              name: imageUp[0].fileName,
-            }
-          : '',
-      );
+        const SaveData = new FormData();
+        SaveData.append('user_id', data.id);
+        SaveData.append('full_name', PersonName);
+        SaveData.append('email', Email);
+        SaveData.append('address', Address);
+        SaveData.append('house_no', FHN);
+        SaveData.append('landmark', Landmark);
+        SaveData.append('locality_id', LocalityValue);
+        SaveData.append('shop_name', data.shop_name);
+        SaveData.append('category_id', data.shop_category);
+        SaveData.append('whatsapp_no', data.whatsapp_no);
+        SaveData.append('hostel_name', HostelName);
+        SaveData.append('hostel_address', hostel_address);
+        SaveData.append(
+          'profile_image',
+          imageUp
+            ? {
+                uri: imageUp[0].uri,
+                type: imageUp[0].type,
+                name: imageUp[0].fileName,
+              }
+            : '',
+        );
 
-      const res = await fetch(URL, {
-        method: 'post',
-        body: SaveData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      let response = await res.json();
-      setSpinner(false);
-      if (response.success === true) {
-        setNewData(response);
-        navigation.navigate('Profile');
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        const res = await fetch(URL, {
+          method: 'post',
+          body: SaveData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        let response = await res.json();
+        setSpinner(false);
+        if (response.success === true) {
+          setNewData(response);
+          navigation.navigate('Profile');
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        setSpinner(false);
+        console.log(error);
+        alert(error);
       }
-    } catch (error) {
-      setSpinner(false);
-      console.log(error);
-      alert(error);
     }
   };
 
@@ -160,6 +164,7 @@ const EditProfile = ({route, navigation}) => {
       }
     });
   };
+
   const openCamera = () => {
     let opetions = {
       mediaType: 'photo',
@@ -202,19 +207,16 @@ const EditProfile = ({route, navigation}) => {
       {localData !== '' ? (
         <ScrollView>
           <TouchableOpacity
-            activeOpacity={0.8}
+            style={genericStyles.selfCenter}
+            activeOpacity={0.5}
             onPress={() => createThreeButtonAlert()}>
-            <Image
-              source={imageUp ? imageUp : {uri: data.profile_image}}
-              style={styles.ImageStyle}
-            />
-            <View style={styles.ImageContainer}>
+            <View style={styles.imageConatiner(imageUp)}>
               <Image
-                source={Images.Camera}
-                resizeMode="contain"
-                style={styles.ChangeImgStyle}
+                source={imageUp ? imageUp : {uri: data.profile_image}}
+                style={styles.imageStyle(imageUp)}
               />
             </View>
+            <Text style={styles.AddLogoText}>Add Profile</Text>
           </TouchableOpacity>
           <View style={styles.midd}>
             {data.app_role_id === 1 ? (
@@ -303,27 +305,21 @@ const EditProfile = ({route, navigation}) => {
 export default EditProfile;
 
 const styles = StyleSheet.create({
-  ImageStyle: {
-    width: 120,
-    height: 120,
+  imageConatiner: imageUp => ({
+    backgroundColor: imageUp ? COLORS.secondary : COLORS.white,
+    borderRadius: 50,
     alignSelf: 'center',
-    marginTop: 20,
-    borderRadius: 60,
-  },
-  ChangeImgStyle: {
-    width: 17,
-    height: 17,
-    alignSelf: 'center',
-  },
-  ImageContainer: {
-    backgroundColor: '#FEF6EF',
-    paddingVertical: 5,
-    borderRadius: 8,
-    width: 30,
-    elevation: 5,
-    position: 'absolute',
-    right: '38%',
-    bottom: 10,
+  }),
+  imageStyle: imageUp => ({
+    width: imageUp ? 70 : 70,
+    height: imageUp ? 70 : 70,
+    borderRadius: imageUp ? 50 : 50,
+  }),
+  AddLogoText: {
+    fontSize: 12,
+    color: COLORS.third,
+    marginVertical: 5,
+    fontFamily: FONTS.InterMedium,
   },
   text: {
     fontSize: 14,

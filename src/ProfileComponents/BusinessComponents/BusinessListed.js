@@ -38,7 +38,12 @@ const BusinessListed = ({navigation}) => {
         <ScrollView style={genericStyles.mt(10)}>
           {newData.map((data, index) => (
             <CardsListed
-              source={{uri: data.logo_image}}
+              source={
+                data.logo_image ===
+                'https://colonyguide.garimaartgallery.com/storage'
+                  ? require('../../../assets/Image_not_available.png')
+                  : {uri: data.logo_image}
+              }
               title={data.name}
               key={data.id}
               index={index}

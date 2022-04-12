@@ -21,7 +21,6 @@ import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 
 const BusinessDetails = ({navigation, route}) => {
-  const {User} = route.params;
   const {Userdata, UserToken, setCheckStatus} = useApp();
   const [CategoryData, setCategoryData] = useState([]);
   const [Category, setCategory] = useState('');
@@ -113,7 +112,7 @@ const BusinessDetails = ({navigation, route}) => {
       const data = new FormData();
       data.append('user_id', Userdata.userData.id);
       data.append('app_role_id', Userdata.userData.app_role_id);
-      data.append('type', User === 'Service Info' ? 1 : 0);
+      data.append('type', 0);
       data.append('service_name', ShopBusName);
       data.append('contact_person', PersonName);
       data.append('contact_person_mobile', mobile_no);

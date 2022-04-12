@@ -18,13 +18,22 @@ import {useApp} from '../../Context/AppContext';
 import ImageViewer from 'react-native-image-zoom-viewer';
 import BaseURL from '../constants/BaseURL';
 import {Icon} from 'react-native-elements';
+import PushNotification from 'react-native-push-notification';
+import messaging from '@react-native-firebase/messaging';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 const HomeScreen = ({navigation}) => {
   const [newData, setData] = useState([]);
   const [SliderImage, setSliderImg] = useState([]);
   const [visible, setIsvisible] = useState(false);
   const [imageIndex, setimageIndex] = useState(0);
-  const {Userdata, checkVersion} = useApp();
+  const {
+    Userdata,
+    checkVersion,
+    setNotificationToken,
+    notificationToken,
+    UserToken,
+  } = useApp();
 
   const idx = async () => {
     try {
@@ -35,16 +44,95 @@ const HomeScreen = ({navigation}) => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    idx();
-    return () => {
-      setData([]);
-      setSliderImg([]);
-    };
-  }, []);
 
-  const images = SliderImage.map(data => data.banner_image);
-  const ImageView = SliderImage.map(data => ({url: data.banner_image}));
+  const sendToken = async () => {
+    try {
+      const response = await axios(BaseURL('update-device-token'), {
+        method: 'post',
+        data: {user_id: Userdata.userData.id, device_token: notificationToken},
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const checkPermission = () => {
+    messaging()
+      .hasPermission()
+      .then(enabled => {
+        if (enabled) {
+          getToken();
+        } else {
+          requestPermission();
+        }
+      })
+      .catch(error => {
+        console.log('error checking permisions ' + error);
+      });
+  };
+
+  //2
+  const requestPermission = () => {
+    messaging()
+      .requestPermission()
+      .then(() => {
+        getToken();
+      })
+      .catch(error => {
+        console.log('permission rejected ' + error);
+      });
+  };
+
+  //3
+  const getToken = () => {
+    messaging()
+      .getToken()
+      .then(token => {
+        console.log('push token ' + token);
+      })
+      .catch(error => {
+        console.log('error getting push token ' + error);
+      });
+  };
+
+  const PushNotificationUser = () => {
+    PushNotification.configure({
+      // (optional) Called when Token is generated (iOS and Android)
+      onRegister: function (token) {
+        setNotificationToken(token);
+      },
+
+      // (required) Called when a remote is received or opened, or local notification is opened
+      onNotification: function (notification) {
+        console.log('onNotification:', notification);
+        navigation.navigate('Notification');
+
+        notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
+
+      onAction: function (notification) {
+        console.log('ACTION:', notification.action);
+        console.log('onAction:', notification);
+      },
+
+      onRegistrationError: function (err) {
+        console.error(err.message, err);
+      },
+
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true,
+      },
+
+      popInitialNotification: true,
+
+      requestPermissions: true,
+    });
+  };
 
   const ImageZoomComponent = () => {
     return (
@@ -74,6 +162,20 @@ const HomeScreen = ({navigation}) => {
     setimageIndex(index);
     setIsvisible(true);
   };
+
+  const images = SliderImage.map(data => data.banner_image);
+  const ImageView = SliderImage.map(data => ({url: data.banner_image}));
+
+  useEffect(() => {
+    idx();
+    sendToken();
+    PushNotificationUser();
+    checkPermission();
+    return () => {
+      setData([]);
+      setSliderImg([]);
+    };
+  }, []);
 
   return (
     <View style={genericStyles.Container}>
@@ -140,6 +242,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   ImageComponentStyle: {
     width: '87%',
+    marginTop: 5,
   },
   dotStyle: {
     width: 10,

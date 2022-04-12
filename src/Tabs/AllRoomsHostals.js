@@ -36,33 +36,32 @@ const AllRoomsHostals = ({navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
-      <>
-        {check === false ? (
-          <NoDataAni />
-        ) : (
-          <>
-            {newData.length > 0 ? (
-              <ScrollView style={genericStyles.mt(5)}>
-                {newData.map((data, index) => (
-                  <CardsListed
-                    key={data.id}
-                    title={data.building_name}
-                    subTitle={data.contact_person}
-                    category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
-                    source={{uri: data.logo_image}}
-                    index={index}
-                    phoneNumber={data.mobile_no}
-                    WhatsAppNumber={data.whatsapp_no}
-                  />
-                ))}
-                <View style={genericStyles.height(20)} />
-              </ScrollView>
-            ) : (
-              <ListedAnimation />
-            )}
-          </>
-        )}
-      </>
+      {check === false ? (
+        <NoDataAni />
+      ) : (
+        <>
+          {newData.length > 0 ? (
+            <ScrollView style={genericStyles.mt(5)}>
+              {newData.map((data, index) => (
+                <CardsListed
+                  key={data.id}
+                  title={data.building_name}
+                  subTitle={data.contact_person}
+                  category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
+                  source={{uri: data.logo_image}}
+                  index={index}
+                  phoneNumber={data.mobile_no}
+                  WhatsAppNumber={data.whatsapp_no}
+                />
+              ))}
+              <View style={genericStyles.height(20)} />
+            </ScrollView>
+          ) : (
+            <ListedAnimation />
+          )}
+        </>
+      )}
+
       {Userdata !== null ? (
         Userdata.userData.app_role_id === 3 ? (
           <>

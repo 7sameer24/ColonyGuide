@@ -118,7 +118,7 @@ const BusinessEdit = ({navigation, route}) => {
       SaveData.append('business_address', AL1);
       SaveData.append(
         'logo_image',
-        imageUp
+        imageUp !== ''
           ? {
               uri: imageUp[0].uri,
               type: imageUp[0].type,

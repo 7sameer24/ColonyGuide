@@ -111,52 +111,62 @@ const Addroom = ({navigation}) => {
     ]);
 
   const SaveDetail = async () => {
-    try {
-      setSpinner(true);
-      const data = new FormData();
-      data.append('user_id', Userdata.userData.id);
-      data.append('building_name', Userdata.userData.app_role_id);
-      data.append('contact_person', PersonName);
-      data.append('mobile_no', mobile_no);
-      data.append('whatsapp_no', WhatsappNo);
-      data.append('category', Category);
-      data.append('room_type_id', roomType);
-      data.append('is_veg', check1 === true ? 1 : 0);
-      data.append(
-        'renter_type',
-        check2 === true ? 1 : check3 === true ? 2 : check4 === true ? 3 : null,
-      );
-      data.append('address', `${buildFL},${AL1},${Landmark}`);
-      data.append(
-        'logo_image',
-        imageUp !== ''
-          ? {
-              uri: imageUp[0].uri,
-              type: imageUp[0].type,
-              name: imageUp[0].fileName,
-            }
-          : '',
-      );
-      const res = await fetch(BaseURL('add-room-hostel'), {
-        method: 'post',
-        body: data,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${UserToken}`,
-        },
-      });
-      let response = await res.json();
-      setSpinner(false);
-      if (response.success === true) {
-        navigation.navigate('Feed');
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
-      } else {
-        console.log(response);
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+    if (!imageUp) {
+      ToastAndroid.show('Please Add Rooms/Hostel Image', ToastAndroid.SHORT);
+    } else {
+      try {
+        setSpinner(true);
+        const data = new FormData();
+        data.append('user_id', Userdata.userData.id);
+        data.append('building_name', building_name);
+        data.append('contact_person', PersonName);
+        data.append('mobile_no', mobile_no);
+        data.append('whatsapp_no', WhatsappNo);
+        data.append('category', Category);
+        data.append('room_type_id', roomType);
+        data.append('is_veg', check1 === true ? 1 : 0);
+        data.append(
+          'renter_type',
+          check2 === true
+            ? 1
+            : check3 === true
+            ? 2
+            : check4 === true
+            ? 3
+            : null,
+        );
+        data.append('address', `${buildFL},${AL1},${Landmark}`);
+        data.append(
+          'logo_image',
+          imageUp !== ''
+            ? {
+                uri: imageUp[0].uri,
+                type: imageUp[0].type,
+                name: imageUp[0].fileName,
+              }
+            : '',
+        );
+        const res = await fetch(BaseURL('add-room-hostel'), {
+          method: 'post',
+          body: data,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${UserToken}`,
+          },
+        });
+        let response = await res.json();
+        setSpinner(false);
+        if (response.success === true) {
+          navigation.navigate('Feed');
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        } else {
+          console.log(response);
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        setSpinner(false);
+        alert(error);
       }
-    } catch (error) {
-      setSpinner(false);
-      alert(error);
     }
   };
 

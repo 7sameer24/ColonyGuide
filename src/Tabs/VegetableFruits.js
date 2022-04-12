@@ -56,7 +56,12 @@ const VegetableFruits = ({navigation, route}) => {
             <ScrollView style={genericStyles.mt(20)}>
               {data.map((data, index) => (
                 <CardsListed
-                  source={{uri: data.logo_image}}
+                  source={
+                    data.logo_image ===
+                    'https://colonyguide.garimaartgallery.com/storage'
+                      ? require('../../assets/Image_not_available.png')
+                      : {uri: data.logo_image}
+                  }
                   index={index}
                   key={data.id}
                   title={data.name}
