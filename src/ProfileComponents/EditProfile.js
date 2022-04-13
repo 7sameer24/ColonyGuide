@@ -25,7 +25,7 @@ const EditProfile = ({route, navigation}) => {
   const [spinner, setSpinner] = useState(false);
   const [LocalityValue, setLocality] = useState(data.locality_id);
   const [localData, setLocalData] = useState('');
-  const [PersonName, setPersonName] = useState(`${data.name}`);
+  const [PersonName, setPersonName] = useState(data.name);
   const [Email, setEmail] = useState(data.email);
   const [Landmark, setLandmark] = useState(data.landmark);
   const [Address, setAddress] = useState(data.address);
@@ -85,60 +85,57 @@ const EditProfile = ({route, navigation}) => {
   }, []);
 
   const SaveDetail = async () => {
-    if (!LocalityValue) {
-      ToastAndroid.show('Please enter locality', ToastAndroid.SHORT);
-    } else {
-      try {
-        setSpinner(true);
-        const URL =
-          'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
+    try {
+      setSpinner(true);
+      const URL =
+        'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
 
-        const SaveData = new FormData();
-        SaveData.append('user_id', data.id);
-        SaveData.append('full_name', PersonName);
-        SaveData.append('email', Email);
-        SaveData.append('address', Address);
-        SaveData.append('house_no', FHN);
-        SaveData.append('landmark', Landmark);
-        SaveData.append('locality_id', LocalityValue);
-        SaveData.append('shop_name', data.shop_name);
-        SaveData.append('category_id', data.shop_category);
-        SaveData.append('whatsapp_no', data.whatsapp_no);
-        SaveData.append('hostel_name', HostelName);
-        SaveData.append('hostel_address', hostel_address);
-        SaveData.append(
-          'profile_image',
-          imageUp
-            ? {
-                uri: imageUp[0].uri,
-                type: imageUp[0].type,
-                name: imageUp[0].fileName,
-              }
-            : '',
-        );
+      const SaveData = new FormData();
+      SaveData.append('user_id', data.id);
+      SaveData.append('full_name', PersonName);
+      Email === null ? null : SaveData.append('email', Email);
+      SaveData.append('address', Address);
+      SaveData.append('house_no', FHN);
+      SaveData.append('landmark', Landmark);
+      SaveData.append('locality_id', LocalityValue);
+      SaveData.append('shop_name', data.shop_name);
+      SaveData.append('category_id', data.shop_category);
+      SaveData.append('whatsapp_no', data.whatsapp_no);
+      SaveData.append('about', data.about);
+      SaveData.append('hostel_name', HostelName);
+      SaveData.append('hostel_address', hostel_address);
+      SaveData.append(
+        'profile_image',
+        imageUp
+          ? {
+              uri: imageUp[0].uri,
+              type: imageUp[0].type,
+              name: imageUp[0].fileName,
+            }
+          : '',
+      );
 
-        const res = await fetch(URL, {
-          method: 'post',
-          body: SaveData,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        let response = await res.json();
-        setSpinner(false);
-        if (response.success === true) {
-          setNewData(response);
-          navigation.navigate('Profile');
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
-        } else {
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
-        }
-      } catch (error) {
-        setSpinner(false);
-        console.log(error);
-        alert(error);
+      const res = await fetch(URL, {
+        method: 'post',
+        body: SaveData,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      let response = await res.json();
+      setSpinner(false);
+      if (response.success === true) {
+        setNewData(response);
+        navigation.navigate('Profile');
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
       }
+    } catch (error) {
+      setSpinner(false);
+      console.log(error);
+      alert(error);
     }
   };
 

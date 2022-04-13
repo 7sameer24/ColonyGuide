@@ -1,7 +1,7 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
-import {genericStyles} from '../constants';
+import {COLORS, FONTS, genericStyles} from '../constants';
 import Spinner from '../Components/Spinner';
 import BaseURL from '../constants/BaseURL';
 
@@ -27,12 +27,18 @@ const Notification = () => {
     <View style={genericStyles.Container}>
       {data.length > 0 ? (
         <>
-          {data.map((newData, index) => (
-            <View key={newData.id} style={genericStyles.mt(10)}>
-              <Image source={{uri: newData.image}} style={styles.imageStyle} />
-              <Text>Notification</Text>
-            </View>
-          ))}
+          <ScrollView>
+            {data.map(newData => (
+              <View key={newData.id} style={[genericStyles.mt(10)]}>
+                <Image
+                  source={{uri: newData.image}}
+                  style={styles.imageStyle}
+                  fadeDuration={0}
+                />
+                <Text style={styles.topText}>{newData.message}</Text>
+              </View>
+            ))}
+          </ScrollView>
         </>
       ) : (
         <Spinner />
@@ -45,8 +51,16 @@ export default Notification;
 
 const styles = StyleSheet.create({
   imageStyle: {
-    width: '100%',
-    height: '60%',
+    width: '90%',
+    height: 150,
     borderRadius: 10,
+    alignSelf: 'center',
+  },
+  topText: {
+    fontSize: 14,
+    fontFamily: FONTS.InterMedium,
+    color: COLORS.textColor,
+    alignSelf: 'center',
+    marginBottom: 10,
   },
 });

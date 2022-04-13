@@ -91,7 +91,7 @@ const HomeScreen = ({navigation}) => {
     messaging()
       .getToken()
       .then(token => {
-        console.log('push token ' + token);
+        setNotificationToken(token);
       })
       .catch(error => {
         console.log('error getting push token ' + error);
@@ -102,7 +102,7 @@ const HomeScreen = ({navigation}) => {
     PushNotification.configure({
       // (optional) Called when Token is generated (iOS and Android)
       onRegister: function (token) {
-        setNotificationToken(token);
+        console.log('Push Notification:', token);
       },
 
       // (required) Called when a remote is received or opened, or local notification is opened
@@ -186,47 +186,46 @@ const HomeScreen = ({navigation}) => {
           <>
             <StatusBar backgroundColor={COLORS.primary} />
             {newData.length > 0 ? (
-              checkVersion.AppVersion.android_v !== '1' ? (
-                alert('ss')
-              ) : checkVersion.appSetting.app_status !== 1 ? (
-                alert('Maintanndc')
-              ) : (
-                <ScrollView>
-                  <HeaderBar
-                    bellIcon="bell"
-                    thirdOnpress={() =>
-                      Userdata === null
-                        ? alert('Please Login')
-                        : navigation.navigate('Notification')
-                    }
-                    // searchIcon="search"
-                    navigation={navigation}
-                    firstIcon="menu"
-                    ThirdType="material-community"
-                    firstOnpress={() => navigation.openDrawer()}
+              // checkVersion.AppVersion.android_v !== '1' ? (
+              //   alert('ss')
+              // ) : checkVersion.appSetting.app_status !== 1 ? (
+              //   alert('Maintanndc')
+              // ) : (
+              <ScrollView>
+                <HeaderBar
+                  bellIcon="bell"
+                  thirdOnpress={() =>
+                    Userdata === null
+                      ? alert('Please Login')
+                      : navigation.navigate('Notification')
+                  }
+                  // searchIcon="search"
+                  navigation={navigation}
+                  firstIcon="menu"
+                  ThirdType="material-community"
+                  firstOnpress={() => navigation.openDrawer()}
+                />
+                <>
+                  <SliderBox
+                    images={images}
+                    sliderBoxHeight={150}
+                    dotColor="#fff"
+                    inactiveDotColor={COLORS.transparent}
+                    autoplay={true}
+                    circleLoop={true}
+                    imageLoadingColor={COLORS.primary}
+                    ImageComponentStyle={styles.ImageComponentStyle}
+                    dotStyle={styles.dotStyle}
+                    onCurrentImagePressed={index => ImageZoom(index)}
                   />
-                  <>
-                    <SliderBox
-                      images={images}
-                      sliderBoxHeight={150}
-                      dotColor="#fff"
-                      inactiveDotColor={COLORS.transparent}
-                      autoplay
-                      circleLoop
-                      imageLoadingColor={COLORS.primary}
-                      ImageComponentStyle={styles.ImageComponentStyle}
-                      dotStyle={styles.dotStyle}
-                      onCurrentImagePressed={index => ImageZoom(index)}
-                    />
 
-                    <FourList navigation={navigation} />
-                    <View style={genericStyles.mh(20)}>
-                      <Text style={styles.topText}>Top Categories</Text>
-                      <CategoriesList navigation={navigation} data={newData} />
-                    </View>
-                  </>
-                </ScrollView>
-              )
+                  <FourList navigation={navigation} />
+                  <View style={genericStyles.mh(20)}>
+                    <Text style={styles.topText}>Top Categories</Text>
+                    <CategoriesList navigation={navigation} data={newData} />
+                  </View>
+                </>
+              </ScrollView>
             ) : (
               <Spinner />
             )}
