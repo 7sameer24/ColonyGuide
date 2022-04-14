@@ -24,7 +24,7 @@ import BaseURL from '../constants/BaseURL';
 const Addroom = ({navigation}) => {
   const [spinner, setSpinner] = useState(false);
   const [check1, setCheck1] = useState(false);
-  const [check2, setCheck2] = useState(false);
+  const [check2, setCheck2] = useState(true);
   const [check3, setCheck3] = useState(false);
   const [check4, setCheck4] = useState(false);
   const [Category, setCategory] = useState('');
@@ -46,8 +46,8 @@ const Addroom = ({navigation}) => {
   ];
 
   const checkBoxArr = [
-    {title: 'Only boys', value: check2, setValue: setCheck2},
-    {title: 'Only girls', value: check3, setValue: setCheck3},
+    {title: 'Boys', value: check2, setValue: setCheck2},
+    {title: 'Girls', value: check3, setValue: setCheck3},
     {title: 'Family', value: check4, setValue: setCheck4},
   ];
 
@@ -110,63 +110,65 @@ const Addroom = ({navigation}) => {
       {text: 'Gallery', onPress: () => openGallery()},
     ]);
 
-  const SaveDetail = async () => {
+  const Velidation = async () => {
     if (!imageUp) {
       ToastAndroid.show('Please Add Rooms/Hostel Image', ToastAndroid.SHORT);
+    } else if (Category == 1) {
+      !roomType
+        ? ToastAndroid.show('Please select room type', ToastAndroid.SHORT)
+        : Saved();
     } else {
-      try {
-        setSpinner(true);
-        const data = new FormData();
-        data.append('user_id', Userdata.userData.id);
-        data.append('building_name', building_name);
-        data.append('contact_person', PersonName);
-        data.append('mobile_no', mobile_no);
-        data.append('whatsapp_no', WhatsappNo);
-        data.append('category', Category);
-        data.append('room_type_id', roomType);
-        data.append('is_veg', check1 === true ? 1 : 0);
-        data.append(
-          'renter_type',
-          check2 === true
-            ? 1
-            : check3 === true
-            ? 2
-            : check4 === true
-            ? 3
-            : null,
-        );
-        data.append('address', `${buildFL},${AL1},${Landmark}`);
-        data.append(
-          'logo_image',
-          imageUp !== ''
-            ? {
-                uri: imageUp[0].uri,
-                type: imageUp[0].type,
-                name: imageUp[0].fileName,
-              }
-            : '',
-        );
-        const res = await fetch(BaseURL('add-room-hostel'), {
-          method: 'post',
-          body: data,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${UserToken}`,
-          },
-        });
-        let response = await res.json();
-        setSpinner(false);
-        if (response.success === true) {
-          navigation.navigate('Feed');
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
-        } else {
-          console.log(response);
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
-        }
-      } catch (error) {
-        setSpinner(false);
-        alert(error);
+      Saved();
+    }
+  };
+
+  const Saved = async () => {
+    try {
+      setSpinner(true);
+      const data = new FormData();
+      data.append('user_id', Userdata.userData.id);
+      data.append('building_name', building_name);
+      data.append('contact_person', PersonName);
+      data.append('mobile_no', mobile_no);
+      data.append('whatsapp_no', WhatsappNo);
+      data.append('category', Category);
+      data.append('room_type_id', roomType);
+      data.append('is_veg', check1 === true ? 1 : 0);
+      data.append(
+        'renter_type',
+        check2 === true ? 1 : check3 === true ? 2 : check4 === true ? 3 : null,
+      );
+      data.append('address', `${buildFL},${AL1},${Landmark}`);
+      data.append(
+        'logo_image',
+        imageUp !== ''
+          ? {
+              uri: imageUp[0].uri,
+              type: imageUp[0].type,
+              name: imageUp[0].fileName,
+            }
+          : '',
+      );
+      const res = await fetch(BaseURL('add-room-hostel'), {
+        method: 'post',
+        body: data,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      let response = await res.json();
+      setSpinner(false);
+      if (response.success === true) {
+        navigation.navigate('Feed');
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+      } else {
+        console.log(response);
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
       }
+    } catch (error) {
+      setSpinner(false);
+      alert(error);
     }
   };
 
@@ -198,128 +200,129 @@ const Addroom = ({navigation}) => {
   return (
     <View style={genericStyles.Container}>
       {roomTypeData.length > 0 ? (
-        <ScrollView>
-          <TouchableOpacity
-            style={genericStyles.selfCenter}
-            activeOpacity={0.5}
-            onPress={() => createThreeButtonAlert()}>
-            <View style={styles.imageConatiner(imageUp)}>
-              <Image
-                source={imageUp ? imageUp : Images.BusinessProfile}
-                style={styles.imageStyle(imageUp)}
-              />
+        <>
+          <ScrollView>
+            <TouchableOpacity
+              style={genericStyles.selfCenter}
+              activeOpacity={0.5}
+              onPress={() => createThreeButtonAlert()}>
+              <View style={styles.imageConatiner(imageUp)}>
+                <Image
+                  source={imageUp ? imageUp : Images.BusinessProfile}
+                  style={styles.imageStyle(imageUp)}
+                />
+              </View>
+              <Text style={styles.AddLogoText}>Add image / logo</Text>
+            </TouchableOpacity>
+            <Text style={styles.textStyle}>Room Details</Text>
+            <InputComponent
+              placeholder="Building / Hostel Name"
+              value={building_name}
+              onChangeText={text => setBN(text)}
+              autoCapitalize="words"
+            />
+            <InputComponent
+              placeholder="Contact person’s name"
+              value={PersonName}
+              onChangeText={text => setPersonName(text)}
+              autoCapitalize="words"
+            />
+            <InputComponent
+              placeholder="Contact person’s mobile number"
+              value={mobile_no}
+              autoCapitalize="words"
+              keyboardType="number-pad"
+              onChangeText={text => setMobile(text)}
+            />
+            <InputComponent
+              placeholder="Contact person’s whatsapp number"
+              value={WhatsappNo}
+              autoCapitalize="words"
+              keyboardType="number-pad"
+              onChangeText={text => setWhatsappNo(text)}
+            />
+            <DropDownComponent
+              placeholder="Select Category"
+              labelField="label"
+              valueField="value"
+              data={CategoryData}
+              value={Category}
+              maxHeight={110}
+              onChange={item => setCategory(item.value)}
+            />
+            {Category == 0 ? null : (
+              <>
+                <DropDownComponent
+                  placeholder="Room type"
+                  data={roomTypeData}
+                  value={roomType}
+                  onChange={item => setRoomType(item.id)}
+                  labelField="room_type"
+                  valueField="id"
+                  maxHeight={170}
+                />
+                <CheckBox
+                  title="Only Vegetarian"
+                  checked={check1}
+                  onPress={() => setCheck1(!check1)}
+                  checkedColor={COLORS.primary}
+                  containerStyle={styles.checkBoxContanier}
+                  textStyle={styles.CheckText}
+                />
+              </>
+            )}
+            <Text style={styles.textStyle}>Renter Type</Text>
+            <View style={genericStyles.row}>
+              {checkBoxArr.map(data => (
+                <CheckBox
+                  key={data.title}
+                  title={data.title}
+                  checkedIcon="dot-circle-o"
+                  uncheckedIcon="circle-o"
+                  checked={data.value}
+                  onPress={() => {
+                    radioHandler(data.setValue);
+                  }}
+                  checkedColor={COLORS.primary}
+                  containerStyle={[
+                    styles.checkBoxContanier,
+                    {marginLeft: 10, marginRight: 0},
+                  ]}
+                  textStyle={styles.CheckText}
+                />
+              ))}
             </View>
-            <Text style={styles.AddLogoText}>Add image / logo</Text>
-          </TouchableOpacity>
-          <Text style={styles.textStyle}>Room Details</Text>
-          <InputComponent
-            placeholder="Building / Hostel Name"
-            value={building_name}
-            onChangeText={text => setBN(text)}
-            autoCapitalize="words"
+            <Text style={styles.textStyle}>Address</Text>
+            <InputComponent
+              placeholder="Building / Flat Number"
+              value={buildFL}
+              onChangeText={text => setBuildFL(text)}
+              autoCapitalize="words"
+            />
+            <InputComponent
+              placeholder="Address Line 1"
+              value={AL1}
+              autoCapitalize="words"
+              onChangeText={text => setAL1(text)}
+            />
+            <InputComponent
+              placeholder="Landmark (optional)"
+              value={Landmark}
+              autoCapitalize="words"
+              containerStyle={genericStyles.mb(10)}
+              onChangeText={text => setLandmark(text)}
+            />
+          </ScrollView>
+          <ButtonComponent
+            title="Save"
+            loading={spinner ? true : false}
+            onPress={() => Velidation()}
           />
-          <InputComponent
-            placeholder="Contact person’s name"
-            value={PersonName}
-            onChangeText={text => setPersonName(text)}
-            autoCapitalize="words"
-          />
-          <InputComponent
-            placeholder="Contact person’s mobile number"
-            value={mobile_no}
-            autoCapitalize="words"
-            keyboardType="number-pad"
-            onChangeText={text => setMobile(text)}
-          />
-          <InputComponent
-            placeholder="Contact person’s whatsapp number"
-            value={WhatsappNo}
-            autoCapitalize="words"
-            keyboardType="number-pad"
-            onChangeText={text => setWhatsappNo(text)}
-          />
-          <DropDownComponent
-            placeholder="Select category"
-            labelField="label"
-            valueField="value"
-            data={CategoryData}
-            value={Category}
-            maxHeight={110}
-            onChange={item => setCategory(item.value)}
-          />
-          {Category == 0 ? null : (
-            <>
-              <DropDownComponent
-                placeholder="Room type"
-                data={roomTypeData}
-                value={roomType}
-                onChange={item => setRoomType(item.id)}
-                labelField="room_type"
-                valueField="id"
-                maxHeight={170}
-              />
-              <CheckBox
-                title="Only Vegetarian"
-                checked={check1}
-                onPress={() => setCheck1(!check1)}
-                checkedColor={COLORS.primary}
-                containerStyle={styles.checkBoxContanier}
-                textStyle={styles.CheckText}
-              />
-            </>
-          )}
-          <Text style={styles.textStyle}>SELECT</Text>
-          <View style={genericStyles.row}>
-            {checkBoxArr.map(data => (
-              <CheckBox
-                key={data.title}
-                title={data.title}
-                checkedIcon="dot-circle-o"
-                uncheckedIcon="circle-o"
-                checked={data.value}
-                onPress={() => {
-                  radioHandler(data.setValue);
-                }}
-                checkedColor={COLORS.primary}
-                containerStyle={[
-                  styles.checkBoxContanier,
-                  {marginLeft: 10, marginRight: 0},
-                ]}
-                textStyle={styles.CheckText}
-              />
-            ))}
-          </View>
-          <Text style={styles.textStyle}>Address</Text>
-          <InputComponent
-            placeholder="Building / Flat Number"
-            value={buildFL}
-            onChangeText={text => setBuildFL(text)}
-            autoCapitalize="words"
-          />
-          <InputComponent
-            placeholder="Address Line 1"
-            value={AL1}
-            autoCapitalize="words"
-            onChangeText={text => setAL1(text)}
-          />
-          <InputComponent
-            placeholder="Landmark (optional)"
-            value={Landmark}
-            autoCapitalize="words"
-            containerStyle={genericStyles.mb(10)}
-            onChangeText={text => setLandmark(text)}
-          />
-        </ScrollView>
+          <Poweredby container={{flex: 0}} />
+        </>
       ) : (
         <Spinner />
       )}
-      <ButtonComponent
-        title="Save"
-        ButtonContainer={genericStyles.mb(30)}
-        loading={spinner ? true : false}
-        onPress={() => SaveDetail()}
-      />
-      <Poweredby container={genericStyles.mb(5)} />
     </View>
   );
 };

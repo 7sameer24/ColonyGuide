@@ -1,6 +1,7 @@
 import {
   Keyboard,
   Linking,
+  ScrollView,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -77,65 +78,67 @@ const ContactUs = ({route, navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
-      <View style={styles.Container}>
-        <Text style={styles.text}>{text}</Text>
-        <InputComponent
-          placeholder="Name"
-          value={name}
-          onChangeText={text => setName(text)}
-        />
-        <InputComponent
-          placeholder="Mobile Number"
-          value={mobile}
-          onChangeText={num => setMobile(num)}
-          keyboardType="number-pad"
-        />
-        <InputComponent
-          placeholder="Message"
-          value={message}
-          onChangeText={text => setMessage(text)}
-        />
-      </View>
-      <ButtonComponent
-        title="Send"
-        onPress={() => SendContact()}
-        loading={spinner ? true : false}
-      />
-      <View style={styles.Container2}>
-        <Text style={styles.VisitTex}>Visit Us</Text>
-        <TouchableOpacity
-          onPress={() =>
-            Linking.openURL('geo:24.583972309751147, 73.71816321121639')
-          }>
-          <Text style={styles.VisitTitle}>{text2}</Text>
-        </TouchableOpacity>
-        <Text style={styles.VisitTex}>Talk to us</Text>
-        <TouchableOpacity onPress={() => Linking.openURL('tel:	9549993335')}>
-          <Text style={[styles.VisitTitle, {marginTop: 10}]}>
-            +91-9549993335
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => Linking.openURL('mailto:ankit@phppoets.com')}>
-          <Text style={[styles.VisitTitle, {marginTop: 2}]}>
-            ankit@phppoets.com
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View style={styles.iconContainer}>
-        {arr.map(data => (
-          <Icon
-            name={data.name}
-            type="ionicon"
-            color={COLORS.primary}
-            key={data.name}
-            raised
-            onPress={() => Linking.openURL(data.url)}
-            containerStyle={genericStyles.shadow}
+      <ScrollView>
+        <View style={styles.Container}>
+          <Text style={styles.text}>{text}</Text>
+          <InputComponent
+            placeholder="Name"
+            value={name}
+            onChangeText={text => setName(text)}
           />
-        ))}
-      </View>
-      <Poweredby />
+          <InputComponent
+            placeholder="Mobile Number"
+            value={mobile}
+            onChangeText={num => setMobile(num)}
+            keyboardType="number-pad"
+          />
+          <InputComponent
+            placeholder="Message"
+            value={message}
+            onChangeText={text => setMessage(text)}
+          />
+        </View>
+        <ButtonComponent
+          title="Send"
+          onPress={() => SendContact()}
+          loading={spinner ? true : false}
+        />
+        <View style={styles.Container2}>
+          <Text style={styles.VisitTex}>Visit Us</Text>
+          <TouchableOpacity
+            onPress={() =>
+              Linking.openURL('geo:24.583972309751147, 73.71816321121639')
+            }>
+            <Text style={styles.VisitTitle}>{text2}</Text>
+          </TouchableOpacity>
+          <Text style={styles.VisitTex}>Talk to us</Text>
+          <TouchableOpacity onPress={() => Linking.openURL('tel:	9549993335')}>
+            <Text style={[styles.VisitTitle, {marginTop: 10}]}>
+              +91-9549993335
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => Linking.openURL('mailto:ankit@phppoets.com')}>
+            <Text style={[styles.VisitTitle, {marginTop: 2}]}>
+              ankit@phppoets.com
+            </Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.iconContainer}>
+          {arr.map(data => (
+            <Icon
+              name={data.name}
+              type="ionicon"
+              color={COLORS.primary}
+              key={data.name}
+              raised
+              onPress={() => Linking.openURL(data.url)}
+              containerStyle={genericStyles.shadow}
+            />
+          ))}
+        </View>
+        <Poweredby />
+      </ScrollView>
     </View>
   );
 };
@@ -173,9 +176,12 @@ const styles = StyleSheet.create({
     color: '#7E7E7E',
     textAlign: 'left',
     marginTop: 10,
+    textDecorationLine: 'underline',
   },
   iconContainer: {
     flexDirection: 'row',
     alignSelf: 'center',
+    marginTop: 60,
+    marginBottom: 10,
   },
 });

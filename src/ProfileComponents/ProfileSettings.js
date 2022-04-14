@@ -43,53 +43,35 @@ const ProfileSettings = ({route}) => {
 
   return (
     <View style={genericStyles.Container}>
-      <View>
-        <InputComponent
-          placeholder="Old password"
-          iconName="lock-closed"
-          value={OLPass}
-          onChangeText={text => setOLPass(text)}
-        />
-        <InputComponent
-          placeholder="New password"
-          iconName="lock-closed"
-          value={Password}
-          onChangeText={text => setPassword(text)}
-        />
-        <InputComponent
-          placeholder="Confirm password"
-          iconName="lock-closed"
-          value={CPASS}
-          onChangeText={text => setCPASS(text)}
-        />
-        <ButtonComponent
-          title="Save"
-          loading={spinner ? true : false}
-          ButtonContainer={genericStyles.mt(20)}
-          onPress={() => ChangePassword()}
-        />
-      </View>
-      <Poweredby />
+      {/* <View> */}
+      <InputComponent
+        placeholder="Old password"
+        iconName="lock-closed"
+        value={OLPass}
+        onChangeText={text => setOLPass(text)}
+      />
+      <InputComponent
+        placeholder="New password"
+        iconName="lock-closed"
+        value={Password}
+        onChangeText={text => setPassword(text)}
+      />
+      <InputComponent
+        placeholder="Confirm password"
+        iconName="lock-closed"
+        value={CPASS}
+        onChangeText={text => setCPASS(text)}
+      />
+      <ButtonComponent
+        title="Save"
+        loading={spinner ? true : false}
+        ButtonContainer={genericStyles.mt(20)}
+        onPress={() => ChangePassword()}
+      />
+      {/* </View> */}
+      {/* <Poweredby /> */}
     </View>
   );
 };
 
 export default ProfileSettings;
-
-const styles = StyleSheet.create({
-  title: {
-    fontSize: 18,
-    fontFamily: FONTS.InterMedium,
-    color: COLORS.textColor,
-    marginTop: 20,
-    marginLeft: 20,
-  },
-  subTitle: {
-    fontSize: 14,
-    fontFamily: FONTS.InterRegular,
-    color: '#888888',
-    marginTop: 10,
-    marginLeft: 20,
-    marginBottom: 30,
-  },
-});

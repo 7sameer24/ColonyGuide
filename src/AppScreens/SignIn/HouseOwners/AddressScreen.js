@@ -86,12 +86,12 @@ const AddressScreen = ({route, navigation}) => {
           setNewData(response);
           setUserToken(UserData.token);
           setNavigationState(navigationStateType.HOME);
-          ToastAndroid.show(
-            UserData.app_role_id === 3
-              ? `Welcome ${HOName}`
-              : `Welcome ${FullName}`,
-            ToastAndroid.SHORT,
-          );
+          // ToastAndroid.show(
+          //   UserData.app_role_id === 3
+          //     ? `Welcome ${HOName}`
+          //     : `Welcome ${FullName}`,
+          //   ToastAndroid.SHORT,
+          // );
         } else {
           ToastAndroid.show(response.message, ToastAndroid.SHORT);
         }
@@ -162,7 +162,7 @@ const AddressScreen = ({route, navigation}) => {
                 valueField="id"
                 placeholder="Locality"
                 value={LocalityValue}
-                maxHeight={50}
+                maxHeight={100}
                 onChange={item => setLocality(item.id)}
               />
             </View>
@@ -170,10 +170,9 @@ const AddressScreen = ({route, navigation}) => {
               title="Save"
               onPress={() => handleOnSubmit()}
               loading={spinner ? true : false}
-              ButtonContainer={{marginBottom: 30}}
             />
           </>
-          <Poweredby container={genericStyles.mb(0)} />
+          <Poweredby />
         </ScrollView>
       ) : (
         <Spinner />

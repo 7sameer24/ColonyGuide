@@ -51,16 +51,23 @@ const CustomDrawer = props => {
           <>
             <View style={styles.ProfileContanier}>
               <View style={genericStyles.column}>
-                <Image
-                  source={
-                    Userdata.userData.profile_image ===
-                    'https://colonyguide.garimaartgallery.com/storage'
-                      ? Images.Ellipse
-                      : {uri: Userdata.userData.profile_image}
-                  }
-                  style={styles.ImageStyle}
-                />
-                <View style={genericStyles.column}>
+                <TouchableOpacity
+                  onPress={() =>
+                    props.navigation.navigate('Personal Details', {
+                      userID: Userdata.userData.id,
+                      userToken: UserToken,
+                    })
+                  }>
+                  <Image
+                    source={
+                      Userdata.userData.profile_image ===
+                      'https://colonyguide.garimaartgallery.com/storage'
+                        ? Images.Ellipse
+                        : {uri: Userdata.userData.profile_image}
+                    }
+                    style={styles.ImageStyle}
+                  />
+                  {/* <View style={genericStyles.column}> */}
                   <Text
                     numberOfLines={1}
                     style={
@@ -72,7 +79,8 @@ const CustomDrawer = props => {
                       ? Userdata.userData.mobile_no
                       : Userdata.userData.name}
                   </Text>
-                  {Userdata.userData.app_role_id === 4 ? null : (
+                </TouchableOpacity>
+                {/* {Userdata.userData.app_role_id === 4 ? null : (
                     <TouchableOpacity
                       onPress={() =>
                         props.navigation.navigate('Personal Details', {
@@ -82,8 +90,8 @@ const CustomDrawer = props => {
                       }>
                       <Text style={styles.subTitle}>View profile</Text>
                     </TouchableOpacity>
-                  )}
-                </View>
+                  )} */}
+                {/* </View> */}
               </View>
             </View>
             {Userdata.userData.app_role_id === 4 || 1 ? null : (
@@ -102,7 +110,7 @@ const CustomDrawer = props => {
             />
             {Userdata.userData.app_role_id === 4 ? null : (
               <ProfileComponents
-                title="Residence"
+                title="Resident"
                 ImageContainer={styles.DrawerIcon}
                 IconSvg={<HouseOwners />}
                 onPress={() => props.navigation.navigate('House Owners')}
@@ -128,11 +136,11 @@ const CustomDrawer = props => {
             />
             <Divider style={styles.Divider} color="#FFEBD9" width={1} />
             <ProfileComponents
-              title="Feedbacks"
+              title="Feedback"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Feedback />}
               onPress={() =>
-                props.navigation.navigate('Feedbacks', {
+                props.navigation.navigate('Feedback', {
                   ID: Userdata.userData.id,
                   token: UserToken,
                 })
@@ -187,7 +195,7 @@ const CustomDrawer = props => {
             />
 
             <ProfileComponents
-              title="Residence"
+              title="Resident"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<HouseOwners />}
               onPress={() => alert('Please Login')}
@@ -214,7 +222,7 @@ const CustomDrawer = props => {
               onPress={() => alert('Please Login')}
             />
             <ProfileComponents
-              title="Feedbacks"
+              title="Feedback"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Feedback />}
               onPress={() => alert('Please Login')}

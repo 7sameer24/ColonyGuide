@@ -56,7 +56,7 @@ const ForgotScreen = ({navigation}) => {
         subTitle="Please enter your mobile number associated 
 with your account"
         onPress={() => skipToHome()}
-        Icon={<ImgIcon />}
+        Icon={<ImgIcon height={160} />}
       />
       <InputComponent
         placeholder="Mobile Number"

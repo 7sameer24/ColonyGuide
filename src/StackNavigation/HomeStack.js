@@ -105,7 +105,7 @@ const HomeStack = ({navigation}) => {
       headerShadowVisible: false,
     },
     {
-      name: 'Feedbacks',
+      name: 'Feedback',
       component: FeedBacks,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,

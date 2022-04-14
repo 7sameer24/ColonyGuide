@@ -60,7 +60,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
-    alignSelf: 'center',
+    textAlign: 'left',
     marginBottom: 10,
+    marginLeft: 20,
   },
 });

@@ -28,7 +28,7 @@ const BusinessListed = ({navigation}) => {
     <View style={genericStyles.Container}>
       <HeaderBar
         firstIcon="arrow-back-outline"
-        title="Business listed"
+        title="Business Listing"
         // searchIcon="search"
         // bellIcon="filter"
         ThirdType="material-community"

@@ -118,9 +118,9 @@ const LoginScreen = ({navigation}) => {
       <StatusBar backgroundColor={COLORS.primary} />
       <ScrollView>
         <HeaderBody
-          title="Welcome back!"
+          title="Welcome"
           subTitle="Log in to continue"
-          Icon={<LoginLogo height={height / 3.5} />}
+          Icon={<LoginLogo height={height / 4.5} />}
           Skip="Skip"
           onPress={() => skipToHome()}
         />
@@ -146,14 +146,14 @@ const LoginScreen = ({navigation}) => {
           />
         </View>
         <View style={styles.CheckBox}>
-          <CheckBox
+          {/* <CheckBox
             title="Remember me"
             checked={check1}
             onPress={() => toggleRememberMe(!check1)}
             checkedColor={COLORS.primary}
             containerStyle={styles.checkBoxContanier}
             textStyle={styles.CheckText}
-          />
+          /> */}
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}>
             <Text style={styles.forgotText}>Forgot password?</Text>
@@ -165,6 +165,8 @@ const LoginScreen = ({navigation}) => {
           onPress={() => Login()}
           disabled={!MN || !password ? true : false}
           ButtonContainer={{elevation: !MN || !password ? 0 : 4}}
+          disabledTitleStyle={{color: COLORS.white}}
+          disabledStyle={{backgroundColor: '#a668d5'}}
         />
         <View style={styles.signUpBtn}>
           <Text style={styles.signUp}>Don’t have an account? </Text>
@@ -172,8 +174,8 @@ const LoginScreen = ({navigation}) => {
             <Text style={styles.signUpBtn2}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-        <Poweredby container={genericStyles.mb(0)} />
       </ScrollView>
+      <Poweredby />
     </View>
   );
 };
@@ -205,9 +207,9 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterRegular,
   },
   CheckBox: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
+    flexDirection: 'row-reverse',
+    // justifyContent: 'space-between',
+    marginBottom: 15,
   },
   signUp: {
     fontSize: 16,

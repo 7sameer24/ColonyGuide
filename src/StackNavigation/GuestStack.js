@@ -9,27 +9,7 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import HomeScreen from '../Tabs/HomeScreen';
 import CategoriesScreen from '../Tabs/CategoriesScreen';
 import ProfileScreen from '../Tabs/ProfileScreen';
-import TermsCondition from '../ProfileComponents/TermsCondition';
-import ProfileDetails from '../ProfileComponents/ProfileDetails';
-import ProfileSettings from '../ProfileComponents/ProfileSettings';
-import BusinessInfo from '../ProfileComponents/BusinessComponents/BusinessInfo';
-import ServiceInfo from '../ProfileComponents/ServiceInfo';
-import ContactUs from '../ProfileComponents/ContactUs';
-import BusinessDetails from '../ProfileComponents/BusinessComponents/BusinessDetails';
-import BusinessSaved from '../ProfileComponents/BusinessComponents/BusinessSaved';
 import CustomDrawer from '../Components/CustomDrawer';
-import Committee from '../Tabs/Committee';
-import HouseOwners from '../Tabs/HouseOwners';
-import Helpline from '../Tabs/Helpline';
-import SearchScreen from '../Tabs/SearchScreen';
-import BusinessListed from '../ProfileComponents/BusinessComponents/BusinessListed';
-import VegetableFruits from '../Tabs/VegetableFruits';
-import RoomsFlats from '../Tabs/RoomsFlats';
-import Addroom from '../Tabs/Addroom';
-import EditProfile from '../ProfileComponents/EditProfile';
-import FeedBacks from '../Tabs/FeedBacks';
-import ServiceEdit from '../ProfileComponents/BusinessComponents/ServiceEdit';
-import ServiceSaved from '../ProfileComponents/BusinessComponents/ServiceSaved';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

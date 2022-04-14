@@ -113,16 +113,18 @@ const CardsListed = ({
                 type="material-community"
                 color="#407BFF"
                 size={18}
+                reverse
                 onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
-                containerStyle={genericStyles.mr(25)}
+                containerStyle={genericStyles.shadow}
               />
               <Icon
                 name="whatsapp"
                 type="material-community"
                 size={18}
                 color="#25D366"
+                reverse
                 onPress={() => sendWhatsApp()}
-                containerStyle={genericStyles.mr(15)}
+                containerStyle={genericStyles.shadow}
               />
               {/* <Icon
                 name="map-marker-radius"
@@ -146,17 +148,22 @@ export default CardsListed;
 
 const styles = StyleSheet.create({
   CardContainer: {
-    borderWidth: 0,
+    borderWidth: 1,
     elevation: 5,
     borderRadius: 10,
     marginHorizontal: 20,
     paddingHorizontal: 10,
+    borderColor: COLORS.primary,
+    paddingVertical: 10,
+    alignItems: 'center',
+    paddingBottom: 0,
   },
   ImageStyle: {
     width: 54,
     height: 54,
     borderRadius: 10,
-    alignSelf: 'center',
+    // alignSelf: 'center',
+    marginTop: 5,
   },
   View: {
     flexDirection: 'column',
@@ -165,6 +172,7 @@ const styles = StyleSheet.create({
   View2: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   View3: {
     flexDirection: 'row',
@@ -181,10 +189,11 @@ const styles = StyleSheet.create({
     color: '#7D7D7D',
   },
   subTitle1: {
-    width: 250,
+    width: 150,
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
+    marginBottom: -15,
   },
   readMoreText: {
     fontSize: 12,

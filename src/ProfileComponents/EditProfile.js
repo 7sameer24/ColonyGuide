@@ -288,9 +288,8 @@ const EditProfile = ({route, navigation}) => {
             title="Save"
             loading={spinner ? true : false}
             onPress={() => SaveDetail()}
-            ButtonContainer={genericStyles.mb(30)}
           />
-          <Poweredby container={genericStyles.mb(0)} />
+          <Poweredby />
         </ScrollView>
       ) : (
         <Spinner />

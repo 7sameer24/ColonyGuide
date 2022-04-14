@@ -77,7 +77,7 @@ const ProfileDetails = ({navigation, route}) => {
               <Text style={styles.text}>
                 {userData.app_role_id === 1 ? 'Hostel Name' : 'Address'}
               </Text>
-              <View style={styles.viewCon}>
+              <View style={[styles.viewCon, {marginBottom: 30}]}>
                 <Text style={[styles.full, {width: '85%'}]}>
                   {userData.app_role_id === 1
                     ? userData.hostel_name
@@ -87,7 +87,7 @@ const ProfileDetails = ({navigation, route}) => {
               {userData.app_role_id === 1 ? (
                 <>
                   <Text style={styles.text}>Hostel Address</Text>
-                  <View style={styles.viewCon}>
+                  <View style={[styles.viewCon, {marginBottom: 30}]}>
                     <Text style={[styles.full, {width: '85%'}]}>
                       {userData.hostel_address}
                     </Text>
@@ -109,10 +109,10 @@ export default ProfileDetails;
 
 const styles = StyleSheet.create({
   ImageStyle: {
-    width: 110,
-    height: 110,
+    width: 90,
+    height: 90,
     alignSelf: 'center',
-    marginTop: 40,
+    marginTop: 20,
     borderRadius: 100,
   },
   ChangeImgStyle: {

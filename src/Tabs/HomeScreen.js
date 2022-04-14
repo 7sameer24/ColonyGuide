@@ -21,6 +21,7 @@ import {Icon} from 'react-native-elements';
 import PushNotification from 'react-native-push-notification';
 import messaging from '@react-native-firebase/messaging';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
+import ButtonComponent from '../Components/ButtonComponent';
 
 const HomeScreen = ({navigation}) => {
   const [newData, setData] = useState([]);
@@ -168,7 +169,7 @@ const HomeScreen = ({navigation}) => {
 
   useEffect(() => {
     idx();
-    sendToken();
+    Userdata === null ? null : sendToken();
     PushNotificationUser();
     checkPermission();
     return () => {
@@ -225,6 +226,12 @@ const HomeScreen = ({navigation}) => {
                     <CategoriesList navigation={navigation} data={newData} />
                   </View>
                 </>
+                <ButtonComponent
+                  title="View more"
+                  ButtonContainer={styles.ButtonContainer}
+                  buttonStyle={genericStyles.pv(10)}
+                  onPress={() => navigation.navigate('categories')}
+                />
               </ScrollView>
             ) : (
               <Spinner />
@@ -257,7 +264,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
-    marginLeft: 10,
+    marginLeft: 5,
   },
   ImageZoomComponent: {
     flex: 1,
@@ -267,5 +274,10 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     marginLeft: 20,
     marginVertical: 20,
+  },
+  ButtonContainer: {
+    width: '30%',
+    alignSelf: 'center',
+    marginBottom: 20,
   },
 });

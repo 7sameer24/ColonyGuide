@@ -41,39 +41,40 @@ const AllRoomsHostals = ({navigation}) => {
       ) : (
         <>
           {newData.length > 0 ? (
-            <ScrollView style={genericStyles.mt(5)}>
-              {newData.map((data, index) => (
-                <CardsListed
-                  key={data.id}
-                  title={data.building_name}
-                  subTitle={data.contact_person}
-                  category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
-                  source={{uri: data.logo_image}}
-                  index={index}
-                  phoneNumber={data.mobile_no}
-                  WhatsAppNumber={data.whatsapp_no}
-                />
-              ))}
-              <View style={genericStyles.height(20)} />
-            </ScrollView>
+            <>
+              <ScrollView style={genericStyles.mt(5)}>
+                {newData.map((data, index) => (
+                  <CardsListed
+                    key={data.id}
+                    title={data.building_name}
+                    subTitle={data.contact_person}
+                    category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
+                    source={{uri: data.logo_image}}
+                    index={index}
+                    phoneNumber={data.mobile_no}
+                    WhatsAppNumber={data.whatsapp_no}
+                  />
+                ))}
+                <View style={genericStyles.height(20)} />
+              </ScrollView>
+              {Userdata !== null ? (
+                Userdata.userData.app_role_id === 3 ? (
+                  <>
+                    <ButtonComponent
+                      title="Add room"
+                      ButtonContainer={styles.ButtonContainer}
+                      onPress={() => navigation.navigate('Add room')}
+                    />
+                    <Poweredby container={{flex: 0}} />
+                  </>
+                ) : null
+              ) : null}
+            </>
           ) : (
             <ListedAnimation />
           )}
         </>
       )}
-
-      {Userdata !== null ? (
-        Userdata.userData.app_role_id === 3 ? (
-          <>
-            <ButtonComponent
-              title="Add room"
-              ButtonContainer={styles.ButtonContainer}
-              onPress={() => navigation.navigate('Add room')}
-            />
-            <Poweredby container={genericStyles.mb(0)} />
-          </>
-        ) : null
-      ) : null}
     </View>
   );
 };
@@ -83,6 +84,5 @@ export default AllRoomsHostals;
 const styles = StyleSheet.create({
   ButtonContainer: {
     width: '90%',
-    marginBottom: 25,
   },
 });

@@ -47,7 +47,7 @@ const PersonalDetails = ({data, navigation}) => {
           setNewData(response.data);
           setUserToken(data.token);
           setNavigationState(navigationStateType.HOME);
-          ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
+          // ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
         } else {
           alert(response.data);
         }
@@ -61,7 +61,7 @@ const PersonalDetails = ({data, navigation}) => {
     <View style={genericStyles.Container}>
       <ScrollView>
         <HeaderBody
-          Icon={<ImgIcon />}
+          Icon={<ImgIcon height={160} />}
           touchableOpacityStyle={genericStyles.mb(0)}
           title="Personal Details"
           subTitle="Enter the details below to continue"
@@ -98,8 +98,8 @@ const PersonalDetails = ({data, navigation}) => {
           loading={spinner ? true : false}
           ButtonContainer={styles.ButtonContainer}
         />
-        <Poweredby container={genericStyles.mb(0)} />
       </ScrollView>
+      <Poweredby />
     </View>
   );
 };

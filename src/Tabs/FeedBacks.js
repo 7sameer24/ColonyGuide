@@ -7,14 +7,16 @@ import ButtonComponent from '../Components/ButtonComponent';
 import Poweredby from '../Components/Poweredby';
 import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
+import {useApp} from '../../Context/AppContext';
 
 const FeedBacks = ({route, navigation}) => {
   const {ID, token} = route.params;
   const [star, setStar] = useState(null);
-  const [PersonName, setPersonName] = useState('');
-  const [mobile_no, setMobile] = useState('');
+  // const [PersonName, setPersonName] = useState('');
+  // const [mobile_no, setMobile] = useState('');
   const [message, setMessage] = useState('');
   const [spinner, setSpinner] = useState(false);
+  const {Userdata} = useApp();
 
   const handleOnSubmit = async () => {
     try {
@@ -25,9 +27,9 @@ const FeedBacks = ({route, navigation}) => {
         headers: {Authorization: `Bearer ${token}`},
         data: {
           user_id: ID,
-          name: PersonName,
+          name: Userdata.userData.name,
           rating: star,
-          mobile_no: mobile_no,
+          mobile_no: Userdata.userData.mobile_no,
           message: message,
         },
       });
@@ -61,7 +63,8 @@ const FeedBacks = ({route, navigation}) => {
           selectedStar={rating => setStar(rating)}
           rating={star}
         />
-        <InputComponent
+
+        {/* <InputComponent
           placeholder="Name"
           value={PersonName}
           onChangeText={text => setPersonName(text)}
@@ -70,11 +73,24 @@ const FeedBacks = ({route, navigation}) => {
           placeholder="Mobile Number"
           value={mobile_no}
           onChangeText={text => setMobile(text)}
-        />
+        /> */}
+        <View style={styles.viewCon}>
+          <Text style={styles.full}>{Userdata.userData.name}</Text>
+        </View>
+        <View style={styles.viewCon}>
+          <Text style={styles.full}>{Userdata.userData.mobile_no}</Text>
+        </View>
         <InputComponent
           placeholder="Write here..."
           value={message}
           multiline={true}
+          autoCapitalize="words"
+          inputContainerStyle={{
+            borderRadius: 8,
+            backgroundColor: '#F3EBF9',
+            borderBottomWidth: 0,
+          }}
+          containerStyle={{marginTop: 10, width: '95%'}}
           onChangeText={text => setMessage(text)}
         />
         <ButtonComponent
@@ -84,7 +100,6 @@ const FeedBacks = ({route, navigation}) => {
           ButtonContainer={genericStyles.mt(20)}
         />
       </View>
-      <Poweredby />
     </View>
   );
 };
@@ -103,5 +118,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     marginLeft: 15,
     marginBottom: 20,
+  },
+  viewCon: {
+    borderRadius: 8,
+    backgroundColor: '#F3EBF9',
+    padding: 14,
+    marginTop: 10,
+    marginBottom: 10,
+    marginHorizontal: 20,
+  },
+  full: {
+    fontSize: 14,
+    color: '#666666',
+    fontFamily: FONTS.InterMedium,
   },
 });

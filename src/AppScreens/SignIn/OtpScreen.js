@@ -79,7 +79,7 @@ const OtpScreen = ({route, navigation}) => {
       <ScrollView>
         <View style={styles.ViewContainer}>
           <View style={genericStyles.selfCenter}>
-            <ImgIcon />
+            <ImgIcon height={160} />
           </View>
           <Text style={styles.text}>OTP Verification</Text>
           <Text style={styles.subText}>

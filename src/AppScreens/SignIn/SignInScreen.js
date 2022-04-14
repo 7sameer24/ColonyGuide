@@ -50,7 +50,7 @@ const SignInScreen = ({navigation}) => {
             <Text style={styles.TouchableText}>Skip</Text>
           </TouchableOpacity>
           <View style={styles.imageStyle}>
-            <ImgIcon height={height / 3.5} />
+            <ImgIcon height={height / 4} />
             <Text style={styles.text}>Select your role</Text>
           </View>
           {newData.map(data => (
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     marginTop: 15,
     marginLeft: 20,
-    marginBottom: 30,
+    marginBottom: 40,
   },
   TouchableText: {
     color: COLORS.primary,

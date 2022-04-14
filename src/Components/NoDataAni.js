@@ -1,7 +1,7 @@
-import {StatusBar, StyleSheet, View} from 'react-native';
+import {StatusBar, StyleSheet, Text, View} from 'react-native';
 import LottieView from 'lottie-react-native';
 import React from 'react';
-import {COLORS, genericStyles} from '../constants';
+import {COLORS, FONTS, genericStyles} from '../constants';
 
 const NoDataAni = () => {
   return (
@@ -12,8 +12,9 @@ const NoDataAni = () => {
         autoPlay
         loop={false}
         autoSize
-        style={genericStyles.width('80%')}
+        style={[genericStyles.width('80%'), {marginTop: -10}]}
       />
+      <Text style={styles.topText}> No data found.</Text>
     </View>
   );
 };
@@ -26,5 +27,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  topText: {
+    fontSize: 18,
+    fontFamily: FONTS.InterMedium,
+    color: COLORS.primary,
+    marginTop: -30,
   },
 });

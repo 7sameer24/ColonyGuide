@@ -29,13 +29,13 @@ const FourList = ({navigation}) => {
       image: <Third width={30} height={30} />,
       Id: 2,
       navigation: 'House Owners',
-      name: 'Residence',
+      name: 'Resident',
     },
     {
-      image: <Four width={30} height={30} />,
+      image: <Four width={40} height={40} />,
       Id: 3,
       navigation: 'Business listed',
-      name: 'Business Listed',
+      name: 'Business Listing',
     },
     {
       image: <Second width={30} height={30} />,
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   },
   containerStyle: (width, height) => ({
     width: width / 6.1,
-    height: height / 15,
+    height: height / 14,
     borderRadius: 10,
     borderWidth: 0,
     marginHorizontal: 14,

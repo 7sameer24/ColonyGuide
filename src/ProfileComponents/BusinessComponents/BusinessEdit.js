@@ -228,14 +228,14 @@ const BusinessEdit = ({navigation, route}) => {
               autoCapitalize="words"
               onChangeText={text => setLandmark(text)}
             />
+            <ButtonComponent
+              title="Save"
+              ButtonContainer={styles.ButtonContainer}
+              loading={spinner ? true : false}
+              onPress={() => businessUpdate()}
+            />
+            <Poweredby />
           </ScrollView>
-          <ButtonComponent
-            title="Save"
-            ButtonContainer={styles.ButtonContainer}
-            loading={spinner ? true : false}
-            onPress={() => businessUpdate()}
-          />
-          <Poweredby container={genericStyles.mb(5)} />
         </>
       ) : (
         <Spinner />
@@ -285,7 +285,6 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
   },
   ButtonContainer: {
-    marginVertical: 20,
-    marginBottom: 30,
+    marginTop: 20,
   },
 });

@@ -165,7 +165,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             labelField="name"
             valueField="id"
             value={Category}
-            placeholder="Select category"
+            placeholder="Select Category"
             maxHeight={200}
             onChange={item => setCategory(item.id)}
           />
@@ -177,7 +177,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             autoCapitalize="words"
           />
           <InputComponent
-            placeholder="Short Description"
+            placeholder="What services you provide"
             value={shortDes}
             onChangeText={text => setShortDes(text)}
             autoCapitalize="words"
@@ -189,7 +189,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             onPress={() => validationCheck()}
             ButtonContainer={styles.ButtonContainer(imageUp)}
           />
-          <Poweredby container={genericStyles.mb(0)} />
+          <Poweredby />
         </ScrollView>
       ) : (
         <Spinner />
@@ -234,6 +234,5 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: imageUp => ({
     marginTop: '5%',
-    marginBottom: 30,
   }),
 });

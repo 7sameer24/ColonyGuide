@@ -77,7 +77,7 @@ const ServiceInfo = ({navigation, route}) => {
         ButtonContainer={styles.ButtonContainer}
         onPress={() => navigation.navigate('ServiceAddDetails')}
       />
-      <Poweredby container={genericStyles.mb(0)} />
+      <Poweredby container={{flex: 0}} />
     </View>
   );
 };
@@ -104,6 +104,5 @@ const styles = StyleSheet.create({
   },
   ButtonContainer: {
     width: '90%',
-    marginBottom: 25,
   },
 });

@@ -53,7 +53,7 @@ const VegetableFruits = ({navigation, route}) => {
       ) : (
         <>
           {data.length > 0 ? (
-            <ScrollView style={genericStyles.mt(20)}>
+            <ScrollView>
               {data.map((data, index) => (
                 <CardsListed
                   source={

@@ -1,4 +1,5 @@
 import {
+  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -16,7 +17,9 @@ import axios from 'axios';
 import Poweredby from '../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
+
 const RegisterScreen = ({navigation, route}) => {
+  const {width, height} = Dimensions.get('window');
   const {role_id} = route.params;
   const [visible, setVisible] = useState(true);
   const [visible2, setVisible2] = useState(true);
@@ -84,8 +87,8 @@ const RegisterScreen = ({navigation, route}) => {
           title="Create Account"
           subTitle="Sign Up to continue"
           Skip="Skip"
-          Icon={<ImgIcon />}
-          touchableOpacityStyle={genericStyles.mb(30)}
+          Icon={<ImgIcon height={height / 4.5} />}
+          touchableOpacityStyle={genericStyles.mb(0)}
           subTitleStyle={genericStyles.mb(10)}
           onPress={() => skipToHome()}
         />
@@ -132,8 +135,8 @@ const RegisterScreen = ({navigation, route}) => {
             <Text style={styles.signUpBtn2}>Sign In</Text>
           </TouchableOpacity>
         </View>
-        <Poweredby container={genericStyles.mb(0)} />
       </ScrollView>
+      <Poweredby />
     </View>
   );
 };

@@ -126,7 +126,7 @@ const ProfileScreen = ({navigation}) => {
               Userdata.userData.app_role_id == 1 ? null : (
                 <ProfileComponents
                   onPress={() =>
-                    checkStatus === 0
+                    checkStatus === 1
                       ? navigation.navigate('Business Infoo')
                       : navigation.navigate('Business Saved', {
                           userID: Userdata.userData.id,
@@ -180,9 +180,9 @@ const ProfileScreen = ({navigation}) => {
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Feedback />}
-            title="Feedbacks"
+            title="Feedback"
             onPress={() =>
-              navigation.navigate('Feedbacks', {
+              navigation.navigate('Feedback', {
                 ID: Userdata.userData.id,
                 token: UserToken,
               })
@@ -250,7 +250,7 @@ const ProfileScreen = ({navigation}) => {
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Feedback />}
-            title="Feedbacks"
+            title="Feedback"
             onPress={() => alert('Please Login')}
           />
           <ProfileComponents
