@@ -5,6 +5,7 @@ import {Button, Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
+import HeaderBar from '../../Components/HeaderBar';
 
 const ServiceSaved = ({route, navigation}) => {
   const {userID, userToken} = route.params;
@@ -33,6 +34,19 @@ const ServiceSaved = ({route, navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
+      <HeaderBar
+        firstIcon="arrow-back-outline"
+        title="Service Information"
+        bellIcon="create-outline"
+        ThirdType="ionicon"
+        thirdOnpress={() =>
+          navigation.navigate('ServiceEdit', {
+            data: Userdata,
+            token: userToken,
+          })
+        }
+        firstOnpress={() => navigation.goBack()}
+      />
       {Userdata !== '' ? (
         <>
           <View style={styles.radiusView}>
@@ -46,9 +60,13 @@ const ServiceSaved = ({route, navigation}) => {
               style={styles.ImageStyle}
               fadeDuration={0}
             />
+            <View style={genericStyles.column}>
+              <Text style={[styles.title, {color: COLORS.textColor}]}>
+                {Userdata.shop_name}
+              </Text>
+              <Text style={styles.subTitle}>{Userdata.name}</Text>
+            </View>
           </View>
-          <Text style={styles.title}>{Userdata.shop_name}</Text>
-          <Text style={styles.subTitle}>{Userdata.name}</Text>
           <View style={styles.DetailsContanier}>
             <View style={genericStyles.column}>
               <View style={styles.firstView}>
@@ -92,21 +110,6 @@ const ServiceSaved = ({route, navigation}) => {
               {`${Userdata.house_no} ${Userdata.address} ${Userdata.landmark}`}
             </Text>
           </View>
-          <View style={styles.buttonView}>
-            <Button
-              containerStyle={styles.buttonContainer}
-              buttonStyle={styles.buttonStyle}
-              titleStyle={styles.titleStyle}
-              type="outline"
-              title="Edit"
-              onPress={() =>
-                navigation.navigate('ServiceEdit', {
-                  data: Userdata,
-                  token: userToken,
-                })
-              }
-            />
-          </View>
         </>
       ) : (
         <Spinner />
@@ -119,32 +122,26 @@ export default ServiceSaved;
 
 const styles = StyleSheet.create({
   radiusView: {
-    backgroundColor: COLORS.primary,
-    height: '8%',
-    borderBottomStartRadius: 20,
-    borderBottomEndRadius: 20,
-    marginBottom: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
   },
   ImageStyle: {
-    width: 80,
-    height: 80,
-    alignSelf: 'center',
-    marginTop: 20,
+    width: 70,
+    height: 70,
     borderRadius: 60,
-    borderColor: COLORS.white,
-    borderWidth: 5,
+    marginHorizontal: 20,
   },
   title: {
     fontSize: 16,
-    color: COLORS.textColor,
+    color: COLORS.primary,
     fontFamily: FONTS.InterMedium,
-    alignSelf: 'center',
+    marginBottom: 10,
   },
   subTitle: {
     fontSize: 14,
     color: COLORS.textColor,
     fontFamily: FONTS.InterRegular,
-    alignSelf: 'center',
   },
   text: {
     fontSize: 14,
@@ -185,10 +182,5 @@ const styles = StyleSheet.create({
   buttonStyle: {
     paddingVertical: 16,
     borderWidth: 0,
-  },
-  buttonView: {
-    position: 'absolute',
-    bottom: 40,
-    width: '100%',
   },
 });

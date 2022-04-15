@@ -46,10 +46,7 @@ const AddressScreen = ({route, navigation}) => {
 
         Form.append('user_id', UserData.user_id);
         Form.append('app_role_id', UserData.app_role_id);
-        Form.append(
-          'full_name',
-          UserData.app_role_id === 3 ? HOName : FullName,
-        );
+        Form.append('full_name', UserData.app_role_id == 3 ? HOName : FullName);
         Form.append('geolocation', `${latitude},${longitude}`);
         Form.append('house_no', house);
         Form.append('address', Address);
@@ -120,10 +117,10 @@ const AddressScreen = ({route, navigation}) => {
   return (
     <View style={genericStyles.Container}>
       {newData.length > 0 ? (
-        <ScrollView>
-          <>
+        <>
+          <ScrollView>
             <HeaderBody
-              Icon={<ImgIcon width={266} height={239} />}
+              Icon={<ImgIcon height={160} />}
               title="Your Address"
               subTitle="Enter the otp sent to the mobile number +91-xxx-xxxx-xxx"
               touchableOpacityStyle={genericStyles.mb(0)}
@@ -171,9 +168,10 @@ const AddressScreen = ({route, navigation}) => {
               onPress={() => handleOnSubmit()}
               loading={spinner ? true : false}
             />
-          </>
+            <View style={genericStyles.height(20)} />
+          </ScrollView>
           <Poweredby />
-        </ScrollView>
+        </>
       ) : (
         <Spinner />
       )}

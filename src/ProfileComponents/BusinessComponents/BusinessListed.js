@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../constants';
 import HeaderBar from '../../Components/HeaderBar';
@@ -37,21 +37,27 @@ const BusinessListed = ({navigation}) => {
       {newData.length > 0 ? (
         <ScrollView style={genericStyles.mt(10)}>
           {newData.map((data, index) => (
-            <CardsListed
-              source={
-                data.logo_image ===
-                'https://colonyguide.garimaartgallery.com/storage'
-                  ? require('../../../assets/Image_not_available.png')
-                  : {uri: data.logo_image}
-              }
-              title={data.name}
+            <TouchableOpacity
               key={data.id}
-              index={index}
-              subTitle={data.contact_person}
-              phoneNumber={data.contact_person_mobile}
-              WhatsAppNumber={data.contact_person_whatsapp}
-              category={data.categoryName}
-            />
+              activeOpacity={0.9}
+              onPress={() =>
+                navigation.navigate('Business Information', {ID: data.id})
+              }>
+              <CardsListed
+                source={
+                  data.logo_image ===
+                  'https://colonyguide.garimaartgallery.com/storage'
+                    ? require('../../../assets/Image_not_available.png')
+                    : {uri: data.logo_image}
+                }
+                title={data.name}
+                index={index}
+                subTitle={data.contact_person}
+                phoneNumber={data.contact_person_mobile}
+                WhatsAppNumber={data.contact_person_whatsapp}
+                category={data.categoryName}
+              />
+            </TouchableOpacity>
           ))}
           <View style={genericStyles.height(20)} />
         </ScrollView>

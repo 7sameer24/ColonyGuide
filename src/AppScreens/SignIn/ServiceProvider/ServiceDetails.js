@@ -21,8 +21,8 @@ import BaseURL from '../../../constants/BaseURL';
 
 const ServiceDetails = ({navigation, UserNewData}) => {
   const [imageUp, setImage] = useState('');
-  const [shopName, setShop] = useState(null);
-  const [fullName, setFullName] = useState(null);
+  const [shopName, setShop] = useState('');
+  const [fullName, setFullName] = useState('');
   const [WhatsappNo, setWhatsappNo] = useState();
   const [shortDes, setShortDes] = useState('');
   const [newData, setNewData] = useState([]);
@@ -33,7 +33,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
     } else if (WhatsappNo.length < 10 || WhatsappNo.length > 10) {
       ToastAndroid.show(
-        'Please check your number and try again',
+        'Please check your Whatsapp number and try again',
         ToastAndroid.SHORT,
       );
     } else {
@@ -128,69 +128,72 @@ const ServiceDetails = ({navigation, UserNewData}) => {
   return (
     <View style={genericStyles.Container}>
       {newData.length > 0 ? (
-        <ScrollView>
-          <View style={genericStyles.mb(20)}>
-            <Text style={styles.text}>Service Details</Text>
-            <Text style={styles.subText}>
-              Enter the details below to continue
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={genericStyles.selfCenter}
-            activeOpacity={0.5}
-            onPress={() => createThreeButtonAlert()}>
-            <View style={styles.ImageContainer(imageUp)}>
-              <Image
-                resizeMode={imageUp ? null : 'contain'}
-                source={imageUp ? imageUp : Images.BusinessProfile}
-                style={styles.imageStyle(imageUp)}
-              />
+        <>
+          <ScrollView>
+            <View style={genericStyles.mb(20)}>
+              <Text style={styles.text}>Service Details</Text>
+              <Text style={styles.subText}>
+                Enter the details below to continue
+              </Text>
             </View>
-            <Text style={styles.AddLogoText}>Add image / logo</Text>
-          </TouchableOpacity>
-          <InputComponent
-            placeholder="Shop Name (Optional)"
-            value={shopName}
-            onChangeText={text => setShop(text)}
-            autoCapitalize="words"
-          />
-          <InputComponent
-            placeholder="Full name"
-            value={fullName}
-            onChangeText={text => setFullName(text)}
-            autoCapitalize="words"
-          />
-          <DropDownComponent
-            data={newData}
-            labelField="name"
-            valueField="id"
-            value={Category}
-            placeholder="Select Category"
-            maxHeight={200}
-            onChange={item => setCategory(item.id)}
-          />
-          <InputComponent
-            placeholder="Whatsapp number"
-            value={WhatsappNo}
-            onChangeText={num => setWhatsappNo(num)}
-            keyboardType="number-pad"
-            autoCapitalize="words"
-          />
-          <InputComponent
-            placeholder="What services you provide"
-            value={shortDes}
-            onChangeText={text => setShortDes(text)}
-            autoCapitalize="words"
-            multiline={true}
-            maxLength={70}
-          />
-          <ButtonComponent
-            title="Next"
-            onPress={() => validationCheck()}
-            ButtonContainer={styles.ButtonContainer(imageUp)}
-          />
+            <TouchableOpacity
+              style={genericStyles.selfCenter}
+              activeOpacity={0.5}
+              onPress={() => createThreeButtonAlert()}>
+              <View style={styles.ImageContainer(imageUp)}>
+                <Image
+                  resizeMode={imageUp ? null : 'contain'}
+                  source={imageUp ? imageUp : Images.BusinessProfile}
+                  style={styles.imageStyle(imageUp)}
+                />
+              </View>
+              <Text style={styles.AddLogoText}>Add image / logo</Text>
+            </TouchableOpacity>
+            <InputComponent
+              placeholder="Shop Name (Optional)"
+              value={shopName}
+              onChangeText={text => setShop(text)}
+              autoCapitalize="words"
+            />
+            <InputComponent
+              placeholder="Full name"
+              value={fullName}
+              onChangeText={text => setFullName(text)}
+              autoCapitalize="words"
+            />
+            <DropDownComponent
+              data={newData}
+              labelField="name"
+              valueField="id"
+              value={Category}
+              placeholder="Select Category"
+              maxHeight={200}
+              onChange={item => setCategory(item.id)}
+            />
+            <InputComponent
+              placeholder="Whatsapp number"
+              value={WhatsappNo}
+              onChangeText={num => setWhatsappNo(num)}
+              keyboardType="number-pad"
+              autoCapitalize="words"
+            />
+            <InputComponent
+              placeholder="What services you provide"
+              value={shortDes}
+              onChangeText={text => setShortDes(text)}
+              autoCapitalize="words"
+              multiline={true}
+              maxLength={70}
+            />
+            <ButtonComponent
+              title="Next"
+              onPress={() => validationCheck()}
+              ButtonContainer={styles.ButtonContainer(imageUp)}
+            />
+            <View style={genericStyles.height(20)} />
+          </ScrollView>
           <Poweredby />
-        </ScrollView>
+        </>
       ) : (
         <Spinner />
       )}

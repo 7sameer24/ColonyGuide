@@ -126,7 +126,7 @@ const ProfileScreen = ({navigation}) => {
               Userdata.userData.app_role_id == 1 ? null : (
                 <ProfileComponents
                   onPress={() =>
-                    checkStatus === 1
+                    checkStatus === 0
                       ? navigation.navigate('Business Infoo')
                       : navigation.navigate('Business Saved', {
                           userID: Userdata.userData.id,

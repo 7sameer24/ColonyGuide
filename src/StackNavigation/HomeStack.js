@@ -23,7 +23,6 @@ import HouseOwners from '../Tabs/HouseOwners';
 import Helpline from '../Tabs/Helpline';
 import SearchScreen from '../Tabs/SearchScreen';
 import BusinessListed from '../ProfileComponents/BusinessComponents/BusinessListed';
-import VegetableFruits from '../Tabs/VegetableFruits';
 import RoomsFlats from '../Tabs/RoomsFlats';
 import Addroom from '../Tabs/Addroom';
 import EditProfile from '../ProfileComponents/EditProfile';
@@ -35,6 +34,9 @@ import AllRoomsHostals from '../Tabs/AllRoomsHostals';
 import BusinessEdit from '../ProfileComponents/BusinessComponents/BusinessEdit';
 import HostelListed from '../Tabs/HostelListed';
 import ServiceAddDetails from '../ProfileComponents/BusinessComponents/ServiceAddDetails';
+import ServiceList from '../Tabs/CategoriesScreens/ServiceList';
+import ServiceInformation from '../Tabs/CategoriesScreens/ServiceInformation';
+import BusinessInformation from '../ProfileComponents/BusinessComponents/BusinessInformation';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -82,8 +84,8 @@ const HomeStack = ({navigation}) => {
       headerShown: false,
     },
     {
-      name: 'Vegetable Fruits',
-      component: VegetableFruits,
+      name: 'Service List',
+      component: ServiceList,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
@@ -238,7 +240,23 @@ const HomeStack = ({navigation}) => {
         name="Business Saved"
         component={BusinessSaved}
         options={() => ({
-          title: 'Business Information',
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="Service Information"
+        component={ServiceInformation}
+        options={() => ({
+          headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
+          headerTintColor: COLORS.white,
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="Business Information"
+        component={BusinessInformation}
+        options={() => ({
           headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
           headerTintColor: COLORS.white,
           headerStyle: {backgroundColor: COLORS.primary},
@@ -249,11 +267,7 @@ const HomeStack = ({navigation}) => {
         name="ServiceSaved"
         component={ServiceSaved}
         options={() => ({
-          title: 'Service Information',
-          headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
-          headerTintColor: COLORS.white,
-          headerStyle: {backgroundColor: COLORS.primary},
-          headerShadowVisible: false,
+          headerShown: false,
         })}
       />
     </Stack.Navigator>

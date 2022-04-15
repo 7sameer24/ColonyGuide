@@ -24,7 +24,7 @@ const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
           onPress={() =>
             Userdata === null
               ? alert('Please Login')
-              : navigation.navigate('Vegetable Fruits', {
+              : navigation.navigate('Service List', {
                   ID: data.id,
                   Name: data.name,
                 })

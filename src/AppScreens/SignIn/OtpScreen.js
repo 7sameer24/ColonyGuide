@@ -167,7 +167,7 @@ const OtpScreen = ({route, navigation}) => {
           onPress={() => checkOtp()}
           loading={spinner ? true : false}
         />
-        <FooterButton title="Resend OTP" onPress={() => resendOtp()} />
+        <FooterButton title="Resend OTP" />
       </ScrollView>
     </View>
   );

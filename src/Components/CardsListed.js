@@ -10,7 +10,6 @@ import {
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
-import ReadMore from '@fawazahmed/react-native-read-more';
 
 const CardsListed = ({
   category,
@@ -55,56 +54,18 @@ const CardsListed = ({
   // const geolocation = GeoLocation.split(',');
 
   return (
-    <Card
-      containerStyle={[
-        styles.CardContainer,
-        // {backgroundColor: alternatingColor[index % alternatingColor.length]},
-      ]}>
+    <Card containerStyle={[styles.CardContainer]}>
       <View style={genericStyles.row}>
         <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
         <View style={styles.View}>
-          <Text
-            style={[
-              styles.title,
-              // {
-              //   color:
-              //     alternatingTextColor[index % alternatingTextColor.length],
-              // },
-            ]}
-            numberOfLines={1}>
+          <Text style={[styles.title]} numberOfLines={1}>
             {title}
           </Text>
-          <Text
-            style={[
-              styles.subTitle1,
-              // {
-              //   color:
-              //     alternatingTextColor[index % alternatingTextColor.length],
-              // },
-            ]}
-            numberOfLines={1}>
+          <Text style={[styles.subTitle1]} numberOfLines={1}>
             {subTitle}
           </Text>
-          {/* {ShortDescription ? (
-            <ReadMore
-              numberOfLines={1}
-              style={styles.readMoreText}
-              wrapperStyle={genericStyles.mb(5)}
-              seeLessStyle={genericStyles.color(COLORS.primary)}
-              seeMoreStyle={genericStyles.color(COLORS.primary)}>
-              {ShortDescription}
-            </ReadMore>
-          ) : null} */}
           <View style={styles.View2}>
-            <Text
-              numberOfLines={1}
-              style={[
-                styles.subTitle,
-                // {
-                //   color:
-                //     alternatingTextColor[index % alternatingTextColor.length],
-                // },
-              ]}>
+            <Text numberOfLines={1} style={[styles.subTitle]}>
               {category}
             </Text>
             <View style={styles.View3}>

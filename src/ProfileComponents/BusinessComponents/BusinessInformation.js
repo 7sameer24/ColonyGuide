@@ -5,20 +5,15 @@ import {Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
-import HeaderBar from '../../Components/HeaderBar';
 
-const BusinessSaved = ({route, navigation}) => {
-  const {userID, userToken, Role} = route.params;
+const BusinessInformation = ({route, navigation}) => {
+  const {ID} = route.params;
   const [Userdata, setUserData] = useState('');
 
-  const idx = async () => {
+  const FetchData = async () => {
     try {
-      const response = await axios(BaseURL('business-details'), {
-        method: 'post',
-        data: {user_id: userID, app_role_id: Role},
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
+      const response = await axios.post(BaseURL('business-view'), {
+        business_id: ID,
       });
       setUserData(response.data.data);
     } catch (error) {
@@ -26,26 +21,14 @@ const BusinessSaved = ({route, navigation}) => {
     }
   };
   useEffect(() => {
-    idx();
+    FetchData();
     return () => {
       setUserData('');
     };
   }, []);
+
   return (
     <View style={genericStyles.Container}>
-      <HeaderBar
-        firstIcon="arrow-back-outline"
-        title="Business Information"
-        bellIcon="create-outline"
-        ThirdType="ionicon"
-        thirdOnpress={() =>
-          navigation.navigate('BusinessEdit', {
-            data: Userdata,
-            token: userToken,
-          })
-        }
-        firstOnpress={() => navigation.goBack()}
-      />
       {Userdata !== '' ? (
         <>
           <View style={styles.radiusView}>
@@ -56,16 +39,12 @@ const BusinessSaved = ({route, navigation}) => {
                   ? Images.Ellipse
                   : {uri: Userdata.logo_image}
               }
-              fadeDuration={0}
               style={styles.ImageStyle}
+              fadeDuration={0}
             />
-            <View style={genericStyles.column}>
-              <Text style={[styles.title, {color: COLORS.textColor}]}>
-                {Userdata.name}
-              </Text>
-              <Text style={styles.subTitle}>{Userdata.contact_person}</Text>
-            </View>
           </View>
+          <Text style={styles.title}>{Userdata.contact_person}</Text>
+          <Text style={styles.subTitle}>{Userdata.name}</Text>
           <View style={styles.DetailsContanier}>
             <View style={genericStyles.column}>
               <View style={styles.firstView}>
@@ -103,16 +82,19 @@ const BusinessSaved = ({route, navigation}) => {
           </View>
           <View style={genericStyles.ml(20)}>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              Business address
-            </Text>
-            <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-              {`${Userdata.house_no} ${Userdata.address} ${Userdata.landmark}`}
-            </Text>
-            <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              About business
+              About service
             </Text>
             <Text style={styles.SubText}>{Userdata.about}</Text>
+            <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
+              Shop address
+            </Text>
+            <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
+              {`${Userdata.house_no} ${Userdata.address} ${
+                Userdata.landmark == null ? '' : Userdata.landmark
+              }`}
+            </Text>
           </View>
+          <View style={styles.buttonView}></View>
         </>
       ) : (
         <Spinner />
@@ -121,30 +103,36 @@ const BusinessSaved = ({route, navigation}) => {
   );
 };
 
-export default BusinessSaved;
+export default BusinessInformation;
 
 const styles = StyleSheet.create({
   radiusView: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 20,
+    backgroundColor: COLORS.primary,
+    height: '8%',
+    borderBottomStartRadius: 20,
+    borderBottomEndRadius: 20,
+    marginBottom: 50,
   },
   ImageStyle: {
-    width: 70,
-    height: 70,
+    width: 80,
+    height: 80,
+    alignSelf: 'center',
+    marginTop: 20,
     borderRadius: 60,
-    marginHorizontal: 20,
+    borderColor: COLORS.white,
+    borderWidth: 5,
   },
   title: {
     fontSize: 16,
-    color: COLORS.primary,
+    color: COLORS.textColor,
     fontFamily: FONTS.InterMedium,
-    marginBottom: 10,
+    alignSelf: 'center',
   },
   subTitle: {
     fontSize: 14,
     color: COLORS.textColor,
     fontFamily: FONTS.InterRegular,
+    alignSelf: 'center',
   },
   text: {
     fontSize: 14,
@@ -167,6 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontFamily: FONTS.InterRegular,
     color: '#A1A1A1',
+    marginTop: 10,
     width: '90%',
     marginBottom: 20,
   },
@@ -184,5 +173,10 @@ const styles = StyleSheet.create({
   buttonStyle: {
     paddingVertical: 16,
     borderWidth: 0,
+  },
+  buttonView: {
+    position: 'absolute',
+    bottom: 40,
+    width: '100%',
   },
 });

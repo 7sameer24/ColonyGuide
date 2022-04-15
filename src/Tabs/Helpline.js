@@ -27,6 +27,9 @@ const Helpline = () => {
     HelplineData();
     return () => {
       setHelpData('');
+      setFB('');
+      setOther('');
+      setPolice('');
     };
   }, []);
 

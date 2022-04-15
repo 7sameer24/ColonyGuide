@@ -202,95 +202,104 @@ const EditProfile = ({route, navigation}) => {
   return (
     <View style={genericStyles.Container}>
       {localData !== '' ? (
-        <ScrollView>
-          <TouchableOpacity
-            style={genericStyles.selfCenter}
-            activeOpacity={0.5}
-            onPress={() => createThreeButtonAlert()}>
-            <View style={styles.imageConatiner(imageUp)}>
-              <Image
-                source={imageUp ? imageUp : {uri: data.profile_image}}
-                style={styles.imageStyle(imageUp)}
-              />
+        <>
+          <ScrollView>
+            <TouchableOpacity
+              style={genericStyles.selfCenter}
+              activeOpacity={0.5}
+              onPress={() => createThreeButtonAlert()}>
+              <View style={styles.imageConatiner(imageUp)}>
+                <Image
+                  source={
+                    imageUp
+                      ? imageUp
+                      : data.profile_image ==
+                        'https://colonyguide.garimaartgallery.com/storage'
+                      ? Images.Ellipse
+                      : {uri: data.profile_image}
+                  }
+                  style={styles.imageStyle(imageUp)}
+                />
+              </View>
+              <Text style={styles.AddLogoText}>Add Profile</Text>
+            </TouchableOpacity>
+            <View style={styles.midd}>
+              {data.app_role_id === 1 ? (
+                <View style={genericStyles.mb(15)}>
+                  <Text style={styles.text}>Your Name</Text>
+                  <InputComponent
+                    placeholder="Your Name"
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={genericStyles.ml(16)}
+                    value={PersonName}
+                    onChangeText={text => setPersonName(text)}
+                    autoCapitalize="words"
+                  />
+                  <Text style={styles.text}>Your Email</Text>
+                  <InputComponent
+                    placeholder="Email"
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={genericStyles.ml(16)}
+                    value={Email}
+                    onChangeText={text => setEmail(text)}
+                    autoCapitalize="words"
+                  />
+                  <Text style={styles.text}>Hostel Name</Text>
+                  <InputComponent
+                    placeholder="Hostel Name"
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={genericStyles.ml(16)}
+                    value={HostelName}
+                    onChangeText={text => setHostelName(text)}
+                    autoCapitalize="words"
+                  />
+                  <Text style={styles.text}>Hostel Address</Text>
+                  <InputComponent
+                    placeholder="Hostel Address"
+                    inputContainerStyle={styles.inputContainerStyle}
+                    inputStyle={genericStyles.ml(16)}
+                    value={hostel_address}
+                    onChangeText={text => setHostelAdd(text)}
+                    autoCapitalize="words"
+                  />
+                </View>
+              ) : (
+                <View>
+                  {arr.map(data => (
+                    <View key={data.title}>
+                      <Text style={styles.text}>{data.title}</Text>
+                      <InputComponent
+                        placeholder={data.placeHolder}
+                        inputContainerStyle={styles.inputContainerStyle}
+                        inputStyle={genericStyles.ml(16)}
+                        value={data.value}
+                        onChangeText={text => data.onChagneText(text)}
+                        autoCapitalize="words"
+                      />
+                    </View>
+                  ))}
+                  <Text style={styles.text}>Locality</Text>
+                  <DropDownComponent
+                    maxHeight={100}
+                    data={localData}
+                    placeholder="Locality"
+                    value={LocalityValue}
+                    labelField="name"
+                    valueField="id"
+                    onChange={item => setLocality(item.id)}
+                    dropdownStyle={styles.dropdownStyle}
+                  />
+                </View>
+              )}
             </View>
-            <Text style={styles.AddLogoText}>Add Profile</Text>
-          </TouchableOpacity>
-          <View style={styles.midd}>
-            {data.app_role_id === 1 ? (
-              <View style={genericStyles.mb(15)}>
-                <Text style={styles.text}>Your Name</Text>
-                <InputComponent
-                  placeholder="Your Name"
-                  inputContainerStyle={styles.inputContainerStyle}
-                  inputStyle={genericStyles.ml(16)}
-                  value={PersonName}
-                  onChangeText={text => setPersonName(text)}
-                  autoCapitalize="words"
-                />
-                <Text style={styles.text}>Your Email</Text>
-                <InputComponent
-                  placeholder="Email"
-                  inputContainerStyle={styles.inputContainerStyle}
-                  inputStyle={genericStyles.ml(16)}
-                  value={Email}
-                  onChangeText={text => setEmail(text)}
-                  autoCapitalize="words"
-                />
-                <Text style={styles.text}>Hostel Name</Text>
-                <InputComponent
-                  placeholder="Hostel Name"
-                  inputContainerStyle={styles.inputContainerStyle}
-                  inputStyle={genericStyles.ml(16)}
-                  value={HostelName}
-                  onChangeText={text => setHostelName(text)}
-                  autoCapitalize="words"
-                />
-                <Text style={styles.text}>Hostel Address</Text>
-                <InputComponent
-                  placeholder="Hostel Address"
-                  inputContainerStyle={styles.inputContainerStyle}
-                  inputStyle={genericStyles.ml(16)}
-                  value={hostel_address}
-                  onChangeText={text => setHostelAdd(text)}
-                  autoCapitalize="words"
-                />
-              </View>
-            ) : (
-              <View>
-                {arr.map(data => (
-                  <View key={data.title}>
-                    <Text style={styles.text}>{data.title}</Text>
-                    <InputComponent
-                      placeholder={data.placeHolder}
-                      inputContainerStyle={styles.inputContainerStyle}
-                      inputStyle={genericStyles.ml(16)}
-                      value={data.value}
-                      onChangeText={text => data.onChagneText(text)}
-                      autoCapitalize="words"
-                    />
-                  </View>
-                ))}
-                <Text style={styles.text}>Locality</Text>
-                <DropDownComponent
-                  maxHeight={60}
-                  data={localData}
-                  placeholder="Locality"
-                  value={LocalityValue}
-                  labelField="name"
-                  valueField="id"
-                  onChange={item => setLocality(item.id)}
-                  dropdownStyle={styles.dropdownStyle}
-                />
-              </View>
-            )}
-          </View>
+          </ScrollView>
           <ButtonComponent
             title="Save"
             loading={spinner ? true : false}
             onPress={() => SaveDetail()}
           />
-          <Poweredby />
-        </ScrollView>
+          <Poweredby container={{flex: 0}} />
+        </>
       ) : (
         <Spinner />
       )}

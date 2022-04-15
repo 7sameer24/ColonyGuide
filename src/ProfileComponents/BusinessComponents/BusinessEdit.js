@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {COLORS, FONTS, genericStyles} from '../../constants';
+import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import InputComponent from '../../Components/InputComponent';
 import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
@@ -168,7 +168,14 @@ const BusinessEdit = ({navigation, route}) => {
               onPress={() => createThreeButtonAlert()}>
               <View style={styles.imageConatiner(imageUp)}>
                 <Image
-                  source={imageUp ? imageUp : {uri: data.logo_image}}
+                  source={
+                    imageUp
+                      ? imageUp
+                      : data.logo_image ==
+                        'https://colonyguide.garimaartgallery.com/storage'
+                      ? Images.Ellipse
+                      : {uri: data.logo_image}
+                  }
                   style={styles.imageStyle(imageUp)}
                 />
               </View>
@@ -228,14 +235,13 @@ const BusinessEdit = ({navigation, route}) => {
               autoCapitalize="words"
               onChangeText={text => setLandmark(text)}
             />
-            <ButtonComponent
-              title="Save"
-              ButtonContainer={styles.ButtonContainer}
-              loading={spinner ? true : false}
-              onPress={() => businessUpdate()}
-            />
-            <Poweredby />
           </ScrollView>
+          <ButtonComponent
+            title="Save"
+            loading={spinner ? true : false}
+            onPress={() => businessUpdate()}
+          />
+          <Poweredby container={{flex: 0}} />
         </>
       ) : (
         <Spinner />
