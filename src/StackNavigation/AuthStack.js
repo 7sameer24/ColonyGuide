@@ -1,9 +1,7 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {COLORS, FONTS} from '../constants';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '../AppScreens/Login/LoginScreen';
-import SignInScreen from '../AppScreens/SignIn/SignInScreen';
+import SelectRole from '../AppScreens/SignIn/SelectRole';
 import RegisterScreen from '../AppScreens/SignIn/RegisterScreen';
 import OtpScreen from '../AppScreens/SignIn/OtpScreen';
 import AllRegistration from '../AppScreens/SignIn/AllRegistration';
@@ -11,14 +9,13 @@ import AddressScreen from '../AppScreens/SignIn/HouseOwners/AddressScreen';
 import Location from '../AppScreens/SignIn/HouseOwners/Location';
 import ForgotScreen from '../AppScreens/Login/ForgotScreen';
 import ResetPassScreen from '../AppScreens/Login/ResetPassScreen';
-import OnboardingScreen from '../AppScreens/OnboardingScreen';
 
 const Stack = createNativeStackNavigator();
 
-const AuthStack = ({navigation}) => {
+const AuthStack = () => {
   const arr = [
     {name: 'Login', component: LoginScreen, headerShown: false},
-    {name: 'Sign in', component: SignInScreen, headerShown: false},
+    {name: 'Sign in', component: SelectRole, headerShown: false},
     {name: 'Register', component: RegisterScreen, headerShown: false},
     {name: 'Otp', component: OtpScreen, headerTransparent: true, title: null},
     {name: 'Registration', component: AllRegistration, headerShown: false},
@@ -55,40 +52,3 @@ const AuthStack = ({navigation}) => {
 };
 
 export default AuthStack;
-
-const styles = StyleSheet.create({
-  iconContainer: focused => ({
-    backgroundColor: focused ? COLORS.primary : COLORS.white,
-    padding: 10,
-    borderRadius: 10,
-  }),
-  headerStyle: {
-    color: COLORS.textColor,
-    fontSize: 18,
-    fontFamily: FONTS.InterSemiBold,
-  },
-  tabBarStyle: {
-    height: '9%',
-    backgroundColor: COLORS.white,
-    paddingHorizontal: 20,
-  },
-  drawerLabelStyle: {
-    fontSize: 16,
-    fontFamily: FONTS.InterRegular,
-    marginLeft: -15,
-  },
-  drawerStyle: {
-    borderTopEndRadius: 20,
-    borderBottomEndRadius: 20,
-    width: '67%',
-  },
-  DrawerIcon: {
-    backgroundColor: '#FEF6EF',
-    padding: 10,
-    borderRadius: 7,
-  },
-  titleStyle: {
-    marginLeft: 15,
-    marginRight: '29%',
-  },
-});

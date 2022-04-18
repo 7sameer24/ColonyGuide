@@ -9,16 +9,17 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {COLORS, FONTS, genericStyles, Images} from '../constants';
-import ButtonComponent from '../Components/ButtonComponent';
-import Poweredby from '../Components/Poweredby';
-import InputComponent from '../Components/InputComponent';
-import DropDownComponent from '../Components/DropDownComponent';
+import {COLORS, FONTS, genericStyles, Images} from '../../constants';
+import ButtonComponent from '../../Components/ButtonComponent';
+import Poweredby from '../../Components/Poweredby';
+import InputComponent from '../../Components/InputComponent';
+import DropDownComponent from '../../Components/DropDownComponent';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
+import Spinner from '../../Components/Spinner';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import {useApp} from '../../Context/AppContext';
-import BaseURL from '../constants/BaseURL';
+import {useApp} from '../../../Context/AppContext';
+import BaseURL from '../../constants/BaseURL';
+import ModalPopup from '../../Components/ModalPopup';
 
 const EditProfile = ({route, navigation}) => {
   const {data, token} = route.params;
@@ -34,6 +35,7 @@ const EditProfile = ({route, navigation}) => {
   const [FHN, setFHN] = useState(data.house_no);
   const [imageUp, setImage] = useState('');
   const {setNewData} = useApp();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const arr = [
     {
@@ -140,6 +142,7 @@ const EditProfile = ({route, navigation}) => {
   };
 
   const openGallery = () => {
+    setModalVisible(false);
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -163,6 +166,7 @@ const EditProfile = ({route, navigation}) => {
   };
 
   const openCamera = () => {
+    setModalVisible(false);
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -185,20 +189,6 @@ const EditProfile = ({route, navigation}) => {
     });
   };
 
-  const createThreeButtonAlert = () =>
-    Alert.alert(null, 'Please Select Image/logo', [
-      {
-        text: 'Camera',
-        onPress: () => openCamera(),
-      },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Gallery', onPress: () => openGallery()},
-    ]);
-
   return (
     <View style={genericStyles.Container}>
       {localData !== '' ? (
@@ -207,7 +197,7 @@ const EditProfile = ({route, navigation}) => {
             <TouchableOpacity
               style={genericStyles.selfCenter}
               activeOpacity={0.5}
-              onPress={() => createThreeButtonAlert()}>
+              onPress={() => setModalVisible(true)}>
               <View style={styles.imageConatiner(imageUp)}>
                 <Image
                   source={
@@ -223,6 +213,12 @@ const EditProfile = ({route, navigation}) => {
               </View>
               <Text style={styles.AddLogoText}>Add Profile</Text>
             </TouchableOpacity>
+            <ModalPopup
+              visible={modalVisible}
+              CameraOnpress={() => openCamera()}
+              GalleryOnpress={() => openGallery()}
+              OnPressCancel={() => setModalVisible(false)}
+            />
             <View style={styles.midd}>
               {data.app_role_id === 1 ? (
                 <View style={genericStyles.mb(15)}>

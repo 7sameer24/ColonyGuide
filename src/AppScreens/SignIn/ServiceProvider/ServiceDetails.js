@@ -18,6 +18,7 @@ import axios from 'axios';
 import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
 import BaseURL from '../../../constants/BaseURL';
+import ModalPopup from '../../../Components/ModalPopup';
 
 const ServiceDetails = ({navigation, UserNewData}) => {
   const [imageUp, setImage] = useState('');
@@ -27,6 +28,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
   const [shortDes, setShortDes] = useState('');
   const [newData, setNewData] = useState([]);
   const [Category, setCategory] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const validationCheck = () => {
     if (!WhatsappNo || !fullName || !Category) {
@@ -111,20 +113,6 @@ const ServiceDetails = ({navigation, UserNewData}) => {
     };
   }, []);
 
-  const createThreeButtonAlert = () =>
-    Alert.alert(null, 'Please Select Image/logo', [
-      {
-        text: 'Camera',
-        onPress: () => openCamera(),
-      },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Gallery', onPress: () => openGallery()},
-    ]);
-
   return (
     <View style={genericStyles.Container}>
       {newData.length > 0 ? (
@@ -139,7 +127,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
             <TouchableOpacity
               style={genericStyles.selfCenter}
               activeOpacity={0.5}
-              onPress={() => createThreeButtonAlert()}>
+              onPress={() => setModalVisible(true)}>
               <View style={styles.ImageContainer(imageUp)}>
                 <Image
                   resizeMode={imageUp ? null : 'contain'}
@@ -149,6 +137,12 @@ const ServiceDetails = ({navigation, UserNewData}) => {
               </View>
               <Text style={styles.AddLogoText}>Add image / logo</Text>
             </TouchableOpacity>
+            <ModalPopup
+              visible={modalVisible}
+              CameraOnpress={() => openCamera()}
+              GalleryOnpress={() => openGallery()}
+              OnPressCancel={() => setModalVisible(false)}
+            />
             <InputComponent
               placeholder="Shop Name (Optional)"
               value={shopName}

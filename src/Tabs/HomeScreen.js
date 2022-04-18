@@ -10,7 +10,7 @@ import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import {SliderBox} from 'react-native-image-slider-box';
 import FourList from '../Components/FourList';
-import CategoriesList from './CategoriesList';
+import CategoriesList from './Categories/CategoriesList';
 import HeaderBar from '../Components/HeaderBar';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';

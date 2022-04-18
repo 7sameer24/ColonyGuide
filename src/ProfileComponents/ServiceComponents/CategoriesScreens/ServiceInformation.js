@@ -9,11 +9,11 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {COLORS, FONTS, genericStyles, Images} from '../../constants';
-import {Button, Icon} from 'react-native-elements';
+import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
+import {Icon} from 'react-native-elements';
 import axios from 'axios';
-import Spinner from '../../Components/Spinner';
-import BaseURL from '../../constants/BaseURL';
+import Spinner from '../../../Components/Spinner';
+import BaseURL from '../../../constants/BaseURL';
 
 const ServiceInformation = ({route, navigation}) => {
   const {ID} = route.params;

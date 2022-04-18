@@ -1,12 +1,11 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {genericStyles} from '../constants';
-import CommiteeList from '../Components/CommitteeList';
-import HeaderBar from '../Components/HeaderBar';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {genericStyles} from '../../constants';
+import CommiteeList from '../../Components/CommitteeList';
+import HeaderBar from '../../Components/HeaderBar';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
-import BaseURL from '../constants/BaseURL';
+import Spinner from '../../Components/Spinner';
+import BaseURL from '../../constants/BaseURL';
 
 const Committee = ({navigation}) => {
   const [newData, setNewData] = useState([]);

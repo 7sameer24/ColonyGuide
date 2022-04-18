@@ -15,7 +15,7 @@ import Poweredby from '../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 
-const SignInScreen = ({navigation}) => {
+const SelectRole = ({navigation}) => {
   const [newData, setNewData] = useState([]);
   const {width, height} = Dimensions.get('window');
 
@@ -88,7 +88,7 @@ const SignInScreen = ({navigation}) => {
   );
 };
 
-export default SignInScreen;
+export default SelectRole;
 
 const styles = StyleSheet.create({
   container: {

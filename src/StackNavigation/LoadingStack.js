@@ -10,7 +10,7 @@ export default function LoadingStack() {
       <Stack.Screen
         name="Loader"
         component={Spinner}
-        options={({route}) => ({
+        options={() => ({
           headerShown: false,
         })}
       />

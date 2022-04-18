@@ -7,35 +7,35 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import HomeScreen from '../Tabs/HomeScreen';
-import CategoriesScreen from '../Tabs/CategoriesScreen';
+import CategoriesScreen from '../Tabs/Categories/CategoriesScreen';
 import ProfileScreen from '../Tabs/ProfileScreen';
 import TermsCondition from '../ProfileComponents/TermsCondition';
-import ProfileDetails from '../ProfileComponents/ProfileDetails';
+import ProfileDetails from '../ProfileComponents/UserDetails/ProfileDetails';
 import ProfileSettings from '../ProfileComponents/ProfileSettings';
 import BusinessInfo from '../ProfileComponents/BusinessComponents/BusinessInfo';
-import ServiceInfo from '../ProfileComponents/ServiceInfo';
+import ServiceInfo from '../ProfileComponents/ServiceComponents/ServiceInfo';
 import ContactUs from '../ProfileComponents/ContactUs';
 import BusinessDetails from '../ProfileComponents/BusinessComponents/BusinessDetails';
 import BusinessSaved from '../ProfileComponents/BusinessComponents/BusinessSaved';
 import CustomDrawer from '../Components/CustomDrawer';
-import Committee from '../Tabs/Committee';
-import HouseOwners from '../Tabs/HouseOwners';
+import Committee from '../Tabs/Drawer/Committee';
+import HouseOwners from '../Tabs/HouseOwner/HouseOwners';
 import Helpline from '../Tabs/Helpline';
 import SearchScreen from '../Tabs/SearchScreen';
 import BusinessListed from '../ProfileComponents/BusinessComponents/BusinessListed';
-import RoomsFlats from '../Tabs/RoomsFlats';
-import Addroom from '../Tabs/Addroom';
-import EditProfile from '../ProfileComponents/EditProfile';
-import FeedBacks from '../Tabs/FeedBacks';
-import ServiceEdit from '../ProfileComponents/BusinessComponents/ServiceEdit';
-import ServiceSaved from '../ProfileComponents/BusinessComponents/ServiceSaved';
+import RoomsFlats from '../Tabs/HouseOwner/RoomsFlats';
+import Addroom from '../Tabs/HouseOwner/Addroom';
+import EditProfile from '../ProfileComponents/UserDetails/EditProfile';
+import FeedBacks from '../Tabs/../ProfileComponents/FeedBacks';
+import ServiceEdit from '../ProfileComponents/ServiceComponents/ServiceEdit';
+import ServiceSaved from '../ProfileComponents/ServiceComponents/ServiceSaved';
 import Notification from '../Tabs/Notification';
-import AllRoomsHostals from '../Tabs/AllRoomsHostals';
+import AllRoomsHostals from '../Tabs/HouseOwner/AllRoomsHostals';
 import BusinessEdit from '../ProfileComponents/BusinessComponents/BusinessEdit';
-import HostelListed from '../Tabs/HostelListed';
-import ServiceAddDetails from '../ProfileComponents/BusinessComponents/ServiceAddDetails';
-import ServiceList from '../Tabs/CategoriesScreens/ServiceList';
-import ServiceInformation from '../Tabs/CategoriesScreens/ServiceInformation';
+import HostelListed from '../Tabs/HouseOwner/HostelListed';
+import ServiceAddDetails from '../ProfileComponents/ServiceComponents/ServiceAddDetails';
+import ServiceList from '../Tabs/../ProfileComponents/ServiceComponents/CategoriesScreens/ServiceList';
+import ServiceInformation from '../Tabs/../ProfileComponents/ServiceComponents/CategoriesScreens/ServiceInformation';
 import BusinessInformation from '../ProfileComponents/BusinessComponents/BusinessInformation';
 
 const Stack = createNativeStackNavigator();
@@ -43,7 +43,7 @@ const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 const TopTab = createMaterialTopTabNavigator();
 
-const HomeStack = ({navigation}) => {
+const HomeStack = () => {
   const arr = [
     {name: 'Feed', component: MyDrawer, headerShown: false},
     {
@@ -166,6 +166,72 @@ const HomeStack = ({navigation}) => {
       headerShadowVisible: false,
       title: 'Service Details',
     },
+    {
+      name: 'Business Infoo',
+      component: BusinessInfo,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      headerShown: false,
+      title: 'Business Information',
+    },
+    {
+      name: 'Service Info',
+      component: ServiceInfo,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      title: 'Add Service Provider',
+    },
+    {
+      name: 'Business Details',
+      component: BusinessDetails,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'ServiceEdit',
+      component: ServiceEdit,
+      title: 'Service Edit',
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'BusinessEdit',
+      component: BusinessEdit,
+      title: 'Business Edit',
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Business Saved',
+      component: BusinessSaved,
+      headerShown: false,
+    },
+    {
+      name: 'Service Information',
+      component: ServiceInformation,
+      headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
+      headerTintColor: COLORS.white,
+      headerStyle: {backgroundColor: COLORS.primary},
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Business Information',
+      component: BusinessInformation,
+      headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
+      headerTintColor: COLORS.white,
+      headerStyle: {backgroundColor: COLORS.primary},
+      headerShadowVisible: false,
+    },
+    {
+      name: 'ServiceSaved',
+      component: ServiceSaved,
+      headerShown: false,
+    },
   ];
 
   return (
@@ -183,96 +249,14 @@ const HomeStack = ({navigation}) => {
             headerShadowVisible: data.headerShadowVisible,
             headerBackVisible: data.headerBackVisible,
             title: data.title,
+            headerStyle: data.headerStyle,
           })}
         />
       ))}
-      <Stack.Screen
-        name="Business Infoo"
-        component={BusinessInfo}
-        options={() => ({
-          headerTitleStyle: styles.headerStyle,
-          headerTintColor: COLORS.textColor,
-          headerShadowVisible: false,
-          headerShown: false,
-          title: 'Business Information',
-        })}
-      />
-      <Stack.Screen
-        name="Service Info"
-        component={ServiceInfo}
-        options={() => ({
-          headerTitleStyle: styles.headerStyle,
-          headerTintColor: COLORS.textColor,
-          headerShadowVisible: false,
-          title: 'Add Service Provider',
-        })}
-      />
-      <Stack.Screen
-        name="Business Details"
-        component={BusinessDetails}
-        options={({route}) => ({
-          headerTitleStyle: styles.headerStyle,
-          headerTintColor: COLORS.textColor,
-          headerShadowVisible: false,
-        })}
-      />
-      <Stack.Screen
-        name="ServiceEdit"
-        component={ServiceEdit}
-        options={() => ({
-          title: 'Service Edit',
-          headerTitleStyle: styles.headerStyle,
-          headerTintColor: COLORS.textColor,
-          headerShadowVisible: false,
-        })}
-      />
-      <Stack.Screen
-        name="BusinessEdit"
-        component={BusinessEdit}
-        options={() => ({
-          title: 'Business Edit',
-          headerTitleStyle: styles.headerStyle,
-          headerTintColor: COLORS.textColor,
-          headerShadowVisible: false,
-        })}
-      />
-      <Stack.Screen
-        name="Business Saved"
-        component={BusinessSaved}
-        options={() => ({
-          headerShown: false,
-        })}
-      />
-      <Stack.Screen
-        name="Service Information"
-        component={ServiceInformation}
-        options={() => ({
-          headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
-          headerTintColor: COLORS.white,
-          headerStyle: {backgroundColor: COLORS.primary},
-          headerShadowVisible: false,
-        })}
-      />
-      <Stack.Screen
-        name="Business Information"
-        component={BusinessInformation}
-        options={() => ({
-          headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
-          headerTintColor: COLORS.white,
-          headerStyle: {backgroundColor: COLORS.primary},
-          headerShadowVisible: false,
-        })}
-      />
-      <Stack.Screen
-        name="ServiceSaved"
-        component={ServiceSaved}
-        options={() => ({
-          headerShown: false,
-        })}
-      />
     </Stack.Navigator>
   );
 };
+
 function MyTopTabs() {
   const TopTabsArr = [
     {component: AllRoomsHostals, name: 'All', ID: '0'},
@@ -408,14 +392,5 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderBottomEndRadius: 20,
     width: '67%',
-  },
-  DrawerIcon: {
-    backgroundColor: '#FEF6EF',
-    padding: 10,
-    borderRadius: 7,
-  },
-  titleStyle: {
-    marginLeft: 15,
-    marginRight: '29%',
   },
 });

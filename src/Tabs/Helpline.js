@@ -1,7 +1,7 @@
 import {Linking, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
-import {Icon} from 'react-native-elements';
+import {Card, Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
 import BaseURL from '../constants/BaseURL';
@@ -40,6 +40,7 @@ const Helpline = () => {
           <View style={styles.topTexConyainer}>
             <Text style={styles.topText}>Medical</Text>
           </View>
+          {/* <Card containerStyle={styles.cardConatiner}> */}
           {helpData.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
               <View style={genericStyles.row}>
@@ -60,9 +61,11 @@ const Helpline = () => {
               />
             </View>
           ))}
+          {/* </Card> */}
           <View style={styles.topTexConyainer}>
             <Text style={styles.topText}>Police</Text>
           </View>
+          {/* <Card containerStyle={styles.cardConatiner}> */}
           {policeData.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
               <View style={genericStyles.row}>
@@ -83,9 +86,11 @@ const Helpline = () => {
               />
             </View>
           ))}
+          {/* </Card> */}
           <View style={styles.topTexConyainer}>
             <Text style={styles.topText}>Fire Brigade</Text>
           </View>
+          {/* <Card containerStyle={styles.cardConatiner}> */}
           {fire_brigade.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
               <View style={genericStyles.row}>
@@ -106,9 +111,11 @@ const Helpline = () => {
               />
             </View>
           ))}
+          {/* </Card> */}
           <View style={styles.topTexConyainer}>
             <Text style={styles.topText}>Other</Text>
           </View>
+          {/* <Card containerStyle={[styles.cardConatiner, {marginBottom: 10}]}> */}
           {other.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
               <View style={genericStyles.row}>
@@ -129,6 +136,7 @@ const Helpline = () => {
               />
             </View>
           ))}
+          {/* </Card> */}
         </ScrollView>
       ) : (
         <Spinner />
@@ -169,6 +177,11 @@ const styles = StyleSheet.create({
     marginTop: 16,
     justifyContent: 'space-evenly',
     paddingVertical: 1,
-    backgroundColor: '#FEF6EF',
+    backgroundColor: '#F3EBF9',
+  },
+  cardConatiner: {
+    padding: 0,
+    borderWidth: 0,
+    borderRadius: 10,
   },
 });

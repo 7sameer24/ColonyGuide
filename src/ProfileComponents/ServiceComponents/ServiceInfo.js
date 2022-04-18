@@ -1,14 +1,14 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {COLORS, FONTS, genericStyles} from '../../src/constants';
-import ButtonComponent from '../../src/Components/ButtonComponent';
-import Poweredby from '../Components/Poweredby';
+import {COLORS, FONTS, genericStyles} from '../../constants';
+import ButtonComponent from '../../Components/ButtonComponent';
+import Poweredby from '../../Components/Poweredby';
 import axios from 'axios';
-import CardsListed from '../Components/CardsListed';
-import Spinner from '../Components/Spinner';
+import CardsListed from '../../Components/CardsListed';
+import Spinner from '../../Components/Spinner';
 import {ScrollView} from 'react-native-gesture-handler';
-import BaseURL from '../constants/BaseURL';
-import NoDataAni from '../Components/NoDataAni';
+import BaseURL from '../../constants/BaseURL';
+import NoDataAni from '../../Components/NoDataAni';
 
 const ServiceInfo = ({navigation, route}) => {
   const {userID, Role} = route.params;
@@ -59,7 +59,7 @@ const ServiceInfo = ({navigation, route}) => {
                     source={
                       newData.logo_image ===
                       'https://colonyguide.garimaartgallery.com/storage'
-                        ? require('../../assets/Image_not_available.png')
+                        ? require('../../../assets/Image_not_available.png')
                         : {uri: newData.logo_image}
                     }
                   />

@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, Text, ToastAndroid, View} from 'react-native';
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {Input} from 'react-native-elements';
 import ButtonComponent from '../../Components/ButtonComponent';
@@ -9,6 +9,7 @@ import ImgIcon from '../../../assets/svg/Frame 10.svg';
 import axios from 'axios';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
+import ResendTimer from '../../Components/ResendTimer';
 
 const OtpScreen = ({route, navigation}) => {
   const {DATA, userMobile} = route.params;
@@ -22,6 +23,42 @@ const OtpScreen = ({route, navigation}) => {
   const thirdInput = useRef(null);
   const LastInput = useRef(null);
   const {setNewData, setUserToken, setNavigationState} = useApp();
+  const [resendingOTP, setResendingOTP] = useState(false);
+  const [resendStatus, setResendStatus] = useState('Resend');
+
+  // Resend Timer
+  const [timeLeft, setTimeLeft] = useState(null);
+  const [targetTime, setTargetTime] = useState(null);
+
+  const [activeResend, setActiveResend] = useState(false);
+  let resendTimerInterval;
+
+  const calculatetimerLeft = finalTime => {
+    const difference = finalTime - +new Date();
+    if (difference >= 0) {
+      setTimeLeft(Math.round(difference / 1000));
+    } else {
+      setTimeLeft(null);
+      clearInterval(resendTimerInterval);
+      setActiveResend(true);
+    }
+  };
+
+  const triggerTimer = (targetTimeSeconds = 30) => {
+    setTargetTime(targetTimeSeconds);
+    setActiveResend(false);
+    const finalTime = +new Date() + targetTimeSeconds * 1000;
+    resendTimerInterval = setInterval(
+      () => (calculatetimerLeft(finalTime), 1000),
+    );
+  };
+
+  useEffect(() => {
+    triggerTimer();
+    return () => {
+      clearInterval(resendTimerInterval);
+    };
+  }, []);
 
   const checkOtp = async () => {
     let idx = `${first}${second}${third}${last}`;
@@ -62,14 +99,15 @@ const OtpScreen = ({route, navigation}) => {
   };
 
   const resendOtp = async () => {
-    try {
-      const response = await axios.post(BaseURL('resend-otp'), {
-        mobile_no: userMobile,
-      });
-      console.log(response.data);
-    } catch (error) {
-      alert(error);
-    }
+    triggerTimer();
+    // try {
+    //   const response = await axios.post(BaseURL('resend-otp'), {
+    //     mobile_no: userMobile,
+    //   });
+    //   console.log(response.data);
+    // } catch (error) {
+    //   alert(error);
+    // }
   };
   const start = userMobile.slice(0, 2);
   const end = userMobile.slice(8, 10);
@@ -167,7 +205,14 @@ const OtpScreen = ({route, navigation}) => {
           onPress={() => checkOtp()}
           loading={spinner ? true : false}
         />
-        <FooterButton title="Resend OTP" />
+        <ResendTimer
+          activeResend={activeResend}
+          resendingOTP={resendingOTP}
+          resendStatus={resendStatus}
+          targetTime={targetTime}
+          timeLeft={timeLeft}
+          resendOtp={resendOtp}
+        />
       </ScrollView>
     </View>
   );

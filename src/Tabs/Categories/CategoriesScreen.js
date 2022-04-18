@@ -1,11 +1,11 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import HeaderBar from '../Components/HeaderBar';
-import {genericStyles} from '../constants';
+import HeaderBar from '../../Components/HeaderBar';
+import {genericStyles} from '../../constants';
 import CategoriesList from './CategoriesList';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
-import BaseURL from '../constants/BaseURL';
+import Spinner from '../../Components/Spinner';
+import BaseURL from '../../constants/BaseURL';
 
 const CategoriesScreen = ({navigation}) => {
   const [newData, setNewData] = useState([]);

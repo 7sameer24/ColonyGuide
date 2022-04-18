@@ -1,11 +1,11 @@
 import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {FONTS, genericStyles, Images} from '../constants';
-import HeaderBar from '../Components/HeaderBar';
+import {FONTS, genericStyles, Images} from '../../constants';
+import HeaderBar from '../../Components/HeaderBar';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
-import Poweredby from '../Components/Poweredby';
-import BaseURL from '../constants/BaseURL';
+import Spinner from '../../Components/Spinner';
+import Poweredby from '../../Components/Poweredby';
+import BaseURL from '../../constants/BaseURL';
 
 const ProfileDetails = ({navigation, route}) => {
   const {userID, userToken} = route.params;

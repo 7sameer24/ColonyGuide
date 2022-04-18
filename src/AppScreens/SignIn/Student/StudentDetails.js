@@ -10,7 +10,7 @@ import Poweredby from '../../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
 import BaseURL from '../../../constants/BaseURL';
 
-const PersonalDetails = ({data, navigation}) => {
+const StudentDetails = ({data, navigation}) => {
   const [FullName, setFullName] = useState('');
   const [hostelName, setHostelName] = useState('');
   const [hostelAdd, setHostelAdd] = useState('');
@@ -104,7 +104,7 @@ const PersonalDetails = ({data, navigation}) => {
   );
 };
 
-export default PersonalDetails;
+export default StudentDetails;
 
 const styles = StyleSheet.create({
   checkBoxContanier: {

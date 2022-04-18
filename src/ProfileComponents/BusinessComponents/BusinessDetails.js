@@ -19,6 +19,7 @@ import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
 import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
+import ModalPopup from '../../Components/ModalPopup';
 
 const BusinessDetails = ({navigation, route}) => {
   const {Userdata, UserToken, setCheckStatus} = useApp();
@@ -34,6 +35,7 @@ const BusinessDetails = ({navigation, route}) => {
   const [buildFL, setBuildFL] = useState('');
   const [AL1, setAL1] = useState('');
   const [Landmark, setLandmark] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
 
   const idx = async () => {
     try {
@@ -88,20 +90,6 @@ const BusinessDetails = ({navigation, route}) => {
       }
     });
   };
-
-  const createThreeButtonAlert = () =>
-    Alert.alert(null, 'Please Select Image/logo', [
-      {
-        text: 'Camera',
-        onPress: () => openCamera(),
-      },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Gallery', onPress: () => openGallery()},
-    ]);
 
   const SaveDetail = async () => {
     try {
@@ -171,7 +159,7 @@ const BusinessDetails = ({navigation, route}) => {
             <TouchableOpacity
               style={genericStyles.selfCenter}
               activeOpacity={0.5}
-              onPress={() => createThreeButtonAlert()}>
+              onPress={() => setModalVisible(true)}>
               <View style={styles.imageConatiner(imageUp)}>
                 <Image
                   source={imageUp ? imageUp : Images.BusinessProfile}
@@ -180,6 +168,12 @@ const BusinessDetails = ({navigation, route}) => {
               </View>
               <Text style={styles.AddLogoText}>Add image / logo</Text>
             </TouchableOpacity>
+            <ModalPopup
+              visible={modalVisible}
+              CameraOnpress={() => openCamera()}
+              GalleryOnpress={() => openGallery()}
+              OnPressCancel={() => setModalVisible(false)}
+            />
             <Text style={styles.BusinessDetails}>Business Details</Text>
             <InputComponent
               placeholder="Name of business"

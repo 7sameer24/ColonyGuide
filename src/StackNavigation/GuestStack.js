@@ -5,18 +5,16 @@ import {Icon} from 'react-native-elements';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createDrawerNavigator} from '@react-navigation/drawer';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import HomeScreen from '../Tabs/HomeScreen';
-import CategoriesScreen from '../Tabs/CategoriesScreen';
+import CategoriesScreen from '../Tabs/Categories/CategoriesScreen';
 import ProfileScreen from '../Tabs/ProfileScreen';
 import CustomDrawer from '../Components/CustomDrawer';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
-const TopTab = createMaterialTopTabNavigator();
 
-const GuestStack = ({navigation}) => {
+const GuestStack = () => {
   const arr = [{name: 'Feed', component: MyDrawer, headerShown: false}];
 
   return (
@@ -125,11 +123,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   }),
-  headerStyle: {
-    color: COLORS.textColor,
-    fontSize: 18,
-    fontFamily: FONTS.InterSemiBold,
-  },
   tabBarStyle: {
     height: '9%',
     backgroundColor: COLORS.white,
@@ -144,14 +137,5 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderBottomEndRadius: 20,
     width: '67%',
-  },
-  DrawerIcon: {
-    backgroundColor: '#FEF6EF',
-    padding: 10,
-    borderRadius: 7,
-  },
-  titleStyle: {
-    marginLeft: 15,
-    marginRight: '29%',
   },
 });

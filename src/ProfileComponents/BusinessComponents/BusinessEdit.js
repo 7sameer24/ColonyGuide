@@ -18,6 +18,7 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
 import BaseURL from '../../constants/BaseURL';
+import ModalPopup from '../../Components/ModalPopup';
 
 const BusinessEdit = ({navigation, route}) => {
   const {data, token} = route.params;
@@ -32,6 +33,7 @@ const BusinessEdit = ({navigation, route}) => {
   const [buildFL, setBuildFL] = useState(data.house_no);
   const [AL1, setAL1] = useState(data.address);
   const [Landmark, setLandmark] = useState(data.landmark);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const idx = async () => {
     try {
@@ -86,20 +88,6 @@ const BusinessEdit = ({navigation, route}) => {
       }
     });
   };
-
-  const createThreeButtonAlert = () =>
-    Alert.alert(null, 'Please Select Image/logo', [
-      {
-        text: 'Camera',
-        onPress: () => openCamera(),
-      },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Gallery', onPress: () => openGallery()},
-    ]);
 
   const businessUpdate = async () => {
     try {
@@ -165,7 +153,7 @@ const BusinessEdit = ({navigation, route}) => {
             <TouchableOpacity
               style={genericStyles.selfCenter}
               activeOpacity={0.5}
-              onPress={() => createThreeButtonAlert()}>
+              onPress={() => setModalVisible(true)}>
               <View style={styles.imageConatiner(imageUp)}>
                 <Image
                   source={
@@ -181,6 +169,12 @@ const BusinessEdit = ({navigation, route}) => {
               </View>
               <Text style={styles.AddLogoText}>Add image / logo</Text>
             </TouchableOpacity>
+            <ModalPopup
+              visible={modalVisible}
+              CameraOnpress={() => openCamera()}
+              GalleryOnpress={() => openGallery()}
+              OnPressCancel={() => setModalVisible(false)}
+            />
             <Text style={styles.BusinessDetails}>Business Details</Text>
             <InputComponent
               placeholder="Name of business"
@@ -276,21 +270,5 @@ const styles = StyleSheet.create({
     marginLeft: 23,
     marginTop: 20,
     marginBottom: 5,
-  },
-  checkBoxContanier: {
-    backgroundColor: COLORS.transparent,
-    borderWidth: 0,
-    marginTop: -10,
-    marginBottom: 0,
-  },
-  CheckText: {
-    color: COLORS.third,
-    fontSize: 15,
-    marginLeft: 2,
-    fontFamily: FONTS.InterRegular,
-    fontWeight: 'normal',
-  },
-  ButtonContainer: {
-    marginTop: 20,
   },
 });

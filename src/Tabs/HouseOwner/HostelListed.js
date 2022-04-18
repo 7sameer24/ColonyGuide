@@ -1,14 +1,14 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {genericStyles} from '../constants';
-import CardsListed from '../Components/CardsListed';
-import ButtonComponent from '../Components/ButtonComponent';
+import {genericStyles} from '../../constants';
+import CardsListed from '../../Components/CardsListed';
+import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
-import {useApp} from '../../Context/AppContext';
-import ListedAnimation from '../Components/ListedAnimation';
-import Poweredby from '../Components/Poweredby';
-import BaseURL from '../constants/BaseURL';
-import NoDataAni from '../Components/NoDataAni';
+import {useApp} from '../../../Context/AppContext';
+import ListedAnimation from '../../Components/ListedAnimation';
+import Poweredby from '../../Components/Poweredby';
+import BaseURL from '../../constants/BaseURL';
+import NoDataAni from '../../Components/NoDataAni';
 
 const HostelListed = ({navigation, route}) => {
   const {Userdata} = useApp();

@@ -9,17 +9,18 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {COLORS, FONTS, genericStyles, Images} from '../constants';
-import InputComponent from '../Components/InputComponent';
+import {COLORS, FONTS, genericStyles, Images} from '../../constants';
+import InputComponent from '../../Components/InputComponent';
 import {CheckBox} from 'react-native-elements';
-import ButtonComponent from '../Components/ButtonComponent';
-import Poweredby from '../Components/Poweredby';
+import ButtonComponent from '../../Components/ButtonComponent';
+import Poweredby from '../../Components/Poweredby';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import DropDownComponent from '../Components/DropDownComponent';
-import {useApp} from '../../Context/AppContext';
+import DropDownComponent from '../../Components/DropDownComponent';
+import {useApp} from '../../../Context/AppContext';
 import axios from 'axios';
-import Spinner from '../Components/Spinner';
-import BaseURL from '../constants/BaseURL';
+import Spinner from '../../Components/Spinner';
+import BaseURL from '../../constants/BaseURL';
+import ModalPopup from '../../Components/ModalPopup';
 
 const Addroom = ({navigation}) => {
   const [spinner, setSpinner] = useState(false);
@@ -39,6 +40,7 @@ const Addroom = ({navigation}) => {
   const [mobile_no, setMobile] = useState('');
   const [WhatsappNo, setWhatsappNo] = useState('');
   const {Userdata, UserToken} = useApp();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const CategoryData = [
     {label: 'Hostel', value: '0'},
@@ -95,20 +97,6 @@ const Addroom = ({navigation}) => {
       }
     });
   };
-
-  const createThreeButtonAlert = () =>
-    Alert.alert(null, 'Please Select Image/logo', [
-      {
-        text: 'Camera',
-        onPress: () => openCamera(),
-      },
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'Gallery', onPress: () => openGallery()},
-    ]);
 
   const Velidation = async () => {
     if (!imageUp) {
@@ -205,7 +193,7 @@ const Addroom = ({navigation}) => {
             <TouchableOpacity
               style={genericStyles.selfCenter}
               activeOpacity={0.5}
-              onPress={() => createThreeButtonAlert()}>
+              onPress={() => setModalVisible(true)}>
               <View style={styles.imageConatiner(imageUp)}>
                 <Image
                   source={imageUp ? imageUp : Images.BusinessProfile}
@@ -214,6 +202,12 @@ const Addroom = ({navigation}) => {
               </View>
               <Text style={styles.AddLogoText}>Add image / logo</Text>
             </TouchableOpacity>
+            <ModalPopup
+              visible={modalVisible}
+              CameraOnpress={() => openCamera()}
+              GalleryOnpress={() => openGallery()}
+              OnPressCancel={() => setModalVisible(false)}
+            />
             <Text style={styles.textStyle}>Room Details</Text>
             <InputComponent
               placeholder="Building / Hostel Name"

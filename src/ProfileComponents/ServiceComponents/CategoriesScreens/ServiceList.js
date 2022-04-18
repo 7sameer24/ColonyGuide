@@ -1,12 +1,12 @@
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import HeaderBar from '../../Components/HeaderBar';
-import {genericStyles} from '../../constants';
-import CardsListed from '../../Components/CardsListed';
+import HeaderBar from '../../../Components/HeaderBar';
+import {genericStyles} from '../../../constants';
+import CardsListed from '../../../Components/CardsListed';
 import axios from 'axios';
-import ListedAnimation from '../../Components/ListedAnimation';
-import BaseURL from '../../constants/BaseURL';
-import NoDataAni from '../../Components/NoDataAni';
+import ListedAnimation from '../../../Components/ListedAnimation';
+import BaseURL from '../../../constants/BaseURL';
+import NoDataAni from '../../../Components/NoDataAni';
 
 const ServiceList = ({navigation, route}) => {
   const {ID, Name} = route.params;
@@ -64,7 +64,7 @@ const ServiceList = ({navigation, route}) => {
                     source={
                       data.logo_image ===
                       'https://colonyguide.garimaartgallery.com/storage'
-                        ? require('../../../assets/Image_not_available.png')
+                        ? require('../../../../assets/Image_not_available.png')
                         : {uri: data.logo_image}
                     }
                     index={index}

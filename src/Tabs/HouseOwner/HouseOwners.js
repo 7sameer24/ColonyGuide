@@ -1,11 +1,11 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {genericStyles} from '../constants';
-import HeaderBar from '../Components/HeaderBar';
-import HouseOnwersList from '../Components/HouseOnwersList';
+import {genericStyles} from '../../constants';
+import HeaderBar from '../../Components/HeaderBar';
+import HouseOnwersList from '../../Components/HouseOnwersList';
 import axios from 'axios';
-import ListedAnimation from '../Components/ListedAnimation';
-import BaseURL from '../constants/BaseURL';
+import ListedAnimation from '../../Components/ListedAnimation';
+import BaseURL from '../../constants/BaseURL';
 
 const HouseOwners = ({navigation}) => {
   const [newData, setData] = useState([]);
