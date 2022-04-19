@@ -30,13 +30,14 @@ const HouseOwners = ({navigation}) => {
       <HeaderBar
         firstIcon="arrow-back-outline"
         title="Resident"
-        // searchIcon="search"
+        searchIcon="search"
+        searchTouchable={() => navigation.navigate('Search')}
         // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
       {newData.length > 0 ? (
-        <ScrollView style={genericStyles.mt(10)}>
+        <ScrollView>
           {newData.map((data, index) => (
             <HouseOnwersList
               title={data.name}

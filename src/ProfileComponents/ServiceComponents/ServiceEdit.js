@@ -47,6 +47,7 @@ const ServiceEdit = ({navigation, route}) => {
   };
 
   const openGallery = () => {
+    setModalVisible(false);
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -69,6 +70,7 @@ const ServiceEdit = ({navigation, route}) => {
     });
   };
   const openCamera = () => {
+    setModalVisible(false);
     let opetions = {
       mediaType: 'photo',
       path: 'images',

@@ -204,6 +204,8 @@ const HomeScreen = ({navigation}) => {
                   navigation={navigation}
                   firstIcon="menu"
                   ThirdType="material-community"
+                  title="Colony Guide"
+                  titleStyle={{color: COLORS.primary, marginLeft: 10}}
                   firstOnpress={() => navigation.openDrawer()}
                 />
                 <>

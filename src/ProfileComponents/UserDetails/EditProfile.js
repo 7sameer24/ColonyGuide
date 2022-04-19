@@ -96,9 +96,9 @@ const EditProfile = ({route, navigation}) => {
       SaveData.append('user_id', data.id);
       SaveData.append('full_name', PersonName);
       Email === null ? null : SaveData.append('email', Email);
-      SaveData.append('address', Address);
-      SaveData.append('house_no', FHN);
-      SaveData.append('landmark', Landmark);
+      Address === null ? null : SaveData.append('address', Address);
+      FHN === null ? null : SaveData.append('house_no', FHN);
+      Landmark === null ? null : SaveData.append('landmark', Landmark);
       SaveData.append('locality_id', LocalityValue);
       SaveData.append('shop_name', data.shop_name);
       SaveData.append('category_id', data.shop_category);

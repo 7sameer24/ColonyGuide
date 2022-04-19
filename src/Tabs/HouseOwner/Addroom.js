@@ -54,6 +54,7 @@ const Addroom = ({navigation}) => {
   ];
 
   const openGallery = () => {
+    setModalVisible(false);
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -76,6 +77,7 @@ const Addroom = ({navigation}) => {
     });
   };
   const openCamera = () => {
+    setModalVisible(false);
     let opetions = {
       mediaType: 'photo',
       path: 'images',

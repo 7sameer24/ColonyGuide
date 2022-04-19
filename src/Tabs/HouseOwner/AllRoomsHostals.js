@@ -37,7 +37,21 @@ const AllRoomsHostals = ({navigation}) => {
   return (
     <View style={genericStyles.Container}>
       {check === false ? (
-        <NoDataAni />
+        <>
+          <NoDataAni />
+          {Userdata !== null ? (
+            Userdata.userData.app_role_id === 3 ? (
+              <>
+                <ButtonComponent
+                  title="Add room"
+                  ButtonContainer={styles.ButtonContainer}
+                  onPress={() => navigation.navigate('Add room')}
+                />
+                <Poweredby container={{flex: 0}} />
+              </>
+            ) : null
+          ) : null}
+        </>
       ) : (
         <>
           {newData.length > 0 ? (

@@ -52,6 +52,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
   };
 
   const openGallery = () => {
+    setModalVisible(false);
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -75,6 +76,8 @@ const ServiceDetails = ({navigation, UserNewData}) => {
   };
 
   const openCamera = () => {
+    setModalVisible(false);
+
     let opetions = {
       mediaType: 'photo',
       path: 'images',

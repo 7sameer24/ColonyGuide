@@ -34,68 +34,76 @@ const AddressScreen = ({route, navigation}) => {
   const [LocalityValue, setLocality] = useState('');
   const {setNewData, setUserToken, setNavigationState} = useApp();
 
-  const handleOnSubmit = async () => {
+  const VelidationCheck = async () => {
     if (!house || !Address) {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
     } else if (!LocalityValue) {
       ToastAndroid.show('Please choose locality!', ToastAndroid.SHORT);
+    } else if (UserData.app_role_id == 3) {
+      !HOName
+        ? ToastAndroid.show('Please enter full name!', ToastAndroid.SHORT)
+        : handleOnSubmit();
     } else {
-      try {
-        setSpinner(true);
-        const Form = new FormData();
+      handleOnSubmit();
+    }
+  };
 
-        Form.append('user_id', UserData.user_id);
-        Form.append('app_role_id', UserData.app_role_id);
-        Form.append('full_name', UserData.app_role_id == 3 ? HOName : FullName);
-        Form.append('geolocation', `${latitude},${longitude}`);
-        Form.append('house_no', house);
-        Form.append('address', Address);
-        Form.append('landmark', Landmark);
-        Form.append('shop_name', ShopName);
-        Form.append('about', ShortDescription);
-        Form.append('category_id', CategoryShop);
-        Form.append('whatsapp_no', WhatsappNum);
-        Form.append('locality_id', LocalityValue);
-        Form.append(
-          'logo_image',
-          UserData.app_role_id === 3
-            ? ''
-            : imageLogo
-            ? {
-                uri: imageLogo[0].uri,
-                type: imageLogo[0].type,
-                name: imageLogo[0].fileName,
-              }
-            : '',
-        );
+  const handleOnSubmit = async () => {
+    try {
+      setSpinner(true);
+      const Form = new FormData();
 
-        const res = await fetch(BaseURL('add-details'), {
-          method: 'post',
-          body: Form,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${UserData.token}`,
-          },
-        });
-        const response = await res.json();
-        setSpinner(false);
-        if (response.success === true) {
-          setNewData(response);
-          setUserToken(UserData.token);
-          setNavigationState(navigationStateType.HOME);
-          // ToastAndroid.show(
-          //   UserData.app_role_id === 3
-          //     ? `Welcome ${HOName}`
-          //     : `Welcome ${FullName}`,
-          //   ToastAndroid.SHORT,
-          // );
-        } else {
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
-        }
-      } catch (error) {
-        setSpinner(false);
-        alert(error);
+      Form.append('user_id', UserData.user_id);
+      Form.append('app_role_id', UserData.app_role_id);
+      Form.append('full_name', UserData.app_role_id == 3 ? HOName : FullName);
+      Form.append('geolocation', `${latitude},${longitude}`);
+      Form.append('house_no', house);
+      Form.append('address', Address);
+      Form.append('landmark', Landmark);
+      Form.append('shop_name', ShopName);
+      Form.append('about', ShortDescription);
+      Form.append('category_id', CategoryShop);
+      Form.append('whatsapp_no', WhatsappNum);
+      Form.append('locality_id', LocalityValue);
+      Form.append(
+        'logo_image',
+        UserData.app_role_id === 3
+          ? ''
+          : imageLogo
+          ? {
+              uri: imageLogo[0].uri,
+              type: imageLogo[0].type,
+              name: imageLogo[0].fileName,
+            }
+          : '',
+      );
+
+      const res = await fetch(BaseURL('add-details'), {
+        method: 'post',
+        body: Form,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${UserData.token}`,
+        },
+      });
+      const response = await res.json();
+      setSpinner(false);
+      if (response.success === true) {
+        setNewData(response);
+        setUserToken(UserData.token);
+        setNavigationState(navigationStateType.HOME);
+        // ToastAndroid.show(
+        //   UserData.app_role_id === 3
+        //     ? `Welcome ${HOName}`
+        //     : `Welcome ${FullName}`,
+        //   ToastAndroid.SHORT,
+        // );
+      } else {
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
       }
+    } catch (error) {
+      setSpinner(false);
+      alert(error);
     }
   };
 
@@ -165,7 +173,7 @@ const AddressScreen = ({route, navigation}) => {
             </View>
             <ButtonComponent
               title="Save"
-              onPress={() => handleOnSubmit()}
+              onPress={() => VelidationCheck()}
               loading={spinner ? true : false}
             />
             <View style={genericStyles.height(20)} />

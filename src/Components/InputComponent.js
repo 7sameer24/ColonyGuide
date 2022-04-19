@@ -22,6 +22,7 @@ const InputComponent = ({
   multiline,
   iconColor,
   autoCapitalize,
+  onKeyPress,
 }) => {
   return (
     <Input
@@ -50,6 +51,7 @@ const InputComponent = ({
       secureTextEntry={secureTextEntry}
       autoCapitalize={autoCapitalize}
       multiline={multiline}
+      onKeyPress={onKeyPress}
     />
   );
 };

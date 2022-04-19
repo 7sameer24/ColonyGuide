@@ -107,7 +107,9 @@ const ServiceSaved = ({route, navigation}) => {
               Shop address
             </Text>
             <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-              {`${Userdata.house_no} ${Userdata.address} ${Userdata.landmark}`}
+              {`${Userdata.house_no === null ? '' : Userdata.house_no} ${
+                Userdata.address === null ? '' : Userdata.address
+              } ${Userdata.landmark === null ? '' : Userdata.landmark}`}
             </Text>
           </View>
         </>

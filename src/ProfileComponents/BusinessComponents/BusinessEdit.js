@@ -45,6 +45,8 @@ const BusinessEdit = ({navigation, route}) => {
   };
 
   const openGallery = () => {
+    setModalVisible(false);
+
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -67,6 +69,8 @@ const BusinessEdit = ({navigation, route}) => {
     });
   };
   const openCamera = () => {
+    setModalVisible(false);
+
     let opetions = {
       mediaType: 'photo',
       path: 'images',

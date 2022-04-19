@@ -81,7 +81,9 @@ const ProfileDetails = ({navigation, route}) => {
                 <Text style={[styles.full, {width: '85%'}]}>
                   {userData.app_role_id === 1
                     ? userData.hostel_name
-                    : `${userData.house_no} ${userData.address} ${userData.landmark}`}
+                    : `${userData.house_no === null ? '' : userData.house_no} ${
+                        userData.address === null ? '' : userData.address
+                      } ${userData.landmark === null ? '' : userData.landmark}`}
                 </Text>
               </View>
               {userData.app_role_id === 1 ? (

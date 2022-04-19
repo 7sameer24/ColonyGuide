@@ -23,9 +23,21 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
     }
   };
 
+  const CutName = title != null ? title.slice(0, 1) : null;
+
   return (
     <Card containerStyle={styles.CardContainer}>
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={styles.mainContainer}>
+        <View style={styles.CutNameConatiner}>
+          <Text
+            style={{
+              color: COLORS.white,
+              fontSize: 20,
+              fontFamily: FONTS.InterRegular,
+            }}>
+            {CutName}
+          </Text>
+        </View>
         <View style={genericStyles.column}>
           <Text style={styles.title} numberOfLines={1}>
             {title}
@@ -69,6 +81,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 20,
     paddingVertical: 10,
+    borderWidth: 1,
+    borderColor: COLORS.primary,
   },
   title: {
     fontSize: 14,
@@ -82,5 +96,19 @@ const styles = StyleSheet.create({
     color: '#7D7D7D',
     marginTop: 2,
     width: 250,
+  },
+  mainContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  CutNameConatiner: {
+    backgroundColor: COLORS.primary,
+    borderRadius: 50,
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
   },
 });
