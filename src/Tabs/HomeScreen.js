@@ -39,6 +39,18 @@ const HomeScreen = ({navigation}) => {
   const idx = async () => {
     try {
       const response = await axios.post(BaseURL('home'));
+      Userdata === null
+        ? null
+        : await axios(BaseURL('update-device-token'), {
+            method: 'post',
+            data: {
+              user_id: Userdata.userData.id,
+              device_token: notificationToken,
+            },
+            headers: {
+              Authorization: `Bearer ${UserToken}`,
+            },
+          });
       setData(response.data.categories);
       setSliderImg(response.data.banners);
     } catch (error) {
@@ -46,19 +58,19 @@ const HomeScreen = ({navigation}) => {
     }
   };
 
-  const sendToken = async () => {
-    try {
-      const response = await axios(BaseURL('update-device-token'), {
-        method: 'post',
-        data: {user_id: Userdata.userData.id, device_token: notificationToken},
-        headers: {
-          Authorization: `Bearer ${UserToken}`,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const sendToken = async () => {
+  //   try {
+  //     const response = await axios(BaseURL('update-device-token'), {
+  //       method: 'post',
+  //       data: {user_id: Userdata.userData.id, device_token: notificationToken},
+  //       headers: {
+  //         Authorization: `Bearer ${UserToken}`,
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const checkPermission = () => {
     messaging()
@@ -169,7 +181,6 @@ const HomeScreen = ({navigation}) => {
 
   useEffect(() => {
     idx();
-    Userdata === null ? null : sendToken();
     PushNotificationUser();
     checkPermission();
     return () => {
@@ -205,7 +216,7 @@ const HomeScreen = ({navigation}) => {
                   firstIcon="menu"
                   ThirdType="material-community"
                   title="Colony Guide"
-                  titleStyle={{color: COLORS.primary, marginLeft: 10}}
+                  titleStyle={{color: COLORS.primary}}
                   firstOnpress={() => navigation.openDrawer()}
                 />
                 <>

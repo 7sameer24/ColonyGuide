@@ -7,7 +7,11 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: `Colony Guide Sharing This ${title} ${subTitle} ${AddressLine} ${Landmark}`,
+        message: `Colony Guide Sharing This${title === null ? '' : title} ${
+          subTitle === null ? '' : subTitle
+        } ${AddressLine === null ? '' : AddressLine} ${
+          Landmark === null ? '' : Landmark
+        }`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -56,7 +60,7 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
           <Icon
             name="share-social"
             type="ionicon"
-            color={COLORS.textColor}
+            color={COLORS.primary}
             size={20}
             onPress={() => onShare()}
           />
@@ -83,6 +87,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderWidth: 1,
     borderColor: COLORS.primary,
+    paddingHorizontal: 0,
   },
   title: {
     fontSize: 14,
@@ -99,7 +104,7 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   CutNameConatiner: {
@@ -110,5 +115,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 5,
+    marginHorizontal: 20,
   },
 });

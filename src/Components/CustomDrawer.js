@@ -122,7 +122,7 @@ const CustomDrawer = props => {
               IconSvg={<Help />}
               onPress={() => props.navigation.navigate('Helpline')}
             />
-            <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+            <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             <ProfileComponents
               title="Change Password"
               ImageContainer={styles.DrawerIcon}
@@ -134,7 +134,7 @@ const CustomDrawer = props => {
                 })
               }
             />
-            <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+            <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             <ProfileComponents
               title="Feedback"
               ImageContainer={styles.DrawerIcon}
@@ -207,14 +207,14 @@ const CustomDrawer = props => {
               IconSvg={<Help />}
               onPress={() => alert('Please Login')}
             />
-            <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+            <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             <ProfileComponents
               title="Change Password"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Settings />}
               onPress={() => alert('Please Login')}
             />
-            <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+            <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             <ProfileComponents
               title="Contact Us"
               ImageContainer={styles.DrawerIcon}

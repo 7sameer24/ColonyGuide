@@ -1,4 +1,10 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import InputComponent from '../Components/InputComponent';
@@ -6,8 +12,9 @@ import ImgIcon from '../../assets/svg/amico.svg';
 import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
 import {Divider, Icon} from 'react-native-elements';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const SearchScreen = () => {
+const SearchScreen = ({navigation}) => {
   const [data, setData] = useState([]);
   const [check, setCheck] = useState('');
 
@@ -27,6 +34,47 @@ const SearchScreen = () => {
     }
   };
 
+  // const SaveSearch = async searchData => {
+  //   let currentlyMerged;
+  //   // const data = {
+  //   //   name: searchData.name,
+  //   //   house: searchData.house_no,
+  //   // };
+  //   // searchData.address,
+  //   // searchData.landmark,
+  //   // const data2 = {
+  //   //   name: searchData.name,
+  //   //   house: searchData.house_no,
+  //   // };
+
+  //   // const multiSet = [
+  //   //   ['@MyApp_USER_1', JSON.stringify(data)],
+  //   //   ['@MyApp_USER_2', JSON.stringify(data2)],
+  //   // ];
+
+  //   const key = searchData.name + searchData.name;
+
+  //   try {
+  //     // await AsyncStorage.multiSet(multiSet);
+  //     await AsyncStorage.setItem('@MyApp_USER_1', JSON.stringify(key));
+  //     currentlyMerged = await AsyncStorage.getItem('@MyApp_USER_1');
+  //   } catch (e) {
+  //     //save error
+  //   }
+
+  //   console.log(currentlyMerged);
+  // };
+
+  // const getMultiple = async () => {
+  //   let values;
+  //   try {
+  //     values = await AsyncStorage.multiGet(['@MyApp_USER_1,@MyApp_USER_2']);
+  //   } catch (e) {
+  //     // read error
+  //   }
+  //   console.log(values);
+  // };
+
   return (
     <View style={genericStyles.Container}>
       <InputComponent
@@ -45,29 +93,35 @@ const SearchScreen = () => {
         <ScrollView style={genericStyles.mt(20)}>
           <>
             {data.map(newData => (
-              <View style={styles.mainContainer} key={newData.id}>
-                <Icon
-                  name="map-marker-radius"
-                  type="material-community"
-                  size={20}
-                  color={COLORS.primary}
-                  containerStyle={styles.CutNameConatiner}
-                />
-                <View style={genericStyles.column}>
-                  <Text style={styles.title} numberOfLines={1}>
-                    {newData.name}
-                  </Text>
-                  <Text style={styles.subTitle} numberOfLines={1}>
-                    {`${newData.house_no == null ? '' : newData.house_no} ${
-                      newData.address == null ? '' : newData.address
-                    } ${newData.landmark == null ? '' : newData.landmark}`}
-                  </Text>
-                  <Divider
-                    style={{width: 1000, marginTop: 20}}
+              <TouchableOpacity
+                key={newData.id}
+                onPress={() =>
+                  navigation.navigate('Search Result', {userData: newData})
+                }>
+                <View style={styles.mainContainer}>
+                  <Icon
+                    name="map-marker-radius"
+                    type="material-community"
+                    size={20}
                     color={COLORS.primary}
+                    containerStyle={styles.CutNameConatiner}
                   />
+                  <View style={genericStyles.column}>
+                    <Text style={styles.title} numberOfLines={1}>
+                      {newData.name}
+                    </Text>
+                    <Text style={styles.subTitle} numberOfLines={1}>
+                      {`${newData.house_no == null ? '' : newData.house_no} ${
+                        newData.address == null ? '' : newData.address
+                      } ${newData.landmark == null ? '' : newData.landmark}`}
+                    </Text>
+                    <Divider
+                      style={{width: 1000, marginTop: 20}}
+                      color={COLORS.primary}
+                    />
+                  </View>
                 </View>
-              </View>
+              </TouchableOpacity>
             ))}
           </>
         </ScrollView>

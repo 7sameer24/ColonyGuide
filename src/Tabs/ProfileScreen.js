@@ -94,7 +94,7 @@ const ProfileScreen = ({navigation}) => {
               </View>
             </View>
           </View>
-          <Divider style={genericStyles.ml(22)} color="#FFEBD9" width={1} />
+          <Divider style={genericStyles.ml(22)} color="#F3EBF9" width={1} />
           {Userdata.userData.app_role_id === 4 ? (
             Userdata.userData.app_role_id == 1 ? (
               <ProfileComponents
@@ -161,7 +161,7 @@ const ProfileScreen = ({navigation}) => {
                   }
                 />
               )}
-              <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+              <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             </>
           )}
 
@@ -176,7 +176,7 @@ const ProfileScreen = ({navigation}) => {
             IconSvg={<Settings />}
             title="Change Password"
           />
-          <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+          <Divider style={styles.Divider} color="#F3EBF9" width={1} />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Feedback />}
@@ -205,7 +205,7 @@ const ProfileScreen = ({navigation}) => {
             IconSvg={<Contact />}
             title="Contact Us"
           />
-          <Divider style={styles.Divider2} color="#FFEBD9" width={1} />
+          <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
           <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       ) : (
@@ -220,7 +220,7 @@ const ProfileScreen = ({navigation}) => {
               </View>
             </View>
           </View>
-          <Divider style={genericStyles.ml(22)} color="#FFEBD9" width={1} />
+          <Divider style={genericStyles.ml(22)} color="#F3EBF9" width={1} />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<IconImg />}
@@ -239,14 +239,14 @@ const ProfileScreen = ({navigation}) => {
             title={'Add Service Provider'}
             onPress={() => alert('Please Login')}
           />
-          <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+          <Divider style={styles.Divider} color="#F3EBF9" width={1} />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Settings />}
             title="Change Password"
             onPress={() => alert('Please Login')}
           />
-          <Divider style={styles.Divider} color="#FFEBD9" width={1} />
+          <Divider style={styles.Divider} color="#F3EBF9" width={1} />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Feedback />}
@@ -265,7 +265,7 @@ const ProfileScreen = ({navigation}) => {
             title="Contact Us"
             onPress={() => alert('Please Login')}
           />
-          <Divider style={styles.Divider2} color="#FFEBD9" width={1} />
+          <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
           <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       )}

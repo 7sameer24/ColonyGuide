@@ -37,6 +37,7 @@ import ServiceAddDetails from '../ProfileComponents/ServiceComponents/ServiceAdd
 import ServiceList from '../Tabs/../ProfileComponents/ServiceComponents/CategoriesScreens/ServiceList';
 import ServiceInformation from '../Tabs/../ProfileComponents/ServiceComponents/CategoriesScreens/ServiceInformation';
 import BusinessInformation from '../ProfileComponents/BusinessComponents/BusinessInformation';
+import SearchResult from '../Tabs/SearchScreens/SearchResult';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -116,6 +117,13 @@ const HomeStack = () => {
     {
       name: 'Search',
       component: SearchScreen,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Search Result',
+      component: SearchResult,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
