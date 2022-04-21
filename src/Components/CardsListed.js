@@ -10,6 +10,9 @@ import {
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
+import BaseURL from '../constants/BaseURL';
+import axios from 'axios';
+import {useApp} from '../../Context/AppContext';
 
 const CardsListed = ({
   category,
@@ -21,9 +24,32 @@ const CardsListed = ({
   WhatsAppNumber,
   GeoLocation,
   ShortDescription,
+  userId,
+  serviceId,
+  businessId,
 }) => {
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
+  const {Userdata} = useApp();
+
+  const callCount = async number => {
+    try {
+      const response = await axios.post(BaseURL('click-count'), {
+        user_id: userId,
+        service_id: serviceId,
+        businessId: businessId,
+        type: number === 1 ? 1 : 2,
+        clicked_user_id: Userdata.userData.id,
+      });
+      if (response.data.success) {
+        number === 1 ? Linking.openURL(`tel:${phoneNumber}`) : sendWhatsApp();
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const sendWhatsApp = () => {
     let msg = 'Hello';
@@ -75,7 +101,7 @@ const CardsListed = ({
                 color="#407BFF"
                 size={18}
                 reverse
-                onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
+                onPress={() => callCount(1)}
                 containerStyle={genericStyles.shadow}
               />
               <Icon

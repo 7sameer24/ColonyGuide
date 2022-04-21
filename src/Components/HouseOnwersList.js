@@ -1,13 +1,14 @@
-import {Share, StyleSheet, Text, View} from 'react-native';
+import {Share, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
 
 const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
+  const {width} = useWindowDimensions();
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: `Colony Guide Sharing This${title === null ? '' : title} ${
+        message: `Colony Guide Sharing This ${title === null ? '' : title} ${
           subTitle === null ? '' : subTitle
         } ${AddressLine === null ? '' : AddressLine} ${
           Landmark === null ? '' : Landmark
@@ -27,22 +28,16 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
     }
   };
 
-  const CutName = title != null ? title.slice(0, 1) : null;
+  const CutName = title != null ? title.slice(0, 2) : null;
 
   return (
     <Card containerStyle={styles.CardContainer}>
       <View style={styles.mainContainer}>
         <View style={styles.CutNameConatiner}>
-          <Text
-            style={{
-              color: COLORS.white,
-              fontSize: 20,
-              fontFamily: FONTS.InterRegular,
-            }}>
-            {CutName}
-          </Text>
+          <Text style={styles.CutName}>{CutName}</Text>
         </View>
-        <View style={genericStyles.column}>
+        <View
+          style={[genericStyles.column, {width: width / 1.8, marginRight: 5}]}>
           <Text style={styles.title} numberOfLines={1}>
             {title}
           </Text>
@@ -93,18 +88,15 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
-    width: 250,
   },
   subTitle: {
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
     marginTop: 2,
-    width: 250,
   },
   mainContainer: {
     flexDirection: 'row',
-    // justifyContent: 'space-evenly',
     alignItems: 'center',
   },
   CutNameConatiner: {
@@ -115,6 +107,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     elevation: 5,
-    marginHorizontal: 20,
+    marginHorizontal: 13,
+  },
+  CutName: {
+    color: COLORS.white,
+    fontSize: 22,
+    fontFamily: FONTS.InterRegular,
   },
 });

@@ -14,17 +14,39 @@ import {Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../../../Components/Spinner';
 import BaseURL from '../../../constants/BaseURL';
+import {useApp} from '../../../../Context/AppContext';
 
 const ServiceInformation = ({route, navigation}) => {
   const {ID} = route.params;
-  const [Userdata, setUserData] = useState('');
+  const [infoData, setInfoData] = useState('');
+  const {Userdata} = useApp();
+
+  const callCount = async number => {
+    try {
+      const response = await axios.post(BaseURL('click-count'), {
+        user_id: infoData.user_id,
+        service_id: ID,
+        type: number === 1 ? 1 : 2,
+        clicked_user_id: Userdata.userData.id,
+      });
+      if (response.data.success) {
+        number === 1
+          ? Linking.openURL(`tel:${infoData.contact_person_mobile}`)
+          : sendWhatsApp();
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const FetchData = async () => {
     try {
       const response = await axios.post(BaseURL('service-view'), {
         service_id: ID,
       });
-      setUserData(response.data.data);
+      setInfoData(response.data.data);
     } catch (error) {
       alert(error);
     }
@@ -32,13 +54,13 @@ const ServiceInformation = ({route, navigation}) => {
   useEffect(() => {
     FetchData();
     return () => {
-      setUserData('');
+      setInfoData('');
     };
   }, []);
 
   const sendWhatsApp = () => {
     let msg = 'Hello';
-    let phoneWithCountryCode = `91${Userdata.contact_person_whatsapp}`;
+    let phoneWithCountryCode = `91${infoData.contact_person_whatsapp}`;
     let mobile =
       Platform.OS == 'ios' ? phoneWithCountryCode : '+' + phoneWithCountryCode;
     if (mobile) {
@@ -64,29 +86,31 @@ const ServiceInformation = ({route, navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
-      {Userdata !== '' ? (
+      {infoData !== '' ? (
         <>
           <View style={styles.radiusView}>
             <Image
               source={
-                Userdata.logo_image ===
+                infoData.logo_image ===
                 'https://colonyguide.garimaartgallery.com/storage'
                   ? Images.Ellipse
-                  : {uri: Userdata.logo_image}
+                  : {uri: infoData.logo_image}
               }
               style={styles.ImageStyle}
               fadeDuration={0}
             />
           </View>
-          <Text style={styles.title}>{Userdata.contact_person}</Text>
-          <Text style={styles.subTitle}>{Userdata.name}</Text>
+          {infoData.contact_person !== null ? (
+            <Text style={styles.title}>{infoData.contact_person}</Text>
+          ) : null}
+          {infoData.name !== null ? (
+            <Text style={styles.subTitle}>{infoData.name}</Text>
+          ) : null}
           <View style={styles.DetailsContanier}>
             <View style={genericStyles.column}>
               <TouchableOpacity
                 style={styles.firstView}
-                onPress={() =>
-                  Linking.openURL(`tel:${Userdata.contact_person_mobile}`)
-                }>
+                onPress={() => callCount(1)}>
                 <Icon
                   name="phone-outgoing"
                   type="material-community"
@@ -94,7 +118,7 @@ const ServiceInformation = ({route, navigation}) => {
                   size={20}
                 />
                 <Text style={styles.text}>
-                  {Userdata.contact_person_mobile}
+                  {infoData.contact_person_mobile}
                 </Text>
               </TouchableOpacity>
               <View style={genericStyles.row}>
@@ -104,12 +128,12 @@ const ServiceInformation = ({route, navigation}) => {
                   size={20}
                   color="#A484FF"
                 />
-                <Text style={styles.text}>{Userdata.categoryName}</Text>
+                <Text style={styles.text}>{infoData.categoryName}</Text>
               </View>
             </View>
             <TouchableOpacity
               style={genericStyles.row}
-              onPress={() => sendWhatsApp()}>
+              onPress={() => callCount()}>
               <Icon
                 name="whatsapp"
                 type="material-community"
@@ -117,7 +141,7 @@ const ServiceInformation = ({route, navigation}) => {
                 color="#25D366"
               />
               <Text style={styles.text}>
-                {Userdata.contact_person_whatsapp}
+                {infoData.contact_person_whatsapp}
               </Text>
             </TouchableOpacity>
           </View>
@@ -125,13 +149,13 @@ const ServiceInformation = ({route, navigation}) => {
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
               About service
             </Text>
-            <Text style={styles.SubText}>{Userdata.about}</Text>
+            <Text style={styles.SubText}>{infoData.about}</Text>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
               Shop address
             </Text>
             <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-              {`${Userdata.house_no} ${Userdata.address} ${
-                Userdata.landmark == null ? '' : Userdata.landmark
+              {`${infoData.house_no} ${infoData.address} ${
+                infoData.landmark == null ? '' : infoData.landmark
               }`}
             </Text>
           </View>

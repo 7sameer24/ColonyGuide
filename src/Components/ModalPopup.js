@@ -8,6 +8,7 @@ const ModalPopup = ({
   visible,
   CameraOnpress,
   GalleryOnpress,
+  onRequestClose,
 }) => {
   return (
     <View style={styles.centeredView}>
@@ -15,9 +16,7 @@ const ModalPopup = ({
         animationType="none"
         transparent={true}
         visible={visible}
-        onRequestClose={() => {
-          Alert.alert('Modal has been closed.');
-        }}>
+        onRequestClose={onRequestClose}>
         <View
           style={{
             width: '100%',

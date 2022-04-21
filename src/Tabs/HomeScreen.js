@@ -22,6 +22,7 @@ import PushNotification from 'react-native-push-notification';
 import messaging from '@react-native-firebase/messaging';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import ButtonComponent from '../Components/ButtonComponent';
+import LoginAnimation from '../Components/LoginAnimation';
 
 const HomeScreen = ({navigation}) => {
   const [newData, setData] = useState([]);
@@ -34,6 +35,8 @@ const HomeScreen = ({navigation}) => {
     setNotificationToken,
     notificationToken,
     UserToken,
+    loginPop,
+    setIsLoginPop,
   } = useApp();
 
   const idx = async () => {
@@ -150,7 +153,11 @@ const HomeScreen = ({navigation}) => {
   const ImageZoomComponent = () => {
     return (
       <View style={styles.ImageZoomComponent}>
-        <Modal visible={visible} transparent={true} animationType="slide">
+        <Modal
+          visible={visible}
+          transparent={true}
+          animationType="slide"
+          onRequestClose={() => setIsvisible(false)}>
           <Icon
             name="close-outline"
             type="ionicon"
@@ -208,7 +215,7 @@ const HomeScreen = ({navigation}) => {
                   bellIcon="bell"
                   thirdOnpress={() =>
                     Userdata === null
-                      ? alert('Please Login')
+                      ? setIsLoginPop(true)
                       : navigation.navigate('Notification')
                   }
                   // searchIcon="search"
@@ -216,7 +223,7 @@ const HomeScreen = ({navigation}) => {
                   firstIcon="menu"
                   ThirdType="material-community"
                   title="Colony Guide"
-                  titleStyle={{color: COLORS.primary}}
+                  titleStyle={genericStyles.color(COLORS.primary)}
                   firstOnpress={() => navigation.openDrawer()}
                 />
                 <>
@@ -252,6 +259,7 @@ const HomeScreen = ({navigation}) => {
           </>
         )}
       </>
+      {loginPop ? <LoginAnimation visible={loginPop} /> : null}
     </View>
   );
 };
@@ -291,6 +299,6 @@ const styles = StyleSheet.create({
   ButtonContainer: {
     width: '30%',
     alignSelf: 'center',
-    marginBottom: 20,
+    marginBottom: 15,
   },
 });

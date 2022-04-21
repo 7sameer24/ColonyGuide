@@ -24,8 +24,14 @@ import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
 
 const ProfileScreen = ({navigation}) => {
-  const {Userdata, UserToken, setNavigationState, setCheckStatus, checkStatus} =
-    useApp();
+  const {
+    Userdata,
+    UserToken,
+    setNavigationState,
+    setCheckStatus,
+    checkStatus,
+    setIsLoginPop,
+  } = useApp();
 
   const checkBusinessStauts = async () => {
     try {
@@ -157,7 +163,7 @@ const ProfileScreen = ({navigation}) => {
                   title={
                     Userdata.userData.app_role_id === 2
                       ? 'Service Information'
-                      : 'Add Service Provider'
+                      : 'My Service Provider'
                   }
                 />
               )}
@@ -225,45 +231,45 @@ const ProfileScreen = ({navigation}) => {
             iconName="chevron-forward-outline"
             IconSvg={<IconImg />}
             title="Personal Details"
-            onPress={() => alert('Please Login')}
+            onPress={() => setIsLoginPop(true)}
           />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Group />}
             title="Business Information"
-            onPress={() => alert('Please Login')}
+            onPress={() => setIsLoginPop(true)}
           />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Service />}
             title={'Add Service Provider'}
-            onPress={() => alert('Please Login')}
+            onPress={() => setIsLoginPop(true)}
           />
           <Divider style={styles.Divider} color="#F3EBF9" width={1} />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Settings />}
             title="Change Password"
-            onPress={() => alert('Please Login')}
+            onPress={() => setIsLoginPop(true)}
           />
           <Divider style={styles.Divider} color="#F3EBF9" width={1} />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Feedback />}
             title="Feedback"
-            onPress={() => alert('Please Login')}
+            onPress={() => setIsLoginPop(true)}
           />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Terms />}
             title="Terms & Condition"
-            onPress={() => alert('Please Login')}
+            onPress={() => setIsLoginPop(true)}
           />
           <ProfileComponents
             iconName="chevron-forward-outline"
             IconSvg={<Contact />}
             title="Contact Us"
-            onPress={() => alert('Please Login')}
+            onPress={() => setIsLoginPop(true)}
           />
           <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
           <Poweredby container={genericStyles.mb(0)} />

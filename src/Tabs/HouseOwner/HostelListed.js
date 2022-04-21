@@ -69,6 +69,7 @@ const HostelListed = ({navigation, route}) => {
                       index={index}
                       phoneNumber={data.mobile_no}
                       WhatsAppNumber={data.whatsapp_no}
+                      userId={data.user_id}
                     />
                   ))}
                   <View style={genericStyles.height(20)} />

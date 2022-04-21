@@ -94,50 +94,57 @@ const BusinessEdit = ({navigation, route}) => {
   };
 
   const businessUpdate = async () => {
-    try {
-      setSpinner(true);
-
-      const SaveData = new FormData();
-      SaveData.append('user_id', data.user_id);
-      SaveData.append('service_name', ShopBusName);
-      SaveData.append('contact_person', PersonName);
-      SaveData.append('contact_person_mobile', data.contact_person_mobile);
-      SaveData.append('contact_person_whatsapp', WhatsappNo);
-      SaveData.append('category_id', Category);
-      SaveData.append('about_service', About);
-      SaveData.append('house_no', buildFL);
-      SaveData.append('landmark', Landmark);
-      SaveData.append('business_address', AL1);
-      SaveData.append(
-        'logo_image',
-        imageUp !== ''
-          ? {
-              uri: imageUp[0].uri,
-              type: imageUp[0].type,
-              name: imageUp[0].fileName,
-            }
-          : '',
+    if (WhatsappNo.length < 10) {
+      ToastAndroid.show(
+        'Please check your Whatsapp number and try again',
+        ToastAndroid.SHORT,
       );
+    } else {
+      try {
+        setSpinner(true);
 
-      const res = await fetch(BaseURL('update-service-detail'), {
-        method: 'post',
-        body: SaveData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      let response = await res.json();
-      setSpinner(false);
-      if (response.success === true) {
-        navigation.navigate('Profile');
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        const SaveData = new FormData();
+        SaveData.append('user_id', data.user_id);
+        SaveData.append('service_name', ShopBusName);
+        SaveData.append('contact_person', PersonName);
+        SaveData.append('contact_person_mobile', data.contact_person_mobile);
+        SaveData.append('contact_person_whatsapp', WhatsappNo);
+        SaveData.append('category_id', Category);
+        SaveData.append('about_service', About);
+        SaveData.append('house_no', buildFL);
+        SaveData.append('landmark', Landmark);
+        SaveData.append('business_address', AL1);
+        SaveData.append(
+          'logo_image',
+          imageUp !== ''
+            ? {
+                uri: imageUp[0].uri,
+                type: imageUp[0].type,
+                name: imageUp[0].fileName,
+              }
+            : '',
+        );
+
+        const res = await fetch(BaseURL('update-service-detail'), {
+          method: 'post',
+          body: SaveData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        let response = await res.json();
+        setSpinner(false);
+        if (response.success === true) {
+          navigation.navigate('Profile');
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        setSpinner(false);
+        alert(error);
       }
-    } catch (error) {
-      setSpinner(false);
-      alert(error);
     }
   };
 
@@ -195,7 +202,8 @@ const BusinessEdit = ({navigation, route}) => {
             <InputComponent
               placeholder="Contact person’s whatsapp number"
               value={WhatsappNo}
-              autoCapitalize="words"
+              keyboardType="number-pad"
+              maxLength={10}
               onChangeText={text => setWhatsappNo(text)}
             />
 

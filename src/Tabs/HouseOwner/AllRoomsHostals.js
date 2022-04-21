@@ -1,6 +1,6 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {genericStyles} from '../../constants';
+import {COLORS, genericStyles} from '../../constants';
 import CardsListed from '../../Components/CardsListed';
 import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
@@ -9,11 +9,19 @@ import ListedAnimation from '../../Components/ListedAnimation';
 import Poweredby from '../../Components/Poweredby';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
+import {Icon} from 'react-native-elements';
+import FilterModal from '../../Components/FilterModal';
 
 const AllRoomsHostals = ({navigation}) => {
   const {Userdata} = useApp();
   const [newData, setData] = useState([]);
   const [check, setCheck] = useState('');
+  const [visible, setIsvisible] = useState(false);
+  const [boysCheck, setIsboysCheck] = useState(false);
+  const [girlsCheck, setIsgirlsCheck] = useState(false);
+  const [familyCheck, setIsfamilyCheck] = useState(false);
+  const [veg, setIsveg] = useState(false);
+  const [noVeg, setIsnoVeg] = useState(false);
 
   const idx = async () => {
     try {
@@ -67,16 +75,26 @@ const AllRoomsHostals = ({navigation}) => {
                     index={index}
                     phoneNumber={data.mobile_no}
                     WhatsAppNumber={data.whatsapp_no}
+                    userId={data.user_id}
                   />
                 ))}
-                <View style={genericStyles.height(20)} />
+                <View style={genericStyles.height(50)} />
               </ScrollView>
+              <Icon
+                color={COLORS.primary}
+                name="filter"
+                type="material-community"
+                size={27}
+                containerStyle={styles.iconContainer}
+                reverse
+                onPress={() => setIsvisible(true)}
+              />
               {Userdata !== null ? (
                 Userdata.userData.app_role_id === 3 ? (
                   <>
                     <ButtonComponent
                       title="Add room"
-                      ButtonContainer={styles.ButtonContainer}
+                      ButtonContainer={genericStyles.width('90%')}
                       onPress={() => navigation.navigate('Add room')}
                     />
                     <Poweredby container={{flex: 0}} />
@@ -89,6 +107,21 @@ const AllRoomsHostals = ({navigation}) => {
           )}
         </>
       )}
+      <FilterModal
+        visible={visible}
+        boysCheck={boysCheck}
+        girlsCheck={girlsCheck}
+        familyCheck={familyCheck}
+        veg={veg}
+        noVeg={noVeg}
+        // boysOnpress={() => setIsboysCheck(!boysCheck)}
+        // girlsOnpress={() => setIsgirlsCheck(!girlsCheck)}
+        // familyOnpress={() => setIsfamilyCheck(!familyCheck)}
+        // vegOnpress={() => setIsveg(!veg)}
+        // noVegOnpress={() => setIsnoVeg(!noVeg)}
+        OnPressCancel={() => setIsvisible(false)}
+        onRequestClose={() => setIsvisible(false)}
+      />
     </View>
   );
 };
@@ -96,7 +129,10 @@ const AllRoomsHostals = ({navigation}) => {
 export default AllRoomsHostals;
 
 const styles = StyleSheet.create({
-  ButtonContainer: {
-    width: '90%',
+  iconContainer: {
+    position: 'absolute',
+    bottom: '12%',
+    right: 1,
+    elevation: 5,
   },
 });

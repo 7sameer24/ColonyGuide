@@ -12,7 +12,7 @@ import {useApp} from '../../../Context/AppContext';
 import {SvgUri} from 'react-native-svg';
 
 const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
-  const {Userdata} = useApp();
+  const {Userdata, setIsLoginPop} = useApp();
   const {width, height} = useWindowDimensions();
 
   return (
@@ -23,7 +23,7 @@ const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
           activeOpacity={0.9}
           onPress={() =>
             Userdata === null
-              ? alert('Please Login')
+              ? setIsLoginPop(true)
               : navigation.navigate('Service List', {
                   ID: data.id,
                   Name: data.name,

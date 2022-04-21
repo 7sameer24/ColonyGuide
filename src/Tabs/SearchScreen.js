@@ -27,7 +27,7 @@ const SearchScreen = ({navigation}) => {
         setData(response.data.data);
       } else {
         setData([]);
-        setCheck(response.data.success);
+        setCheck(false);
       }
     } catch (error) {
       console.log(error);
@@ -81,15 +81,17 @@ const SearchScreen = ({navigation}) => {
         placeholder="Search people, categories..."
         iconName="search"
         onChangeText={text => SearchData(text)}
+        autoFocus={true}
         inputContainerStyle={styles.inputContainerStyle}
       />
 
-      {check === false ? (
+      {/* {check === false ? (
         <View style={styles.imageStyle}>
           <ImgIcon />
           <Text style={styles.topText}> No data found.</Text>
         </View>
-      ) : data.length > 0 ? (
+      ) : */}
+      {data.length > 0 ? (
         <ScrollView style={genericStyles.mt(20)}>
           <>
             {data.map(newData => (
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
-    width: 320,
+    width: 270,
   },
   mainContainer: {
     flexDirection: 'row',

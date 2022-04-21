@@ -95,53 +95,65 @@ const ServiceAddDetails = ({navigation, route}) => {
   };
 
   const SaveDetail = async () => {
-    try {
-      setSpinner(true);
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/add-service-detail';
-
-      const data = new FormData();
-      data.append('user_id', Userdata.userData.id);
-      data.append('app_role_id', Userdata.userData.app_role_id);
-      data.append('type', 1);
-      data.append('service_name', ShopBusName);
-      data.append('contact_person', PersonName);
-      data.append('contact_person_mobile', mobile_no);
-      data.append('contact_person_whatsapp', WhatsappNo);
-      data.append('category_id', Category);
-      data.append('about_service', About);
-      data.append('house_no', buildFL);
-      data.append('landmark', Landmark);
-      data.append('business_address', AL1);
-      data.append(
-        'logo_image',
-        imageUp !== ''
-          ? {
-              uri: imageUp[0].uri,
-              type: imageUp[0].type,
-              name: imageUp[0].fileName,
-            }
-          : '',
+    if (mobile_no.length < 10) {
+      ToastAndroid.show(
+        'Please check your Mobile number and try again',
+        ToastAndroid.SHORT,
       );
-      const res = await fetch(URL, {
-        method: 'post',
-        body: data,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${UserToken}`,
-        },
-      });
-      let response = await res.json();
-      setSpinner(false);
-      if (response.success === true) {
-        navigation.navigate('Profile');
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+    } else if (WhatsappNo.length < 10) {
+      ToastAndroid.show(
+        'Please check your Whatsapp number and try again',
+        ToastAndroid.SHORT,
+      );
+    } else {
+      try {
+        setSpinner(true);
+        const URL =
+          'https://colonyguide.garimaartgallery.com/api/add-service-detail';
+
+        const data = new FormData();
+        data.append('user_id', Userdata.userData.id);
+        data.append('app_role_id', Userdata.userData.app_role_id);
+        data.append('type', 1);
+        data.append('service_name', ShopBusName);
+        data.append('contact_person', PersonName);
+        data.append('contact_person_mobile', mobile_no);
+        data.append('contact_person_whatsapp', WhatsappNo);
+        data.append('category_id', Category);
+        data.append('about_service', About);
+        data.append('house_no', buildFL);
+        data.append('landmark', Landmark);
+        data.append('business_address', AL1);
+        data.append(
+          'logo_image',
+          imageUp !== ''
+            ? {
+                uri: imageUp[0].uri,
+                type: imageUp[0].type,
+                name: imageUp[0].fileName,
+              }
+            : '',
+        );
+        const res = await fetch(URL, {
+          method: 'post',
+          body: data,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${UserToken}`,
+          },
+        });
+        let response = await res.json();
+        setSpinner(false);
+        if (response.success === true) {
+          navigation.navigate('Profile');
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        setSpinner(false);
+        alert(error);
       }
-    } catch (error) {
-      setSpinner(false);
-      alert(error);
     }
   };
 
@@ -195,17 +207,19 @@ const ServiceAddDetails = ({navigation, route}) => {
               placeholder="Contact person’s mobile number"
               value={mobile_no}
               keyboardType="number-pad"
+              maxLength={10}
               onChangeText={text => setMobile(text)}
             />
             <InputComponent
               placeholder="Contact person’s whatsapp number"
               value={WhatsappNo}
+              maxLength={10}
               keyboardType="number-pad"
               onChangeText={text => setWhatsappNo(text)}
             />
 
             <DropDownComponent
-              placeholder="Select category"
+              placeholder="Select Category"
               data={CategoryData}
               labelField="name"
               valueField="id"
@@ -238,14 +252,14 @@ const ServiceAddDetails = ({navigation, route}) => {
               autoCapitalize="words"
               onChangeText={text => setLandmark(text)}
             />
-            <ButtonComponent
-              title="Save"
-              ButtonContainer={styles.ButtonContainer}
-              loading={spinner ? true : false}
-              onPress={() => SaveDetail()}
-            />
-            <Poweredby />
           </ScrollView>
+          <ButtonComponent
+            title="Save"
+            ButtonContainer={styles.ButtonContainer}
+            loading={spinner ? true : false}
+            onPress={() => SaveDetail()}
+          />
+          <Poweredby container={{flex: 0}} />
         </>
       ) : (
         <Spinner />

@@ -43,15 +43,9 @@ const Helpline = () => {
           {/* <Card containerStyle={styles.cardConatiner}> */}
           {helpData.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <View style={genericStyles.row}>
-                <Text style={[styles.topText2]}>{data.id}</Text>
-                <Text style={[styles.topText2, {marginRight: 0}]}>
-                  {data.name}
-                </Text>
-              </View>
-              <Text style={[styles.topText2, {marginRight: 0}]}>
-                {data.department}
-              </Text>
+              <Text style={[styles.topText2, {width: 10}]}>{data.id}</Text>
+              <Text style={styles.topText2}>{data.name}</Text>
+              <Text style={styles.topText2}>{data.department}</Text>
               <Icon
                 name="phone-outgoing"
                 type="material-community"
@@ -68,15 +62,9 @@ const Helpline = () => {
           {/* <Card containerStyle={styles.cardConatiner}> */}
           {policeData.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <View style={genericStyles.row}>
-                <Text style={[styles.topText2]}>{data.id}</Text>
-                <Text style={[styles.topText2, {marginRight: 0}]}>
-                  {data.name}
-                </Text>
-              </View>
-              <Text style={[styles.topText2, {marginRight: 0}]}>
-                {data.department}
-              </Text>
+              <Text style={[styles.topText2, {width: 10}]}>{data.id}</Text>
+              <Text style={styles.topText2}>{data.name}</Text>
+              <Text style={styles.topText2}>{data.department}</Text>
               <Icon
                 name="phone-outgoing"
                 type="material-community"
@@ -93,15 +81,9 @@ const Helpline = () => {
           {/* <Card containerStyle={styles.cardConatiner}> */}
           {fire_brigade.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <View style={genericStyles.row}>
-                <Text style={[styles.topText2]}>{data.id}</Text>
-                <Text style={[styles.topText2, {marginRight: 0}]}>
-                  {data.name}
-                </Text>
-              </View>
-              <Text style={[styles.topText2, {marginRight: 0}]}>
-                {data.department}
-              </Text>
+              <Text style={[styles.topText2, {width: 10}]}>{data.id}</Text>
+              <Text style={styles.topText2}>{data.name}</Text>
+              <Text style={styles.topText2}>{data.department}</Text>
               <Icon
                 name="phone-outgoing"
                 type="material-community"
@@ -118,13 +100,11 @@ const Helpline = () => {
           {/* <Card containerStyle={[styles.cardConatiner, {marginBottom: 10}]}> */}
           {other.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <View style={genericStyles.row}>
-                <Text style={[styles.topText2]}>{data.id}</Text>
-                <Text style={[styles.topText2, {marginRight: 0}]}>
-                  {data.name}
-                </Text>
-              </View>
-              <Text style={[styles.topText2, {marginRight: 0}]}>
+              <Text style={[styles.topText2, {width: 10}]}>{data.id}</Text>
+              <Text style={styles.topText2} numberOfLines={1}>
+                {data.name}
+              </Text>
+              <Text style={styles.topText2} numberOfLines={1}>
                 {data.department}
               </Text>
               <Icon
@@ -164,20 +144,20 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
-    marginRight: 27,
+    width: 100,
   },
   midd: {
     flexDirection: 'row',
     marginTop: 16,
     justifyContent: 'flex-start',
-    marginLeft: 80,
   },
   middComen: {
     flexDirection: 'row',
     marginTop: 16,
-    justifyContent: 'space-evenly',
-    paddingVertical: 1,
+    justifyContent: 'space-around',
+    paddingVertical: 5,
     backgroundColor: '#F3EBF9',
+    // alignItems: 'center',
   },
   cardConatiner: {
     padding: 0,

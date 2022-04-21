@@ -78,6 +78,8 @@ const ServiceList = ({navigation, route}) => {
                     WhatsAppNumber={data.contact_person_whatsapp}
                     ShortDescription={data.about}
                     navigation={navigation}
+                    userId={data.user_id}
+                    serviceId={data.id}
                   />
                 </TouchableOpacity>
               ))}

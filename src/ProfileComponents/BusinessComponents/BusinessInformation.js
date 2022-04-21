@@ -1,21 +1,53 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {
+  Image,
+  Linking,
+  Platform,
+  StyleSheet,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
+import {useApp} from '../../../Context/AppContext';
 
 const BusinessInformation = ({route, navigation}) => {
   const {ID} = route.params;
-  const [Userdata, setUserData] = useState('');
+  const [busInfoData, setBusData] = useState('');
+
+  const {Userdata} = useApp();
+
+  const callCount = async number => {
+    try {
+      const response = await axios.post(BaseURL('click-count'), {
+        user_id: busInfoData.user_id,
+        service_id: ID,
+        type: number === 1 ? 1 : 2,
+        clicked_user_id: Userdata.userData.id,
+      });
+      if (response.data.success) {
+        number === 1
+          ? Linking.openURL(`tel:${busInfoData.contact_person_mobile}`)
+          : sendWhatsApp();
+      } else {
+        alert(response.data.message);
+      }
+    } catch (error) {
+      alert(error);
+    }
+  };
 
   const FetchData = async () => {
     try {
       const response = await axios.post(BaseURL('business-view'), {
         business_id: ID,
       });
-      setUserData(response.data.data);
+      setBusData(response.data.data);
     } catch (error) {
       alert(error);
     }
@@ -23,31 +55,58 @@ const BusinessInformation = ({route, navigation}) => {
   useEffect(() => {
     FetchData();
     return () => {
-      setUserData('');
+      setBusData('');
     };
   }, []);
 
+  const sendWhatsApp = () => {
+    let msg = 'Hello';
+    let phoneWithCountryCode = `91${busInfoData.contact_person_whatsapp}`;
+    let mobile =
+      Platform.OS == 'ios' ? phoneWithCountryCode : '+' + phoneWithCountryCode;
+    if (mobile) {
+      if (msg) {
+        let url = 'whatsapp://send?text=' + msg + '&phone=' + mobile;
+        Linking.openURL(url)
+          .then(() => {
+            ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
+          })
+          .catch(() => {
+            ToastAndroid.show(
+              'Make sure WhatsApp installed on your device',
+              ToastAndroid.SHORT,
+            );
+          });
+      } else {
+        ToastAndroid.show('Please insert message to send', ToastAndroid.SHORT);
+      }
+    } else {
+      ToastAndroid.show('Please insert mobile no', ToastAndroid.SHORT);
+    }
+  };
   return (
     <View style={genericStyles.Container}>
-      {Userdata !== '' ? (
+      {busInfoData !== '' ? (
         <>
           <View style={styles.radiusView}>
             <Image
               source={
-                Userdata.logo_image ===
+                busInfoData.logo_image ===
                 'https://colonyguide.garimaartgallery.com/storage'
                   ? Images.Ellipse
-                  : {uri: Userdata.logo_image}
+                  : {uri: busInfoData.logo_image}
               }
               style={styles.ImageStyle}
               fadeDuration={0}
             />
           </View>
-          <Text style={styles.title}>{Userdata.contact_person}</Text>
-          <Text style={styles.subTitle}>{Userdata.name}</Text>
+          <Text style={styles.title}>{busInfoData.contact_person}</Text>
+          <Text style={styles.subTitle}>{busInfoData.name}</Text>
           <View style={styles.DetailsContanier}>
             <View style={genericStyles.column}>
-              <View style={styles.firstView}>
+              <TouchableOpacity
+                style={styles.firstView}
+                onPress={() => callCount(1)}>
                 <Icon
                   name="phone-outgoing"
                   type="material-community"
@@ -55,9 +114,9 @@ const BusinessInformation = ({route, navigation}) => {
                   size={20}
                 />
                 <Text style={styles.text}>
-                  {Userdata.contact_person_mobile}
+                  {busInfoData.contact_person_mobile}
                 </Text>
-              </View>
+              </TouchableOpacity>
               <View style={genericStyles.row}>
                 <Icon
                   name="store"
@@ -65,32 +124,34 @@ const BusinessInformation = ({route, navigation}) => {
                   size={20}
                   color="#A484FF"
                 />
-                <Text style={styles.text}>{Userdata.categoryName}</Text>
+                <Text style={styles.text}>{busInfoData.categoryName}</Text>
               </View>
             </View>
-            <View style={genericStyles.row}>
-              <Icon
-                name="whatsapp"
-                type="material-community"
-                size={20}
-                color="#25D366"
-              />
-              <Text style={styles.text}>
-                {Userdata.contact_person_whatsapp}
-              </Text>
-            </View>
+            <TouchableOpacity onPress={() => callCount()}>
+              <View style={genericStyles.row}>
+                <Icon
+                  name="whatsapp"
+                  type="material-community"
+                  size={20}
+                  color="#25D366"
+                />
+                <Text style={styles.text}>
+                  {busInfoData.contact_person_whatsapp}
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
           <View style={genericStyles.ml(20)}>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              About service
+              About business
             </Text>
-            <Text style={styles.SubText}>{Userdata.about}</Text>
+            <Text style={styles.SubText}>{busInfoData.about}</Text>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              Shop address
+              Business address
             </Text>
             <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-              {`${Userdata.house_no} ${Userdata.address} ${
-                Userdata.landmark == null ? '' : Userdata.landmark
+              {`${busInfoData.house_no} ${busInfoData.address} ${
+                busInfoData.landmark == null ? '' : busInfoData.landmark
               }`}
             </Text>
           </View>

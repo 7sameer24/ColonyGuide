@@ -20,7 +20,7 @@ import Poweredby from '../../../Components/Poweredby';
 import BaseURL from '../../../constants/BaseURL';
 import ModalPopup from '../../../Components/ModalPopup';
 
-const ServiceDetails = ({navigation, UserNewData}) => {
+const ServiceForm = ({navigation, UserNewData}) => {
   const [imageUp, setImage] = useState('');
   const [shopName, setShop] = useState('');
   const [fullName, setFullName] = useState('');
@@ -198,7 +198,7 @@ const ServiceDetails = ({navigation, UserNewData}) => {
   );
 };
 
-export default ServiceDetails;
+export default ServiceForm;
 
 const styles = StyleSheet.create({
   imageStyle: imageUp => ({

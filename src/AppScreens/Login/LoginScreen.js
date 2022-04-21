@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {CheckBox} from 'react-native-elements';
 import HeaderBody from '../../Components/HeaderBody';
@@ -17,7 +17,6 @@ import Poweredby from '../../Components/Poweredby';
 import InputComponent from '../../Components/InputComponent';
 import axios from 'axios';
 import LoginLogo from '../../../assets/svg/pana.svg';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 
@@ -62,52 +61,6 @@ const LoginScreen = ({navigation}) => {
       }
     }
   };
-
-  const toggleRememberMe = value => {
-    setCheck1(value);
-    if (value === true) {
-      //user wants to be remembered.
-      rememberUser();
-    } else {
-      forgetUser();
-    }
-  };
-
-  const rememberUser = async () => {
-    try {
-      await AsyncStorage.setItem('Remember', JSON.stringify(MN));
-    } catch (error) {
-      alert(error);
-    }
-  };
-
-  const getRememberedUser = async () => {
-    try {
-      const username = await AsyncStorage.getItem('Remember');
-      if (username !== null) {
-        // We have username!!
-        return username;
-      }
-    } catch (error) {}
-  };
-
-  const forgetUser = async () => {
-    try {
-      await AsyncStorage.removeItem('Remember');
-    } catch (error) {
-      // Error removing
-      alert(error);
-    }
-  };
-
-  useEffect(() => {
-    async () => {
-      const username = await getRememberedUser();
-      setMobile(username || '');
-      setPass(username || '');
-      setCheck1(username ? true : false);
-    };
-  }, []);
 
   const skipToHome = () => {
     setNavigationState(navigationStateType.GUEST);
@@ -175,7 +128,7 @@ const LoginScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Poweredby />
+      <Poweredby container={genericStyles.mb(10)} />
     </View>
   );
 };

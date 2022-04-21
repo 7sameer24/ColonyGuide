@@ -46,20 +46,34 @@ const OnboardingScreen = () => {
 
   const Slide = ({item}) => {
     return (
-      <View style={[genericStyles.ai('center'), {justifyContent: 'center'}]}>
-        {item.image}
-        <View>
-          {item.title || item.subtitle ? (
-            <>
-              <Text style={styles.title}>{item?.title}</Text>
-              <Text style={styles.subtitle}>{item?.subtitle}</Text>
-            </>
-          ) : (
-            <ActivityIndicator
-              color={COLORS.primary}
-              style={genericStyles.mt(20)}
-            />
-          )}
+      <View>
+        {currentSlideIndex == slides.length - 1 ? null : (
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => signIn()}
+            style={{flexDirection: 'row-reverse'}}>
+            <Text style={styles.skipText}>Skip</Text>
+          </TouchableOpacity>
+        )}
+        <View
+          style={[
+            genericStyles.ai('center'),
+            {justifyContent: 'center', flex: 1},
+          ]}>
+          {item.image}
+          <View>
+            {item.title || item.subtitle ? (
+              <>
+                <Text style={styles.title}>{item?.title}</Text>
+                <Text style={styles.subtitle}>{item?.subtitle}</Text>
+              </>
+            ) : (
+              <ActivityIndicator
+                color={COLORS.primary}
+                style={genericStyles.mt(20)}
+              />
+            )}
+          </View>
         </View>
       </View>
     );
@@ -138,19 +152,7 @@ const OnboardingScreen = () => {
               onPress={() => signIn()}>
               <Text style={styles.signIn}>Sign In</Text>
             </TouchableOpacity>
-          ) : (
-            <View style={styles.skipView}>
-              <TouchableOpacity activeOpacity={0.8} onPress={skip}>
-                <Text style={styles.skipText}>Skip</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.iconCon}
-                onPress={() => signIn()}>
-                <Text style={styles.signIn}>Sign In</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          ) : null}
         </View>
       </View>
     );
@@ -223,10 +225,10 @@ const styles = StyleSheet.create({
   },
   skipText: {
     fontSize: 16,
-    color: COLORS.third,
-    marginTop: 20,
-    fontFamily: FONTS.InterMedium,
-    marginLeft: 30,
+    color: COLORS.primary,
+    marginTop: 15,
+    fontFamily: FONTS.InterRegular,
+    marginRight: 15,
   },
   signIn: {
     fontSize: 16,

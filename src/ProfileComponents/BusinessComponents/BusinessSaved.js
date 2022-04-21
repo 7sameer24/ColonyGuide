@@ -103,6 +103,10 @@ const BusinessSaved = ({route, navigation}) => {
           </View>
           <View style={genericStyles.ml(20)}>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
+              About business
+            </Text>
+            <Text style={styles.SubText}>{Userdata.about}</Text>
+            <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
               Business address
             </Text>
             <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
@@ -110,10 +114,6 @@ const BusinessSaved = ({route, navigation}) => {
                 Userdata.address === null ? '' : Userdata.address
               } ${Userdata.landmark === null ? '' : Userdata.landmark}`}
             </Text>
-            <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              About business
-            </Text>
-            <Text style={styles.SubText}>{Userdata.about}</Text>
           </View>
         </>
       ) : (

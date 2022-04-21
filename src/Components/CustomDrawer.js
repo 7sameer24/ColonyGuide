@@ -24,8 +24,14 @@ import {navigationStateType, useApp} from '../../Context/AppContext';
 import Terms from '../../assets/ProfileSvg/TC.svg';
 
 const CustomDrawer = props => {
-  const {Userdata, UserToken, setNewData, setUserToken, setNavigationState} =
-    useApp();
+  const {
+    Userdata,
+    UserToken,
+    setNewData,
+    setUserToken,
+    setNavigationState,
+    setIsLoginPop,
+  } = useApp();
 
   const removeValue = async () => {
     const keys = ['UserLogin', 'UserToken'];
@@ -185,47 +191,47 @@ const CustomDrawer = props => {
               title="Business Information"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Group />}
-              onPress={() => alert('Please Login')}
+              onPress={() => setIsLoginPop(true)}
             />
             <ProfileComponents
               title="Committee"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Committe />}
-              onPress={() => alert('Please Login')}
+              onPress={() => setIsLoginPop(true)}
             />
 
             <ProfileComponents
               title="Resident"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<HouseOwners />}
-              onPress={() => alert('Please Login')}
+              onPress={() => setIsLoginPop(true)}
             />
 
             <ProfileComponents
               title="Helpline"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Help />}
-              onPress={() => alert('Please Login')}
+              onPress={() => setIsLoginPop(true)}
             />
             <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             <ProfileComponents
               title="Change Password"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Settings />}
-              onPress={() => alert('Please Login')}
+              onPress={() => setIsLoginPop(true)}
             />
             <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             <ProfileComponents
               title="Contact Us"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Contact />}
-              onPress={() => alert('Please Login')}
+              onPress={() => setIsLoginPop(true)}
             />
             <ProfileComponents
               title="Feedback"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Feedback />}
-              onPress={() => alert('Please Login')}
+              onPress={() => setIsLoginPop(true)}
             />
           </>
         )}

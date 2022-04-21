@@ -113,52 +113,70 @@ const Addroom = ({navigation}) => {
   };
 
   const Saved = async () => {
-    try {
-      setSpinner(true);
-      const data = new FormData();
-      data.append('user_id', Userdata.userData.id);
-      data.append('building_name', building_name);
-      data.append('contact_person', PersonName);
-      data.append('mobile_no', mobile_no);
-      data.append('whatsapp_no', WhatsappNo);
-      data.append('category', Category);
-      data.append('room_type_id', roomType);
-      data.append('is_veg', check1 === true ? 1 : 0);
-      data.append(
-        'renter_type',
-        check2 === true ? 1 : check3 === true ? 2 : check4 === true ? 3 : null,
+    if (mobile_no.length < 10) {
+      ToastAndroid.show(
+        'Please check your Mobile number and try again',
+        ToastAndroid.SHORT,
       );
-      data.append('address', `${buildFL},${AL1},${Landmark}`);
-      data.append(
-        'logo_image',
-        imageUp !== ''
-          ? {
-              uri: imageUp[0].uri,
-              type: imageUp[0].type,
-              name: imageUp[0].fileName,
-            }
-          : '',
+    } else if (WhatsappNo.length < 10) {
+      ToastAndroid.show(
+        'Please check your Whatsapp number and try again',
+        ToastAndroid.SHORT,
       );
-      const res = await fetch(BaseURL('add-room-hostel'), {
-        method: 'post',
-        body: data,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${UserToken}`,
-        },
-      });
-      let response = await res.json();
-      setSpinner(false);
-      if (response.success === true) {
-        navigation.navigate('Feed');
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
-      } else {
-        console.log(response);
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+    } else {
+      try {
+        setSpinner(true);
+        const data = new FormData();
+        data.append('user_id', Userdata.userData.id);
+        data.append('building_name', building_name);
+        data.append('contact_person', PersonName);
+        data.append('mobile_no', mobile_no);
+        data.append('whatsapp_no', WhatsappNo);
+        data.append('category', Category);
+        data.append('room_type_id', roomType);
+        data.append('is_veg', check1 === true ? 1 : 0);
+        data.append(
+          'renter_type',
+          check2 === true
+            ? 1
+            : check3 === true
+            ? 2
+            : check4 === true
+            ? 3
+            : null,
+        );
+        data.append('address', `${buildFL},${AL1},${Landmark}`);
+        data.append(
+          'logo_image',
+          imageUp !== ''
+            ? {
+                uri: imageUp[0].uri,
+                type: imageUp[0].type,
+                name: imageUp[0].fileName,
+              }
+            : '',
+        );
+        const res = await fetch(BaseURL('add-room-hostel'), {
+          method: 'post',
+          body: data,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${UserToken}`,
+          },
+        });
+        let response = await res.json();
+        setSpinner(false);
+        if (response.success === true) {
+          navigation.navigate('Feed');
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        } else {
+          console.log(response);
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        setSpinner(false);
+        alert(error);
       }
-    } catch (error) {
-      setSpinner(false);
-      alert(error);
     }
   };
 
@@ -209,6 +227,7 @@ const Addroom = ({navigation}) => {
               CameraOnpress={() => openCamera()}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
+              onRequestClose={() => setModalVisible(false)}
             />
             <Text style={styles.textStyle}>Room Details</Text>
             <InputComponent
@@ -226,15 +245,15 @@ const Addroom = ({navigation}) => {
             <InputComponent
               placeholder="Contact person’s mobile number"
               value={mobile_no}
-              autoCapitalize="words"
               keyboardType="number-pad"
+              maxLength={10}
               onChangeText={text => setMobile(text)}
             />
             <InputComponent
               placeholder="Contact person’s whatsapp number"
               value={WhatsappNo}
-              autoCapitalize="words"
               keyboardType="number-pad"
+              maxLength={10}
               onChangeText={text => setWhatsappNo(text)}
             />
             <DropDownComponent
@@ -257,16 +276,16 @@ const Addroom = ({navigation}) => {
                   valueField="id"
                   maxHeight={170}
                 />
-                <CheckBox
-                  title="Only Vegetarian"
-                  checked={check1}
-                  onPress={() => setCheck1(!check1)}
-                  checkedColor={COLORS.primary}
-                  containerStyle={styles.checkBoxContanier}
-                  textStyle={styles.CheckText}
-                />
               </>
             )}
+            <CheckBox
+              title="Only Vegetarian"
+              checked={check1}
+              onPress={() => setCheck1(!check1)}
+              checkedColor={COLORS.primary}
+              containerStyle={styles.checkBoxContanier}
+              textStyle={styles.CheckText}
+            />
             <Text style={styles.textStyle}>Renter Type</Text>
             <View style={genericStyles.row}>
               {checkBoxArr.map(data => (

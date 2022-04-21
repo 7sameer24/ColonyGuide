@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../constants';
-import ServiceDetails from './ServiceProvider/ServiceDetails';
+import ServiceForm from './ServiceProvider/ServiceForm';
 import OwnerLocation from './HouseOwners/OwnerLocation';
 import StudentDetails from './Student/StudentDetails';
 
@@ -13,7 +13,7 @@ const AllRegistration = ({route, navigation}) => {
         <StudentDetails navigation={navigation} data={UserData} />
       ) : null}
       {UserData.app_role_id === 2 ? (
-        <ServiceDetails navigation={navigation} UserNewData={UserData} />
+        <ServiceForm navigation={navigation} UserNewData={UserData} />
       ) : null}
       {UserData.app_role_id === 3 ? (
         <OwnerLocation navigation={navigation} data={UserData} />

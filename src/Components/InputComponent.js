@@ -23,6 +23,7 @@ const InputComponent = ({
   iconColor,
   autoCapitalize,
   onKeyPress,
+  autoFocus,
 }) => {
   return (
     <Input
@@ -52,6 +53,7 @@ const InputComponent = ({
       autoCapitalize={autoCapitalize}
       multiline={multiline}
       onKeyPress={onKeyPress}
+      autoFocus={autoFocus}
     />
   );
 };

@@ -284,7 +284,7 @@ function MyTopTabs() {
             options={{
               tabBarActiveTintColor: COLORS.primary,
               tabBarInactiveTintColor: COLORS.textColor,
-              tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterRegular},
+              tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               tabBarItemStyle: {width: 90},

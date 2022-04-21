@@ -56,6 +56,8 @@ const BusinessListed = ({navigation}) => {
                 phoneNumber={data.contact_person_mobile}
                 WhatsAppNumber={data.contact_person_whatsapp}
                 category={data.categoryName}
+                userId={data.user_id}
+                businessId={data.id}
               />
             </TouchableOpacity>
           ))}

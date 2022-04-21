@@ -94,52 +94,59 @@ const ServiceEdit = ({navigation, route}) => {
   };
 
   const SaveDetail = async () => {
-    try {
-      setSpinner(true);
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
-
-      const SaveData = new FormData();
-      SaveData.append('user_id', data.id);
-      SaveData.append('shop_name', ShopBusName);
-      SaveData.append('full_name', PersonName);
-      SaveData.append('whatsapp_no', WhatsappNo);
-      SaveData.append('category_id', Category);
-      SaveData.append('about', About);
-      SaveData.append('house_no', buildFL);
-      SaveData.append('landmark', Landmark);
-      SaveData.append('address', AL1);
-      SaveData.append(
-        'logo_image',
-        imageUp !== ''
-          ? {
-              uri: imageUp[0].uri,
-              type: imageUp[0].type,
-              name: imageUp[0].fileName,
-            }
-          : '',
+    if (WhatsappNo.length < 10) {
+      ToastAndroid.show(
+        'Please check your Whatsapp number and try again',
+        ToastAndroid.SHORT,
       );
+    } else {
+      try {
+        setSpinner(true);
+        const URL =
+          'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
 
-      const res = await fetch(URL, {
-        method: 'post',
-        body: SaveData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      let response = await res.json();
-      setSpinner(false);
-      if (response.success === true) {
-        setNewData(response);
-        navigation.navigate('Profile');
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        const SaveData = new FormData();
+        SaveData.append('user_id', data.id);
+        SaveData.append('shop_name', ShopBusName);
+        SaveData.append('full_name', PersonName);
+        SaveData.append('whatsapp_no', WhatsappNo);
+        SaveData.append('category_id', Category);
+        SaveData.append('about', About);
+        SaveData.append('house_no', buildFL);
+        SaveData.append('landmark', Landmark);
+        SaveData.append('address', AL1);
+        SaveData.append(
+          'logo_image',
+          imageUp !== ''
+            ? {
+                uri: imageUp[0].uri,
+                type: imageUp[0].type,
+                name: imageUp[0].fileName,
+              }
+            : '',
+        );
+
+        const res = await fetch(URL, {
+          method: 'post',
+          body: SaveData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        let response = await res.json();
+        setSpinner(false);
+        if (response.success === true) {
+          setNewData(response);
+          navigation.navigate('Profile');
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        setSpinner(false);
+        alert(error);
       }
-    } catch (error) {
-      setSpinner(false);
-      alert(error);
     }
   };
 
@@ -197,7 +204,8 @@ const ServiceEdit = ({navigation, route}) => {
             <InputComponent
               placeholder="Contact person’s whatsapp number"
               value={WhatsappNo}
-              autoCapitalize="words"
+              maxLength={10}
+              keyboardType="number-pad"
               onChangeText={text => setWhatsappNo(text)}
             />
 

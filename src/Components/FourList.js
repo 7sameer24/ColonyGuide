@@ -1,5 +1,4 @@
 import {
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -16,7 +15,7 @@ import Four from '../../assets/svg/Vector-3.svg';
 import {useApp} from '../../Context/AppContext';
 
 const FourList = ({navigation}) => {
-  const {Userdata} = useApp();
+  const {Userdata, setIsLoginPop} = useApp();
 
   const arr = [
     {
@@ -55,7 +54,7 @@ const FourList = ({navigation}) => {
           onPress={() =>
             Userdata !== null
               ? navigation.navigate(data.navigation)
-              : alert('Please Login')
+              : setIsLoginPop(true)
           }>
           <Card containerStyle={styles.containerStyle(width, height)}>
             {data.image}
