@@ -59,7 +59,7 @@ const StudentDetails = ({data, navigation}) => {
   };
   return (
     <View style={genericStyles.Container}>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <HeaderBody
           Icon={<ImgIcon height={160} />}
           touchableOpacityStyle={genericStyles.mb(0)}

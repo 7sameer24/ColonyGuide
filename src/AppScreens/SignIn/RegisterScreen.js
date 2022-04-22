@@ -82,12 +82,12 @@ const RegisterScreen = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <HeaderBody
           title="Create Account"
           subTitle="Sign Up to continue"
           Skip="Skip"
-          Icon={<ImgIcon height={height / 4.5} />}
+          Icon={<ImgIcon height={160} />}
           touchableOpacityStyle={genericStyles.mb(0)}
           subTitleStyle={genericStyles.mb(10)}
           onPress={() => skipToHome()}
@@ -136,7 +136,7 @@ const RegisterScreen = ({navigation, route}) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Poweredby />
+      <Poweredby container={genericStyles.mb(10)} />
     </View>
   );
 };

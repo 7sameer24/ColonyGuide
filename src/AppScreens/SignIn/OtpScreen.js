@@ -114,7 +114,7 @@ const OtpScreen = ({route, navigation}) => {
 
   return (
     <View style={styles.Container}>
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <View style={styles.ViewContainer}>
           <View style={genericStyles.selfCenter}>
             <ImgIcon height={160} />

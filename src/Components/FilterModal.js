@@ -1,29 +1,24 @@
 import React, {useState} from 'react';
-import {Alert, Modal, StyleSheet, Text, View} from 'react-native';
-import {Button, CheckBox, Icon} from 'react-native-elements';
+import {Modal, StyleSheet, View} from 'react-native';
+import {CheckBox, Icon} from 'react-native-elements';
+import {useApp} from '../../Context/AppContext';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import ButtonComponent from './ButtonComponent';
 
-const FilterModal = ({
-  OnPressCancel,
-  visible,
-  //   boysCheck,
-  //   girlsCheck,
-  //   familyCheck,
-  //   veg,
-  //   noVeg,
-  //   boysOnpress,
-  //   girlsOnpress,
-  //   familyOnpress,
-  //   vegOnpress,
-  //   noVegOnpress,
-  onRequestClose,
-}) => {
+const FilterModal = ({OnPressCancel, onRequestClose, callData}) => {
   const [boys, setIsboys] = useState(false);
   const [girlsCheck, setIsgirlsCheck] = useState(false);
   const [familyCheck, setIsfamilyCheck] = useState(false);
   const [veg, setIsveg] = useState(false);
   const [noVeg, setIsnoVeg] = useState(false);
+  const {visible, setIsvisible} = useApp();
+
+  const Plus = `${boys},${girlsCheck},${familyCheck},${veg},${noVeg}`;
+
+  const filterbtn = () => {
+    setIsvisible(false);
+    callData(Plus);
+  };
 
   return (
     <View style={styles.centeredView}>
@@ -102,6 +97,7 @@ const FilterModal = ({
             <ButtonComponent
               title="Apply"
               ButtonContainer={styles.ButtonContainer}
+              onPress={() => filterbtn()}
             />
           </View>
         </View>

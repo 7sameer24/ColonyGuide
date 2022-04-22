@@ -6,6 +6,7 @@ import {
   Linking,
   ToastAndroid,
   Platform,
+  useWindowDimensions,
 } from 'react-native';
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
@@ -30,6 +31,7 @@ const CardsListed = ({
 }) => {
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
+  const {width} = useWindowDimensions();
   const {Userdata} = useApp();
 
   const callCount = async number => {
@@ -81,7 +83,7 @@ const CardsListed = ({
 
   return (
     <Card containerStyle={[styles.CardContainer]}>
-      <View style={genericStyles.row}>
+      <View style={[genericStyles.row, {width: width / 1.2}]}>
         <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
         <View style={styles.View}>
           <Text style={[styles.title]} numberOfLines={1}>
@@ -143,18 +145,17 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
     paddingVertical: 10,
     alignItems: 'center',
-    paddingBottom: 0,
   },
   ImageStyle: {
     width: 54,
     height: 54,
     borderRadius: 10,
     // alignSelf: 'center',
-    marginTop: 5,
+    // marginTop: 5,
+    marginRight: 11,
   },
   View: {
     flexDirection: 'column',
-    marginLeft: 11,
   },
   View2: {
     flexDirection: 'row',

@@ -77,7 +77,7 @@ const ProfileDetails = ({navigation, route}) => {
               <Text style={styles.text}>
                 {userData.app_role_id === 1 ? 'Hostel Name' : 'Address'}
               </Text>
-              <View style={[styles.viewCon, {marginBottom: 30}]}>
+              <View style={[styles.viewCon]}>
                 <Text style={[styles.full, {width: '85%'}]}>
                   {userData.app_role_id === 1
                     ? userData.hostel_name
@@ -96,9 +96,17 @@ const ProfileDetails = ({navigation, route}) => {
                   </View>
                 </>
               ) : null}
+              {userData.app_role_id === 1 ? null : (
+                <>
+                  <Text style={styles.text}>Locality</Text>
+                  <View style={styles.viewCon}>
+                    <Text style={styles.full}>{userData.localityName}</Text>
+                  </View>
+                </>
+              )}
             </View>
           </ScrollView>
-          <Poweredby />
+          <Poweredby container={{flex: 0, marginBottom: 20}} />
         </>
       ) : (
         <Spinner />

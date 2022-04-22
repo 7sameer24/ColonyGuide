@@ -19,6 +19,9 @@ const RoomsFlats = ({navigation, route}) => {
     try {
       const response = await axios.post(BaseURL('filtered-room-hostel-list'), {
         room_type_id: route.name,
+        type: 'other',
+        // is_veg: 0,
+        // renter_type
       });
       if (response.data.success === true) {
         setData(response.data.data);

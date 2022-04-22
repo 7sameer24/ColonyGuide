@@ -49,7 +49,9 @@ const ForgotScreen = ({navigation}) => {
   };
 
   return (
-    <ScrollView style={genericStyles.Container}>
+    <ScrollView
+      style={genericStyles.Container}
+      keyboardShouldPersistTaps="handled">
       <HeaderBody
         Skip="Skip"
         title="Forgot Password"
@@ -75,7 +77,7 @@ with your account"
       />
       <FooterButton
         title="Back"
-        textStyle={genericStyles.fontSize(14)}
+        textStyle={{fontSize: 14, marginTop: 10}}
         onPress={() => navigation.goBack()}
       />
     </ScrollView>

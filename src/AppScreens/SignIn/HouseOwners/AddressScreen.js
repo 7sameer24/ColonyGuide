@@ -126,7 +126,7 @@ const AddressScreen = ({route, navigation}) => {
     <View style={genericStyles.Container}>
       {newData.length > 0 ? (
         <>
-          <ScrollView>
+          <ScrollView keyboardShouldPersistTaps="handled">
             <HeaderBody
               Icon={<ImgIcon height={160} />}
               title="Your Address"

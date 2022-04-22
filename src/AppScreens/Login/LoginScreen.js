@@ -69,7 +69,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} />
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <HeaderBody
           title="Welcome"
           subTitle="Log in to continue"

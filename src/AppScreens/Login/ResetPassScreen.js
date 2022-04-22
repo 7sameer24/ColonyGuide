@@ -58,7 +58,7 @@ const ResetPassScreen = ({navigation, route}) => {
   return (
     <View style={genericStyles.Container}>
       <>
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="handled">
           <StatusBar backgroundColor={COLORS.primary} />
 
           <HeaderBody
@@ -82,7 +82,7 @@ const ResetPassScreen = ({navigation, route}) => {
             title="Continue"
             loading={spinner ? true : false}
             onPress={() => idx()}
-            ButtonContainer={styles.ButtonContainer}
+            ButtonContainer={genericStyles.mv(20)}
           />
         </ScrollView>
       </>
@@ -92,9 +92,3 @@ const ResetPassScreen = ({navigation, route}) => {
 };
 
 export default ResetPassScreen;
-
-const styles = StyleSheet.create({
-  ButtonContainer: {
-    marginVertical: 20,
-  },
-});

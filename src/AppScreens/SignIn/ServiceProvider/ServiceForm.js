@@ -120,7 +120,7 @@ const ServiceForm = ({navigation, UserNewData}) => {
     <View style={genericStyles.Container}>
       {newData.length > 0 ? (
         <>
-          <ScrollView>
+          <ScrollView keyboardShouldPersistTaps="handled">
             <View style={genericStyles.mb(20)}>
               <Text style={styles.text}>Service Details</Text>
               <Text style={styles.subText}>

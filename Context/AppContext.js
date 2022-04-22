@@ -22,6 +22,8 @@ const AppContext = ({children}) => {
   const [checkVersion, setVersion] = useState([]);
   const [notificationToken, setNotificationToken] = useState('');
   const [loginPop, setIsLoginPop] = useState(false);
+  const [visible, setIsvisible] = useState(false);
+  const [FilterData, setIsFilterData] = useState([]);
 
   const fetchVersion = async () => {
     try {
@@ -65,6 +67,10 @@ const AppContext = ({children}) => {
         setNewData,
         setUserToken,
         setIsLoginPop,
+        visible,
+        setIsvisible,
+        FilterData,
+        setIsFilterData,
       }}>
       {children}
     </App.Provider>
