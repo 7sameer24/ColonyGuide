@@ -1,6 +1,6 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {genericStyles} from '../../constants';
+import {COLORS, genericStyles} from '../../constants';
 import CardsListed from '../../Components/CardsListed';
 import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
@@ -9,31 +9,43 @@ import ListedAnimation from '../../Components/ListedAnimation';
 import Poweredby from '../../Components/Poweredby';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
+import FilterModal from '../../Components/FilterModal';
+import {Icon} from 'react-native-elements';
 
 const RoomsFlats = ({navigation, route}) => {
   const {Userdata} = useApp();
   const [newData, setData] = useState([]);
   const [check, setCheck] = useState('');
+  const [visible, setIsvisible] = useState(false);
+  const [loading, setIsloading] = useState(false);
 
-  const idx = async () => {
+  const fetchData = async Filterd => {
+    const Fil = Filterd ? Filterd.split(',') : '';
     try {
+      setIsloading(true);
       const response = await axios.post(BaseURL('filtered-room-hostel-list'), {
         room_type_id: route.name,
         type: 'other',
-        // is_veg: 0,
-        // renter_type
+        is_veg: Fil[3] === 'true' ? 1 : Fil[4] === 'true' ? 0 : null,
+        renter_type:
+          Fil[0] === 'true'
+            ? 0
+            : Fil[1] === 'true'
+            ? 1
+            : Fil[2] === 'true'
+            ? 2
+            : null,
       });
-      if (response.data.success === true) {
-        setData(response.data.data);
-      } else {
-        setCheck(response.data.success);
-      }
+      setIsloading(false);
+      setData(response.data.data);
+      setCheck(response.data.success);
     } catch (error) {
+      setIsloading(false);
       console.log(error);
     }
   };
   useEffect(() => {
-    idx();
+    fetchData();
     return () => {
       setData([]);
       setCheck('');
@@ -42,12 +54,36 @@ const RoomsFlats = ({navigation, route}) => {
 
   return (
     <View style={genericStyles.Container}>
-      {check === false ? (
+      {visible ? (
+        <FilterModal
+          OnPressCancel={() => setIsvisible(false)}
+          onRequestClose={() => setIsvisible(false)}
+          callData={fetchData}
+          visible={visible}
+          setIsvisible={setIsvisible}
+          Loader={loading}
+        />
+      ) : check === false ? (
         <>
           <NoDataAni />
           {Userdata !== null ? (
             Userdata.userData.app_role_id === 3 ? (
               <>
+                <Icon
+                  color={COLORS.primary}
+                  name="filter"
+                  type="material-community"
+                  size={27}
+                  containerStyle={[
+                    styles.iconContainer,
+                    {
+                      bottom:
+                        Userdata.userData.app_role_id === 3 ? '12%' : '1%',
+                    },
+                  ]}
+                  reverse
+                  onPress={() => setIsvisible(true)}
+                />
                 <ButtonComponent
                   title="Add room"
                   ButtonContainer={styles.ButtonContainer}
@@ -76,8 +112,20 @@ const RoomsFlats = ({navigation, route}) => {
                     userId={data.user_id}
                   />
                 ))}
-                <View style={genericStyles.height(20)} />
+                <View style={genericStyles.height(50)} />
               </ScrollView>
+              <Icon
+                color={COLORS.primary}
+                name="filter"
+                type="material-community"
+                size={27}
+                containerStyle={[
+                  styles.iconContainer,
+                  {bottom: Userdata.userData.app_role_id === 3 ? '12%' : '1%'},
+                ]}
+                reverse
+                onPress={() => setIsvisible(true)}
+              />
               {Userdata !== null ? (
                 Userdata.userData.app_role_id === 3 ? (
                   <>
@@ -105,5 +153,11 @@ export default RoomsFlats;
 const styles = StyleSheet.create({
   ButtonContainer: {
     width: '90%',
+  },
+  iconContainer: {
+    position: 'absolute',
+    bottom: '12%',
+    right: 1,
+    elevation: 5,
   },
 });

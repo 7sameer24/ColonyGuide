@@ -1,10 +1,11 @@
-import {Share, StyleSheet, Text, View} from 'react-native';
+import {Share, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {Card, Icon} from 'react-native-elements';
 
 const SearchResult = ({route}) => {
   const {userData} = route.params;
+  const {width} = useWindowDimensions();
 
   const onShare = async () => {
     try {
@@ -29,23 +30,20 @@ const SearchResult = ({route}) => {
     }
   };
 
-  const CutName = userData.name != null ? userData.name.slice(0, 1) : null;
+  const CutName = userData.name != null ? userData.name.slice(0, 2) : null;
 
   return (
     <View style={genericStyles.Container}>
       <Card containerStyle={styles.CardContainer}>
         <View style={styles.mainContainer}>
           <View style={styles.CutNameConatiner}>
-            <Text
-              style={{
-                color: COLORS.white,
-                fontSize: 20,
-                fontFamily: FONTS.InterRegular,
-              }}>
-              {CutName}
-            </Text>
+            <Text style={styles.CutName}>{CutName}</Text>
           </View>
-          <View style={genericStyles.column}>
+          <View
+            style={[
+              genericStyles.column,
+              {width: width / 1.8, marginRight: 5},
+            ]}>
             <Text style={styles.title} numberOfLines={1}>
               {userData.name}
             </Text>
@@ -98,14 +96,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
-    width: 250,
   },
   subTitle: {
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
     marginTop: 2,
-    width: 250,
   },
   mainContainer: {
     flexDirection: 'row',
@@ -121,5 +117,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 5,
     marginHorizontal: 20,
+  },
+  CutName: {
+    color: COLORS.white,
+    fontSize: 22,
+    fontFamily: FONTS.InterRegular,
   },
 });

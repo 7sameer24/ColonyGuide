@@ -22,7 +22,7 @@ const HeaderBody = ({
         onPress={onPress}>
         <Text style={styles.TouchableText}>{Skip}</Text>
       </TouchableOpacity>
-      <View style={genericStyles.mb(30)}>
+      <View style={genericStyles.mb(0)}>
         <View style={genericStyles.selfCenter}>{Icon}</View>
         <Text style={[styles.text, {...titleStyle}]}>{title}</Text>
         <Text style={[styles.subText, {...subTitleStyle}]}>{subTitle}</Text>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row-reverse',
     marginTop: 15,
     marginLeft: 20,
-    marginBottom: 40,
+    marginBottom: 20,
   },
   TouchableText: {
     color: COLORS.primary,

@@ -55,7 +55,7 @@ const BusinessListed = ({navigation}) => {
                 subTitle={data.contact_person}
                 phoneNumber={data.contact_person_mobile}
                 WhatsAppNumber={data.contact_person_whatsapp}
-                category={data.categoryName}
+                category={data.about}
                 userId={data.user_id}
                 businessId={data.id}
               />

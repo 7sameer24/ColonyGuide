@@ -83,49 +83,46 @@ const CardsListed = ({
 
   return (
     <Card containerStyle={[styles.CardContainer]}>
-      <View style={[genericStyles.row, {width: width / 1.2}]}>
+      <View
+        style={[genericStyles.row, {width: width / 1.2, alignItems: 'center'}]}>
         <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
-        <View style={styles.View}>
-          <Text style={[styles.title]} numberOfLines={1}>
-            {title}
-          </Text>
-          <Text style={[styles.subTitle1]} numberOfLines={1}>
-            {subTitle}
-          </Text>
-          <View style={styles.View2}>
-            <Text numberOfLines={1} style={[styles.subTitle]}>
+        <View style={styles.View2}>
+          <View style={styles.View}>
+            <Text
+              style={[styles.title, {width: width / 2.5}]}
+              numberOfLines={1}>
+              {title}
+            </Text>
+            <Text
+              style={[styles.subTitle1, {width: width / 2.5}]}
+              numberOfLines={1}>
+              {subTitle}
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={[styles.subTitle, {width: width / 2.5}]}>
               {category}
             </Text>
-            <View style={styles.View3}>
-              <Icon
-                name="phone-outgoing"
-                type="material-community"
-                color="#407BFF"
-                size={18}
-                reverse
-                onPress={() => callCount(1)}
-                containerStyle={genericStyles.shadow}
-              />
-              <Icon
-                name="whatsapp"
-                type="material-community"
-                size={18}
-                color="#25D366"
-                reverse
-                onPress={() => sendWhatsApp()}
-                containerStyle={genericStyles.shadow}
-              />
-              {/* <Icon
-                name="map-marker-radius"
-                type="material-community"
-                size={17}
-                onPress={() =>
-                  Linking.openURL(`geo:${geolocation[0]},${geolocation[1]}`)
-                }
-                containerStyle={genericStyles.mr(15)}
-                color={COLORS.textColor}
-              /> */}
-            </View>
+          </View>
+          <View style={styles.View3}>
+            <Icon
+              name="phone-outgoing"
+              type="material-community"
+              color="#407BFF"
+              size={18}
+              reverse
+              onPress={() => callCount(1)}
+              containerStyle={genericStyles.shadow}
+            />
+            <Icon
+              name="whatsapp"
+              type="material-community"
+              size={18}
+              color="#25D366"
+              reverse
+              onPress={() => sendWhatsApp()}
+              containerStyle={genericStyles.shadow}
+            />
           </View>
         </View>
       </View>
@@ -143,15 +140,12 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     paddingHorizontal: 10,
     borderColor: COLORS.primary,
-    paddingVertical: 10,
-    alignItems: 'center',
+    paddingVertical: 13,
   },
   ImageStyle: {
     width: 54,
     height: 54,
     borderRadius: 10,
-    // alignSelf: 'center',
-    // marginTop: 5,
     marginRight: 11,
   },
   View: {
@@ -159,8 +153,6 @@ const styles = StyleSheet.create({
   },
   View2: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   View3: {
     flexDirection: 'row',
@@ -169,7 +161,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
-    width: 250,
   },
   subTitle: {
     fontSize: 12,
@@ -177,17 +168,8 @@ const styles = StyleSheet.create({
     color: '#7D7D7D',
   },
   subTitle1: {
-    width: 150,
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
-    marginBottom: -15,
-  },
-  readMoreText: {
-    fontSize: 12,
-    fontFamily: FONTS.InterRegular,
-    color: '#7D7D7D',
-    width: 120,
-    marginRight: -85,
   },
 });

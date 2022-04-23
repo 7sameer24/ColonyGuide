@@ -19,22 +19,9 @@ const AppContext = ({children}) => {
   const [Userdata, setNewData] = useState(null);
   const [UserToken, setUserToken] = useState(null);
   const [checkStatus, setCheckStatus] = useState('');
-  const [checkVersion, setVersion] = useState([]);
   const [notificationToken, setNotificationToken] = useState('');
   const [loginPop, setIsLoginPop] = useState(false);
-  const [visible, setIsvisible] = useState(false);
   const [FilterData, setIsFilterData] = useState([]);
-
-  const fetchVersion = async () => {
-    try {
-      const response = await axios.post(
-        'https://colonyguide.garimaartgallery.com/api/app-version',
-      );
-      setVersion(response.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   useEffect(() => {
     const saveDetail = async () => {
@@ -42,7 +29,6 @@ const AppContext = ({children}) => {
       await AsyncStorage.setItem('UserToken', JSON.stringify(UserToken));
     };
     saveDetail();
-    fetchVersion();
     if (UserToken) {
       setNavigationState(navigationStateType.HOME);
     } else if (navigationStateType.LOADING !== navigationState) {
@@ -57,19 +43,15 @@ const AppContext = ({children}) => {
         UserToken,
         navigationState,
         checkStatus,
-        checkVersion,
         notificationToken,
         loginPop,
+        FilterData,
         setNavigationState,
         setNotificationToken,
         setCheckStatus,
-        setVersion,
         setNewData,
         setUserToken,
         setIsLoginPop,
-        visible,
-        setIsvisible,
-        FilterData,
         setIsFilterData,
       }}>
       {children}

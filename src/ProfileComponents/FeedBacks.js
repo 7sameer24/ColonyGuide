@@ -4,7 +4,6 @@ import {COLORS, FONTS, genericStyles} from '../constants';
 import StarRating from 'react-native-star-rating';
 import InputComponent from '../Components/InputComponent';
 import ButtonComponent from '../Components/ButtonComponent';
-import Poweredby from '../Components/Poweredby';
 import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
 import {useApp} from '../../Context/AppContext';
@@ -12,8 +11,7 @@ import {useApp} from '../../Context/AppContext';
 const FeedBacks = ({route, navigation}) => {
   const {ID, token} = route.params;
   const [star, setStar] = useState(null);
-  // const [PersonName, setPersonName] = useState('');
-  // const [mobile_no, setMobile] = useState('');
+
   const [message, setMessage] = useState('');
   const [spinner, setSpinner] = useState(false);
   const {Userdata} = useApp();
@@ -63,17 +61,6 @@ const FeedBacks = ({route, navigation}) => {
           selectedStar={rating => setStar(rating)}
           rating={star}
         />
-
-        {/* <InputComponent
-          placeholder="Name"
-          value={PersonName}
-          onChangeText={text => setPersonName(text)}
-        />
-        <InputComponent
-          placeholder="Mobile Number"
-          value={mobile_no}
-          onChangeText={text => setMobile(text)}
-        /> */}
         <View style={styles.viewCon}>
           <Text style={styles.full}>{Userdata.userData.name}</Text>
         </View>
@@ -85,12 +72,9 @@ const FeedBacks = ({route, navigation}) => {
           value={message}
           multiline={true}
           autoCapitalize="words"
-          inputContainerStyle={{
-            borderRadius: 8,
-            backgroundColor: '#F3EBF9',
-            borderBottomWidth: 0,
-          }}
-          containerStyle={{marginTop: 10, width: '95%'}}
+          inputContainerStyle={styles.inputContainerStyle}
+          inputStyle={genericStyles.ml(10)}
+          containerStyle={styles.containerStyle}
           onChangeText={text => setMessage(text)}
         />
         <ButtonComponent
@@ -131,5 +115,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666666',
     fontFamily: FONTS.InterMedium,
+  },
+  inputContainerStyle: {
+    borderRadius: 8,
+    backgroundColor: '#F3EBF9',
+    borderBottomWidth: 0,
+  },
+  containerStyle: {
+    marginTop: 10,
+    width: '95%',
   },
 });

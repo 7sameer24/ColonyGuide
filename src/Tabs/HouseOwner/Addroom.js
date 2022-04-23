@@ -288,23 +288,44 @@ const Addroom = ({navigation}) => {
             />
             <Text style={styles.textStyle}>Renter Type</Text>
             <View style={genericStyles.row}>
-              {checkBoxArr.map(data => (
-                <CheckBox
-                  key={data.title}
-                  title={data.title}
-                  checkedIcon="dot-circle-o"
-                  uncheckedIcon="circle-o"
-                  checked={data.value}
-                  onPress={() => {
-                    radioHandler(data.setValue);
-                  }}
-                  checkedColor={COLORS.primary}
-                  containerStyle={[
-                    styles.checkBoxContanier,
-                    {marginLeft: 10, marginRight: 0},
-                  ]}
-                  textStyle={styles.CheckText}
-                />
+              {checkBoxArr.map((data, index) => (
+                <View key={data.title}>
+                  {Category == 0 ? (
+                    index == 2 ? null : (
+                      <CheckBox
+                        title={data.title}
+                        checkedIcon="dot-circle-o"
+                        uncheckedIcon="circle-o"
+                        checked={data.value}
+                        onPress={() => {
+                          radioHandler(data.setValue);
+                        }}
+                        checkedColor={COLORS.primary}
+                        containerStyle={[
+                          styles.checkBoxContanier,
+                          {marginLeft: 10, marginRight: 0},
+                        ]}
+                        textStyle={styles.CheckText}
+                      />
+                    )
+                  ) : (
+                    <CheckBox
+                      title={data.title}
+                      checkedIcon="dot-circle-o"
+                      uncheckedIcon="circle-o"
+                      checked={data.value}
+                      onPress={() => {
+                        radioHandler(data.setValue);
+                      }}
+                      checkedColor={COLORS.primary}
+                      containerStyle={[
+                        styles.checkBoxContanier,
+                        {marginLeft: 10, marginRight: 0},
+                      ]}
+                      textStyle={styles.CheckText}
+                    />
+                  )}
+                </View>
               ))}
             </View>
             <Text style={styles.textStyle}>Address</Text>

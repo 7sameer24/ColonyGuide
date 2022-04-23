@@ -28,19 +28,19 @@ const OnboardingScreen = () => {
       id: '1',
       image: <Frame height="43%" width={width} />,
       title: data.title1,
-      subtitle: data.title1,
+      subtitle: data.description1,
     },
     {
       id: '2',
       image: <Frame5 height="45%" width={width} />,
       title: data.title2,
-      subtitle: data.title2,
+      subtitle: data.description2,
     },
     {
       id: '3',
       image: <Frame6 height="45%" width={width} />,
       title: data.title3,
-      subtitle: data.title3,
+      subtitle: data.description3,
     },
   ];
 
@@ -183,16 +183,18 @@ const styles = StyleSheet.create({
     color: '#888888',
     fontSize: 12,
     marginTop: 10,
-    maxWidth: '70%',
+    maxWidth: 250,
     textAlign: 'center',
     lineHeight: 23,
     fontFamily: FONTS.InterRegular,
+    alignSelf: 'center',
   },
   title: {
     color: '#000',
-    fontSize: 18,
+    fontSize: 15,
     marginTop: 20,
     textAlign: 'center',
+    alignSelf: 'center',
     fontFamily: FONTS.InterSemiBold,
   },
   indicator: {

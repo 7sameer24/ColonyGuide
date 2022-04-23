@@ -10,7 +10,7 @@ const LoginAnimation = ({visible}) => {
 
   const Login = () => {
     setNavigationState(navigationStateType.AUTH);
-    setIsvisible(false);
+    setIsLoginPop(false);
   };
   return (
     <View style={styles.centeredView}>
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
     // borderColor: COLORS.primary,
     width: '80%',
-    height: '40%',
+    height: '50%',
   },
   button: {
     borderRadius: 20,

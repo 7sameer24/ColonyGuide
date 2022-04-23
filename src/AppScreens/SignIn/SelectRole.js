@@ -50,7 +50,7 @@ const SelectRole = ({navigation}) => {
             <Text style={styles.TouchableText}>Skip</Text>
           </TouchableOpacity>
           <View style={styles.imageStyle}>
-            <ImgIcon height={height / 4} />
+            <ImgIcon height={160} />
             <Text style={styles.text}>Select your role</Text>
           </View>
           {newData.map(data => (

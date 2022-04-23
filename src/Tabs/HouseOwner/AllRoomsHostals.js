@@ -13,13 +13,15 @@ import {Icon} from 'react-native-elements';
 import FilterModal from '../../Components/FilterModal';
 
 const AllRoomsHostals = ({navigation}) => {
-  const {Userdata, setIsvisible, FilterData, setIsFilterData, visible} =
-    useApp();
+  const {Userdata, FilterData, setIsFilterData} = useApp();
   const [check, setCheck] = useState('');
+  const [loading, setIsloading] = useState(false);
+  const [visible, setIsvisible] = useState(false);
 
   const fetchData = async Filterd => {
     const Fil = Filterd ? Filterd.split(',') : '';
     try {
+      setIsloading(true);
       const response = await axios.post(BaseURL('filtered-room-hostel-list'), {
         type: 'room',
         is_veg: Fil[3] === 'true' ? 1 : Fil[4] === 'true' ? 0 : null,
@@ -32,13 +34,11 @@ const AllRoomsHostals = ({navigation}) => {
             ? 2
             : null,
       });
-
-      if (response.data.success === true) {
-        setIsFilterData(response.data.data);
-      } else {
-        setCheck(response.data.success);
-      }
+      setIsloading(false);
+      setIsFilterData(response.data.data);
+      setCheck(response.data.success);
     } catch (error) {
+      setIsloading(false);
       console.log(error);
     }
   };
@@ -51,7 +51,16 @@ const AllRoomsHostals = ({navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
-      {check === false ? (
+      {visible ? (
+        <FilterModal
+          OnPressCancel={() => setIsvisible(false)}
+          onRequestClose={() => setIsvisible(false)}
+          callData={fetchData}
+          Loader={loading}
+          visible={visible}
+          setIsvisible={setIsvisible}
+        />
+      ) : check === false ? (
         <>
           <NoDataAni />
           <Icon
@@ -59,7 +68,10 @@ const AllRoomsHostals = ({navigation}) => {
             name="filter"
             type="material-community"
             size={27}
-            containerStyle={styles.iconContainer}
+            containerStyle={[
+              styles.iconContainer,
+              {bottom: Userdata.userData.app_role_id === 3 ? '12%' : '1%'},
+            ]}
             reverse
             onPress={() => setIsvisible(true)}
           />
@@ -101,7 +113,10 @@ const AllRoomsHostals = ({navigation}) => {
                 name="filter"
                 type="material-community"
                 size={27}
-                containerStyle={styles.iconContainer}
+                containerStyle={[
+                  styles.iconContainer,
+                  {bottom: Userdata.userData.app_role_id === 3 ? '12%' : '1%'},
+                ]}
                 reverse
                 onPress={() => setIsvisible(true)}
               />
@@ -123,13 +138,6 @@ const AllRoomsHostals = ({navigation}) => {
           )}
         </>
       )}
-      {visible ? (
-        <FilterModal
-          OnPressCancel={() => setIsvisible(false)}
-          onRequestClose={() => setIsvisible(false)}
-          callData={fetchData}
-        />
-      ) : null}
     </View>
   );
 };

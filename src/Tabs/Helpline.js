@@ -43,9 +43,9 @@ const Helpline = () => {
           {/* <Card containerStyle={styles.cardConatiner}> */}
           {helpData.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <Text style={[styles.topText2, {width: 10}]}>{data.id}</Text>
+              <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
               <Text style={styles.topText2}>{data.name}</Text>
-              <Text style={styles.topText2}>{data.department}</Text>
+              <Text style={styles.topText3}>{data.department}</Text>
               <Icon
                 name="phone-outgoing"
                 type="material-community"
@@ -62,9 +62,9 @@ const Helpline = () => {
           {/* <Card containerStyle={styles.cardConatiner}> */}
           {policeData.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <Text style={[styles.topText2, {width: 10}]}>{data.id}</Text>
+              <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
               <Text style={styles.topText2}>{data.name}</Text>
-              <Text style={styles.topText2}>{data.department}</Text>
+              <Text style={styles.topText3}>{data.department}</Text>
               <Icon
                 name="phone-outgoing"
                 type="material-community"
@@ -81,9 +81,9 @@ const Helpline = () => {
           {/* <Card containerStyle={styles.cardConatiner}> */}
           {fire_brigade.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <Text style={[styles.topText2, {width: 10}]}>{data.id}</Text>
+              <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
               <Text style={styles.topText2}>{data.name}</Text>
-              <Text style={styles.topText2}>{data.department}</Text>
+              <Text style={styles.topText3}>{data.department}</Text>
               <Icon
                 name="phone-outgoing"
                 type="material-community"
@@ -100,11 +100,11 @@ const Helpline = () => {
           {/* <Card containerStyle={[styles.cardConatiner, {marginBottom: 10}]}> */}
           {other.map(data => (
             <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <Text style={[styles.topText2, {width: 10}]}>{data.id}</Text>
+              <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
               <Text style={styles.topText2} numberOfLines={1}>
                 {data.name}
               </Text>
-              <Text style={styles.topText2} numberOfLines={1}>
+              <Text style={styles.topText3} numberOfLines={1}>
                 {data.department}
               </Text>
               <Icon
@@ -146,6 +146,12 @@ const styles = StyleSheet.create({
     color: COLORS.textColor,
     width: 100,
   },
+  topText3: {
+    fontSize: 14,
+    fontFamily: FONTS.InterMedium,
+    color: COLORS.textColor,
+    width: 50,
+  },
   midd: {
     flexDirection: 'row',
     marginTop: 16,
@@ -156,8 +162,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
     justifyContent: 'space-around',
     paddingVertical: 5,
-    backgroundColor: '#F3EBF9',
+    // backgroundColor: '#F3EBF9',
     // alignItems: 'center',
+    borderWidth: 1,
+    borderColor: COLORS.primary,
   },
   cardConatiner: {
     padding: 0,

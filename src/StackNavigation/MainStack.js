@@ -1,15 +1,18 @@
 import React, {useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import OnboardingStack from './OnboardingStack';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
 import LoadingStack from './LoadingStack';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 import AuthStack from './AuthStack';
 import GuestStack from './GuestStack';
 import HomeStack from './HomeStack';
-import axios from 'axios';
-import BaseURL from '../constants/BaseURL';
 import MaintenanceStack from './MaintenanceStack';
+import {useColorScheme} from 'react-native';
 
 const MainStack = () => {
   const {
@@ -59,8 +62,14 @@ const MainStack = () => {
         return <LoadingStack />;
     }
   };
+  const scheme = useColorScheme();
 
-  return <NavigationContainer>{renderStack()}</NavigationContainer>;
+  return (
+    <NavigationContainer
+      theme={scheme === 'dark' ? DefaultTheme : DefaultTheme}>
+      {renderStack()}
+    </NavigationContainer>
+  );
 };
 
 export default MainStack;

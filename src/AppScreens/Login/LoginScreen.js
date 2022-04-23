@@ -73,7 +73,7 @@ const LoginScreen = ({navigation}) => {
         <HeaderBody
           title="Welcome"
           subTitle="Log in to continue"
-          Icon={<LoginLogo height={height / 4.5} />}
+          Icon={<LoginLogo height={160} />}
           Skip="Skip"
           onPress={() => skipToHome()}
         />
@@ -99,14 +99,6 @@ const LoginScreen = ({navigation}) => {
           />
         </View>
         <View style={styles.CheckBox}>
-          {/* <CheckBox
-            title="Remember me"
-            checked={check1}
-            onPress={() => toggleRememberMe(!check1)}
-            checkedColor={COLORS.primary}
-            containerStyle={styles.checkBoxContanier}
-            textStyle={styles.CheckText}
-          /> */}
           <TouchableOpacity
             onPress={() => navigation.navigate('ForgotPassword')}>
             <Text style={styles.forgotText}>Forgot password?</Text>
@@ -140,19 +132,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.white,
   },
-  checkBoxContanier: {
-    backgroundColor: COLORS.transparent,
-    borderWidth: 0,
-    marginTop: -10,
-    marginBottom: 0,
-  },
-  CheckText: {
-    color: COLORS.third,
-    fontSize: 15,
-    marginLeft: 2,
-    fontFamily: FONTS.InterRegular,
-    fontWeight: 'normal',
-  },
   forgotText: {
     marginRight: 20,
     color: '#337FF5',
@@ -173,7 +152,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     marginTop: 20,
-    marginBottom: 25,
   },
   signUpBtn2: {
     fontSize: 16,

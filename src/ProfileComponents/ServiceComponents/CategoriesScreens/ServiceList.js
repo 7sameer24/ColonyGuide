@@ -72,11 +72,11 @@ const ServiceList = ({navigation, route}) => {
                     subTitle={`${data.house_no} ${data.address} ${
                       data.landmark == null ? '' : data.landmark
                     }`}
-                    category={data.categoryName}
+                    category={data.about}
                     GeoLocation={data.geolocation}
                     phoneNumber={data.contact_person_mobile}
                     WhatsAppNumber={data.contact_person_whatsapp}
-                    ShortDescription={data.about}
+                    // ShortDescription={data.about}
                     navigation={navigation}
                     userId={data.user_id}
                     serviceId={data.id}

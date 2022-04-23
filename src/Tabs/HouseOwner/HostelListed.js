@@ -13,23 +13,26 @@ import {Icon} from 'react-native-elements';
 import FilterModal from '../../Components/FilterModal';
 
 const HostelListed = ({navigation}) => {
-  const {Userdata, setIsvisible, visible} = useApp();
+  const {Userdata} = useApp();
   const [newData, setData] = useState([]);
   const [check, setCheck] = useState('');
+  const [visible, setIsvisible] = useState(false);
+  const [loading, setIsloading] = useState(false);
 
   const fetchData = async Filterd => {
     const Fil = Filterd ? Filterd.split(',') : '';
     try {
+      setIsloading(true);
       const response = await axios.post(BaseURL('filtered-room-hostel-list'), {
         type: 'hostel',
         is_veg: Fil[3] === 'true' ? 1 : Fil[4] === 'true' ? 0 : null,
+        renter_type: Fil[0] === 'true' ? 0 : Fil[1] === 'true' ? 1 : null,
       });
-      if (response.data.success === true) {
-        setData(response.data.data);
-      } else {
-        setCheck(response.data.success);
-      }
+      setIsloading(false);
+      setData(response.data.data);
+      setCheck(response.data.success);
     } catch (error) {
+      setIsloading(false);
       console.log(error);
     }
   };
@@ -43,78 +46,105 @@ const HostelListed = ({navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
-      <>
-        {check === false ? (
-          <>
-            <NoDataAni />
-            {Userdata !== null ? (
-              Userdata.userData.app_role_id === 3 ? (
-                <>
-                  <ButtonComponent
-                    title="Add room"
-                    ButtonContainer={styles.ButtonContainer}
-                    onPress={() => navigation.navigate('Add room')}
-                  />
-                  <Poweredby container={{flex: 0}} />
-                </>
-              ) : null
-            ) : null}
-          </>
-        ) : (
-          <>
-            {newData.length > 0 ? (
-              <>
-                <ScrollView style={genericStyles.mt(5)}>
-                  {newData.map((data, index) => (
-                    <CardsListed
-                      key={data.id}
-                      title={data.building_name}
-                      subTitle={data.contact_person}
-                      category={data.category === 0 ? 'Hostel' : 'Rooms/Flats'}
-                      source={{uri: data.logo_image}}
-                      index={index}
-                      phoneNumber={data.mobile_no}
-                      WhatsAppNumber={data.whatsapp_no}
-                      userId={data.user_id}
-                    />
-                  ))}
-                  <View style={genericStyles.height(50)} />
-                </ScrollView>
-                <Icon
-                  color={COLORS.primary}
-                  name="filter"
-                  type="material-community"
-                  size={27}
-                  containerStyle={styles.iconContainer}
-                  reverse
-                  onPress={() => setIsvisible(true)}
-                />
-                {Userdata !== null ? (
-                  Userdata.userData.app_role_id === 3 ? (
-                    <>
-                      <ButtonComponent
-                        title="Add room"
-                        ButtonContainer={styles.ButtonContainer}
-                        onPress={() => navigation.navigate('Add room')}
-                      />
-                      <Poweredby container={{flex: 0}} />
-                    </>
-                  ) : null
-                ) : null}
-              </>
-            ) : (
-              <ListedAnimation />
-            )}
-          </>
-        )}
-      </>
       {visible ? (
         <FilterModal
           OnPressCancel={() => setIsvisible(false)}
           onRequestClose={() => setIsvisible(false)}
           callData={fetchData}
+          visible={visible}
+          setIsvisible={setIsvisible}
+          Loader={loading}
         />
-      ) : null}
+      ) : (
+        <>
+          {check === false ? (
+            <>
+              <NoDataAni />
+              {Userdata !== null ? (
+                Userdata.userData.app_role_id === 3 ? (
+                  <>
+                    <Icon
+                      color={COLORS.primary}
+                      name="filter"
+                      type="material-community"
+                      size={27}
+                      containerStyle={[
+                        styles.iconContainer,
+                        {
+                          bottom:
+                            Userdata.userData.app_role_id === 3 ? '12%' : '1%',
+                        },
+                      ]}
+                      reverse
+                      onPress={() => setIsvisible(true)}
+                    />
+                    <ButtonComponent
+                      title="Add room"
+                      ButtonContainer={styles.ButtonContainer}
+                      onPress={() => navigation.navigate('Add room')}
+                    />
+                    <Poweredby container={{flex: 0}} />
+                  </>
+                ) : null
+              ) : null}
+            </>
+          ) : (
+            <>
+              {newData.length > 0 ? (
+                <>
+                  <ScrollView style={genericStyles.mt(5)}>
+                    {newData.map((data, index) => (
+                      <CardsListed
+                        key={data.id}
+                        title={data.building_name}
+                        subTitle={data.contact_person}
+                        category={
+                          data.category === 0 ? 'Hostel' : 'Rooms/Flats'
+                        }
+                        source={{uri: data.logo_image}}
+                        index={index}
+                        phoneNumber={data.mobile_no}
+                        WhatsAppNumber={data.whatsapp_no}
+                        userId={data.user_id}
+                      />
+                    ))}
+                    <View style={genericStyles.height(50)} />
+                  </ScrollView>
+                  <Icon
+                    color={COLORS.primary}
+                    name="filter"
+                    type="material-community"
+                    size={27}
+                    containerStyle={[
+                      styles.iconContainer,
+                      {
+                        bottom:
+                          Userdata.userData.app_role_id === 3 ? '12%' : '1%',
+                      },
+                    ]}
+                    reverse
+                    onPress={() => setIsvisible(true)}
+                  />
+                  {Userdata !== null ? (
+                    Userdata.userData.app_role_id === 3 ? (
+                      <>
+                        <ButtonComponent
+                          title="Add room"
+                          ButtonContainer={styles.ButtonContainer}
+                          onPress={() => navigation.navigate('Add room')}
+                        />
+                        <Poweredby container={{flex: 0}} />
+                      </>
+                    ) : null
+                  ) : null}
+                </>
+              ) : (
+                <ListedAnimation />
+              )}
+            </>
+          )}
+        </>
+      )}
     </View>
   );
 };
