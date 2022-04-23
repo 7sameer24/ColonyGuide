@@ -218,6 +218,7 @@ const EditProfile = ({route, navigation}) => {
               CameraOnpress={() => openCamera()}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
+              onRequestClose={() => setModalVisible(false)}
             />
             <View style={styles.midd}>
               {data.app_role_id === 1 ? (

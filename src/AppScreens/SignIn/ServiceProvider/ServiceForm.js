@@ -145,6 +145,7 @@ const ServiceForm = ({navigation, UserNewData}) => {
               CameraOnpress={() => openCamera()}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
+              onRequestClose={() => setModalVisible(false)}
             />
             <InputComponent
               placeholder="Shop Name (Optional)"

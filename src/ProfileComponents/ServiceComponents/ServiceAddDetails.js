@@ -188,6 +188,7 @@ const ServiceAddDetails = ({navigation, route}) => {
               CameraOnpress={() => openCamera()}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
+              onRequestClose={() => setModalVisible(false)}
             />
 
             <Text style={styles.BusinessDetails}>Shop / Service Details</Text>

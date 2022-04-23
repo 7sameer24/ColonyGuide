@@ -189,6 +189,7 @@ const BusinessDetails = ({navigation, route}) => {
               CameraOnpress={() => openCamera()}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
+              onRequestClose={() => setModalVisible(false)}
             />
             <Text style={styles.BusinessDetails}>Business Details</Text>
             <InputComponent
