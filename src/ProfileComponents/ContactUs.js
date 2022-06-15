@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
   iconContainer: {
     flexDirection: 'row',
     alignSelf: 'center',
-    marginTop: 60,
+    alignItems: 'flex-end',
     marginBottom: 10,
   },
 });

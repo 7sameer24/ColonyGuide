@@ -105,8 +105,8 @@ const ProfileDetails = ({navigation, route}) => {
                 </>
               )}
             </View>
+            <Poweredby />
           </ScrollView>
-          <Poweredby container={{flex: 0, marginBottom: 20}} />
         </>
       ) : (
         <Spinner />

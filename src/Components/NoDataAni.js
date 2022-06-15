@@ -14,7 +14,7 @@ const NoDataAni = () => {
         autoSize
         style={[genericStyles.width('80%'), {marginTop: -10}]}
       />
-      <Text style={styles.topText}> No data found.</Text>
+      <Text style={styles.topText}>No data found</Text>
     </View>
   );
 };

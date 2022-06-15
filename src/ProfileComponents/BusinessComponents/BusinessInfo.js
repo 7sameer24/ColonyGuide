@@ -28,6 +28,7 @@ const BusinessInfo = ({navigation}) => {
         ButtonContainer={{position: 'absolute', bottom: 40, width: '90%'}}
         onPress={() => navigation.navigate('Business Details')}
       />
+      <Poweredby />
     </View>
   );
 };

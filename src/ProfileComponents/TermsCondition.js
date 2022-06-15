@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {FONTS, genericStyles} from '../constants';
 import WebView from 'react-native-webview';
@@ -7,7 +7,7 @@ const TermsCondition = () => {
   return (
     <View style={genericStyles.Container}>
       <WebView
-        source={{uri: 'http://www.colonyguide.com/index.php/terms-condition/'}}
+        source={{uri: 'https://www.colonyguide.com/terms-condition.php'}}
       />
     </View>
   );

@@ -1,6 +1,6 @@
-import {Keyboard, StyleSheet, Text, ToastAndroid, View} from 'react-native';
+import {Keyboard, ToastAndroid, View} from 'react-native';
 import React, {useState} from 'react';
-import {COLORS, FONTS, genericStyles} from '../constants';
+import {genericStyles} from '../constants';
 import InputComponent from '../Components/InputComponent';
 import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
@@ -43,7 +43,6 @@ const ProfileSettings = ({route}) => {
 
   return (
     <View style={genericStyles.Container}>
-      {/* <View> */}
       <InputComponent
         placeholder="Old password"
         iconName="lock-closed"
@@ -68,8 +67,7 @@ const ProfileSettings = ({route}) => {
         ButtonContainer={genericStyles.mt(20)}
         onPress={() => ChangePassword()}
       />
-      {/* </View> */}
-      {/* <Poweredby /> */}
+      <Poweredby />
     </View>
   );
 };

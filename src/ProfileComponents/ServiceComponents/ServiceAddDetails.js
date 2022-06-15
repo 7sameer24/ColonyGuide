@@ -260,7 +260,7 @@ const ServiceAddDetails = ({navigation, route}) => {
             loading={spinner ? true : false}
             onPress={() => SaveDetail()}
           />
-          <Poweredby container={{flex: 0}} />
+          <Poweredby />
         </>
       ) : (
         <Spinner />

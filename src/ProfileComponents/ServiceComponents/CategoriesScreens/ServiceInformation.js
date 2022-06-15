@@ -19,7 +19,7 @@ import {useApp} from '../../../../Context/AppContext';
 const ServiceInformation = ({route, navigation}) => {
   const {ID} = route.params;
   const [infoData, setInfoData] = useState('');
-  const {Userdata} = useApp();
+  const {Userdata, setIsLoginPop} = useApp();
 
   const callCount = async number => {
     try {
@@ -110,7 +110,9 @@ const ServiceInformation = ({route, navigation}) => {
             <View style={genericStyles.column}>
               <TouchableOpacity
                 style={styles.firstView}
-                onPress={() => callCount(1)}>
+                onPress={() =>
+                  Userdata === null ? setIsLoginPop(true) : callCount(1)
+                }>
                 <Icon
                   name="phone-outgoing"
                   type="material-community"
@@ -133,7 +135,9 @@ const ServiceInformation = ({route, navigation}) => {
             </View>
             <TouchableOpacity
               style={genericStyles.row}
-              onPress={() => callCount()}>
+              onPress={() =>
+                Userdata === null ? setIsLoginPop(true) : callCount()
+              }>
               <Icon
                 name="whatsapp"
                 type="material-community"

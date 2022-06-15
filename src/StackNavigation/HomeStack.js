@@ -361,6 +361,7 @@ function MyDrawer() {
         drawerInactiveTintColor: COLORS.textColor,
         drawerActiveTintColor: COLORS.textColor,
         drawerStyle: styles.drawerStyle,
+        swipeEnabled: false,
       }}>
       <Drawer.Screen
         name="Home"

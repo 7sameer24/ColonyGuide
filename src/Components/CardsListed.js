@@ -32,7 +32,7 @@ const CardsListed = ({
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
   const {width} = useWindowDimensions();
-  const {Userdata} = useApp();
+  const {Userdata, setIsLoginPop} = useApp();
 
   const callCount = async number => {
     try {
@@ -111,7 +111,9 @@ const CardsListed = ({
               color="#407BFF"
               size={18}
               reverse
-              onPress={() => callCount(1)}
+              onPress={() =>
+                Userdata === null ? setIsLoginPop(true) : callCount(1)
+              }
               containerStyle={genericStyles.shadow}
             />
             <Icon
@@ -120,7 +122,9 @@ const CardsListed = ({
               size={18}
               color="#25D366"
               reverse
-              onPress={() => sendWhatsApp()}
+              onPress={() =>
+                Userdata === null ? setIsLoginPop(true) : sendWhatsApp()
+              }
               containerStyle={genericStyles.shadow}
             />
           </View>

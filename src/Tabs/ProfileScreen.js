@@ -212,7 +212,6 @@ const ProfileScreen = ({navigation}) => {
             title="Contact Us"
           />
           <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
-          <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       ) : (
         <ScrollView>
@@ -272,9 +271,9 @@ const ProfileScreen = ({navigation}) => {
             onPress={() => setIsLoginPop(true)}
           />
           <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
-          <Poweredby container={genericStyles.mb(0)} />
         </ScrollView>
       )}
+      <Poweredby />
     </View>
   );
 };

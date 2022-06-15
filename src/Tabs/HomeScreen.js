@@ -196,11 +196,6 @@ const HomeScreen = ({navigation}) => {
           <>
             <StatusBar backgroundColor={COLORS.primary} />
             {newData.length > 0 ? (
-              // checkVersion.AppVersion.android_v !== '1' ? (
-              //   alert('ss')
-              // ) : checkVersion.appSetting.app_status !== 1 ? (
-              //   alert('Maintanndc')
-              // ) : (
               <ScrollView>
                 <HeaderBar
                   bellIcon="bell"

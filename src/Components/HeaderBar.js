@@ -15,35 +15,38 @@ const HeaderBar = ({
   iconView,
   ThirdType,
   thirdOnpress,
+  containerStyle,
 }) => {
   return (
-    <View style={[styles.iconView, {...iconView}]}>
-      <View style={genericStyles.row}>
-        <Icon
-          color={COLORS.textColor}
-          name={firstIcon}
-          type="ionicon"
-          size={25}
-          onPress={firstOnpress}
-        />
-        <Text style={[styles.title, {...titleStyle}]}>{title}</Text>
-      </View>
-      <View style={genericStyles.row}>
-        <Icon
-          name={searchIcon}
-          size={25}
-          color={COLORS.textColor}
-          type="ionicon"
-          onPress={searchTouchable}
-        />
-        <Icon
-          color={COLORS.textColor}
-          name={bellIcon}
-          type={ThirdType}
-          size={25}
-          onPress={thirdOnpress}
-          style={[genericStyles.ml(22), {...iconStyle}]}
-        />
+    <View style={genericStyles.bg(COLORS.white)}>
+      <View style={[styles.iconView, {...iconView}]}>
+        <View style={genericStyles.row}>
+          <Icon
+            color={COLORS.textColor}
+            name={firstIcon}
+            type="ionicon"
+            size={25}
+            onPress={firstOnpress}
+          />
+          <Text style={[styles.title, {...titleStyle}]}>{title}</Text>
+        </View>
+        <View style={genericStyles.row}>
+          <Icon
+            name={searchIcon}
+            size={25}
+            color={COLORS.textColor}
+            type="ionicon"
+            onPress={searchTouchable}
+          />
+          <Icon
+            color={COLORS.textColor}
+            name={bellIcon}
+            type={ThirdType}
+            size={25}
+            onPress={thirdOnpress}
+            style={[genericStyles.ml(22), {...iconStyle}]}
+          />
+        </View>
       </View>
     </View>
   );

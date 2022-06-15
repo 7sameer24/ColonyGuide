@@ -73,7 +73,7 @@ const LoginScreen = ({navigation}) => {
         <HeaderBody
           title="Welcome"
           subTitle="Log in to continue"
-          Icon={<LoginLogo height={160} />}
+          Icon={<LoginLogo height={200} />}
           Skip="Skip"
           onPress={() => skipToHome()}
         />
@@ -105,7 +105,7 @@ const LoginScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <ButtonComponent
-          title="Sign In"
+          title="SIGN IN"
           loading={spinner ? true : false}
           onPress={() => Login()}
           disabled={!MN || !password ? true : false}
@@ -120,7 +120,7 @@ const LoginScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-      <Poweredby container={genericStyles.mb(10)} />
+      <Poweredby />
     </View>
   );
 };
@@ -139,8 +139,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterRegular,
   },
   CheckBox: {
-    flexDirection: 'row-reverse',
-    // justifyContent: 'space-between',
+    alignSelf: 'flex-end',
     marginBottom: 15,
   },
   signUp: {

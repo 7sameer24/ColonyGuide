@@ -7,6 +7,7 @@ import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
 import {useApp} from '../../Context/AppContext';
+import Poweredby from '../Components/Poweredby';
 
 const FeedBacks = ({route, navigation}) => {
   const {ID, token} = route.params;
@@ -47,7 +48,7 @@ const FeedBacks = ({route, navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
-      <View style={genericStyles.mt(30)}>
+      <View style={genericStyles.mt(20)}>
         <Text style={styles.title}>Rate your experience on colony guide</Text>
         <StarRating
           disabled={false}
@@ -84,6 +85,7 @@ const FeedBacks = ({route, navigation}) => {
           ButtonContainer={genericStyles.mt(20)}
         />
       </View>
+      <Poweredby />
     </View>
   );
 };

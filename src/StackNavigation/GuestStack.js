@@ -9,13 +9,33 @@ import HomeScreen from '../Tabs/HomeScreen';
 import CategoriesScreen from '../Tabs/Categories/CategoriesScreen';
 import ProfileScreen from '../Tabs/ProfileScreen';
 import CustomDrawer from '../Components/CustomDrawer';
+import ServiceList from '../ProfileComponents/ServiceComponents/CategoriesScreens/ServiceList';
+import ServiceInformation from '../ProfileComponents/ServiceComponents/CategoriesScreens/ServiceInformation';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
 
 const GuestStack = () => {
-  const arr = [{name: 'Feed', component: MyDrawer, headerShown: false}];
+  const arr = [
+    {name: 'Feed', component: MyDrawer, headerShown: false},
+    {
+      name: 'Service List',
+      component: ServiceList,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      headerShown: false,
+    },
+    {
+      name: 'Service Information',
+      component: ServiceInformation,
+      headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
+      headerTintColor: COLORS.white,
+      headerStyle: {backgroundColor: COLORS.primary},
+      headerShadowVisible: false,
+    },
+  ];
 
   return (
     <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
@@ -32,6 +52,7 @@ const GuestStack = () => {
             headerShadowVisible: data.headerShadowVisible,
             headerBackVisible: data.headerBackVisible,
             title: data.title,
+            headerStyle: data.headerStyle,
           })}
         />
       ))}
@@ -137,5 +158,10 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 20,
     borderBottomEndRadius: 20,
     width: '67%',
+  },
+  headerStyle: {
+    color: COLORS.textColor,
+    fontSize: 18,
+    fontFamily: FONTS.InterSemiBold,
   },
 });

@@ -1,14 +1,13 @@
 import {Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
-import {FONTS} from '../constants';
+import {COLORS, FONTS} from '../constants';
 
 const Poweredby = ({textStyle, container}) => {
   return (
     <View style={[styles.container, {...container}]}>
       <TouchableOpacity
-        style={[styles.text, {...textStyle}]}
         onPress={() => Linking.openURL('https://www.phppoets.com/')}>
-        <Text>Designed by PHP POETS</Text>
+        <Text style={[styles.text, {...textStyle}]}>Designed by PHP POETS</Text>
       </TouchableOpacity>
     </View>
   );
@@ -25,6 +24,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
+    marginBottom: 10,
   },
 });

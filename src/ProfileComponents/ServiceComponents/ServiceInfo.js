@@ -34,6 +34,7 @@ const ServiceInfo = ({navigation, route}) => {
     idx();
     return () => {
       setUserData('');
+      setCheck('');
     };
   }, []);
 

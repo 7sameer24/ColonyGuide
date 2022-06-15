@@ -150,5 +150,6 @@ const styles = StyleSheet.create({
     bottom: '12%',
     right: 1,
     elevation: 5,
+    marginBottom: 20,
   },
 });
