@@ -1,7 +1,6 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, genericStyles} from '../../constants';
-import CardsListed from '../../Components/CardsListed';
 import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
 import {useApp} from '../../../Context/AppContext';
@@ -11,6 +10,7 @@ import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import {Icon} from 'react-native-elements';
 import FilterModal from '../../Components/FilterModal';
+import RoomsCard from '../../Components/RoomsCard';
 
 const AllRoomsHostals = ({navigation}) => {
   const {Userdata, FilterData, setIsFilterData} = useApp();
@@ -27,11 +27,11 @@ const AllRoomsHostals = ({navigation}) => {
         is_veg: Fil[3] === 'true' ? 1 : Fil[4] === 'true' ? 0 : null,
         renter_type:
           Fil[0] === 'true'
-            ? 0
-            : Fil[1] === 'true'
             ? 1
-            : Fil[2] === 'true'
+            : Fil[1] === 'true'
             ? 2
+            : Fil[2] === 'true'
+            ? 3
             : null,
       });
       setIsloading(false);
@@ -94,7 +94,7 @@ const AllRoomsHostals = ({navigation}) => {
             <>
               <ScrollView style={genericStyles.mt(5)}>
                 {FilterData.map((data, index) => (
-                  <CardsListed
+                  <RoomsCard
                     key={data.id}
                     title={data.building_name}
                     subTitle={data.contact_person}
@@ -104,6 +104,12 @@ const AllRoomsHostals = ({navigation}) => {
                     phoneNumber={data.mobile_no}
                     WhatsAppNumber={data.whatsapp_no}
                     userId={data.user_id}
+                    is_veg={data.is_veg === 0 ? 'Non-Vegetarian' : 'Vegetarian'}
+                    renter_type={
+                      data.renter_type === 1
+                        ? 'Only Boys'
+                        : data.renter_type === 2 && 'Only Girls'
+                    }
                   />
                 ))}
                 <View style={genericStyles.height(50)} />

@@ -2,6 +2,7 @@ import {
   Image,
   Linking,
   Platform,
+  Share,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -38,6 +39,31 @@ const ServiceInformation = ({route, navigation}) => {
       }
     } catch (error) {
       alert(error);
+    }
+  };
+
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Colony Guide Sharing This ${
+          infoData.contact_person === null ? '' : infoData.contact_person
+        } ${infoData.name === null ? '' : infoData.name} ${
+          infoData.house_no === null ? '' : infoData.house_no
+        } ${infoData.address === null ? '' : infoData.address} ${
+          infoData.landmark === null ? '' : infoData.landmark
+        }`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -133,27 +159,45 @@ const ServiceInformation = ({route, navigation}) => {
                 <Text style={styles.text}>{infoData.categoryName}</Text>
               </View>
             </View>
-            <TouchableOpacity
-              style={genericStyles.row}
-              onPress={() =>
-                Userdata === null ? setIsLoginPop(true) : callCount()
-              }>
-              <Icon
-                name="whatsapp"
-                type="material-community"
-                size={20}
-                color="#25D366"
-              />
-              <Text style={styles.text}>
-                {infoData.contact_person_whatsapp}
-              </Text>
-            </TouchableOpacity>
+            <View>
+              <TouchableOpacity
+                style={styles.firstView}
+                onPress={() =>
+                  Userdata === null ? setIsLoginPop(true) : callCount()
+                }>
+                <Icon
+                  name="whatsapp"
+                  type="material-community"
+                  size={20}
+                  color="#25D366"
+                />
+                <Text style={styles.text}>
+                  {infoData.contact_person_whatsapp}
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={genericStyles.row}
+                onPress={() =>
+                  Userdata === null ? setIsLoginPop(true) : onShare()
+                }>
+                <Icon
+                  name="share-social"
+                  type="ionicon"
+                  size={20}
+                  color={COLORS.primary}
+                />
+                <Text style={styles.text}>Share Profile</Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={genericStyles.ml(20)}>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              About service
+              About us
             </Text>
-            <Text style={styles.SubText}>{infoData.about}</Text>
+            <Text style={styles.SubText}>
+              {infoData.about == 'null' ? '' : infoData.about}
+            </Text>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
               Shop address
             </Text>

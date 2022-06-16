@@ -34,7 +34,7 @@ const FourList = ({navigation}) => {
       image: <Four width={40} height={40} />,
       Id: 3,
       navigation: 'Business listed',
-      name: 'Business Listing',
+      name: 'Our Business',
     },
     {
       image: <Second width={30} height={30} />,

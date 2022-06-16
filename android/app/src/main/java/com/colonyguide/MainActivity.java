@@ -2,9 +2,10 @@ package com.colonyguide;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
-import com.zoontek.rnbootsplash.RNBootSplash; // <- add this necessary import
+// import com.zoontek.rnbootsplash.RNBootSplash; // <- add this necessary import
 import android.os.Build;
-import android.os.Bundle;
+import android.os.Bundle; // here
+import org.devio.rn.splashscreen.SplashScreen; // here
 import android.app.NotificationChannel;
 import android.media.AudioAttributes;
 import android.net.Uri;
@@ -39,6 +40,7 @@ public class MainActivity extends ReactActivity {
       NotificationManager manager = getSystemService(NotificationManager.class);
       manager.createNotificationChannel(notificationChannel);
     }
+    SplashScreen.show(this);  // here
     super.onCreate(savedInstanceState);
   }
 
@@ -50,11 +52,11 @@ public class MainActivity extends ReactActivity {
   protected ReactActivityDelegate createReactActivityDelegate() {
     return new ReactActivityDelegate(this, getMainComponentName()) {
 
-      @Override
-      protected void loadApp(String appKey) {
-        RNBootSplash.init(MainActivity.this); // <- initialize the splash screen
-        super.loadApp(appKey);
-      }
+      // @Override
+      // protected void loadApp(String appKey) {
+      //   RNBootSplash.init(MainActivity.this); // <- initialize the splash screen
+      //   super.loadApp(appKey);
+      // }
     };
   }
 

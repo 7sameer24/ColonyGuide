@@ -1,7 +1,6 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, genericStyles} from '../../constants';
-import CardsListed from '../../Components/CardsListed';
 import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
 import {useApp} from '../../../Context/AppContext';
@@ -11,6 +10,7 @@ import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import {Icon} from 'react-native-elements';
 import FilterModal from '../../Components/FilterModal';
+import RoomsCard from '../../Components/RoomsCard';
 
 const HostelListed = ({navigation}) => {
   const {Userdata} = useApp();
@@ -26,7 +26,7 @@ const HostelListed = ({navigation}) => {
       const response = await axios.post(BaseURL('filtered-room-hostel-list'), {
         type: 'hostel',
         is_veg: Fil[3] === 'true' ? 1 : Fil[4] === 'true' ? 0 : null,
-        renter_type: Fil[0] === 'true' ? 0 : Fil[1] === 'true' ? 1 : null,
+        renter_type: Fil[0] === 'true' ? 1 : Fil[1] === 'true' ? 2 : null,
       });
       setIsloading(false);
       setData(response.data.data);
@@ -94,7 +94,7 @@ const HostelListed = ({navigation}) => {
                 <>
                   <ScrollView style={genericStyles.mt(5)}>
                     {newData.map((data, index) => (
-                      <CardsListed
+                      <RoomsCard
                         key={data.id}
                         title={data.building_name}
                         subTitle={data.contact_person}
@@ -106,6 +106,16 @@ const HostelListed = ({navigation}) => {
                         phoneNumber={data.mobile_no}
                         WhatsAppNumber={data.whatsapp_no}
                         userId={data.user_id}
+                        is_veg={
+                          data.is_veg === 0 ? 'Non-Vegetarian' : 'Vegetarian'
+                        }
+                        renter_type={
+                          data.renter_type === 1
+                            ? 'Only Boys'
+                            : data.renter_type === 2
+                            ? 'Only Girls'
+                            : 'Family'
+                        }
                       />
                     ))}
                     <View style={genericStyles.height(50)} />

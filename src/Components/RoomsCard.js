@@ -15,7 +15,7 @@ import BaseURL from '../constants/BaseURL';
 import axios from 'axios';
 import {useApp} from '../../Context/AppContext';
 
-const CardsListed = ({
+const RoomsCard = ({
   category,
   title,
   subTitle,
@@ -28,6 +28,8 @@ const CardsListed = ({
   userId,
   serviceId,
   businessId,
+  is_veg,
+  renter_type,
 }) => {
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
@@ -101,6 +103,16 @@ const CardsListed = ({
             <Text
               numberOfLines={1}
               style={[styles.subTitle, {width: width / 2.5}]}>
+              {is_veg}
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={[styles.subTitle, {width: width / 2.5}]}>
+              {renter_type}
+            </Text>
+            <Text
+              numberOfLines={1}
+              style={[styles.subTitle, {width: width / 2.5}]}>
               {category}
             </Text>
           </View>
@@ -134,7 +146,7 @@ const CardsListed = ({
   );
 };
 
-export default CardsListed;
+export default RoomsCard;
 
 const styles = StyleSheet.create({
   CardContainer: {

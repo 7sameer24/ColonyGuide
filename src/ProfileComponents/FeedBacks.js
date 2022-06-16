@@ -13,6 +13,7 @@ const FeedBacks = ({route, navigation}) => {
   const {ID, token} = route.params;
   const [star, setStar] = useState(null);
 
+  const [userName, setUserName] = useState('');
   const [message, setMessage] = useState('');
   const [spinner, setSpinner] = useState(false);
   const {Userdata} = useApp();
@@ -26,7 +27,10 @@ const FeedBacks = ({route, navigation}) => {
         headers: {Authorization: `Bearer ${token}`},
         data: {
           user_id: ID,
-          name: Userdata.userData.name,
+          name:
+            Userdata.userData.app_role_id == 4
+              ? userName
+              : Userdata.userData.name,
           rating: star,
           mobile_no: Userdata.userData.mobile_no,
           message: message,
@@ -62,9 +66,21 @@ const FeedBacks = ({route, navigation}) => {
           selectedStar={rating => setStar(rating)}
           rating={star}
         />
-        <View style={styles.viewCon}>
-          <Text style={styles.full}>{Userdata.userData.name}</Text>
-        </View>
+        {Userdata.userData.app_role_id == 4 ? (
+          <InputComponent
+            placeholder="Name"
+            value={userName}
+            autoCapitalize="words"
+            inputContainerStyle={styles.inputContainerStyle}
+            inputStyle={genericStyles.ml(10)}
+            containerStyle={styles.containerStyle}
+            onChangeText={text => setUserName(text)}
+          />
+        ) : (
+          <View style={styles.viewCon}>
+            <Text style={styles.full}>{Userdata.userData.name}</Text>
+          </View>
+        )}
         <View style={styles.viewCon}>
           <Text style={styles.full}>{Userdata.userData.mobile_no}</Text>
         </View>

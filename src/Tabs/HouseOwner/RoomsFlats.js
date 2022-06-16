@@ -11,6 +11,7 @@ import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import FilterModal from '../../Components/FilterModal';
 import {Icon} from 'react-native-elements';
+import RoomsCard from '../../Components/RoomsCard';
 
 const RoomsFlats = ({navigation, route}) => {
   const {Userdata} = useApp();
@@ -29,11 +30,11 @@ const RoomsFlats = ({navigation, route}) => {
         is_veg: Fil[3] === 'true' ? 1 : Fil[4] === 'true' ? 0 : null,
         renter_type:
           Fil[0] === 'true'
-            ? 0
-            : Fil[1] === 'true'
             ? 1
-            : Fil[2] === 'true'
+            : Fil[1] === 'true'
             ? 2
+            : Fil[2] === 'true'
+            ? 3
             : null,
       });
       setIsloading(false);
@@ -100,7 +101,7 @@ const RoomsFlats = ({navigation, route}) => {
             <>
               <ScrollView style={genericStyles.mt(5)}>
                 {newData.map((data, index) => (
-                  <CardsListed
+                  <RoomsCard
                     key={data.id}
                     title={data.building_name}
                     subTitle={data.contact_person}
@@ -110,6 +111,14 @@ const RoomsFlats = ({navigation, route}) => {
                     phoneNumber={data.mobile_no}
                     WhatsAppNumber={data.whatsapp_no}
                     userId={data.user_id}
+                    is_veg={data.is_veg === 0 ? 'Non-Vegetarian' : 'Vegetarian'}
+                    renter_type={
+                      data.renter_type === 1
+                        ? 'Only Boys'
+                        : data.renter_type === 2
+                        ? 'Only Girls'
+                        : 'Family'
+                    }
                   />
                 ))}
                 <View style={genericStyles.height(50)} />

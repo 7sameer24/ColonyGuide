@@ -1,4 +1,4 @@
-import {ScrollView, TouchableOpacity, View} from 'react-native';
+import {Image, ScrollView, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBar from '../../../Components/HeaderBar';
 import {genericStyles} from '../../../constants';
@@ -46,6 +46,10 @@ const ServiceList = ({navigation, route}) => {
         // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
+      />
+      <Image
+        source={require('../../../../assets/fake.jpg')}
+        style={{width: '100%', height: 180}}
       />
       {check === false ? (
         <NoDataAni />

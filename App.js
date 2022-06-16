@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import AppContext from './Context/AppContext';
 import MainStack from './src/StackNavigation/MainStack';
-import RNBootSplash from 'react-native-bootsplash';
 import NetInfo from '@react-native-community/netinfo';
 import InternetConnectionModel from './src/Components/InternetConnectionModel';
 import axios from 'axios';
 import CheckUpdate from './src/Components/CheckUpdate';
 import {Platform, StatusBar} from 'react-native';
 import {COLORS} from './src/constants';
+import SplashScreen from 'react-native-splash-screen';
 
 const App = () => {
   const [showInternetPopup, setNetAvailable] = useState(false);
@@ -54,7 +54,7 @@ const App = () => {
     }
   };
 
-  RNBootSplash.hide({fade: true}); // fade
+  SplashScreen.hide(); // fade
   return (
     <AppContext>
       <StatusBar backgroundColor={COLORS.primary} />
