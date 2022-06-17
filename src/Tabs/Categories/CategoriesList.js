@@ -24,6 +24,7 @@ const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {
             navigation.navigate('Service List', {
               ID: data.id,
               Name: data.name,
+              BannerImg: data.banner_image,
             })
           }>
           <Card

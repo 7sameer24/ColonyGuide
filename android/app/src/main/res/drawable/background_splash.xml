@@ -3,12 +3,12 @@
 
 
  <item
-    android:drawable="@color/bootsplash_background"
+    android:drawable="@drawable/splash_back"
     android:gravity="fill" />
 
 <item
-    android:width="280dp"
-    android:height="280dp"
+    android:width="700dp"
+    android:height="700dp"
     android:drawable="@mipmap/bootsplash_logo"
     android:gravity="center" />
 </layer-list>

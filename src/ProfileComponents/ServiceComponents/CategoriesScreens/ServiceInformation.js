@@ -201,11 +201,21 @@ const ServiceInformation = ({route, navigation}) => {
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
               Shop address
             </Text>
-            <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-              {`${infoData.house_no} ${infoData.address} ${
-                infoData.landmark == null ? '' : infoData.landmark
-              }`}
-            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(
+                  `google.navigation:q=${infoData.house_no}+${
+                    infoData.address
+                  }+${infoData.landmark == null ? '' : infoData.landmark}`,
+                )
+              }>
+              <Text
+                style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
+                {`${infoData.house_no} ${infoData.address} ${
+                  infoData.landmark == null ? '' : infoData.landmark
+                }`}
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.buttonView}></View>
         </>

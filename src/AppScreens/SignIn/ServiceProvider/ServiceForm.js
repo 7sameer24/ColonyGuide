@@ -19,6 +19,7 @@ import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
 import BaseURL from '../../../constants/BaseURL';
 import ModalPopup from '../../../Components/ModalPopup';
+import {useApp} from '../../../../Context/AppContext';
 
 const ServiceForm = ({navigation, UserNewData}) => {
   const [imageUp, setImage] = useState('');
@@ -29,6 +30,7 @@ const ServiceForm = ({navigation, UserNewData}) => {
   const [newData, setNewData] = useState([]);
   const [Category, setCategory] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const {resumeDetails} = useApp();
 
   const validationCheck = () => {
     if (!WhatsappNo || !fullName || !Category) {
@@ -44,7 +46,7 @@ const ServiceForm = ({navigation, UserNewData}) => {
         fullName: fullName,
         WhatsappNo: WhatsappNo,
         category: Category,
-        userData: UserNewData,
+        userData: UserNewData == undefined ? resumeDetails : UserNewData,
         imageUp: imageUp,
         shortDes: shortDes,
       });

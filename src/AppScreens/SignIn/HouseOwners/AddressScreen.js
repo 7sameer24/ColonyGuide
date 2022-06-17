@@ -32,6 +32,7 @@ const AddressScreen = ({route, navigation}) => {
   const [spinner, setSpinner] = useState(false);
   const [newData, setData] = useState([]);
   const [LocalityValue, setLocality] = useState('');
+  const [colonyNo, updateColonyNo] = useState('');
   const {setNewData, setUserToken, setNavigationState} = useApp();
 
   const VelidationCheck = async () => {
@@ -47,6 +48,19 @@ const AddressScreen = ({route, navigation}) => {
       handleOnSubmit();
     }
   };
+
+  const colonyData = [
+    {lable: '1', value: '1'},
+    {lable: '2', value: '2'},
+    {lable: '3', value: '3'},
+    {lable: '4', value: '4'},
+    {lable: '5', value: '5'},
+    {lable: '6', value: '6'},
+    {lable: '7', value: '7'},
+    {lable: '8', value: '8'},
+    {lable: '9', value: '9'},
+    {lable: '10', value: '10'},
+  ];
 
   const handleOnSubmit = async () => {
     try {
@@ -128,9 +142,9 @@ const AddressScreen = ({route, navigation}) => {
         <>
           <ScrollView keyboardShouldPersistTaps="handled">
             <HeaderBody
-              Icon={<ImgIcon height={160} />}
+              Icon={<ImgIcon height={180} />}
               title="Your Address"
-              subTitle="Enter the otp sent to the mobile number +91-xxx-xxxx-xxx"
+              subTitle="Enter the details below to continue"
               touchableOpacityStyle={genericStyles.mb(0)}
               subTitleStyle={genericStyles.mb(0)}
             />
@@ -170,6 +184,17 @@ const AddressScreen = ({route, navigation}) => {
                 maxHeight={100}
                 onChange={item => setLocality(item.id)}
               />
+              {UserData.app_role_id === 3 ? (
+                <DropDownComponent
+                  data={colonyData}
+                  labelField="lable"
+                  valueField="value"
+                  placeholder="Colony No."
+                  value={colonyNo}
+                  maxHeight={150}
+                  onChange={item => updateColonyNo(item.value)}
+                />
+              ) : null}
             </View>
             <ButtonComponent
               title="Save"

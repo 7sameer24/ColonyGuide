@@ -16,7 +16,8 @@ const StudentDetails = ({data, navigation}) => {
   const [hostelAdd, setHostelAdd] = useState('');
   const [WhatsappNo, setWhatsappNo] = useState();
   const [spinner, setSpinner] = useState(false);
-  const {setNewData, setUserToken, setNavigationState} = useApp();
+  const {setNewData, setUserToken, setNavigationState, resumeDetails} =
+    useApp();
 
   const handleOnSubmit = async () => {
     if (!FullName || !hostelName || !hostelAdd) {
@@ -31,11 +32,16 @@ const StudentDetails = ({data, navigation}) => {
         setSpinner(true);
         const response = await axios({
           method: 'post',
-          headers: {Authorization: `Bearer ${data.token}`},
+          headers: {
+            Authorization: `Bearer ${
+              data == undefined ? resumeDetails.token : data.token
+            }`,
+          },
           url: BaseURL('add-details'),
           data: {
-            user_id: data.user_id,
-            app_role_id: data.app_role_id,
+            user_id: data == undefined ? resumeDetails.user_id : data.user_id,
+            app_role_id:
+              data == undefined ? resumeDetails.app_role_id : data.app_role_id,
             full_name: FullName,
             hostel_name: hostelName,
             hostel_address: hostelAdd,
@@ -45,7 +51,7 @@ const StudentDetails = ({data, navigation}) => {
         setSpinner(false);
         if (response.data.success === true) {
           setNewData(response.data);
-          setUserToken(data.token);
+          setUserToken(data == undefined ? resumeDetails.token : data.token);
           setNavigationState(navigationStateType.HOME);
           // ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
         } else {
@@ -61,7 +67,7 @@ const StudentDetails = ({data, navigation}) => {
     <View style={genericStyles.Container}>
       <ScrollView keyboardShouldPersistTaps="handled">
         <HeaderBody
-          Icon={<ImgIcon height={160} />}
+          Icon={<ImgIcon height={180} />}
           touchableOpacityStyle={genericStyles.mb(0)}
           title="Personal Details"
           subTitle="Enter the details below to continue"

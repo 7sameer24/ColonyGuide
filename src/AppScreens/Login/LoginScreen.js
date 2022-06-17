@@ -28,7 +28,8 @@ const LoginScreen = ({navigation}) => {
   const [visible, setVisible] = useState(true);
   const [MN, setMobile] = useState('');
   const [password, setPass] = useState('');
-  const {setNewData, setUserToken, setNavigationState} = useApp();
+  const {setNewData, setUserToken, setNavigationState, updateResumeDtails} =
+    useApp();
 
   const Login = async () => {
     if (MN.length < 10 || MN.length > 10) {
@@ -51,8 +52,30 @@ const LoginScreen = ({navigation}) => {
               if (response.data.otp_status === false) {
                 ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
               } else {
-                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+                if (response.data.message.includes('Service provider')) {
+                  updateResumeDtails({
+                    token: response.data.token,
+                    app_role_id: response.data.userData.app_role_id,
+                    user_id: response.data.userData.id,
+                  });
+                  setNavigationState(navigationStateType.SERVICE_FORM);
+                } else if (response.data.message.includes('Resident')) {
+                  updateResumeDtails({
+                    token: response.data.token,
+                    app_role_id: response.data.userData.app_role_id,
+                    user_id: response.data.userData.id,
+                  });
+                  setNavigationState(navigationStateType.HOUSE_FORM);
+                } else if (response.data.message.includes('student')) {
+                  updateResumeDtails({
+                    token: response.data.token,
+                    app_role_id: response.data.userData.app_role_id,
+                    user_id: response.data.userData.id,
+                  });
+                  setNavigationState(navigationStateType.HOSTEL_FORM);
+                }
               }
+              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
             }
           });
       } catch (error) {

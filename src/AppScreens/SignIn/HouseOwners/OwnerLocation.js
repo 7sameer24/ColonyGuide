@@ -5,10 +5,13 @@ import ButtonComponent from '../../../Components/ButtonComponent';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import Poweredby from '../../../Components/Poweredby';
+import {useApp} from '../../../../Context/AppContext';
 
 const OwnerLocation = ({navigation, data}) => {
   const [latitude, setLatitude] = useState(24.5826);
   const [longitude, setLongitude] = useState(73.7191);
+  const {resumeDetails} = useApp();
+
   const [pin, setPin] = useState({
     latitude: latitude,
     longitude: longitude,
@@ -77,7 +80,7 @@ const OwnerLocation = ({navigation, data}) => {
         ButtonContainer={styles.abb}
         onPress={() =>
           navigation.navigate('Address', {
-            UserData: data,
+            UserData: data == undefined ? resumeDetails : data,
             latitude: latitude,
             longitude: longitude,
           })

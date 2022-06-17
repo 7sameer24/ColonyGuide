@@ -9,6 +9,9 @@ export const navigationStateType = {
   HOME: 'HOME',
   LOADING: 'LOADING',
   MAINTENANCE: 'MAINTENANCE',
+  SERVICE_FORM: 'SERVICE_FORM',
+  HOUSE_FORM: 'HOUSE_FORM',
+  HOSTEL_FORM: 'HOSTEL_FORM',
 };
 const AppContext = ({children}) => {
   const [navigationState, setNavigationState] = useState(
@@ -21,6 +24,7 @@ const AppContext = ({children}) => {
   const [notificationToken, setNotificationToken] = useState('');
   const [loginPop, setIsLoginPop] = useState(false);
   const [FilterData, setIsFilterData] = useState([]);
+  const [resumeDetails, updateResumeDtails] = useState({});
 
   useEffect(() => {
     const saveDetail = async () => {
@@ -52,6 +56,8 @@ const AppContext = ({children}) => {
         setUserToken,
         setIsLoginPop,
         setIsFilterData,
+        resumeDetails,
+        updateResumeDtails,
       }}>
       {children}
     </App.Provider>

@@ -9,7 +9,7 @@ import BaseURL from '../../../constants/BaseURL';
 import NoDataAni from '../../../Components/NoDataAni';
 
 const ServiceList = ({navigation, route}) => {
-  const {ID, Name} = route.params;
+  const {ID, Name, BannerImg} = route.params;
   const [data, setData] = useState([]);
   const [check, setCheck] = useState('');
 
@@ -47,16 +47,19 @@ const ServiceList = ({navigation, route}) => {
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
-      <Image
-        source={require('../../../../assets/fake.jpg')}
-        style={{width: '100%', height: 180}}
-      />
+
       {check === false ? (
         <NoDataAni />
       ) : (
         <>
           {data.length > 0 ? (
             <ScrollView>
+              {BannerImg.includes('jpg') && (
+                <Image
+                  source={{uri: BannerImg}}
+                  style={{width: '100%', height: 180}}
+                />
+              )}
               {data.map((data, index) => (
                 <TouchableOpacity
                   key={data.id}

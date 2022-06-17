@@ -29,7 +29,6 @@ const HomeScreen = ({navigation}) => {
   const [SliderImage, setSliderImg] = useState([]);
   const [visible, setIsvisible] = useState(false);
   const [imageIndex, setimageIndex] = useState(0);
-  const [checkVersion, setVersion] = useState([]);
 
   const {
     Userdata,
@@ -43,9 +42,6 @@ const HomeScreen = ({navigation}) => {
   const idx = async () => {
     try {
       const response = await axios.post(BaseURL('home'));
-      const versionRes = await axios.post(
-        'https://colonyguide.garimaartgallery.com/api/app-version',
-      );
       Userdata === null
         ? null
         : await axios(BaseURL('update-device-token'), {
@@ -58,7 +54,6 @@ const HomeScreen = ({navigation}) => {
               Authorization: `Bearer ${UserToken}`,
             },
           });
-      setVersion(versionRes.data);
       setData(response.data.categories);
       setSliderImg(response.data.banners);
     } catch (error) {

@@ -13,6 +13,9 @@ import GuestStack from './GuestStack';
 import HomeStack from './HomeStack';
 import MaintenanceStack from './MaintenanceStack';
 import {useColorScheme} from 'react-native';
+import ResumeServiceForm from './ResumeFormsStack/ResumeServiceForm';
+import ResumeHouseForm from './ResumeFormsStack/ResumeHouseForm';
+import ResumeHostelForm from './ResumeFormsStack/ResumeHostelForm';
 
 const MainStack = () => {
   const {
@@ -57,6 +60,15 @@ const MainStack = () => {
 
       case navigationStateType.MAINTENANCE:
         return <MaintenanceStack />;
+
+      case navigationStateType.SERVICE_FORM:
+        return <ResumeServiceForm />;
+
+      case navigationStateType.HOUSE_FORM:
+        return <ResumeHouseForm />;
+
+      case navigationStateType.HOSTEL_FORM:
+        return <ResumeHostelForm />;
 
       default:
         return <LoadingStack />;
