@@ -16,13 +16,13 @@ export default function ResumeServiceForm() {
           headerShown: false,
         })}
       />
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Your location"
         component={Location}
         options={() => ({
           headerShown: false,
         })}
-      />
+      /> */}
       <Stack.Screen
         name="Address"
         component={AddressScreen}

@@ -41,14 +41,15 @@ const ServiceForm = ({navigation, UserNewData}) => {
         ToastAndroid.SHORT,
       );
     } else {
-      navigation.navigate('Your location', {
-        shopName: shopName,
-        fullName: fullName,
-        WhatsappNo: WhatsappNo,
-        category: Category,
-        userData: UserNewData == undefined ? resumeDetails : UserNewData,
-        imageUp: imageUp,
+      navigation.navigate('Address', {
         shortDes: shortDes,
+        ShopName: shopName,
+        FullName: fullName,
+        WhatsappNum: WhatsappNo,
+        CategoryShop: Category,
+        UserData: UserNewData == undefined ? resumeDetails : UserNewData,
+        imageLogo: imageUp,
+        ShortDescription: shortDes,
       });
     }
   };
@@ -185,14 +186,13 @@ const ServiceForm = ({navigation, UserNewData}) => {
               multiline={true}
               maxLength={70}
             />
-            <ButtonComponent
-              title="Next"
-              onPress={() => validationCheck()}
-              ButtonContainer={styles.ButtonContainer(imageUp)}
-            />
-            <View style={genericStyles.height(20)} />
           </ScrollView>
-          <Poweredby />
+          <ButtonComponent
+            title="Next"
+            onPress={() => validationCheck()}
+            ButtonContainer={styles.ButtonContainer(imageUp)}
+          />
+          <Poweredby container={{flex: 0}} />
         </>
       ) : (
         <Spinner />

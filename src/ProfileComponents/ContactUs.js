@@ -107,7 +107,9 @@ const ContactUs = ({route, navigation}) => {
           <Text style={styles.VisitTex}>Visit Us</Text>
           <TouchableOpacity
             onPress={() =>
-              Linking.openURL('geo:24.583972309751147, 73.71816321121639')
+              Linking.openURL(
+                `google.navigation:q=${'193'}+${'Passport office road'}+${'Subhash Nagar'}`,
+              )
             }>
             <Text style={styles.VisitTitle}>{text2}</Text>
           </TouchableOpacity>

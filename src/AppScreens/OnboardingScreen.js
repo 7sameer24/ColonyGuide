@@ -26,19 +26,19 @@ const OnboardingScreen = () => {
   const slides = [
     {
       id: '1',
-      image: <Frame height="50%" width={width} />,
+      image: <Frame height={'50%'} width={width} />,
       title: data.title1,
       subtitle: data.description1,
     },
     {
       id: '2',
-      image: <Frame5 height="50%" width={width} />,
+      image: <Frame5 height={'50%'} width={width} />,
       title: data.title2,
       subtitle: data.description2,
     },
     {
       id: '3',
-      image: <Frame6 height="50%" width={width} />,
+      image: <Frame6 height={'50%'} width={width} />,
       title: data.title3,
       subtitle: data.description3,
     },
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
   indicatorContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    bottom: 50,
+    // bottom: 50,
   },
   GetStartText: {
     fontFamily: FONTS.InterBold,

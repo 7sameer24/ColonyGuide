@@ -110,6 +110,7 @@ const AllRoomsHostals = ({navigation}) => {
                         ? 'Only Boys'
                         : data.renter_type === 2 && 'Only Girls'
                     }
+                    ID={data.id}
                   />
                 ))}
                 <View style={genericStyles.height(50)} />

@@ -6,15 +6,19 @@ import HouseOnwersList from '../../Components/HouseOnwersList';
 import axios from 'axios';
 import ListedAnimation from '../../Components/ListedAnimation';
 import BaseURL from '../../constants/BaseURL';
+import NoDataAni from '../../Components/NoDataAni';
 
 const HouseOwners = ({navigation}) => {
   const [newData, setData] = useState([]);
+  const [loading, updateLoading] = useState(true);
 
   const idx = async () => {
     try {
       const response = await axios.post(BaseURL('house-owner-list'));
+      updateLoading(false);
       setData(response.data.houseowner);
     } catch (error) {
+      updateLoading(false);
       alert(error);
     }
   };
@@ -36,7 +40,7 @@ const HouseOwners = ({navigation}) => {
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
-      {newData.length > 0 ? (
+      {newData.length > 0 && (
         <ScrollView>
           {newData.map((data, index) => (
             <HouseOnwersList
@@ -49,9 +53,9 @@ const HouseOwners = ({navigation}) => {
           ))}
           <View style={genericStyles.height(20)} />
         </ScrollView>
-      ) : (
-        <ListedAnimation />
       )}
+      {loading && <ListedAnimation />}
+      {!loading && newData.length == [] && <NoDataAni />}
     </View>
   );
 };

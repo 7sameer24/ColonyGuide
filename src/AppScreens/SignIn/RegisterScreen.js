@@ -86,11 +86,11 @@ const RegisterScreen = ({navigation, route}) => {
         <HeaderBody
           title="Create Account"
           subTitle="Sign Up to continue"
-          Skip="Skip"
+          // Skip="Skip"
           Icon={<ImgIcon height={160} />}
           touchableOpacityStyle={genericStyles.mb(0)}
           subTitleStyle={genericStyles.mb(10)}
-          onPress={() => skipToHome()}
+          // onPress={() => skipToHome()}
         />
         <View style={genericStyles.mb(10)}>
           <InputComponent

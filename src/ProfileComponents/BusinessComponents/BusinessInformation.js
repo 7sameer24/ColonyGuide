@@ -2,6 +2,7 @@ import {
   Image,
   Linking,
   Platform,
+  Share,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -15,30 +16,60 @@ import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
 import {useApp} from '../../../Context/AppContext';
+import SpinnerModal from '../../Components/SpinnerModal';
 
 const BusinessInformation = ({route, navigation}) => {
   const {ID} = route.params;
   const [busInfoData, setBusData] = useState('');
+  const [loading, updateLoading] = useState(false);
 
-  const {Userdata} = useApp();
+  const {Userdata, setIsLoginPop} = useApp();
 
   const callCount = async number => {
     try {
+      updateLoading(true);
       const response = await axios.post(BaseURL('click-count'), {
         user_id: busInfoData.user_id,
         service_id: ID,
         type: number === 1 ? 1 : 2,
         clicked_user_id: Userdata.userData.id,
       });
+      updateLoading(false);
       if (response.data.success) {
         number === 1
           ? Linking.openURL(`tel:${busInfoData.contact_person_mobile}`)
           : sendWhatsApp();
       } else {
+        updateLoading(false);
         alert(response.data.message);
       }
     } catch (error) {
+      updateLoading(false);
       alert(error);
+    }
+  };
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: `Colony Guide Sharing This ${
+          busInfoData.contact_person === null ? '' : busInfoData.contact_person
+        } ${busInfoData.name === null ? '' : busInfoData.name} ${
+          busInfoData.house_no === null ? '' : busInfoData.house_no
+        } ${busInfoData.address === null ? '' : busInfoData.address} ${
+          busInfoData.landmark === null ? '' : busInfoData.landmark
+        }`,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -60,26 +91,21 @@ const BusinessInformation = ({route, navigation}) => {
   }, []);
 
   const sendWhatsApp = () => {
-    let msg = 'Hello';
     let phoneWithCountryCode = `91${busInfoData.contact_person_whatsapp}`;
     let mobile =
       Platform.OS == 'ios' ? phoneWithCountryCode : '+' + phoneWithCountryCode;
     if (mobile) {
-      if (msg) {
-        let url = 'whatsapp://send?text=' + msg + '&phone=' + mobile;
-        Linking.openURL(url)
-          .then(() => {
-            ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
-          })
-          .catch(() => {
-            ToastAndroid.show(
-              'Make sure WhatsApp installed on your device',
-              ToastAndroid.SHORT,
-            );
-          });
-      } else {
-        ToastAndroid.show('Please insert message to send', ToastAndroid.SHORT);
-      }
+      let url = 'whatsapp://send?text=' + '&phone=' + mobile;
+      Linking.openURL(url)
+        .then(() => {
+          ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
+        })
+        .catch(() => {
+          ToastAndroid.show(
+            'Make sure WhatsApp installed on your device',
+            ToastAndroid.SHORT,
+          );
+        });
     } else {
       ToastAndroid.show('Please insert mobile no', ToastAndroid.SHORT);
     }
@@ -106,7 +132,9 @@ const BusinessInformation = ({route, navigation}) => {
             <View style={genericStyles.column}>
               <TouchableOpacity
                 style={styles.firstView}
-                onPress={() => callCount(1)}>
+                onPress={() =>
+                  Userdata === null ? setIsLoginPop(true) : callCount(1)
+                }>
                 <Icon
                   name="phone-outgoing"
                   type="material-community"
@@ -127,19 +155,37 @@ const BusinessInformation = ({route, navigation}) => {
                 <Text style={styles.text}>{busInfoData.categoryName}</Text>
               </View>
             </View>
-            <TouchableOpacity onPress={() => callCount()}>
-              <View style={genericStyles.row}>
+            <View>
+              <TouchableOpacity
+                onPress={() =>
+                  Userdata === null ? setIsLoginPop(true) : callCount(2)
+                }>
+                <View style={styles.firstView}>
+                  <Icon
+                    name="whatsapp"
+                    type="material-community"
+                    size={20}
+                    color="#25D366"
+                  />
+                  <Text style={styles.text}>
+                    {busInfoData.contact_person_whatsapp}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={genericStyles.row}
+                onPress={() =>
+                  Userdata === null ? setIsLoginPop(true) : onShare()
+                }>
                 <Icon
-                  name="whatsapp"
-                  type="material-community"
+                  name="share-social"
+                  type="ionicon"
                   size={20}
-                  color="#25D366"
+                  color={COLORS.primary}
                 />
-                <Text style={styles.text}>
-                  {busInfoData.contact_person_whatsapp}
-                </Text>
-              </View>
-            </TouchableOpacity>
+                <Text style={styles.text}>Share Profile</Text>
+              </TouchableOpacity>
+            </View>
           </View>
           <View style={genericStyles.ml(20)}>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
@@ -149,17 +195,30 @@ const BusinessInformation = ({route, navigation}) => {
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
               Business address
             </Text>
-            <Text style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
-              {`${busInfoData.house_no} ${busInfoData.address} ${
-                busInfoData.landmark == null ? '' : busInfoData.landmark
-              }`}
-            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(
+                  `google.navigation:q=${busInfoData.house_no}+${
+                    busInfoData.address
+                  }+${
+                    busInfoData.landmark == null ? '' : busInfoData.landmark
+                  }`,
+                )
+              }>
+              <Text
+                style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
+                {`${busInfoData.house_no} ${busInfoData.address} ${
+                  busInfoData.landmark == null ? '' : busInfoData.landmark
+                }`}
+              </Text>
+            </TouchableOpacity>
           </View>
           <View style={styles.buttonView}></View>
         </>
       ) : (
         <Spinner />
       )}
+      <SpinnerModal visible={loading} />
     </View>
   );
 };

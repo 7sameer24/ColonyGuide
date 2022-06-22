@@ -6,15 +6,19 @@ import CardsListed from '../../Components/CardsListed';
 import axios from 'axios';
 import ListedAnimation from '../../Components/ListedAnimation';
 import BaseURL from '../../constants/BaseURL';
+import NoDataAni from '../../Components/NoDataAni';
 
 const BusinessListed = ({navigation}) => {
   const [newData, setNewData] = useState([]);
+  const [loading, updateLoading] = useState(true);
 
   const idx = async () => {
     try {
       const response = await axios.post(BaseURL('business-list'));
+      updateLoading(false);
       setNewData(response.data.business);
     } catch (error) {
+      updateLoading(false);
       console.log(error);
     }
   };
@@ -28,13 +32,13 @@ const BusinessListed = ({navigation}) => {
     <View style={genericStyles.Container}>
       <HeaderBar
         firstIcon="arrow-back-outline"
-        title="Business Listing"
+        title="Our Business"
         // searchIcon="search"
         // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
-      {newData.length > 0 ? (
+      {newData.length > 0 && (
         <ScrollView style={genericStyles.mt(10)}>
           {newData.map((data, index) => (
             <TouchableOpacity
@@ -63,9 +67,9 @@ const BusinessListed = ({navigation}) => {
           ))}
           <View style={genericStyles.height(20)} />
         </ScrollView>
-      ) : (
-        <ListedAnimation />
       )}
+      {loading && <ListedAnimation />}
+      {!loading && newData.length == [] && <NoDataAni />}
     </View>
   );
 };

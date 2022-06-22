@@ -16,28 +16,34 @@ import axios from 'axios';
 import Spinner from '../../../Components/Spinner';
 import BaseURL from '../../../constants/BaseURL';
 import {useApp} from '../../../../Context/AppContext';
+import SpinnerModal from '../../../Components/SpinnerModal';
 
 const ServiceInformation = ({route, navigation}) => {
   const {ID} = route.params;
   const [infoData, setInfoData] = useState('');
   const {Userdata, setIsLoginPop} = useApp();
+  const [loading, updateLoading] = useState(false);
 
   const callCount = async number => {
     try {
+      updateLoading(true);
       const response = await axios.post(BaseURL('click-count'), {
         user_id: infoData.user_id,
         service_id: ID,
         type: number === 1 ? 1 : 2,
         clicked_user_id: Userdata.userData.id,
       });
+      updateLoading(false);
       if (response.data.success) {
         number === 1
           ? Linking.openURL(`tel:${infoData.contact_person_mobile}`)
           : sendWhatsApp();
       } else {
+        updateLoading(false);
         alert(response.data.message);
       }
     } catch (error) {
+      updateLoading(false);
       alert(error);
     }
   };
@@ -85,26 +91,21 @@ const ServiceInformation = ({route, navigation}) => {
   }, []);
 
   const sendWhatsApp = () => {
-    let msg = 'Hello';
     let phoneWithCountryCode = `91${infoData.contact_person_whatsapp}`;
     let mobile =
       Platform.OS == 'ios' ? phoneWithCountryCode : '+' + phoneWithCountryCode;
     if (mobile) {
-      if (msg) {
-        let url = 'whatsapp://send?text=' + msg + '&phone=' + mobile;
-        Linking.openURL(url)
-          .then(() => {
-            ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
-          })
-          .catch(() => {
-            ToastAndroid.show(
-              'Make sure WhatsApp installed on your device',
-              ToastAndroid.SHORT,
-            );
-          });
-      } else {
-        ToastAndroid.show('Please insert message to send', ToastAndroid.SHORT);
-      }
+      let url = 'whatsapp://send?text=' + '&phone=' + mobile;
+      Linking.openURL(url)
+        .then(() => {
+          ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
+        })
+        .catch(() => {
+          ToastAndroid.show(
+            'Make sure WhatsApp installed on your device',
+            ToastAndroid.SHORT,
+          );
+        });
     } else {
       ToastAndroid.show('Please insert mobile no', ToastAndroid.SHORT);
     }
@@ -163,7 +164,7 @@ const ServiceInformation = ({route, navigation}) => {
               <TouchableOpacity
                 style={styles.firstView}
                 onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : callCount()
+                  Userdata === null ? setIsLoginPop(true) : callCount(2)
                 }>
                 <Icon
                   name="whatsapp"
@@ -193,7 +194,7 @@ const ServiceInformation = ({route, navigation}) => {
           </View>
           <View style={genericStyles.ml(20)}>
             <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              About us
+              Service Offered
             </Text>
             <Text style={styles.SubText}>
               {infoData.about == 'null' ? '' : infoData.about}
@@ -222,6 +223,7 @@ const ServiceInformation = ({route, navigation}) => {
       ) : (
         <Spinner />
       )}
+      <SpinnerModal visible={loading} />
     </View>
   );
 };

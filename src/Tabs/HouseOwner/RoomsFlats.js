@@ -119,6 +119,7 @@ const RoomsFlats = ({navigation, route}) => {
                         ? 'Only Girls'
                         : 'Family'
                     }
+                    ID={data.id}
                   />
                 ))}
                 <View style={genericStyles.height(50)} />

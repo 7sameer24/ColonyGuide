@@ -116,6 +116,7 @@ const HostelListed = ({navigation}) => {
                             ? 'Only Girls'
                             : 'Family'
                         }
+                        ID={data.id}
                       />
                     ))}
                     <View style={genericStyles.height(50)} />

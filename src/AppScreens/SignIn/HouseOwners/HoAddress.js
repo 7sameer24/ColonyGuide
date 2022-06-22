@@ -12,32 +12,33 @@ import Poweredby from '../../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
 import BaseURL from '../../../constants/BaseURL';
 
-const AddressScreen = ({route}) => {
-  const {
-    latitude,
-    longitude,
-    ShopName,
-    FullName,
-    WhatsappNum,
-    CategoryShop,
-    UserData,
-    imageLogo,
-    ShortDescription,
-  } = route.params;
-
+const HoAddress = ({data}) => {
+  const [HOName, setHOName] = useState('');
   const [house, setHouseNo] = useState();
   const [Address, setAddress] = useState('');
   const [Landmark, setLandmark] = useState('');
   const [spinner, setSpinner] = useState(false);
   const [newData, setData] = useState([]);
   const [LocalityValue, setLocality] = useState('');
-  const {setNewData, setUserToken, setNavigationState} = useApp();
+  const [colonyData, updateColonyData] = useState([]);
+  const [colonyNo, updateColonyNo] = useState('');
+
+  const {setNewData, setUserToken, setNavigationState, resumeDetails} =
+    useApp();
 
   const VelidationCheck = async () => {
     if (!house || !Address) {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
     } else if (!LocalityValue) {
       ToastAndroid.show('Please choose locality!', ToastAndroid.SHORT);
+    } else if (!colonyNo) {
+      ToastAndroid.show('Please choose colony no.!', ToastAndroid.SHORT);
+    } else if (
+      data != undefined ? data.app_role_id == 3 : resumeDetails.app_role_id == 3
+    ) {
+      !HOName
+        ? ToastAndroid.show('Please enter full name!', ToastAndroid.SHORT)
+        : handleOnSubmit();
     } else {
       handleOnSubmit();
     }
@@ -48,44 +49,36 @@ const AddressScreen = ({route}) => {
       setSpinner(true);
       const Form = new FormData();
 
-      Form.append('user_id', UserData.user_id);
-      Form.append('app_role_id', UserData.app_role_id);
-      Form.append('full_name', UserData.app_role_id == 3 ? HOName : FullName);
-      // Form.append('geolocation', `${latitude},${longitude}`);
+      Form.append(
+        'user_id',
+        data != undefined ? data.user_id : resumeDetails.user_id,
+      );
+      Form.append(
+        'app_role_id',
+        data != undefined ? data.app_role_id : resumeDetails.app_role_id,
+      );
+      Form.append('full_name', HOName);
       Form.append('house_no', house);
       Form.append('address', Address);
       Form.append('landmark', Landmark);
-      Form.append('shop_name', ShopName);
-      Form.append('about', ShortDescription);
-      Form.append('category_id', CategoryShop);
-      Form.append('whatsapp_no', WhatsappNum);
       Form.append('locality_id', LocalityValue);
-      Form.append(
-        'logo_image',
-        UserData.app_role_id === 3
-          ? ''
-          : imageLogo
-          ? {
-              uri: imageLogo[0].uri,
-              type: imageLogo[0].type,
-              name: imageLogo[0].fileName,
-            }
-          : '',
-      );
+      Form.append('street_id', colonyNo);
 
       const res = await fetch(BaseURL('add-details'), {
         method: 'post',
         body: Form,
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${UserData.token}`,
+          Authorization: `Bearer ${
+            data != undefined ? data.token : resumeDetails.token
+          }`,
         },
       });
       const response = await res.json();
       setSpinner(false);
       if (response.success === true) {
         setNewData(response);
-        setUserToken(UserData.token);
+        setUserToken(data != undefined ? data.token : resumeDetails.token);
         setNavigationState(navigationStateType.HOME);
         // ToastAndroid.show(
         //   UserData.app_role_id === 3
@@ -111,6 +104,17 @@ const AddressScreen = ({route}) => {
     }
   };
 
+  const fetchStreetNo = async id => {
+    try {
+      const response = await axios.post(BaseURL('get-street-no'), {
+        locality_id: id,
+      });
+      updateColonyData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     idx();
     return () => {
@@ -130,6 +134,12 @@ const AddressScreen = ({route}) => {
               subTitleStyle={genericStyles.mb(0)}
             />
             <View style={genericStyles.mb('5%')}>
+              <InputComponent
+                placeholder="Full name"
+                value={HOName}
+                onChangeText={text => setHOName(text)}
+                autoCapitalize="words"
+              />
               <InputComponent
                 placeholder="Flat / House No."
                 value={house}
@@ -155,14 +165,27 @@ const AddressScreen = ({route}) => {
                 placeholder="Locality"
                 value={LocalityValue}
                 maxHeight={100}
-                onChange={item => setLocality(item.id)}
+                onChange={item => {
+                  setLocality(item.id);
+                  fetchStreetNo(item.id);
+                }}
+              />
+
+              <DropDownComponent
+                data={colonyData}
+                labelField="street_no"
+                valueField="id"
+                placeholder="Colony No."
+                value={colonyNo}
+                maxHeight={100}
+                onChange={item => updateColonyNo(item.id)}
               />
             </View>
           </ScrollView>
           <ButtonComponent
             title="Save"
             onPress={() => VelidationCheck()}
-            loading={spinner ? true : false}
+            loading={spinner}
           />
           <Poweredby container={{flex: 0}} />
         </>
@@ -173,4 +196,4 @@ const AddressScreen = ({route}) => {
   );
 };
 
-export default AddressScreen;
+export default HoAddress;

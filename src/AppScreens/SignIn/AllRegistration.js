@@ -2,7 +2,7 @@ import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../../constants';
 import ServiceForm from './ServiceProvider/ServiceForm';
-import OwnerLocation from './HouseOwners/OwnerLocation';
+import HoAddress from './HouseOwners/HoAddress';
 import StudentDetails from './Student/StudentDetails';
 
 const AllRegistration = ({route, navigation}) => {
@@ -16,7 +16,7 @@ const AllRegistration = ({route, navigation}) => {
         <ServiceForm navigation={navigation} UserNewData={UserData} />
       ) : null}
       {UserData.app_role_id === 3 ? (
-        <OwnerLocation navigation={navigation} data={UserData} />
+        <HoAddress navigation={navigation} data={UserData} />
       ) : null}
     </View>
   );
