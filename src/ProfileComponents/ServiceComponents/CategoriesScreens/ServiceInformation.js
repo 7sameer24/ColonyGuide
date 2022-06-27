@@ -17,12 +17,15 @@ import Spinner from '../../../Components/Spinner';
 import BaseURL from '../../../constants/BaseURL';
 import {useApp} from '../../../../Context/AppContext';
 import SpinnerModal from '../../../Components/SpinnerModal';
+import ImageZoomComponent from '../../../Components/ImageZoomComponent';
+import HeaderBar from '../../../Components/HeaderBar';
 
 const ServiceInformation = ({route, navigation}) => {
   const {ID} = route.params;
   const [infoData, setInfoData] = useState('');
   const {Userdata, setIsLoginPop} = useApp();
   const [loading, updateLoading] = useState(false);
+  const [visible, setIsvisible] = useState(false);
 
   const callCount = async number => {
     try {
@@ -111,21 +114,59 @@ const ServiceInformation = ({route, navigation}) => {
     }
   };
 
+  const ImageView = [{url: infoData.logo_image}];
+
+  const images = [
+    {
+      props: {
+        // Or you can set source directory.
+        source: Images.Ellipse,
+      },
+    },
+  ];
+
   return (
     <View style={genericStyles.Container}>
-      {infoData !== '' ? (
+      {visible ? (
+        <ImageZoomComponent
+          visible={visible}
+          ImageView={
+            infoData.logo_image ===
+            'https://colonyguide.garimaartgallery.com/storage'
+              ? images
+              : ImageView
+          }
+          imageIndex={0}
+          iconOnPress={() => setIsvisible(false)}
+          onSwipeDown={() => setIsvisible(false)}
+          onRequestClose={() => setIsvisible(false)}
+        />
+      ) : infoData !== '' ? (
         <>
+          <HeaderBar
+            IconColor={COLORS.white}
+            bgContainer={genericStyles.bg(COLORS.primary)}
+            firstIcon="arrow-back-outline"
+            title="Service Information"
+            iconColorChange={true}
+            titleStyle={genericStyles.color(COLORS.white)}
+            firstOnpress={() => navigation.goBack()}
+          />
           <View style={styles.radiusView}>
-            <Image
-              source={
-                infoData.logo_image ===
-                'https://colonyguide.garimaartgallery.com/storage'
-                  ? Images.Ellipse
-                  : {uri: infoData.logo_image}
-              }
-              style={styles.ImageStyle}
-              fadeDuration={0}
-            />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setIsvisible(true)}>
+              <Image
+                source={
+                  infoData.logo_image ===
+                  'https://colonyguide.garimaartgallery.com/storage'
+                    ? Images.Ellipse
+                    : {uri: infoData.logo_image}
+                }
+                style={styles.ImageStyle}
+                fadeDuration={0}
+              />
+            </TouchableOpacity>
           </View>
           {infoData.contact_person !== null ? (
             <Text style={styles.title}>{infoData.contact_person}</Text>
@@ -205,13 +246,10 @@ const ServiceInformation = ({route, navigation}) => {
             <TouchableOpacity
               onPress={() =>
                 Linking.openURL(
-                  `google.navigation:q=${infoData.house_no}+${
-                    infoData.address
-                  }+${infoData.landmark == null ? '' : infoData.landmark}`,
+                  `google.navigation:q=${infoData.house_no}+${infoData.address}, Udaipur, Rajasthan`,
                 )
               }>
-              <Text
-                style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
+              <Text style={styles.VisitTitle}>
                 {`${infoData.house_no} ${infoData.address} ${
                   infoData.landmark == null ? '' : infoData.landmark
                 }`}
@@ -303,5 +341,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 40,
     width: '100%',
+  },
+  VisitTitle: {
+    fontFamily: FONTS.InterRegular,
+    fontSize: 14,
+    color: '#7E7E7E',
+    textAlign: 'left',
+    marginTop: 10,
+    textDecorationLine: 'underline',
+    lineHeight: 22,
   },
 });

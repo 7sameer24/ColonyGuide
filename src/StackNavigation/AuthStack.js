@@ -9,6 +9,7 @@ import AddressScreen from '../AppScreens/SignIn/HouseOwners/AddressScreen';
 import Location from '../AppScreens/SignIn/HouseOwners/Location';
 import ForgotScreen from '../AppScreens/Login/ForgotScreen';
 import ResetPassScreen from '../AppScreens/Login/ResetPassScreen';
+import LocalModal from '../Components/LocalModal';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,6 +29,7 @@ const AuthStack = () => {
     {name: 'Address', component: AddressScreen, headerShown: false},
     {name: 'ForgotPassword', component: ForgotScreen, headerShown: false},
     {name: 'ResetPassword', component: ResetPassScreen, headerShown: false},
+    {name: 'LocalId', component: LocalModal, headerShown: false},
   ];
   return (
     <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>

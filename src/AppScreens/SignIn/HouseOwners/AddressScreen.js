@@ -37,7 +37,7 @@ const AddressScreen = ({route}) => {
     if (!house || !Address) {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
     } else if (!LocalityValue) {
-      ToastAndroid.show('Please choose locality!', ToastAndroid.SHORT);
+      ToastAndroid.show('Please select locality!', ToastAndroid.SHORT);
     } else {
       handleOnSubmit();
     }
@@ -50,7 +50,7 @@ const AddressScreen = ({route}) => {
 
       Form.append('user_id', UserData.user_id);
       Form.append('app_role_id', UserData.app_role_id);
-      Form.append('full_name', UserData.app_role_id == 3 ? HOName : FullName);
+      Form.append('full_name', FullName);
       // Form.append('geolocation', `${latitude},${longitude}`);
       Form.append('house_no', house);
       Form.append('address', Address);
@@ -86,7 +86,6 @@ const AddressScreen = ({route}) => {
       if (response.success === true) {
         setNewData(response);
         setUserToken(UserData.token);
-        setNavigationState(navigationStateType.HOME);
         // ToastAndroid.show(
         //   UserData.app_role_id === 3
         //     ? `Welcome ${HOName}`

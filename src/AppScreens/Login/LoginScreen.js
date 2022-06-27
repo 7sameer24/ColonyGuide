@@ -86,7 +86,7 @@ const LoginScreen = ({navigation}) => {
   };
 
   const skipToHome = () => {
-    setNavigationState(navigationStateType.GUEST);
+    setNavigationState(navigationStateType.CHOOSELOCALID);
   };
 
   return (

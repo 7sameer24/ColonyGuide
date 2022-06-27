@@ -111,6 +111,7 @@ const AllRoomsHostals = ({navigation}) => {
                         : data.renter_type === 2 && 'Only Girls'
                     }
                     ID={data.id}
+                    googleNavigate={`${data.house_no}+${data.address}, Udaipur, Rajasthan`}
                   />
                 ))}
                 <View style={genericStyles.height(50)} />

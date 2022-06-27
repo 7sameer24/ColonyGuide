@@ -16,13 +16,15 @@ const HeaderBar = ({
   ThirdType,
   thirdOnpress,
   containerStyle,
+  bgContainer,
+  iconColorChange,
 }) => {
   return (
-    <View style={genericStyles.bg(COLORS.white)}>
+    <View style={[genericStyles.bg(COLORS.white), {...bgContainer}]}>
       <View style={[styles.iconView, {...iconView}]}>
         <View style={genericStyles.row}>
           <Icon
-            color={COLORS.textColor}
+            color={iconColorChange ? COLORS.white : COLORS.textColor}
             name={firstIcon}
             type="ionicon"
             size={25}

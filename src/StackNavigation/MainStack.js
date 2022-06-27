@@ -16,6 +16,7 @@ import {useColorScheme} from 'react-native';
 import ResumeServiceForm from './ResumeFormsStack/ResumeServiceForm';
 import ResumeHouseForm from './ResumeFormsStack/ResumeHouseForm';
 import ResumeHostelForm from './ResumeFormsStack/ResumeHostelForm';
+import ModalStack from './ModalStack';
 
 const MainStack = () => {
   const {
@@ -69,6 +70,9 @@ const MainStack = () => {
 
       case navigationStateType.HOSTEL_FORM:
         return <ResumeHostelForm />;
+
+      case navigationStateType.CHOOSELOCALID:
+        return <ModalStack />;
 
       default:
         return <LoadingStack />;

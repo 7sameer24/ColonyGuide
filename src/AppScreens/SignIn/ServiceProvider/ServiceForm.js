@@ -179,12 +179,12 @@ const ServiceForm = ({navigation, UserNewData}) => {
               autoCapitalize="words"
             />
             <InputComponent
-              placeholder="What services you provide"
+              placeholder="What services you provide (Only 100 Words)"
               value={shortDes}
               onChangeText={text => setShortDes(text)}
               autoCapitalize="words"
               multiline={true}
-              maxLength={70}
+              maxLength={100}
             />
           </ScrollView>
           <ButtonComponent

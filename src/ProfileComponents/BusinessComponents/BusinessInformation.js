@@ -17,11 +17,14 @@ import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
 import {useApp} from '../../../Context/AppContext';
 import SpinnerModal from '../../Components/SpinnerModal';
+import ImageZoomComponent from '../../Components/ImageZoomComponent';
+import HeaderBar from '../../Components/HeaderBar';
 
 const BusinessInformation = ({route, navigation}) => {
   const {ID} = route.params;
   const [busInfoData, setBusData] = useState('');
   const [loading, updateLoading] = useState(false);
+  const [visible, setIsvisible] = useState(false);
 
   const {Userdata, setIsLoginPop} = useApp();
 
@@ -110,21 +113,59 @@ const BusinessInformation = ({route, navigation}) => {
       ToastAndroid.show('Please insert mobile no', ToastAndroid.SHORT);
     }
   };
+
+  const ImageView = [{url: busInfoData.logo_image}];
+
+  const images = [
+    {
+      props: {
+        // Or you can set source directory.
+        source: Images.Ellipse,
+      },
+    },
+  ];
   return (
     <View style={genericStyles.Container}>
-      {busInfoData !== '' ? (
+      {visible ? (
+        <ImageZoomComponent
+          visible={visible}
+          ImageView={
+            busInfoData.logo_image ===
+            'https://colonyguide.garimaartgallery.com/storage'
+              ? images
+              : ImageView
+          }
+          imageIndex={0}
+          iconOnPress={() => setIsvisible(false)}
+          onSwipeDown={() => setIsvisible(false)}
+          onRequestClose={() => setIsvisible(false)}
+        />
+      ) : busInfoData !== '' ? (
         <>
+          <HeaderBar
+            IconColor={COLORS.white}
+            bgContainer={genericStyles.bg(COLORS.primary)}
+            firstIcon="arrow-back-outline"
+            title="Business Information"
+            iconColorChange={true}
+            titleStyle={genericStyles.color(COLORS.white)}
+            firstOnpress={() => navigation.goBack()}
+          />
           <View style={styles.radiusView}>
-            <Image
-              source={
-                busInfoData.logo_image ===
-                'https://colonyguide.garimaartgallery.com/storage'
-                  ? Images.Ellipse
-                  : {uri: busInfoData.logo_image}
-              }
-              style={styles.ImageStyle}
-              fadeDuration={0}
-            />
+            <TouchableOpacity
+              activeOpacity={0.8}
+              onPress={() => setIsvisible(true)}>
+              <Image
+                source={
+                  busInfoData.logo_image ===
+                  'https://colonyguide.garimaartgallery.com/storage'
+                    ? Images.Ellipse
+                    : {uri: busInfoData.logo_image}
+                }
+                style={styles.ImageStyle}
+                fadeDuration={0}
+              />
+            </TouchableOpacity>
           </View>
           <Text style={styles.title}>{busInfoData.contact_person}</Text>
           <Text style={styles.subTitle}>{busInfoData.name}</Text>
@@ -198,15 +239,10 @@ const BusinessInformation = ({route, navigation}) => {
             <TouchableOpacity
               onPress={() =>
                 Linking.openURL(
-                  `google.navigation:q=${busInfoData.house_no}+${
-                    busInfoData.address
-                  }+${
-                    busInfoData.landmark == null ? '' : busInfoData.landmark
-                  }`,
+                  `google.navigation:q=${busInfoData.house_no}+${busInfoData.address}, Udaipur, Rajasthan`,
                 )
               }>
-              <Text
-                style={[styles.SubText, {fontSize: 14, color: COLORS.third}]}>
+              <Text style={styles.VisitTitle}>
                 {`${busInfoData.house_no} ${busInfoData.address} ${
                   busInfoData.landmark == null ? '' : busInfoData.landmark
                 }`}
@@ -218,6 +254,7 @@ const BusinessInformation = ({route, navigation}) => {
       ) : (
         <Spinner />
       )}
+
       <SpinnerModal visible={loading} />
     </View>
   );
@@ -298,5 +335,14 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 40,
     width: '100%',
+  },
+  VisitTitle: {
+    fontFamily: FONTS.InterRegular,
+    fontSize: 14,
+    color: '#7E7E7E',
+    textAlign: 'left',
+    marginTop: 10,
+    textDecorationLine: 'underline',
+    lineHeight: 22,
   },
 });

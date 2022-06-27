@@ -9,7 +9,7 @@ import DropDownComponent from '../../../Components/DropDownComponent';
 import ImgIcon from '../../../../assets/svg/Frame 11.svg';
 import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
-import {navigationStateType, useApp} from '../../../../Context/AppContext';
+import {useApp} from '../../../../Context/AppContext';
 import BaseURL from '../../../constants/BaseURL';
 
 const HoAddress = ({data}) => {
@@ -23,8 +23,7 @@ const HoAddress = ({data}) => {
   const [colonyData, updateColonyData] = useState([]);
   const [colonyNo, updateColonyNo] = useState('');
 
-  const {setNewData, setUserToken, setNavigationState, resumeDetails} =
-    useApp();
+  const {setNewData, setUserToken, resumeDetails} = useApp();
 
   const VelidationCheck = async () => {
     if (!house || !Address) {
@@ -79,7 +78,6 @@ const HoAddress = ({data}) => {
       if (response.success === true) {
         setNewData(response);
         setUserToken(data != undefined ? data.token : resumeDetails.token);
-        setNavigationState(navigationStateType.HOME);
         // ToastAndroid.show(
         //   UserData.app_role_id === 3
         //     ? `Welcome ${HOName}`

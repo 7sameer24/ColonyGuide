@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import HeaderBar from '../Components/HeaderBar';
 import {Divider} from 'react-native-elements';
@@ -31,6 +31,7 @@ const ProfileScreen = ({navigation}) => {
     setCheckStatus,
     checkStatus,
     setIsLoginPop,
+    updateGSaveLocalID,
   } = useApp();
 
   const checkBusinessStauts = async () => {
@@ -58,6 +59,7 @@ const ProfileScreen = ({navigation}) => {
       }, []);
 
   const backToLogin = () => {
+    updateGSaveLocalID(null);
     setNavigationState(navigationStateType.AUTH);
   };
   return (
@@ -273,7 +275,7 @@ const ProfileScreen = ({navigation}) => {
           <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
         </ScrollView>
       )}
-      <Poweredby />
+      <Poweredby container={{flex: 0}} />
     </View>
   );
 };

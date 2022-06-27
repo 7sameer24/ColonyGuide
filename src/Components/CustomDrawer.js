@@ -31,6 +31,7 @@ const CustomDrawer = props => {
     setUserToken,
     setNavigationState,
     setIsLoginPop,
+    updateGSaveLocalID,
   } = useApp();
 
   const removeValue = async () => {
@@ -42,11 +43,13 @@ const CustomDrawer = props => {
     }
   };
   const backToLogin = () => {
+    updateGSaveLocalID(null);
     setNavigationState(navigationStateType.AUTH);
   };
   const clearLogin = () => {
     removeValue(), setNewData(null);
     setUserToken(null);
+    updateGSaveLocalID(null);
     setNavigationState(navigationStateType.AUTH);
     ToastAndroid.show('Logout Successfully', ToastAndroid.SHORT);
   };

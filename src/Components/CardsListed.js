@@ -29,6 +29,7 @@ const CardsListed = ({
   userId,
   serviceId,
   businessId,
+  googleNavigate,
 }) => {
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
@@ -84,27 +85,23 @@ const CardsListed = ({
   return (
     <View>
       <Card containerStyle={[styles.CardContainer]}>
-        <View
-          style={[
-            genericStyles.row,
-            {width: width / 1.2, alignItems: 'center'},
-          ]}>
+        <View style={[genericStyles.row, {alignItems: 'center'}]}>
           <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
-          <View style={styles.View2}>
-            <View style={styles.View}>
+          <View style={genericStyles.row}>
+            <View style={genericStyles.mr(10)}>
               <Text
-                style={[styles.title, {width: width / 2.5}]}
+                style={[styles.title, {width: width / 3.2}]}
                 numberOfLines={1}>
                 {title}
               </Text>
               <Text
-                style={[styles.subTitle1, {width: width / 2.5}]}
+                style={[styles.subTitle1, {width: width / 3.2}]}
                 numberOfLines={1}>
                 {subTitle}
               </Text>
               <Text
                 numberOfLines={1}
-                style={[styles.subTitle, {width: width / 2.5}]}>
+                style={[styles.subTitle, {width: width / 3.2}]}>
                 {category}
               </Text>
             </View>
@@ -113,7 +110,7 @@ const CardsListed = ({
                 name="phone-outgoing"
                 type="material-community"
                 color="#407BFF"
-                size={18}
+                size={16}
                 reverse
                 onPress={() =>
                   Userdata === null ? setIsLoginPop(true) : callCount(1)
@@ -123,11 +120,24 @@ const CardsListed = ({
               <Icon
                 name="whatsapp"
                 type="material-community"
-                size={18}
+                size={16}
                 color="#25D366"
                 reverse
                 onPress={() =>
                   Userdata === null ? setIsLoginPop(true) : callCount(2)
+                }
+                containerStyle={genericStyles.shadow}
+              />
+              <Icon
+                name="navigate"
+                type="ionicon"
+                size={16}
+                color={COLORS.primary}
+                reverse
+                onPress={() =>
+                  Userdata === null
+                    ? setIsLoginPop(true)
+                    : Linking.openURL(`google.navigation:q=${googleNavigate}`)
                 }
                 containerStyle={genericStyles.shadow}
               />
@@ -153,16 +163,10 @@ const styles = StyleSheet.create({
     paddingVertical: 13,
   },
   ImageStyle: {
-    width: 54,
-    height: 54,
+    width: 50,
+    height: 50,
     borderRadius: 10,
     marginRight: 11,
-  },
-  View: {
-    flexDirection: 'column',
-  },
-  View2: {
-    flexDirection: 'row',
   },
   View3: {
     flexDirection: 'row',

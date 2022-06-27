@@ -87,6 +87,7 @@ const ServiceList = ({navigation, route}) => {
                     navigation={navigation}
                     userId={data.user_id}
                     serviceId={data.id}
+                    googleNavigate={`${data.house_no}+${data.address}, Udaipur, Rajasthan`}
                   />
                 </TouchableOpacity>
               ))}

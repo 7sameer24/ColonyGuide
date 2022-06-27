@@ -226,6 +226,7 @@ const HomeStack = () => {
       headerTintColor: COLORS.white,
       headerStyle: {backgroundColor: COLORS.primary},
       headerShadowVisible: false,
+      headerShown: false,
     },
     {
       name: 'Business Information',
@@ -234,6 +235,7 @@ const HomeStack = () => {
       headerTintColor: COLORS.white,
       headerStyle: {backgroundColor: COLORS.primary},
       headerShadowVisible: false,
+      headerShown: false,
     },
     {
       name: 'ServiceSaved',

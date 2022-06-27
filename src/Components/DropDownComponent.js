@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Icon} from 'react-native-elements';
-import {COLORS, FONTS} from '../constants';
+import {COLORS, FONTS, genericStyles} from '../constants';
 
 const DropDownComponent = ({
   data,
@@ -30,6 +30,7 @@ const DropDownComponent = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      containerStyle={genericStyles.borderRadius(10)}
       renderRightIcon={() => (
         <Icon
           color={COLORS.primary}
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
   },
   selectedTextStyle: {
     fontFamily: FONTS.InterRegular,
-    color: COLORS.third,
+    color: COLORS.primary,
     fontSize: 14,
   },
   inputSearchStyle: {

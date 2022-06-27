@@ -23,12 +23,15 @@ import messaging from '@react-native-firebase/messaging';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import ButtonComponent from '../Components/ButtonComponent';
 import LoginAnimation from '../Components/LoginAnimation';
+import EmptyView from '../Components/EmptyView';
+import ImageZoomComponent from '../Components/ImageZoomComponent';
 
 const HomeScreen = ({navigation}) => {
   const [newData, setData] = useState([]);
   const [SliderImage, setSliderImg] = useState([]);
   const [visible, setIsvisible] = useState(false);
   const [imageIndex, setimageIndex] = useState(0);
+  const [loading, updateLoading] = useState(true);
 
   const {
     Userdata,
@@ -37,11 +40,14 @@ const HomeScreen = ({navigation}) => {
     UserToken,
     loginPop,
     setIsLoginPop,
+    GSaveLocalID,
   } = useApp();
 
   const idx = async () => {
     try {
-      const response = await axios.post(BaseURL('home'));
+      const response = await axios.post(BaseURL('home'), {
+        locality_id: GSaveLocalID ? GSaveLocalID : null,
+      });
       Userdata === null
         ? null
         : await axios(BaseURL('update-device-token'), {
@@ -54,9 +60,11 @@ const HomeScreen = ({navigation}) => {
               Authorization: `Bearer ${UserToken}`,
             },
           });
+      updateLoading(false);
       setData(response.data.categories);
       setSliderImg(response.data.banners);
     } catch (error) {
+      updateLoading(false);
       console.log(error);
     }
   };
@@ -136,34 +144,6 @@ const HomeScreen = ({navigation}) => {
     });
   };
 
-  const ImageZoomComponent = () => {
-    return (
-      <View style={styles.ImageZoomComponent}>
-        <Modal
-          visible={visible}
-          transparent={true}
-          animationType="slide"
-          onRequestClose={() => setIsvisible(false)}>
-          <Icon
-            name="close-outline"
-            type="ionicon"
-            color={COLORS.white}
-            size={30}
-            onPress={() => setIsvisible(false)}
-            containerStyle={styles.iconContainer}
-          />
-          <ImageViewer
-            imageUrls={ImageView}
-            enableSwipeDown={true}
-            index={imageIndex}
-            onSwipeDown={() => setIsvisible(false)}
-            useNativeDriver={true}
-          />
-        </Modal>
-      </View>
-    );
-  };
-
   const ImageZoom = index => {
     setimageIndex(index);
     setIsvisible(true);
@@ -184,29 +164,38 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
+      {!visible && (
+        <HeaderBar
+          bellIcon="bell"
+          thirdOnpress={() =>
+            Userdata === null
+              ? setIsLoginPop(true)
+              : navigation.navigate('Notification')
+          }
+          // searchIcon="search"
+          navigation={navigation}
+          firstIcon="menu"
+          ThirdType="material-community"
+          title="Colony Guide"
+          titleStyle={genericStyles.color(COLORS.primary)}
+          firstOnpress={() => navigation.openDrawer()}
+        />
+      )}
       <>
         {visible ? (
-          <ImageZoomComponent />
+          <ImageZoomComponent
+            visible={visible}
+            ImageView={ImageView}
+            imageIndex={imageIndex}
+            iconOnPress={() => setIsvisible(false)}
+            onSwipeDown={() => setIsvisible(false)}
+            onRequestClose={() => setIsvisible(false)}
+          />
         ) : (
           <>
             <StatusBar backgroundColor={COLORS.primary} />
-            {newData.length > 0 ? (
+            {newData.length > 0 && (
               <ScrollView>
-                <HeaderBar
-                  bellIcon="bell"
-                  thirdOnpress={() =>
-                    Userdata === null
-                      ? setIsLoginPop(true)
-                      : navigation.navigate('Notification')
-                  }
-                  // searchIcon="search"
-                  navigation={navigation}
-                  firstIcon="menu"
-                  ThirdType="material-community"
-                  title="Colony Guide"
-                  titleStyle={genericStyles.color(COLORS.primary)}
-                  firstOnpress={() => navigation.openDrawer()}
-                />
                 <>
                   <SliderBox
                     images={images}
@@ -228,20 +217,24 @@ const HomeScreen = ({navigation}) => {
                     <CategoriesList navigation={navigation} data={newData} />
                   </View>
                 </>
-                <ButtonComponent
-                  title="View more"
-                  ButtonContainer={styles.ButtonContainer}
-                  buttonStyle={genericStyles.pv(10)}
-                  onPress={() => navigation.navigate('categories')}
-                />
+                {newData.length > 9 && (
+                  <ButtonComponent
+                    title="View more"
+                    ButtonContainer={styles.ButtonContainer}
+                    buttonStyle={genericStyles.pv(10)}
+                    onPress={() => navigation.navigate('categories')}
+                  />
+                )}
               </ScrollView>
-            ) : (
-              <Spinner />
             )}
           </>
         )}
       </>
-      {loginPop ? <LoginAnimation visible={loginPop} /> : null}
+      {loading && <Spinner />}
+      {!loading && newData.length == [] && (
+        <EmptyView heading="No categories found for this locality" />
+      )}
+      {loginPop && <LoginAnimation visible={loginPop} />}
     </View>
   );
 };

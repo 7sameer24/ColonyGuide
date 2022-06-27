@@ -1,5 +1,5 @@
 import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import HeaderBody from '../../../Components/HeaderBody';
 import {COLORS, FONTS, genericStyles} from '../../../constants';
 import InputComponent from '../../../Components/InputComponent';
@@ -9,6 +9,7 @@ import axios from 'axios';
 import Poweredby from '../../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
 import BaseURL from '../../../constants/BaseURL';
+import DropDownComponent from '../../../Components/DropDownComponent';
 
 const StudentDetails = ({data, navigation}) => {
   const [FullName, setFullName] = useState('');
@@ -16,6 +17,8 @@ const StudentDetails = ({data, navigation}) => {
   const [hostelAdd, setHostelAdd] = useState('');
   const [WhatsappNo, setWhatsappNo] = useState();
   const [spinner, setSpinner] = useState(false);
+  const [newData, setData] = useState([]);
+  const [LocalityValue, setLocality] = useState('');
   const {setNewData, setUserToken, setNavigationState, resumeDetails} =
     useApp();
 
@@ -27,6 +30,8 @@ const StudentDetails = ({data, navigation}) => {
         'Please check your number and try again',
         ToastAndroid.SHORT,
       );
+    } else if (!LocalityValue) {
+      ToastAndroid.show('Please select locality!', ToastAndroid.SHORT);
     } else {
       try {
         setSpinner(true);
@@ -46,13 +51,13 @@ const StudentDetails = ({data, navigation}) => {
             hostel_name: hostelName,
             hostel_address: hostelAdd,
             whatsapp_no: WhatsappNo,
+            locality_id: LocalityValue,
           },
         });
         setSpinner(false);
         if (response.data.success === true) {
           setNewData(response.data);
           setUserToken(data == undefined ? resumeDetails.token : data.token);
-          setNavigationState(navigationStateType.HOME);
           // ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
         } else {
           alert(response.data);
@@ -63,6 +68,21 @@ const StudentDetails = ({data, navigation}) => {
       }
     }
   };
+  const idx = async () => {
+    try {
+      const response = await axios.post(BaseURL('get-all-master'));
+      setData(response.data.localities);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    idx();
+    return () => {
+      setData([]);
+    };
+  }, []);
   return (
     <View style={genericStyles.Container}>
       <ScrollView keyboardShouldPersistTaps="handled">
@@ -94,9 +114,19 @@ const StudentDetails = ({data, navigation}) => {
         <InputComponent
           placeholder="Whatsapp number"
           value={WhatsappNo}
+          maxLength={10}
           autoCapitalize="words"
           onChangeText={num => setWhatsappNo(num)}
           keyboardType="number-pad"
+        />
+        <DropDownComponent
+          data={newData}
+          labelField="name"
+          valueField="id"
+          placeholder="Locality"
+          value={LocalityValue}
+          maxHeight={100}
+          onChange={item => setLocality(item.id)}
         />
         <ButtonComponent
           title="Done"

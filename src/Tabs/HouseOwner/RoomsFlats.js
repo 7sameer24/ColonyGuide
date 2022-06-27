@@ -120,6 +120,7 @@ const RoomsFlats = ({navigation, route}) => {
                         : 'Family'
                     }
                     ID={data.id}
+                    googleNavigate={`${data.house_no}+${data.address}, Udaipur, Rajasthan`}
                   />
                 ))}
                 <View style={genericStyles.height(50)} />

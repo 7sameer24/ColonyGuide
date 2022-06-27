@@ -12,6 +12,7 @@ export const navigationStateType = {
   SERVICE_FORM: 'SERVICE_FORM',
   HOUSE_FORM: 'HOUSE_FORM',
   HOSTEL_FORM: 'HOSTEL_FORM',
+  CHOOSELOCALID: 'CHOOSELOCALID',
 };
 const AppContext = ({children}) => {
   const [navigationState, setNavigationState] = useState(
@@ -25,6 +26,7 @@ const AppContext = ({children}) => {
   const [loginPop, setIsLoginPop] = useState(false);
   const [FilterData, setIsFilterData] = useState([]);
   const [resumeDetails, updateResumeDtails] = useState({});
+  const [GSaveLocalID, updateGSaveLocalID] = useState(null);
 
   useEffect(() => {
     const saveDetail = async () => {
@@ -58,6 +60,8 @@ const AppContext = ({children}) => {
         setIsFilterData,
         resumeDetails,
         updateResumeDtails,
+        GSaveLocalID,
+        updateGSaveLocalID,
       }}>
       {children}
     </App.Provider>

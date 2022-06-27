@@ -7,7 +7,7 @@ import Poweredby from '../../Components/Poweredby';
 import Cuate from '../../../assets/svg/cuate.svg';
 
 const BusinessInfo = ({navigation}) => {
-  let title2 = 'You have not added business\ndetails';
+  let title2 = 'Colony guide app- one stop for all you info for your locality.';
   return (
     <View style={genericStyles.Container}>
       <HeaderBar
@@ -20,8 +20,9 @@ const BusinessInfo = ({navigation}) => {
       </View>
       <Text style={styles.title}>{title2}</Text>
       <Text style={styles.subTitle}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit ut aliquam,
-        purus sit amet luctus venenatis, lectus magna fringilla urna, porttitor
+        Now you can search for anything from hostels info to PGs to hospitals,
+        schools and shopping malls, hotels and even showrooms in your locality
+        or town.
       </Text>
       <ButtonComponent
         title="Add Your Business"

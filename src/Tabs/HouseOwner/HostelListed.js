@@ -117,6 +117,7 @@ const HostelListed = ({navigation}) => {
                             : 'Family'
                         }
                         ID={data.id}
+                        googleNavigate={`${data.house_no}+${data.address}, Udaipur, Rajasthan`}
                       />
                     ))}
                     <View style={genericStyles.height(50)} />

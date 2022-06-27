@@ -37,7 +37,7 @@ const SelectRole = ({navigation}) => {
   }, []);
 
   const skipToHome = () => {
-    setNavigationState(navigationStateType.GUEST);
+    setNavigationState(navigationStateType.CHOOSELOCALID);
   };
 
   return (

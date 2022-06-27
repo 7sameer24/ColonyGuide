@@ -6,11 +6,12 @@ import ButtonComponent from './ButtonComponent';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 
 const LoginAnimation = ({visible}) => {
-  const {setNavigationState, setIsLoginPop} = useApp();
+  const {setNavigationState, setIsLoginPop, updateGSaveLocalID} = useApp();
 
   const Login = () => {
-    setNavigationState(navigationStateType.AUTH);
+    updateGSaveLocalID(null);
     setIsLoginPop(false);
+    setNavigationState(navigationStateType.AUTH);
   };
   return (
     <View style={styles.centeredView}>

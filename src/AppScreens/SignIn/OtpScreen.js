@@ -69,7 +69,7 @@ const OtpScreen = ({route, navigation}) => {
         otp: idx,
       });
       setSpinner(false);
-      if (response.data.success === true) {
+      if (response.data.success == true) {
         if (
           DATA.message === 'We have sent an OTP on your registered mobile no.'
         ) {
@@ -78,17 +78,15 @@ const OtpScreen = ({route, navigation}) => {
               routes: [{name: 'ResetPassword', params: {data: DATA}}],
             }),
           );
-          ToastAndroid.show('OTP verified successfully', ToastAndroid.SHORT);
+        } else if (DATA.app_role_id == 4) {
+          navigation.navigate('LocalId', {
+            UserData: response.data,
+            token: DATA.token,
+          });
         } else {
-          if (4 === DATA.app_role_id) {
-            setNewData(response.data);
-            setUserToken(DATA.token);
-            setNavigationState(navigationStateType.HOME);
-          } else {
-            navigation.navigate('Registration', {UserData: DATA});
-          }
-          ToastAndroid.show('OTP verified successfully', ToastAndroid.SHORT);
+          navigation.navigate('Registration', {UserData: DATA});
         }
+        ToastAndroid.show('OTP verified successfully', ToastAndroid.SHORT);
       } else {
         ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
       }

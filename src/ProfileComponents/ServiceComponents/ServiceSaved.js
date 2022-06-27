@@ -6,6 +6,7 @@ import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
 import HeaderBar from '../../Components/HeaderBar';
+import Poweredby from '../../Components/Poweredby';
 
 const ServiceSaved = ({route, navigation}) => {
   const {userID, userToken} = route.params;
@@ -112,6 +113,7 @@ const ServiceSaved = ({route, navigation}) => {
               } ${Userdata.landmark === null ? '' : Userdata.landmark}`}
             </Text>
           </View>
+          <Poweredby />
         </>
       ) : (
         <Spinner />

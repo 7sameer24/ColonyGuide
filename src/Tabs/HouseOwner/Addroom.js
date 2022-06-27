@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -41,6 +40,8 @@ const Addroom = ({navigation}) => {
   const [WhatsappNo, setWhatsappNo] = useState('');
   const {Userdata, UserToken} = useApp();
   const [modalVisible, setModalVisible] = useState(false);
+  const [newData, setData] = useState([]);
+  const [LocalityValue, setLocality] = useState('');
 
   const CategoryData = [
     {label: 'Hostel', value: '0'},
@@ -123,6 +124,8 @@ const Addroom = ({navigation}) => {
         'Please check your Whatsapp number and try again',
         ToastAndroid.SHORT,
       );
+    } else if (!LocalityValue) {
+      ToastAndroid.show('Please select locality!', ToastAndroid.SHORT);
     } else {
       try {
         setSpinner(true);
@@ -135,6 +138,7 @@ const Addroom = ({navigation}) => {
         data.append('category', Category);
         data.append('room_type_id', roomType);
         data.append('is_veg', check1 === true ? 1 : 0);
+        data.append('locality_id', LocalityValue);
         data.append(
           'renter_type',
           check2 === true
@@ -184,6 +188,7 @@ const Addroom = ({navigation}) => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
       setRoomData(response.data.room_type);
+      setData(response.data.localities);
     } catch (error) {
       console.log(error);
     }
@@ -193,6 +198,7 @@ const Addroom = ({navigation}) => {
     idx();
     return () => {
       setRoomData('');
+      setData([]);
     };
   }, []);
 
@@ -347,6 +353,15 @@ const Addroom = ({navigation}) => {
               autoCapitalize="words"
               containerStyle={genericStyles.mb(10)}
               onChangeText={text => setLandmark(text)}
+            />
+            <DropDownComponent
+              data={newData}
+              labelField="name"
+              valueField="id"
+              placeholder="Locality"
+              value={LocalityValue}
+              maxHeight={100}
+              onChange={item => setLocality(item.id)}
             />
           </ScrollView>
           <ButtonComponent
