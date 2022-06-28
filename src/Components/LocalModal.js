@@ -11,8 +11,13 @@ const LocalModal = ({route}) => {
   const [newData, setData] = useState([]);
   const [LocalityValue, setLocality] = useState('');
   const [loading, updateLoading] = useState(false);
-  const {setNavigationState, updateGSaveLocalID, setNewData, setUserToken} =
-    useApp();
+  const {
+    setNavigationState,
+    updateGSaveLocalID,
+    setNewData,
+    setUserToken,
+    resumeDetails,
+  } = useApp();
 
   const fetchLocalities = async () => {
     try {
@@ -33,18 +38,28 @@ const LocalModal = ({route}) => {
       const response = await axios(BaseURL('add-details'), {
         method: 'post',
         data: {
-          app_role_id: route.params.UserData.userData.app_role_id,
+          app_role_id:
+            route.params != undefined
+              ? route.params.UserData.userData.app_role_id
+              : resumeDetails.app_role_id,
           locality_id: LocalityValue,
-          user_id: route.params.UserData.userData.id,
+          user_id:
+            route.params != undefined
+              ? route.params.UserData.userData.id
+              : resumeDetails.user_id,
         },
         headers: {
-          Authorization: `Bearer ${route.params.token}`,
+          Authorization: `Bearer ${
+            route.params ? route.params.token : resumeDetails.token
+          }`,
         },
       });
       updateLoading(false);
       if (response.data.success) {
         setNewData(response.data);
-        setUserToken(route.params.token);
+        setUserToken(
+          route.params != undefined ? route.params.token : resumeDetails.token,
+        );
       } else {
         ToastAndroid.show(response.data.message);
       }
@@ -66,6 +81,10 @@ const LocalModal = ({route}) => {
       ToastAndroid.show('Please select your locality', ToastAndroid.SHORT);
     } else if (route.params) {
       if (route.params.UserData.userData.app_role_id == 4) {
+        saveVistorLocalId();
+      }
+    } else if (resumeDetails) {
+      if (resumeDetails.app_role_id == 4) {
         saveVistorLocalId();
       }
     } else {

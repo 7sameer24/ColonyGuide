@@ -125,7 +125,7 @@ const HoAddress = ({data}) => {
         <>
           <ScrollView keyboardShouldPersistTaps="handled">
             <HeaderBody
-              Icon={<ImgIcon height={180} />}
+              Icon={<ImgIcon height={160} />}
               title="Your Address"
               subTitle="Enter the details below to continue"
               touchableOpacityStyle={genericStyles.mb(0)}
@@ -145,7 +145,7 @@ const HoAddress = ({data}) => {
                 autoCapitalize="words"
               />
               <InputComponent
-                placeholder="Address Line"
+                placeholder="Address"
                 value={Address}
                 onChangeText={text => setAddress(text)}
                 autoCapitalize="words"

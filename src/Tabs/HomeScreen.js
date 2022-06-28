@@ -46,7 +46,9 @@ const HomeScreen = ({navigation}) => {
   const idx = async () => {
     try {
       const response = await axios.post(BaseURL('home'), {
-        locality_id: GSaveLocalID ? GSaveLocalID : null,
+        locality_id: GSaveLocalID
+          ? GSaveLocalID
+          : Userdata.userData.locality_id,
       });
       Userdata === null
         ? null

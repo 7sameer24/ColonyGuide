@@ -13,7 +13,7 @@ import FilterModal from '../../Components/FilterModal';
 import RoomsCard from '../../Components/RoomsCard';
 
 const HostelListed = ({navigation}) => {
-  const {Userdata} = useApp();
+  const {Userdata, GSaveLocalID} = useApp();
   const [newData, setData] = useState([]);
   const [check, setCheck] = useState('');
   const [visible, setIsvisible] = useState(false);
@@ -27,6 +27,9 @@ const HostelListed = ({navigation}) => {
         type: 'hostel',
         is_veg: Fil[3] === 'true' ? 1 : Fil[4] === 'true' ? 0 : null,
         renter_type: Fil[0] === 'true' ? 1 : Fil[1] === 'true' ? 2 : null,
+        locality_id: GSaveLocalID
+          ? GSaveLocalID
+          : Userdata.userData.locality_id,
       });
       setIsloading(false);
       setData(response.data.data);

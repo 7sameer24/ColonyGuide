@@ -6,7 +6,6 @@ import {
   Image,
   TouchableOpacity,
   Text,
-  Alert,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
@@ -21,36 +20,108 @@ import BaseURL from '../../../constants/BaseURL';
 import ModalPopup from '../../../Components/ModalPopup';
 import {useApp} from '../../../../Context/AppContext';
 
-const ServiceForm = ({navigation, UserNewData}) => {
+const ServiceForm = ({UserNewData}) => {
   const [imageUp, setImage] = useState('');
   const [shopName, setShop] = useState('');
   const [fullName, setFullName] = useState('');
   const [WhatsappNo, setWhatsappNo] = useState();
   const [shortDes, setShortDes] = useState('');
-  const [newData, setNewData] = useState([]);
+  const [newData, updateNewData] = useState([]);
   const [Category, setCategory] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
-  const {resumeDetails} = useApp();
+  const [localityData, setLocalityData] = useState([]);
+  const [LocalityValue, setLocality] = useState('');
+  const [colonyData, updateColonyData] = useState([]);
+  const [colonyNo, updateColonyNo] = useState('');
+  const [house, setHouseNo] = useState();
+  const [Address, setAddress] = useState('');
+  const [Landmark, setLandmark] = useState('');
+  const [spinner, setSpinner] = useState(false);
 
-  const validationCheck = () => {
-    if (!WhatsappNo || !fullName || !Category) {
+  const [modalVisible, setModalVisible] = useState(false);
+  const {resumeDetails, setNewData, setUserToken} = useApp();
+
+  const validationCheck = async () => {
+    if (!WhatsappNo || !fullName || !Category || !house || !Address) {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
-    } else if (WhatsappNo.length < 10 || WhatsappNo.length > 10) {
+    } else if (WhatsappNo.length < 10) {
       ToastAndroid.show(
         'Please check your Whatsapp number and try again',
         ToastAndroid.SHORT,
       );
+    } else if (!imageUp) {
+      ToastAndroid.show('Please select image', ToastAndroid.SHORT);
+    } else if (!LocalityValue) {
+      ToastAndroid.show('Please select locality!', ToastAndroid.SHORT);
     } else {
-      navigation.navigate('Address', {
-        shortDes: shortDes,
-        ShopName: shopName,
-        FullName: fullName,
-        WhatsappNum: WhatsappNo,
-        CategoryShop: Category,
-        UserData: UserNewData == undefined ? resumeDetails : UserNewData,
-        imageLogo: imageUp,
-        ShortDescription: shortDes,
+      handleOnSubmit();
+    }
+  };
+  const handleOnSubmit = async () => {
+    try {
+      setSpinner(true);
+      const Form = new FormData();
+
+      Form.append(
+        'user_id',
+        UserNewData != undefined ? UserNewData.user_id : resumeDetails.user_id,
+      );
+      Form.append(
+        'app_role_id',
+        UserNewData != undefined
+          ? UserNewData.app_role_id
+          : resumeDetails.app_role_id,
+      );
+      Form.append('full_name', fullName);
+      // Form.append('geolocation', `${latitude},${longitude}`);
+      Form.append('house_no', house);
+      Form.append('address', Address);
+      Form.append('landmark', Landmark);
+      Form.append('shop_name', shopName);
+      Form.append('about', shortDes);
+      Form.append('category_id', Category);
+      Form.append('whatsapp_no', WhatsappNo);
+      Form.append('locality_id', LocalityValue);
+      Form.append('street_id', colonyNo);
+      Form.append(
+        'logo_image',
+        imageUp
+          ? {
+              uri: imageUp[0].uri,
+              type: imageUp[0].type,
+              name: imageUp[0].fileName,
+            }
+          : '',
+      );
+
+      const res = await fetch(BaseURL('add-details'), {
+        method: 'post',
+        body: Form,
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${
+            UserNewData != undefined ? UserNewData.token : resumeDetails.token
+          }`,
+        },
       });
+      const response = await res.json();
+      setSpinner(false);
+      if (response.success === true) {
+        setNewData(response);
+        setUserToken(
+          UserNewData != undefined ? UserNewData.token : resumeDetails.token,
+        );
+        // ToastAndroid.show(
+        //   UserData.app_role_id === 3
+        //     ? `Welcome ${HOName}`
+        //     : `Welcome ${FullName}`,
+        //   ToastAndroid.SHORT,
+        // );
+      } else {
+        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      setSpinner(false);
+      alert(error);
     }
   };
 
@@ -106,7 +177,8 @@ const ServiceForm = ({navigation, UserNewData}) => {
   const CategoryFetch = async () => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
-      setNewData(response.data.categories);
+      updateNewData(response.data.categories);
+      setLocalityData(response.data.localities);
     } catch (error) {
       console.log(error);
     }
@@ -115,9 +187,20 @@ const ServiceForm = ({navigation, UserNewData}) => {
   useEffect(() => {
     CategoryFetch();
     return () => {
-      setNewData([]);
+      updateNewData([]);
     };
   }, []);
+
+  const fetchStreetNo = async id => {
+    try {
+      const response = await axios.post(BaseURL('get-street-no'), {
+        locality_id: id,
+      });
+      updateColonyData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={genericStyles.Container}>
@@ -177,6 +260,7 @@ const ServiceForm = ({navigation, UserNewData}) => {
               onChangeText={num => setWhatsappNo(num)}
               keyboardType="number-pad"
               autoCapitalize="words"
+              maxLength={10}
             />
             <InputComponent
               placeholder="What services you provide (Only 100 Words)"
@@ -186,9 +270,49 @@ const ServiceForm = ({navigation, UserNewData}) => {
               multiline={true}
               maxLength={100}
             />
+            <InputComponent
+              placeholder="Flat / House No."
+              value={house}
+              onChangeText={num => setHouseNo(num)}
+              autoCapitalize="words"
+            />
+            <InputComponent
+              placeholder="Address"
+              value={Address}
+              onChangeText={text => setAddress(text)}
+              autoCapitalize="words"
+            />
+            <InputComponent
+              placeholder="Landmark (optional)"
+              value={Landmark}
+              onChangeText={text => setLandmark(text)}
+              autoCapitalize="words"
+            />
+            <DropDownComponent
+              data={localityData}
+              labelField="name"
+              valueField="id"
+              placeholder="Locality"
+              value={LocalityValue}
+              maxHeight={100}
+              onChange={item => {
+                setLocality(item.id);
+                fetchStreetNo(item.id);
+              }}
+            />
+            <DropDownComponent
+              data={colonyData}
+              labelField="street_no"
+              valueField="id"
+              placeholder="Colony No."
+              value={colonyNo}
+              maxHeight={100}
+              onChange={item => updateColonyNo(item.id)}
+            />
           </ScrollView>
           <ButtonComponent
             title="Next"
+            loading={spinner}
             onPress={() => validationCheck()}
             ButtonContainer={styles.ButtonContainer(imageUp)}
           />

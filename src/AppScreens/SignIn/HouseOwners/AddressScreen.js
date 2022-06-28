@@ -136,7 +136,7 @@ const AddressScreen = ({route}) => {
                 autoCapitalize="words"
               />
               <InputComponent
-                placeholder="Address Line"
+                placeholder="Address"
                 value={Address}
                 onChangeText={text => setAddress(text)}
                 autoCapitalize="words"

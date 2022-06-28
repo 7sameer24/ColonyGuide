@@ -7,14 +7,20 @@ import axios from 'axios';
 import ListedAnimation from '../../Components/ListedAnimation';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
+import {useApp} from '../../../Context/AppContext';
 
 const HouseOwners = ({navigation}) => {
   const [newData, setData] = useState([]);
   const [loading, updateLoading] = useState(true);
+  const {Userdata, GSaveLocalID} = useApp();
 
   const idx = async () => {
     try {
-      const response = await axios.post(BaseURL('house-owner-list'));
+      const response = await axios.post(BaseURL('house-owner-list'), {
+        locality_id: GSaveLocalID
+          ? GSaveLocalID
+          : Userdata.userData.locality_id,
+      });
       updateLoading(false);
       setData(response.data.houseowner);
     } catch (error) {

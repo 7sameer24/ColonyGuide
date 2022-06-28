@@ -73,6 +73,13 @@ const LoginScreen = ({navigation}) => {
                     user_id: response.data.userData.id,
                   });
                   setNavigationState(navigationStateType.HOSTEL_FORM);
+                } else if (response.data.message.includes('Visitor')) {
+                  updateResumeDtails({
+                    token: response.data.token,
+                    app_role_id: response.data.userData.app_role_id,
+                    user_id: response.data.userData.id,
+                  });
+                  setNavigationState(navigationStateType.CHOOSELOCALID);
                 }
               }
               ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
@@ -105,6 +112,7 @@ const LoginScreen = ({navigation}) => {
             placeholder="Mobile Number"
             iconName="call"
             iconSize={25}
+            maxLength={10}
             errorStyle={genericStyles.fontSize(5)}
             value={MN}
             keyboardType="number-pad"

@@ -53,8 +53,10 @@ const ProfileDetails = ({navigation, route}) => {
             <View>
               <Image
                 source={
-                  userData.profile_image ===
-                  'https://colonyguide.garimaartgallery.com/storage'
+                  userData.app_role_id == 2
+                    ? {uri: userData.logo_image}
+                    : userData.profile_image ===
+                      'https://colonyguide.garimaartgallery.com/storage'
                     ? Images.Ellipse
                     : {uri: userData.profile_image}
                 }

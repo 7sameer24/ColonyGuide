@@ -107,7 +107,7 @@ const EditProfile = ({route, navigation}) => {
       SaveData.append('hostel_name', HostelName);
       SaveData.append('hostel_address', hostel_address);
       SaveData.append(
-        'profile_image',
+        data.app_role_id == 2 ? 'logo_image' : 'profile_image',
         imageUp
           ? {
               uri: imageUp[0].uri,
@@ -203,6 +203,8 @@ const EditProfile = ({route, navigation}) => {
                   source={
                     imageUp
                       ? imageUp
+                      : data.app_role_id == 2
+                      ? {uri: data.logo_image}
                       : data.profile_image ==
                         'https://colonyguide.garimaartgallery.com/storage'
                       ? Images.Ellipse

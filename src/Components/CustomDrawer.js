@@ -69,8 +69,10 @@ const CustomDrawer = props => {
                   }>
                   <Image
                     source={
-                      Userdata.userData.profile_image ===
-                      'https://colonyguide.garimaartgallery.com/storage'
+                      Userdata.userData.app_role_id == 2
+                        ? {uri: Userdata.userData.logo_image}
+                        : Userdata.userData.profile_image ===
+                          'https://colonyguide.garimaartgallery.com/storage'
                         ? Images.Ellipse
                         : {uri: Userdata.userData.profile_image}
                     }

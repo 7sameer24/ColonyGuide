@@ -99,6 +99,7 @@ const RegisterScreen = ({navigation, route}) => {
             iconSize={25}
             keyboardType="number-pad"
             value={mobileNo}
+            maxLength={10}
             onChangeText={num => setMobile(num)}
             errorStyle={genericStyles.fontSize(5)}
           />

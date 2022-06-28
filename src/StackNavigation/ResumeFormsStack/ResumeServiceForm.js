@@ -23,13 +23,13 @@ export default function ResumeServiceForm() {
           headerShown: false,
         })}
       /> */}
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Address"
         component={AddressScreen}
         options={() => ({
           headerShown: false,
         })}
-      />
+      /> */}
     </Stack.Navigator>
   );
 }

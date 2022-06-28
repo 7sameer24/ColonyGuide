@@ -7,14 +7,20 @@ import axios from 'axios';
 import ListedAnimation from '../../Components/ListedAnimation';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
+import {useApp} from '../../../Context/AppContext';
 
 const BusinessListed = ({navigation}) => {
   const [newData, setNewData] = useState([]);
   const [loading, updateLoading] = useState(true);
+  const {Userdata, GSaveLocalID} = useApp();
 
   const idx = async () => {
     try {
-      const response = await axios.post(BaseURL('business-list'));
+      const response = await axios.post(BaseURL('business-list'), {
+        locality_id: GSaveLocalID
+          ? GSaveLocalID
+          : Userdata.userData.locality_id,
+      });
       updateLoading(false);
       setNewData(response.data.business);
     } catch (error) {

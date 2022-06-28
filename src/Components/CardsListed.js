@@ -88,20 +88,14 @@ const CardsListed = ({
         <View style={[genericStyles.row, {alignItems: 'center'}]}>
           <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
           <View style={genericStyles.row}>
-            <View style={genericStyles.mr(10)}>
-              <Text
-                style={[styles.title, {width: width / 3.2}]}
-                numberOfLines={1}>
+            <View>
+              <Text style={[styles.title, {width: 90}]} numberOfLines={1}>
                 {title}
               </Text>
-              <Text
-                style={[styles.subTitle1, {width: width / 3.2}]}
-                numberOfLines={1}>
+              <Text style={[styles.subTitle1, {width: 90}]} numberOfLines={1}>
                 {subTitle}
               </Text>
-              <Text
-                numberOfLines={1}
-                style={[styles.subTitle, {width: width / 3.2}]}>
+              <Text numberOfLines={1} style={[styles.subTitle, {width: 90}]}>
                 {category}
               </Text>
             </View>

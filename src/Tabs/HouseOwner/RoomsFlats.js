@@ -14,7 +14,7 @@ import {Icon} from 'react-native-elements';
 import RoomsCard from '../../Components/RoomsCard';
 
 const RoomsFlats = ({navigation, route}) => {
-  const {Userdata} = useApp();
+  const {Userdata, GSaveLocalID} = useApp();
   const [newData, setData] = useState([]);
   const [check, setCheck] = useState('');
   const [visible, setIsvisible] = useState(false);
@@ -36,6 +36,9 @@ const RoomsFlats = ({navigation, route}) => {
             : Fil[2] === 'true'
             ? 3
             : null,
+        locality_id: GSaveLocalID
+          ? GSaveLocalID
+          : Userdata.userData.locality_id,
       });
       setIsloading(false);
       setData(response.data.data);
