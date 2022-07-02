@@ -41,11 +41,18 @@ const HomeScreen = ({navigation}) => {
     loginPop,
     setIsLoginPop,
     GSaveLocalID,
+    updateCategories,
+    updateLocalData,
   } = useApp();
 
   const idx = async () => {
     try {
       const response = await axios.post(BaseURL('home'), {
+        locality_id: GSaveLocalID
+          ? GSaveLocalID
+          : Userdata.userData.locality_id,
+      });
+      const response2 = await axios.post(BaseURL('get-all-master'), {
         locality_id: GSaveLocalID
           ? GSaveLocalID
           : Userdata.userData.locality_id,
@@ -64,6 +71,8 @@ const HomeScreen = ({navigation}) => {
           });
       updateLoading(false);
       setData(response.data.categories);
+      updateCategories(response2.data.categories);
+      updateLocalData(response2.data.localities);
       setSliderImg(response.data.banners);
     } catch (error) {
       updateLoading(false);

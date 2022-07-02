@@ -90,63 +90,69 @@ const RoomsCard = ({
   return (
     <View>
       <Card containerStyle={[styles.CardContainer]}>
-        <View style={[genericStyles.row, {alignItems: 'center'}]}>
-          <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
-          <View style={genericStyles.row}>
-            <View>
-              <Text style={[styles.title, {width: 85}]} numberOfLines={1}>
-                {title}
-              </Text>
-              <Text style={[styles.subTitle1, {width: 85}]} numberOfLines={1}>
-                {subTitle}
-              </Text>
-              <Text numberOfLines={1} style={[styles.subTitle]}>
-                {is_veg}
-              </Text>
-              <Text numberOfLines={1} style={[styles.subTitle]}>
-                {renter_type}
-              </Text>
-              <Text numberOfLines={1} style={[styles.subTitle]}>
-                {category}
-              </Text>
+        <View
+          style={[
+            genericStyles.row,
+            {alignItems: 'center', justifyContent: 'space-between'},
+          ]}>
+          <View style={[genericStyles.row, {alignItems: 'center'}]}>
+            <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
+            <View style={{width: width / 3.3}}>
+              <View>
+                <Text style={[styles.title]} numberOfLines={1}>
+                  {title}
+                </Text>
+                <Text style={[styles.subTitle1]} numberOfLines={1}>
+                  {subTitle}
+                </Text>
+                <Text numberOfLines={1} style={[styles.subTitle]}>
+                  {is_veg}
+                </Text>
+                <Text numberOfLines={1} style={[styles.subTitle]}>
+                  {renter_type}
+                </Text>
+                <Text numberOfLines={1} style={[styles.subTitle]}>
+                  {category}
+                </Text>
+              </View>
             </View>
-            <View style={styles.View3}>
-              <Icon
-                name="phone-outgoing"
-                type="material-community"
-                color="#407BFF"
-                size={18}
-                reverse
-                onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : callCount(1)
-                }
-                containerStyle={genericStyles.shadow}
-              />
-              <Icon
-                name="whatsapp"
-                type="material-community"
-                size={18}
-                color="#25D366"
-                reverse
-                onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : callCount(2)
-                }
-                containerStyle={genericStyles.shadow}
-              />
-              <Icon
-                name="navigate"
-                type="ionicon"
-                size={16}
-                color={COLORS.primary}
-                reverse
-                onPress={() =>
-                  Userdata === null
-                    ? setIsLoginPop(true)
-                    : Linking.openURL(`google.navigation:q=${googleNavigate}`)
-                }
-                containerStyle={genericStyles.shadow}
-              />
-            </View>
+          </View>
+          <View style={styles.View3}>
+            <Icon
+              name="phone-outgoing"
+              type="material-community"
+              color="#407BFF"
+              size={18}
+              reverse
+              onPress={() =>
+                Userdata === null ? setIsLoginPop(true) : callCount(1)
+              }
+              containerStyle={genericStyles.shadow}
+            />
+            <Icon
+              name="whatsapp"
+              type="material-community"
+              size={18}
+              color="#25D366"
+              reverse
+              onPress={() =>
+                Userdata === null ? setIsLoginPop(true) : callCount(2)
+              }
+              containerStyle={genericStyles.shadow}
+            />
+            <Icon
+              name="navigate"
+              type="ionicon"
+              size={16}
+              color={COLORS.primary}
+              reverse
+              onPress={() =>
+                Userdata === null
+                  ? setIsLoginPop(true)
+                  : Linking.openURL(`google.navigation:q=${googleNavigate}`)
+              }
+              containerStyle={genericStyles.shadow}
+            />
           </View>
         </View>
       </Card>
@@ -177,6 +183,7 @@ const styles = StyleSheet.create({
   View3: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 10,
   },
   title: {
     fontSize: 14,

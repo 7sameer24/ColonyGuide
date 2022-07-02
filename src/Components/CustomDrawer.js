@@ -32,6 +32,7 @@ const CustomDrawer = props => {
     setNavigationState,
     setIsLoginPop,
     updateGSaveLocalID,
+    updateResumeDtails,
   } = useApp();
 
   const removeValue = async () => {
@@ -50,6 +51,7 @@ const CustomDrawer = props => {
     removeValue(), setNewData(null);
     setUserToken(null);
     updateGSaveLocalID(null);
+    updateResumeDtails(null);
     setNavigationState(navigationStateType.AUTH);
     ToastAndroid.show('Logout Successfully', ToastAndroid.SHORT);
   };
@@ -61,11 +63,14 @@ const CustomDrawer = props => {
             <View style={styles.ProfileContanier}>
               <View style={genericStyles.column}>
                 <TouchableOpacity
+                  activeOpacity={Userdata.userData.app_role_id === 4 && 2}
                   onPress={() =>
-                    props.navigation.navigate('Personal Details', {
-                      userID: Userdata.userData.id,
-                      userToken: UserToken,
-                    })
+                    Userdata.userData.app_role_id === 4
+                      ? null
+                      : props.navigation.navigate('Personal Details', {
+                          userID: Userdata.userData.id,
+                          userToken: UserToken,
+                        })
                   }>
                   <Image
                     source={

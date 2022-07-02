@@ -8,7 +8,6 @@ import {
 import React from 'react';
 import {COLORS, FONTS} from '../../constants';
 import {Card} from 'react-native-elements';
-import {useApp} from '../../../Context/AppContext';
 import {SvgUri} from 'react-native-svg';
 
 const CategoriesList = ({cardContainer, ViewContainer, navigation, data}) => {

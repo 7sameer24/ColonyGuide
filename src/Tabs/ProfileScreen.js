@@ -149,6 +149,7 @@ const ProfileScreen = ({navigation}) => {
                   title="Business Information"
                 />
               )}
+
               {Userdata.userData.app_role_id === 1 ? null : (
                 <ProfileComponents
                   onPress={() =>
@@ -171,10 +172,22 @@ const ProfileScreen = ({navigation}) => {
                   }
                 />
               )}
+              {Userdata.userData.app_role_id === 3 && (
+                <ProfileComponents
+                  onPress={() =>
+                    navigation.navigate('Add Members', {
+                      userID: Userdata.userData.id,
+                      userToken: UserToken,
+                    })
+                  }
+                  iconName="chevron-forward-outline"
+                  IconSvg={<IconImg />}
+                  title="Add Members"
+                />
+              )}
               <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             </>
           )}
-
           <ProfileComponents
             onPress={() =>
               navigation.navigate('Settings', {
@@ -216,6 +229,7 @@ const ProfileScreen = ({navigation}) => {
             title="Contact Us"
           />
           <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
+          <Poweredby container={{flex: 0}} />
         </ScrollView>
       ) : (
         <ScrollView>
@@ -275,9 +289,9 @@ const ProfileScreen = ({navigation}) => {
             onPress={() => setIsLoginPop(true)}
           />
           <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
+          <Poweredby container={{flex: 0}} />
         </ScrollView>
       )}
-      <Poweredby container={{flex: 0}} />
     </View>
   );
 };

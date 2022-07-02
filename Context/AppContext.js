@@ -25,8 +25,10 @@ const AppContext = ({children}) => {
   const [notificationToken, setNotificationToken] = useState('');
   const [loginPop, setIsLoginPop] = useState(false);
   const [FilterData, setIsFilterData] = useState([]);
-  const [resumeDetails, updateResumeDtails] = useState({});
+  const [resumeDetails, updateResumeDtails] = useState(null);
   const [GSaveLocalID, updateGSaveLocalID] = useState(null);
+  const [categories, updateCategories] = useState([]);
+  const [localityData, updateLocalData] = useState([]);
 
   useEffect(() => {
     const saveDetail = async () => {
@@ -62,6 +64,10 @@ const AppContext = ({children}) => {
         updateResumeDtails,
         GSaveLocalID,
         updateGSaveLocalID,
+        categories,
+        updateCategories,
+        localityData,
+        updateLocalData,
       }}>
       {children}
     </App.Provider>

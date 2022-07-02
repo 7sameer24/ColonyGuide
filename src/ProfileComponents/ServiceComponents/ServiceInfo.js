@@ -38,7 +38,6 @@ const ServiceInfo = ({navigation, route}) => {
     };
   }, []);
 
-  let title = 'You have not added service\ndetails';
   return (
     <View style={genericStyles.Container}>
       <>

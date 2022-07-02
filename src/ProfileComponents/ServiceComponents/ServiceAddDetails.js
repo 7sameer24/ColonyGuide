@@ -22,8 +22,7 @@ import BaseURL from '../../constants/BaseURL';
 import ModalPopup from '../../Components/ModalPopup';
 
 const ServiceAddDetails = ({navigation, route}) => {
-  const {Userdata, UserToken} = useApp();
-  const [CategoryData, setCategoryData] = useState([]);
+  const {Userdata, UserToken, categories} = useApp();
   const [Category, setCategory] = useState('');
   const [imageUp, setImage] = useState('');
   const [spinner, setSpinner] = useState(false);
@@ -36,15 +35,6 @@ const ServiceAddDetails = ({navigation, route}) => {
   const [AL1, setAL1] = useState('');
   const [Landmark, setLandmark] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-
-  const idx = async () => {
-    try {
-      const response = await axios.post(BaseURL('get-all-master'));
-      setCategoryData(response.data.categories);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const openGallery = () => {
     setModalVisible(false);
@@ -167,104 +157,98 @@ const ServiceAddDetails = ({navigation, route}) => {
 
   return (
     <View style={genericStyles.Container}>
-      {CategoryData.length > 0 ? (
-        <>
-          <ScrollView>
-            <TouchableOpacity
-              style={genericStyles.selfCenter}
-              activeOpacity={0.5}
-              onPress={() => setModalVisible(true)}>
-              <View style={styles.imageConatiner(imageUp)}>
-                <Image
-                  source={imageUp ? imageUp : Images.BusinessProfile}
-                  style={styles.imageStyle(imageUp)}
-                />
-              </View>
-              <Text style={styles.AddLogoText}>Add image / logo</Text>
-            </TouchableOpacity>
+      <ScrollView>
+        <TouchableOpacity
+          style={genericStyles.selfCenter}
+          activeOpacity={0.5}
+          onPress={() => setModalVisible(true)}>
+          <View style={styles.imageConatiner(imageUp)}>
+            <Image
+              source={imageUp ? imageUp : Images.BusinessProfile}
+              style={styles.imageStyle(imageUp)}
+            />
+          </View>
+          <Text style={styles.AddLogoText}>Add image / logo</Text>
+        </TouchableOpacity>
 
-            <ModalPopup
-              visible={modalVisible}
-              CameraOnpress={() => openCamera()}
-              GalleryOnpress={() => openGallery()}
-              OnPressCancel={() => setModalVisible(false)}
-              onRequestClose={() => setModalVisible(false)}
-            />
+        <ModalPopup
+          visible={modalVisible}
+          CameraOnpress={() => openCamera()}
+          GalleryOnpress={() => openGallery()}
+          OnPressCancel={() => setModalVisible(false)}
+          onRequestClose={() => setModalVisible(false)}
+        />
 
-            <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
-            <InputComponent
-              placeholder="Shop / Service name (Optional)"
-              value={ShopBusName}
-              autoCapitalize="words"
-              onChangeText={text => setShopBusName(text)}
-            />
-            <InputComponent
-              placeholder="Contact person’s name"
-              value={PersonName}
-              autoCapitalize="words"
-              onChangeText={text => setPersonName(text)}
-            />
-            <InputComponent
-              placeholder="Contact person’s mobile number"
-              value={mobile_no}
-              keyboardType="number-pad"
-              maxLength={10}
-              onChangeText={text => setMobile(text)}
-            />
-            <InputComponent
-              placeholder="Contact person’s whatsapp number"
-              value={WhatsappNo}
-              maxLength={10}
-              keyboardType="number-pad"
-              onChangeText={text => setWhatsappNo(text)}
-            />
+        <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
+        <InputComponent
+          placeholder="Shop / Service name (Optional)"
+          value={ShopBusName}
+          autoCapitalize="words"
+          onChangeText={text => setShopBusName(text)}
+        />
+        <InputComponent
+          placeholder="Contact person’s name"
+          value={PersonName}
+          autoCapitalize="words"
+          onChangeText={text => setPersonName(text)}
+        />
+        <InputComponent
+          placeholder="Contact person’s mobile number"
+          value={mobile_no}
+          keyboardType="number-pad"
+          maxLength={10}
+          onChangeText={text => setMobile(text)}
+        />
+        <InputComponent
+          placeholder="Contact person’s whatsapp number"
+          value={WhatsappNo}
+          maxLength={10}
+          keyboardType="number-pad"
+          onChangeText={text => setWhatsappNo(text)}
+        />
 
-            <DropDownComponent
-              placeholder="Select Category"
-              data={CategoryData}
-              labelField="name"
-              valueField="id"
-              value={Category}
-              maxHeight={200}
-              onChange={item => setCategory(item.id)}
-            />
-            <InputComponent
-              placeholder="About shop or service (Optional)"
-              autoCapitalize="words"
-              value={About}
-              onChangeText={text => setAbout(text)}
-            />
-            <Text style={styles.BusinessDetails}>Shop address</Text>
-            <InputComponent
-              placeholder="Building / Flat Number"
-              value={buildFL}
-              autoCapitalize="words"
-              onChangeText={text => setBuildFL(text)}
-            />
-            <InputComponent
-              placeholder="Address Line 1"
-              value={AL1}
-              autoCapitalize="words"
-              onChangeText={text => setAL1(text)}
-            />
-            <InputComponent
-              placeholder="Landmark (optional)"
-              value={Landmark}
-              autoCapitalize="words"
-              onChangeText={text => setLandmark(text)}
-            />
-          </ScrollView>
-          <ButtonComponent
-            title="Save"
-            ButtonContainer={styles.ButtonContainer}
-            loading={spinner ? true : false}
-            onPress={() => SaveDetail()}
-          />
-          <Poweredby />
-        </>
-      ) : (
-        <Spinner />
-      )}
+        <DropDownComponent
+          placeholder="Select Category"
+          data={CategoryData}
+          labelField="name"
+          valueField="id"
+          value={categories}
+          maxHeight={200}
+          onChange={item => setCategory(item.id)}
+        />
+        <InputComponent
+          placeholder="About shop or service (Optional)"
+          autoCapitalize="words"
+          value={About}
+          onChangeText={text => setAbout(text)}
+        />
+        <Text style={styles.BusinessDetails}>Shop address</Text>
+        <InputComponent
+          placeholder="Building / Flat Number"
+          value={buildFL}
+          autoCapitalize="words"
+          onChangeText={text => setBuildFL(text)}
+        />
+        <InputComponent
+          placeholder="Address Line 1"
+          value={AL1}
+          autoCapitalize="words"
+          onChangeText={text => setAL1(text)}
+        />
+        <InputComponent
+          placeholder="Landmark (optional)"
+          value={Landmark}
+          autoCapitalize="words"
+          onChangeText={text => setLandmark(text)}
+        />
+      </ScrollView>
+      <ButtonComponent
+        title="Save"
+        ButtonContainer={styles.ButtonContainer}
+        loading={spinner ? true : false}
+        onPress={() => SaveDetail()}
+      />
+      <Poweredby />
     </View>
   );
 };

@@ -38,6 +38,8 @@ import ServiceList from '../Tabs/../ProfileComponents/ServiceComponents/Categori
 import ServiceInformation from '../Tabs/../ProfileComponents/ServiceComponents/CategoriesScreens/ServiceInformation';
 import BusinessInformation from '../ProfileComponents/BusinessComponents/BusinessInformation';
 import SearchResult from '../Tabs/SearchScreens/SearchResult';
+import AddMambers from '../Tabs/Mambers/AddMambers';
+import AddMambersDetails from '../Tabs/Mambers/AddMambersDetails';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -241,6 +243,21 @@ const HomeStack = () => {
       name: 'ServiceSaved',
       component: ServiceSaved,
       headerShown: false,
+    },
+    {
+      name: 'Add Members',
+      component: AddMambers,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Add Members Details',
+      component: AddMambersDetails,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      title: 'Members Details',
     },
   ];
 

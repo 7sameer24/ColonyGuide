@@ -18,7 +18,6 @@ const LocalModal = ({route}) => {
     setUserToken,
     resumeDetails,
   } = useApp();
-
   const fetchLocalities = async () => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
@@ -79,17 +78,15 @@ const LocalModal = ({route}) => {
   const goNext = () => {
     if (!LocalityValue) {
       ToastAndroid.show('Please select your locality', ToastAndroid.SHORT);
-    } else if (route.params) {
-      if (route.params.UserData.userData.app_role_id == 4) {
-        saveVistorLocalId();
-      }
-    } else if (resumeDetails) {
-      if (resumeDetails.app_role_id == 4) {
-        saveVistorLocalId();
-      }
     } else {
-      updateGSaveLocalID(LocalityValue);
-      setNavigationState(navigationStateType.HOME);
+      if (route.params == undefined && resumeDetails == null) {
+        updateGSaveLocalID(LocalityValue);
+        setNavigationState(navigationStateType.HOME);
+      } else if (route.params) {
+        saveVistorLocalId();
+      } else if (resumeDetails) {
+        saveVistorLocalId();
+      }
     }
   };
 

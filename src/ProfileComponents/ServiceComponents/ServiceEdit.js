@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -8,22 +7,18 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import InputComponent from '../../Components/InputComponent';
 import ButtonComponent from '../../Components/ButtonComponent';
-import axios from 'axios';
 import DropDownComponent from '../../Components/DropDownComponent';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
 import {useApp} from '../../../Context/AppContext';
-import BaseURL from '../../constants/BaseURL';
 import ModalPopup from '../../Components/ModalPopup';
 
 const ServiceEdit = ({navigation, route}) => {
   const {data, token} = route.params;
-  const [CategoryData, setCategoryData] = useState('');
   const [Category, setCategory] = useState(parseInt(data.shop_category));
   const [imageUp, setImage] = useState('');
   const [spinner, setSpinner] = useState(false);
@@ -34,17 +29,8 @@ const ServiceEdit = ({navigation, route}) => {
   const [buildFL, setBuildFL] = useState(data.house_no);
   const [AL1, setAL1] = useState(data.address);
   const [Landmark, setLandmark] = useState(data.landmark);
-  const {setNewData} = useApp();
+  const {setNewData, categories} = useApp();
   const [modalVisible, setModalVisible] = useState(false);
-
-  const idx = async () => {
-    try {
-      const response = await axios.post(BaseURL('get-all-master'));
-      setCategoryData(response.data.categories);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const openGallery = () => {
     setModalVisible(false);
@@ -150,111 +136,99 @@ const ServiceEdit = ({navigation, route}) => {
     }
   };
 
-  useEffect(() => {
-    idx();
-    return () => {
-      setCategoryData([]);
-      setCategoryData('');
-    };
-  }, []);
-
   return (
     <View style={genericStyles.Container}>
-      {CategoryData.length > 0 ? (
-        <>
-          <ScrollView>
-            <TouchableOpacity
-              style={genericStyles.selfCenter}
-              activeOpacity={0.5}
-              onPress={() => setModalVisible(true)}>
-              <View style={styles.imageConatiner(imageUp)}>
-                <Image
-                  source={
-                    imageUp
-                      ? imageUp
-                      : data.logo_image ==
-                        'https://colonyguide.garimaartgallery.com/storage'
-                      ? Images.Ellipse
-                      : {uri: data.logo_image}
-                  }
-                  style={styles.imageStyle(imageUp)}
-                />
-              </View>
-              <Text style={styles.AddLogoText}>Add image / logo</Text>
-            </TouchableOpacity>
-            <ModalPopup
-              visible={modalVisible}
-              CameraOnpress={() => openCamera()}
-              GalleryOnpress={() => openGallery()}
-              OnPressCancel={() => setModalVisible(false)}
-              onRequestClose={() => setModalVisible(false)}
-            />
-            <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
-            <InputComponent
-              placeholder="Shop / Service name (Optional)"
-              value={ShopBusName}
-              autoCapitalize="words"
-              onChangeText={text => setShopBusName(text)}
-            />
-            <InputComponent
-              placeholder="Contact person’s name"
-              value={PersonName}
-              autoCapitalize="words"
-              onChangeText={text => setPersonName(text)}
-            />
-            <InputComponent
-              placeholder="Contact person’s whatsapp number"
-              value={WhatsappNo}
-              maxLength={10}
-              keyboardType="number-pad"
-              onChangeText={text => setWhatsappNo(text)}
-            />
-
-            <DropDownComponent
-              placeholder="Select category"
-              data={CategoryData}
-              labelField="name"
-              valueField="id"
-              value={Category}
-              maxHeight={200}
-              onChange={item => setCategory(item.id)}
-            />
-            <InputComponent
-              placeholder="About shop or service (Optional)"
-              autoCapitalize="words"
-              value={About}
-              onChangeText={text => setAbout(text)}
-            />
-            <Text style={styles.BusinessDetails}>Shop address</Text>
-            <InputComponent
-              placeholder="Building / Flat Number"
-              value={buildFL}
-              autoCapitalize="words"
-              onChangeText={text => setBuildFL(text)}
-            />
-            <InputComponent
-              placeholder="Address Line 1"
-              value={AL1}
-              autoCapitalize="words"
-              onChangeText={text => setAL1(text)}
-            />
-            <InputComponent
-              placeholder="Landmark (optional)"
-              value={Landmark}
-              autoCapitalize="words"
-              onChangeText={text => setLandmark(text)}
-            />
-          </ScrollView>
-          <ButtonComponent
-            title="Save"
-            loading={spinner ? true : false}
-            onPress={() => SaveDetail()}
+      <>
+        <ScrollView>
+          <TouchableOpacity
+            style={genericStyles.selfCenter}
+            activeOpacity={0.5}
+            onPress={() => setModalVisible(true)}>
+            <View style={styles.imageConatiner(imageUp)}>
+              <Image
+                source={
+                  imageUp
+                    ? imageUp
+                    : data.logo_image ==
+                      'https://colonyguide.garimaartgallery.com/storage'
+                    ? Images.Ellipse
+                    : {uri: data.logo_image}
+                }
+                style={styles.imageStyle(imageUp)}
+              />
+            </View>
+            <Text style={styles.AddLogoText}>Add image / logo</Text>
+          </TouchableOpacity>
+          <ModalPopup
+            visible={modalVisible}
+            CameraOnpress={() => openCamera()}
+            GalleryOnpress={() => openGallery()}
+            OnPressCancel={() => setModalVisible(false)}
+            onRequestClose={() => setModalVisible(false)}
           />
-          <Poweredby container={{flex: 0}} />
-        </>
-      ) : (
-        <Spinner />
-      )}
+          <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
+          <InputComponent
+            placeholder="Shop / Service name (Optional)"
+            value={ShopBusName}
+            autoCapitalize="words"
+            onChangeText={text => setShopBusName(text)}
+          />
+          <InputComponent
+            placeholder="Contact person’s name"
+            value={PersonName}
+            autoCapitalize="words"
+            onChangeText={text => setPersonName(text)}
+          />
+          <InputComponent
+            placeholder="Contact person’s whatsapp number"
+            value={WhatsappNo}
+            maxLength={10}
+            keyboardType="number-pad"
+            onChangeText={text => setWhatsappNo(text)}
+          />
+
+          <DropDownComponent
+            placeholder="Select category"
+            data={categories}
+            labelField="name"
+            valueField="id"
+            value={Category}
+            maxHeight={200}
+            onChange={item => setCategory(item.id)}
+          />
+          <InputComponent
+            placeholder="About shop or service (Optional)"
+            autoCapitalize="words"
+            value={About}
+            onChangeText={text => setAbout(text)}
+          />
+          <Text style={styles.BusinessDetails}>Shop address</Text>
+          <InputComponent
+            placeholder="Building / Flat Number"
+            value={buildFL}
+            autoCapitalize="words"
+            onChangeText={text => setBuildFL(text)}
+          />
+          <InputComponent
+            placeholder="Address Line 1"
+            value={AL1}
+            autoCapitalize="words"
+            onChangeText={text => setAL1(text)}
+          />
+          <InputComponent
+            placeholder="Landmark (optional)"
+            value={Landmark}
+            autoCapitalize="words"
+            onChangeText={text => setLandmark(text)}
+          />
+        </ScrollView>
+        <ButtonComponent
+          title="Save"
+          loading={spinner ? true : false}
+          onPress={() => SaveDetail()}
+        />
+        <Poweredby container={{flex: 0}} />
+      </>
     </View>
   );
 };
