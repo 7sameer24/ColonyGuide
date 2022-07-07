@@ -173,17 +173,25 @@ const ProfileScreen = ({navigation}) => {
                 />
               )}
               {Userdata.userData.app_role_id === 3 && (
-                <ProfileComponents
-                  onPress={() =>
-                    navigation.navigate('Add Members', {
-                      userID: Userdata.userData.id,
-                      userToken: UserToken,
-                    })
-                  }
-                  iconName="chevron-forward-outline"
-                  IconSvg={<IconImg />}
-                  title="Add Members"
-                />
+                <>
+                  <ProfileComponents
+                    onPress={() =>
+                      navigation.navigate('Add Members', {
+                        userID: Userdata.userData.id,
+                        userToken: UserToken,
+                      })
+                    }
+                    iconName="chevron-forward-outline"
+                    IconSvg={<IconImg />}
+                    title="Add Members"
+                  />
+                  <ProfileComponents
+                    onPress={() => navigation.navigate('Matrimonial')}
+                    iconName="chevron-forward-outline"
+                    IconSvg={<IconImg />}
+                    title="Matrimonial"
+                  />
+                </>
               )}
               <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             </>

@@ -69,5 +69,6 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterRegular,
     color: COLORS.third,
     fontSize: 14,
+    marginLeft: -3,
   },
 });

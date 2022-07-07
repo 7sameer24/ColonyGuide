@@ -3,49 +3,19 @@ import {
   StyleSheet,
   Text,
   View,
-  ToastAndroid,
   useWindowDimensions,
+  Linking,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {useApp} from '../../../Context/AppContext';
 import SpinnerModal from '../../Components/SpinnerModal';
-import axios from 'axios';
-import BaseURL from '../../constants/BaseURL';
 
-const MamberCard = ({
-  category,
-  title,
-  subTitle,
-  source,
-  userId,
-  fetchMemberList,
-}) => {
+const MemberCard = ({category, title, subTitle, source, phoneNumber}) => {
   const {width} = useWindowDimensions();
   const {UserToken} = useApp();
   const [loading, updateLoading] = useState(false);
-
-  const deleteList = async () => {
-    try {
-      updateLoading(true);
-      const response = await axios(BaseURL('delete-family-member'), {
-        method: 'post',
-        data: {
-          id: userId,
-        },
-        headers: {
-          Authorization: `Bearer ${UserToken}`,
-        },
-      });
-      updateLoading(false);
-      fetchMemberList();
-      ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
-    } catch (error) {
-      updateLoading(false);
-      console.log(error);
-    }
-  };
 
   return (
     <View>
@@ -58,7 +28,7 @@ const MamberCard = ({
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
             <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
             <View style={genericStyles.row}>
-              <View style={{width: width / 3.1}}>
+              <View style={{width: width / 2.4}}>
                 <Text style={[styles.title]} numberOfLines={1}>
                   {title}
                 </Text>
@@ -73,13 +43,12 @@ const MamberCard = ({
           </View>
           <View style={styles.View3}>
             <Icon
-              name="trash"
-              type="ionicon"
+              name="phone-outgoing"
+              type="material-community"
+              color="#407BFF"
               size={16}
-              color={COLORS.red}
               reverse
-              onPress={deleteList}
-              deleteList={() => deleteList()}
+              onPress={() => Linking.openURL(`tel:${phoneNumber}`)}
               containerStyle={genericStyles.shadow}
             />
           </View>
@@ -90,7 +59,7 @@ const MamberCard = ({
   );
 };
 
-export default MamberCard;
+export default MemberCard;
 
 const styles = StyleSheet.create({
   CardContainer: {

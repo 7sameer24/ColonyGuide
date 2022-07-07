@@ -6,7 +6,7 @@ import {COLORS, FONTS, genericStyles} from '../../constants';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import {View} from 'react-native';
 
-const MambersFrom = ({
+const MembersFrom = ({
   TitleOne,
   NameValue,
   NameOnchangeText,
@@ -36,41 +36,47 @@ const MambersFrom = ({
   startDate,
 }) => {
   const genderDataArr = [
-    {name: 'Female', id: 1},
-    {name: 'Male', id: 2},
-    {name: 'Trans', id: 3},
+    {name: 'Female', id: 'Female'},
+    {name: 'Male', id: 'Male'},
+    {name: 'Trans', id: 'Trans'},
   ];
 
   const BloodArr = [
-    {name: 'A-', id: 1},
-    {name: 'A+', id: 2},
-    {name: 'AB-', id: 3},
-    {name: 'AB+', id: 4},
-    {name: 'O+', id: 5},
-    {name: 'O-', id: 6},
-    {name: 'B-', id: 7},
-    {name: 'B+', id: 8},
+    {name: 'A-', id: 'A-'},
+    {name: 'A+', id: 'A+'},
+    {name: 'AB-', id: 'AB-'},
+    {name: 'AB+', id: 'AB+'},
+    {name: 'O+', id: 'O+'},
+    {name: 'O-', id: 'O-'},
+    {name: 'B-', id: 'B-'},
+    {name: 'B+', id: 'B+'},
   ];
   const LookingForArr = [
-    {name: 'Yes', id: 1},
-    {name: 'No', id: 2},
+    {name: 'Yes', id: 'Yes'},
+    {name: 'No', id: 'No'},
   ];
   const MaritalStatusArr = [
-    {name: 'Single', id: 1},
-    {name: 'Married', id: 2},
+    {name: 'Single', id: 'Single'},
+    {name: 'Married', id: 'Married'},
   ];
 
   return (
     <>
-      {/* <Text style={styles.BusinessDetails}>{TitleOne}</Text> */}
+      {/* <Text style={styles.BusinessDetails}></Text> */}
       <DropDownComponent
-        placeholder="Relation"
+        placeholder="Relation with you"
         data={relationData}
         labelField="name"
-        valueField="id"
+        valueField="ID"
         value={relationValue}
         maxHeight={100}
         onChange={relationOnchange}
+      />
+      <InputComponent
+        placeholder="Enter Name"
+        value={NameValue}
+        autoCapitalize="words"
+        onChangeText={NameOnchangeText}
       />
       <DropDownComponent
         placeholder="Gender"
@@ -82,19 +88,13 @@ const MambersFrom = ({
         onChange={genderOnchange}
       />
       <InputComponent
-        placeholder="Enter Name"
-        value={NameValue}
-        autoCapitalize="words"
-        onChangeText={NameOnchangeText}
-      />
-      <InputComponent
         placeholder="Education"
         value={educationValue}
         autoCapitalize="words"
         onChangeText={educationOnchangeText}
       />
       <InputComponent
-        placeholder="Number"
+        placeholder="Mobile Number"
         maxLength={10}
         keyboardType="number-pad"
         value={numberValue}
@@ -172,7 +172,7 @@ const MambersFrom = ({
   );
 };
 
-export default MambersFrom;
+export default MembersFrom;
 
 const styles = StyleSheet.create({
   BusinessDetails: {
@@ -193,6 +193,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterRegular,
     fontSize: 14,
     color: COLORS.third,
+    marginLeft: 2,
   },
   datePicker: {
     borderBottomWidth: 1,

@@ -39,7 +39,7 @@ const ModalPopup = ({
               titleStyle={styles.titleStyle}
               buttonStyle={styles.buttonStyle}
               onPress={CameraOnpress}
-              containerStyle={[genericStyles.width(300), genericStyles.mb(10)]}
+              containerStyle={[genericStyles.width(200), genericStyles.mb(10)]}
             />
             <Button
               title="Gallery"
@@ -54,7 +54,7 @@ const ModalPopup = ({
               titleStyle={[styles.titleStyle]}
               buttonStyle={[styles.buttonStyle]}
               onPress={GalleryOnpress}
-              containerStyle={[genericStyles.width(300), genericStyles.mb(10)]}
+              containerStyle={[genericStyles.width(200), genericStyles.mb(10)]}
             />
             <Button
               title="Cancel"

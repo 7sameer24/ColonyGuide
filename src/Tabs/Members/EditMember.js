@@ -13,12 +13,15 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
 import ModalPopup from '../../Components/ModalPopup';
-import MambersFrom from '../../Components/Forms/MambersFrom';
+import MembersFrom from '../../Components/Forms/MembersFrom';
 import axios from 'axios';
 import BaseURL from '../../constants/BaseURL';
 import {useApp} from '../../../Context/AppContext';
+import Spinner from '../../Components/Spinner';
 
-const AddMambersDetails = ({navigation}) => {
+const EditMember = ({navigation, route}) => {
+  const {editData} = route.params;
+
   const [imageUp, setImage] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [spinner, setSpinner] = useState(false);
@@ -35,7 +38,7 @@ const AddMambersDetails = ({navigation}) => {
   const [currentworkValue, updateCurrentWorkValue] = useState('');
   const [MSValue, updateMSValue] = useState('');
   const [LookingValue, updateLookingValue] = useState('');
-  const {Userdata, UserToken} = useApp();
+  const {UserToken} = useApp();
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -110,7 +113,7 @@ const AddMambersDetails = ({navigation}) => {
     });
   };
 
-  const idx = async () => {
+  const fetchData = async () => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
       updateRelationData(response.data.relation);
@@ -118,13 +121,39 @@ const AddMambersDetails = ({navigation}) => {
       console.log(error);
     }
   };
+  const updateValues = () => {
+    updateRelationValue({ID: editData.relation});
+    updateGenderValue({id: editData.gender});
+    updateBloodGroupValue({id: editData.blood_group});
+    updateMSValue(editData.marital_status ? {id: editData.marital_status} : '');
+    updateLookingValue({id: editData.looking_for});
+    updateName(editData.name);
+    updateCurrentWorkValue(editData.current_work);
+    updateEducation(editData.education);
+    updateEmail(editData.email ? editData.email : '');
+    updateNumber(editData.mobile_no);
+    setStartDate(editData.dob);
+    setImage(editData.photo.includes('photo') ? editData.photo : '');
+  };
 
   useEffect(() => {
-    idx();
+    fetchData();
+    updateValues();
     return () => {
       updateRelationData([]);
     };
   }, []);
+
+  const ValidateEmail = () => {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    ToastAndroid.show(
+      'You have entered an invalid email address!',
+      ToastAndroid.SHORT,
+    );
+    return false;
+  };
 
   const SaveDetail = async () => {
     if (
@@ -134,7 +163,9 @@ const AddMambersDetails = ({navigation}) => {
       !number ||
       !startDate ||
       !currentworkValue ||
-      !MSValue
+      !MSValue ||
+      !LookingValue ||
+      !genderValue
     ) {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
     } else if (number.length < 10) {
@@ -143,32 +174,40 @@ const AddMambersDetails = ({navigation}) => {
         ToastAndroid.SHORT,
       );
     } else {
+      if (email.length > 0) {
+        ValidateEmail();
+      }
+      if (email.length > 0 && ValidateEmail() === false) {
+        return false;
+      }
       try {
         setSpinner(true);
-        const URL = BaseURL('add-family-member');
+        const URL = BaseURL('update-family-member');
 
         const SaveData = new FormData();
-        SaveData.append('resident_id', Userdata.userData.id);
-        SaveData.append('relation', relationValue);
+        SaveData.append('id', editData.id);
+        SaveData.append('relation', relationValue.ID);
         SaveData.append('name', name);
         SaveData.append('education', education);
         SaveData.append('mobile_no', number);
         SaveData.append('email', email);
-        SaveData.append('blood_group', bloodgroupValue);
+        SaveData.append('blood_group', bloodgroupValue.id);
         SaveData.append('dob', startDate);
-        SaveData.append('marital_status', MSValue);
-        SaveData.append('Looking_for', LookingValue);
-        SaveData.append('gender', genderValue);
+        SaveData.append('marital_status', MSValue.id);
+        SaveData.append('looking_for', LookingValue.id);
+        SaveData.append('gender', genderValue.id);
         SaveData.append('current_work', currentworkValue);
 
         SaveData.append(
           'photo',
           imageUp !== ''
-            ? {
-                uri: imageUp[0].uri,
-                type: imageUp[0].type,
-                name: imageUp[0].fileName,
-              }
+            ? imageUp.includes('photo')
+              ? ''
+              : {
+                  uri: imageUp[0].uri,
+                  type: imageUp[0].type,
+                  name: imageUp[0].fileName,
+                }
             : '',
         );
 
@@ -182,8 +221,8 @@ const AddMambersDetails = ({navigation}) => {
         });
         let response = await res.json();
         setSpinner(false);
-        if (response.success === true) {
-          // navigation.navigate('Profile');
+        if (response.success == true) {
+          navigation.navigate('Profile');
           ToastAndroid.show(response.message, ToastAndroid.SHORT);
         } else {
           ToastAndroid.show(response.message, ToastAndroid.SHORT);
@@ -197,67 +236,79 @@ const AddMambersDetails = ({navigation}) => {
 
   return (
     <View style={genericStyles.Container}>
-      <ScrollView>
-        <TouchableOpacity
-          style={genericStyles.selfCenter}
-          activeOpacity={0.5}
-          onPress={() => setModalVisible(true)}>
-          <View style={styles.imageConatiner(imageUp)}>
-            <Image
-              source={imageUp ? imageUp : Images.BusinessProfile}
-              style={styles.imageStyle(imageUp)}
+      {relationData.length > 0 ? (
+        <>
+          <ScrollView>
+            <TouchableOpacity
+              style={genericStyles.selfCenter}
+              activeOpacity={0.5}
+              onPress={() => setModalVisible(true)}>
+              <View style={styles.imageConatiner(imageUp)}>
+                <Image
+                  source={
+                    imageUp
+                      ? imageUp.includes('photo')
+                        ? {uri: editData.photo}
+                        : imageUp
+                      : Images.BusinessProfile
+                  }
+                  style={styles.imageStyle(imageUp)}
+                />
+              </View>
+              <Text style={styles.AddLogoText}>Add image</Text>
+            </TouchableOpacity>
+            <ModalPopup
+              visible={modalVisible}
+              CameraOnpress={() => openCamera()}
+              GalleryOnpress={() => openGallery()}
+              OnPressCancel={() => setModalVisible(false)}
+              onRequestClose={() => setModalVisible(false)}
             />
-          </View>
-          <Text style={styles.AddLogoText}>Add image / logo</Text>
-        </TouchableOpacity>
-        <ModalPopup
-          visible={modalVisible}
-          CameraOnpress={() => openCamera()}
-          GalleryOnpress={() => openGallery()}
-          OnPressCancel={() => setModalVisible(false)}
-          onRequestClose={() => setModalVisible(false)}
-        />
-        <MambersFrom
-          currentworkValue={currentworkValue}
-          bloodgroupValue={bloodgroupValue}
-          LookingForValue={LookingValue}
-          relationValue={relationValue}
-          maritalStatusValue={MSValue}
-          relationData={relationData}
-          educationValue={education}
-          genderValue={genderValue}
-          startDate={startDate}
-          numberValue={number}
-          emailValue={email}
-          NameValue={name}
-          relationOnchange={item => updateRelationValue(item.id)}
-          genderOnchange={item => updateGenderValue(item.id)}
-          NameOnchangeText={text => updateName(text)}
-          educationOnchangeText={text => updateEducation(text)}
-          numberOnchangeText={text => updateNumber(text)}
-          emailOnchangeText={text => updateEmail(text)}
-          bloodgroupOnchange={item => updateBloodGroupValue(item.id)}
-          currentworkOnchangeText={text => updateCurrentWorkValue(text)}
-          maritalStatusOnchange={item => updateMSValue(item.id)}
-          LookingForOnchange={item => updateLookingValue(item.id)}
-          isDatePickerVisible={isDatePickerVisible}
-          showDatePicker={showDatePicker}
-          onChange={(e, selectedDate) => handleConfirm(e, selectedDate)}
-          onTouchCancel={() => hideDatePicker()}
-        />
-      </ScrollView>
-      <ButtonComponent
-        title="Save"
-        ButtonContainer={styles.ButtonContainer}
-        loading={spinner}
-        onPress={() => SaveDetail()}
-      />
-      <Poweredby container={{flex: 0}} />
+            <MembersFrom
+              currentworkValue={currentworkValue}
+              bloodgroupValue={bloodgroupValue.id}
+              LookingForValue={LookingValue.id}
+              relationValue={relationValue.ID}
+              maritalStatusValue={MSValue.id}
+              relationData={relationData}
+              educationValue={education}
+              genderValue={genderValue.id}
+              startDate={startDate}
+              numberValue={number}
+              emailValue={email}
+              NameValue={name}
+              relationOnchange={item => updateRelationValue(item)}
+              genderOnchange={item => updateGenderValue(item)}
+              NameOnchangeText={text => updateName(text)}
+              educationOnchangeText={text => updateEducation(text)}
+              numberOnchangeText={text => updateNumber(text)}
+              emailOnchangeText={text => updateEmail(text)}
+              bloodgroupOnchange={item => updateBloodGroupValue(item)}
+              currentworkOnchangeText={text => updateCurrentWorkValue(text)}
+              maritalStatusOnchange={item => updateMSValue(item)}
+              LookingForOnchange={item => updateLookingValue(item)}
+              isDatePickerVisible={isDatePickerVisible}
+              showDatePicker={showDatePicker}
+              onChange={(e, selectedDate) => handleConfirm(e, selectedDate)}
+              onTouchCancel={() => hideDatePicker()}
+            />
+          </ScrollView>
+          <ButtonComponent
+            title="Save"
+            ButtonContainer={styles.ButtonContainer}
+            loading={spinner}
+            onPress={() => SaveDetail()}
+          />
+          <Poweredby container={{flex: 0}} />
+        </>
+      ) : (
+        <Spinner />
+      )}
     </View>
   );
 };
 
-export default AddMambersDetails;
+export default EditMember;
 
 const styles = StyleSheet.create({
   imageConatiner: imageUp => ({
@@ -274,8 +325,9 @@ const styles = StyleSheet.create({
   AddLogoText: {
     fontSize: 12,
     color: COLORS.third,
-    marginBottom: 10,
+    marginVertical: 10,
     fontFamily: FONTS.InterMedium,
+    textAlign: 'center',
   },
   ButtonContainer: {
     marginTop: 10,

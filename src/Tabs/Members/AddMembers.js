@@ -1,18 +1,18 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
 import axios from 'axios';
-import MamberCard from './MamberCard';
+import MemberCard from './MemberCard';
 import Spinner from '../../Components/Spinner';
 import {ScrollView} from 'react-native-gesture-handler';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 
-const AddMambers = ({navigation, route}) => {
+const AddMembers = ({navigation, route}) => {
   const {userID, userToken} = route.params;
-  const [data, setUserData] = useState('');
+  const [data, setUserData] = useState([]);
   const [loading, updateLoading] = useState(false);
 
   const fetchMemberList = async () => {
@@ -28,7 +28,9 @@ const AddMambers = ({navigation, route}) => {
         },
       });
       updateLoading(false);
-      setUserData(response.data.family_member);
+      if (response.data.success == true) {
+        setUserData(response.data.family_member);
+      }
     } catch (error) {
       updateLoading(false);
       console.log(error);
@@ -37,7 +39,7 @@ const AddMambers = ({navigation, route}) => {
   useEffect(() => {
     fetchMemberList();
     return () => {
-      setUserData('');
+      setUserData([]);
     };
   }, []);
 
@@ -46,29 +48,40 @@ const AddMambers = ({navigation, route}) => {
       {data.length > 0 && (
         <ScrollView>
           {data.map((newData, index) => (
-            <MamberCard
-              fetchMemberList={fetchMemberList}
-              key={newData.id}
-              userId={newData.id}
-              index={index}
-              category={newData.relation}
-              subTitle={newData.blood_group}
-              title={newData.name}
-              source={
-                newData.logo_image ===
-                'https://colonyguide.garimaartgallery.com/storage'
-                  ? require('../../../assets/Image_not_available.png')
-                  : {uri: newData.photo}
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate('Member Information', {infoData: newData})
               }
-            />
+              activeOpacity={0.9}
+              key={newData.id}>
+              <MemberCard
+                fetchMemberList={fetchMemberList}
+                onUpdate={setUserData}
+                userId={newData.id}
+                index={index}
+                category={newData.relation}
+                subTitle={newData.education}
+                title={newData.name}
+                onEdit={() =>
+                  navigation.navigate('Edit Member Details', {
+                    editData: newData,
+                  })
+                }
+                source={
+                  newData.photo.includes('photo')
+                    ? {uri: newData.photo}
+                    : require('../../../assets/Image_not_available.png')
+                }
+              />
+            </TouchableOpacity>
           ))}
           <View style={genericStyles.mb(20)} />
         </ScrollView>
       )}
       {loading && <Spinner />}
-      {!loading && data == '' && <NoDataAni />}
+      {!loading && data.length == [] && <NoDataAni />}
       <ButtonComponent
-        title="Add Mamber"
+        title="Add Member"
         ButtonContainer={styles.ButtonContainer}
         onPress={() => navigation.navigate('Add Members Details')}
       />
@@ -77,7 +90,7 @@ const AddMambers = ({navigation, route}) => {
   );
 };
 
-export default AddMambers;
+export default AddMembers;
 
 const styles = StyleSheet.create({
   View: {marginTop: 50, alignSelf: 'center', marginBottom: 20},

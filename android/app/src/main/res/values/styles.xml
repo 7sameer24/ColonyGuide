@@ -7,6 +7,12 @@
         <item name="android:forceDarkAllowed">false</item>
         <item name="android:windowDisablePreview">true</item>
         <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:datePickerDialogTheme">@style/Dialog.Theme</item>
+    </style>
+
+    <style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">#8937C7</item>
+        <item name="android:textColorPrimary">#8937C7</item>
     </style>
 
   <style name="BootTheme" parent="AppTheme">

@@ -38,8 +38,12 @@ import ServiceList from '../Tabs/../ProfileComponents/ServiceComponents/Categori
 import ServiceInformation from '../Tabs/../ProfileComponents/ServiceComponents/CategoriesScreens/ServiceInformation';
 import BusinessInformation from '../ProfileComponents/BusinessComponents/BusinessInformation';
 import SearchResult from '../Tabs/SearchScreens/SearchResult';
-import AddMambers from '../Tabs/Mambers/AddMambers';
-import AddMambersDetails from '../Tabs/Mambers/AddMambersDetails';
+import AddMembers from '../Tabs/Members/AddMembers';
+import AddMembersDetails from '../Tabs/Members/AddMembersDetails';
+import MemberInfo from '../Tabs/Members/MemberInfo';
+import EditMember from '../Tabs/Members/EditMember';
+import MMFemale from '../Tabs/Matrimonial/MMFemale';
+import MMMale from '../Tabs/Matrimonial/MMMale';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -246,18 +250,40 @@ const HomeStack = () => {
     },
     {
       name: 'Add Members',
-      component: AddMambers,
+      component: AddMembers,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
     },
     {
       name: 'Add Members Details',
-      component: AddMambersDetails,
+      component: AddMembersDetails,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
       title: 'Members Details',
+    },
+    {
+      name: 'Edit Member Details',
+      component: EditMember,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Member Information',
+      component: MemberInfo,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShown: false,
+    },
+    {
+      name: 'Matrimonial',
+      component: MyMatrimonial,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      headerShown: true,
     },
   ];
 
@@ -308,6 +334,33 @@ function MyTopTabs() {
               tabBarPressColor: '#f2f2f2',
               tabBarItemStyle: {width: 90},
               tabBarScrollEnabled: true,
+              title: data.name,
+            }}
+          />
+        );
+      })}
+    </TopTab.Navigator>
+  );
+}
+function MyMatrimonial() {
+  const TopTabsArr = [
+    {component: MMFemale, name: 'Female', ID: 'Female'},
+    {component: MMMale, name: 'Male', ID: 'Male'},
+  ];
+  return (
+    <TopTab.Navigator>
+      {TopTabsArr.map(data => {
+        return (
+          <TopTab.Screen
+            key={data.name}
+            name={data.ID}
+            component={data.component}
+            options={{
+              tabBarActiveTintColor: COLORS.primary,
+              tabBarInactiveTintColor: COLORS.textColor,
+              tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
+              tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
+              tabBarPressColor: '#f2f2f2',
               title: data.name,
             }}
           />
