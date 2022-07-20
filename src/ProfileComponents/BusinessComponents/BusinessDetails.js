@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -21,10 +20,10 @@ import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 import ModalPopup from '../../Components/ModalPopup';
 
-const BusinessDetails = ({navigation, route}) => {
+const BusinessDetails = ({navigation}) => {
   const {Userdata, UserToken, setCheckStatus} = useApp();
-  const [CategoryData, setCategoryData] = useState([]);
-  const [Category, setCategory] = useState('');
+  const [businessCategoryData, setBusinessCategoryData] = useState([]);
+  const [businessValue, updateBusinessValue] = useState('');
   const [imageUp, setImage] = useState('');
   const [spinner, setSpinner] = useState(false);
   const [ShopBusName, setShopBusName] = useState('');
@@ -39,8 +38,10 @@ const BusinessDetails = ({navigation, route}) => {
 
   const idx = async () => {
     try {
-      const response = await axios.post(BaseURL('get-all-master'));
-      setCategoryData(response.data.businessCategory);
+      const response = await axios.post(BaseURL('get-all-master'), {
+        locality_id: Userdata.userData.locality_id,
+      });
+      setBusinessCategoryData(response.data.businessCategory);
     } catch (error) {
       console.log(error);
     }
@@ -120,7 +121,7 @@ const BusinessDetails = ({navigation, route}) => {
         data.append('contact_person', PersonName);
         data.append('contact_person_mobile', mobile_no);
         data.append('contact_person_whatsapp', WhatsappNo);
-        data.append('category_id', Category);
+        data.append('category_id', businessValue);
         data.append('about_service', About);
         data.append('house_no', buildFL);
         data.append('landmark', Landmark);
@@ -162,14 +163,13 @@ const BusinessDetails = ({navigation, route}) => {
   useEffect(() => {
     idx();
     return () => {
-      setCategoryData([]);
-      setCategoryData('');
+      setBusinessCategoryData([]);
     };
   }, []);
 
   return (
     <View style={genericStyles.Container}>
-      {CategoryData.length > 0 ? (
+      {businessCategoryData.length > 0 ? (
         <>
           <ScrollView>
             <TouchableOpacity
@@ -221,12 +221,12 @@ const BusinessDetails = ({navigation, route}) => {
 
             <DropDownComponent
               placeholder="Select business type"
-              data={CategoryData}
+              data={businessCategoryData}
               labelField="name"
               valueField="id"
-              value={Category}
+              value={businessValue}
               maxHeight={100}
-              onChange={item => setCategory(item.id)}
+              onChange={item => updateBusinessValue(item.id)}
             />
             <InputComponent
               placeholder="About business (Optional)"
@@ -256,11 +256,10 @@ const BusinessDetails = ({navigation, route}) => {
           </ScrollView>
           <ButtonComponent
             title="Save"
-            ButtonContainer={styles.ButtonContainer}
             loading={spinner ? true : false}
             onPress={() => SaveDetail()}
           />
-          <Poweredby container={genericStyles.mb(5)} />
+          <Poweredby container={{flex: 0}} />
         </>
       ) : (
         <Spinner />

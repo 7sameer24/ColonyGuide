@@ -1,5 +1,4 @@
 import {
-  Dimensions,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -10,7 +9,6 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
-import {CheckBox} from 'react-native-elements';
 import HeaderBody from '../../Components/HeaderBody';
 import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
@@ -21,9 +19,6 @@ import {navigationStateType, useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 
 const LoginScreen = ({navigation}) => {
-  const {width, height} = Dimensions.get('window');
-
-  const [check1, setCheck1] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [visible, setVisible] = useState(true);
   const [MN, setMobile] = useState('');

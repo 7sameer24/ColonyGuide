@@ -19,6 +19,7 @@ import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
 import BaseURL from '../../constants/BaseURL';
 import ModalPopup from '../../Components/ModalPopup';
+import {useApp} from '../../../Context/AppContext';
 
 const BusinessEdit = ({navigation, route}) => {
   const {data, token} = route.params;
@@ -34,10 +35,13 @@ const BusinessEdit = ({navigation, route}) => {
   const [AL1, setAL1] = useState(data.address);
   const [Landmark, setLandmark] = useState(data.landmark);
   const [modalVisible, setModalVisible] = useState(false);
+  const {Userdata} = useApp();
 
   const idx = async () => {
     try {
-      const response = await axios.post(BaseURL('get-all-master'));
+      const response = await axios.post(BaseURL('get-all-master'), {
+        locality_id: Userdata.userData.locality_id,
+      });
       setCategoryData(response.data.businessCategory);
     } catch (error) {
       console.log(error);

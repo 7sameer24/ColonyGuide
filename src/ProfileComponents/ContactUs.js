@@ -51,7 +51,7 @@ const ContactUs = ({route, navigation}) => {
       try {
         setSpinner(true);
         const response = await axios({
-          url: BaseURL('contact-us'),
+          url: BaseURL('contactus'),
           method: 'post',
           headers: {Authorization: `Bearer ${userToken}`},
           data: {
@@ -89,6 +89,7 @@ const ContactUs = ({route, navigation}) => {
           <InputComponent
             placeholder="Mobile Number"
             value={mobile}
+            maxLength={10}
             onChangeText={num => setMobile(num)}
             keyboardType="number-pad"
           />

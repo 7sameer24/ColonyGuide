@@ -5,6 +5,7 @@ import {
   View,
   ToastAndroid,
   useWindowDimensions,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 import {Card, Icon} from 'react-native-elements';
@@ -27,6 +28,18 @@ const MemberCard = ({
   const {width} = useWindowDimensions();
   const {UserToken} = useApp();
   const [loading, updateLoading] = useState(false);
+
+  const openLockAlert = () => {
+    Alert.alert(
+      'Member',
+      'Are you sure you want to delete member ?',
+      [
+        {text: 'Ok', onPress: () => deleteList()},
+        {text: 'Cancel', style: 'cancel'},
+      ],
+      {cancelable: false},
+    );
+  };
 
   const deleteList = async () => {
     try {
@@ -90,7 +103,7 @@ const MemberCard = ({
               size={18}
               color={COLORS.red}
               reverse
-              onPress={deleteList}
+              onPress={openLockAlert}
               containerStyle={genericStyles.shadow}
             />
           </View>

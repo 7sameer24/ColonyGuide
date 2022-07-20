@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   ScrollView,
   StyleSheet,
@@ -8,20 +7,17 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import InputComponent from '../../Components/InputComponent';
 import ButtonComponent from '../../Components/ButtonComponent';
-import axios from 'axios';
 import DropDownComponent from '../../Components/DropDownComponent';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
-import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
 import {useApp} from '../../../Context/AppContext';
-import BaseURL from '../../constants/BaseURL';
 import ModalPopup from '../../Components/ModalPopup';
 
-const ServiceAddDetails = ({navigation, route}) => {
+const ServiceAddDetails = ({navigation}) => {
   const {Userdata, UserToken, categories} = useApp();
   const [Category, setCategory] = useState('');
   const [imageUp, setImage] = useState('');
@@ -147,14 +143,6 @@ const ServiceAddDetails = ({navigation, route}) => {
     }
   };
 
-  useEffect(() => {
-    idx();
-    return () => {
-      setCategoryData([]);
-      setCategoryData('');
-    };
-  }, []);
-
   return (
     <View style={genericStyles.Container}>
       <ScrollView>
@@ -209,10 +197,10 @@ const ServiceAddDetails = ({navigation, route}) => {
 
         <DropDownComponent
           placeholder="Select Category"
-          data={CategoryData}
+          data={categories}
           labelField="name"
           valueField="id"
-          value={categories}
+          value={Category}
           maxHeight={200}
           onChange={item => setCategory(item.id)}
         />
@@ -248,7 +236,7 @@ const ServiceAddDetails = ({navigation, route}) => {
         loading={spinner ? true : false}
         onPress={() => SaveDetail()}
       />
-      <Poweredby />
+      <Poweredby container={{flex: 0}} />
     </View>
   );
 };

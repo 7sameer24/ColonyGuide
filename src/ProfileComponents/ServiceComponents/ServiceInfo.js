@@ -62,6 +62,7 @@ const ServiceInfo = ({navigation, route}) => {
                         ? require('../../../assets/Image_not_available.png')
                         : {uri: newData.logo_image}
                     }
+                    googleNavigate={`${newData.house_no}+${newData.address}, Udaipur, Rajasthan`}
                   />
                 ))}
                 <View style={genericStyles.mb(20)} />

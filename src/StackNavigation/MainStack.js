@@ -19,13 +19,8 @@ import ResumeHostelForm from './ResumeFormsStack/ResumeHostelForm';
 import ModalStack from './ModalStack';
 
 const MainStack = () => {
-  const {
-    navigationState,
-    setVersion,
-    setNavigationState,
-    setNewData,
-    setUserToken,
-  } = useApp();
+  const {navigationState, setNavigationState, setNewData, setUserToken} =
+    useApp();
 
   useEffect(() => {
     const setUserDetail = async () => {
