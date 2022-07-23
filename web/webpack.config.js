@@ -18,6 +18,7 @@ const compileNodeModules = [
   'react-native-webview',
   'react-native-reanimated',
   'react-native',
+  '@react-navigation/native',
 ].map(moduleName =>
   path.resolve(appDirectory, `../node_modules/${moduleName}`),
 );
@@ -63,24 +64,24 @@ const imageLoaderConfiguration = {
 const ttfLoaderConfig = {
   test: /\.ttf$/,
   loader: 'url-loader', // or directly file-loader
-  include: [...compileNodeModules],
+  include: path.resolve(__dirname, '../node_modules/react-native-vector-icons'),
 };
-const txLoaderConfig = {
-  test: /\.tsx?$/,
-  include: [...compileNodeModules],
-  use: [
-    {
-      loader: 'babel-loader',
-      options: {
-        presets: ['solid'],
-        configFile: '../tsconfig.json',
-      },
-    },
-    {
-      loader: 'ts-loader',
-    },
-  ],
-};
+// const txLoaderConfig = {
+//   test: /\.tsx?$/,
+//   include: [...compileNodeModules],
+//   use: [
+//     {
+//       loader: 'babel-loader',
+//       options: {
+//         presets: ['solid'],
+//         configFile: 'tsconfig.json',
+//       },
+//     },
+//     {
+//       loader: 'ts-loader',
+//     },
+//   ],
+// };
 
 module.exports = {
   entry: {
@@ -111,7 +112,7 @@ module.exports = {
       imageLoaderConfiguration,
       svgLoaderConfiguration,
       ttfLoaderConfig,
-      txLoaderConfig,
+      // txLoaderConfig,
     ],
   },
   plugins: [

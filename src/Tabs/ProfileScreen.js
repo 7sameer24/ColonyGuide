@@ -191,6 +191,18 @@ const ProfileScreen = ({navigation}) => {
                     IconSvg={<IconImg />}
                     title="Matrimonial"
                   />
+                  <ProfileComponents
+                    onPress={() => navigation.navigate('Events')}
+                    iconName="chevron-forward-outline"
+                    IconSvg={<IconImg />}
+                    title="Events"
+                  />
+                  <ProfileComponents
+                    onPress={() => navigation.navigate('Gallery')}
+                    iconName="chevron-forward-outline"
+                    IconSvg={<IconImg />}
+                    title="Gallery"
+                  />
                 </>
               )}
               <Divider style={styles.Divider} color="#F3EBF9" width={1} />

@@ -44,6 +44,9 @@ import MemberInfo from '../Tabs/Members/MemberInfo';
 import EditMember from '../Tabs/Members/EditMember';
 import MMFemale from '../Tabs/Matrimonial/MMFemale';
 import MMMale from '../Tabs/Matrimonial/MMMale';
+import Events from '../ProfileComponents/Events';
+import Gallery from '../ProfileComponents/GalleryComponents/Gallery';
+import MoreImg from '../ProfileComponents/GalleryComponents/MoreImg';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -63,8 +66,6 @@ const HomeStack = () => {
     {
       name: 'Personal Details',
       component: ProfileDetails,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
       headerShown: false,
     },
     {
@@ -85,25 +86,16 @@ const HomeStack = () => {
     {
       name: 'Committee',
       component: Committee,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
       headerShown: false,
     },
     {
       name: 'Service List',
       component: ServiceList,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
       headerShown: false,
     },
     {
       name: 'House Owners',
       component: HouseOwners,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
       headerShown: false,
     },
     {
@@ -137,9 +129,6 @@ const HomeStack = () => {
     {
       name: 'Business listed',
       component: BusinessListed,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
       headerShown: false,
     },
     {
@@ -183,11 +172,7 @@ const HomeStack = () => {
     {
       name: 'Business Infoo',
       component: BusinessInfo,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
       headerShown: false,
-      title: 'Business Information',
     },
     {
       name: 'Service Info',
@@ -228,19 +213,11 @@ const HomeStack = () => {
     {
       name: 'Service Information',
       component: ServiceInformation,
-      headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
-      headerTintColor: COLORS.white,
-      headerStyle: {backgroundColor: COLORS.primary},
-      headerShadowVisible: false,
       headerShown: false,
     },
     {
       name: 'Business Information',
       component: BusinessInformation,
-      headerTitleStyle: [styles.headerStyle, {color: COLORS.white}],
-      headerTintColor: COLORS.white,
-      headerStyle: {backgroundColor: COLORS.primary},
-      headerShadowVisible: false,
       headerShown: false,
     },
     {
@@ -273,8 +250,6 @@ const HomeStack = () => {
     {
       name: 'Member Information',
       component: MemberInfo,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
       headerShown: false,
     },
     {
@@ -284,6 +259,25 @@ const HomeStack = () => {
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
       headerShown: true,
+    },
+    {
+      name: 'Gallery',
+      component: Gallery,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'MoreImg',
+      component: MoreImg,
+      headerShown: false,
+    },
+    {
+      name: 'Events',
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      component: Events,
     },
   ];
 

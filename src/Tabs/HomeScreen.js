@@ -1,23 +1,22 @@
 import {
-  Modal,
+  Dimensions,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
-import {SliderBox} from 'react-native-image-slider-box';
 import FourList from '../Components/FourList';
 import CategoriesList from './Categories/CategoriesList';
 import HeaderBar from '../Components/HeaderBar';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
 import {useApp} from '../../Context/AppContext';
-import ImageViewer from 'react-native-image-zoom-viewer';
 import BaseURL from '../constants/BaseURL';
-import {Icon} from 'react-native-elements';
+import {Image} from 'react-native-elements';
 import PushNotification from 'react-native-push-notification';
 import messaging from '@react-native-firebase/messaging';
 import PushNotificationIOS from '@react-native-community/push-notification-ios';
@@ -25,7 +24,10 @@ import ButtonComponent from '../Components/ButtonComponent';
 import LoginAnimation from '../Components/LoginAnimation';
 import EmptyView from '../Components/EmptyView';
 import ImageZoomComponent from '../Components/ImageZoomComponent';
+import Swiper from 'react-native-swiper';
 
+const WIDTH = Dimensions.get('window').width;
+const HIGHT = Dimensions.get('window').height;
 const HomeScreen = ({navigation}) => {
   const [newData, setData] = useState([]);
   const [SliderImage, setSliderImg] = useState([]);
@@ -208,20 +210,29 @@ const HomeScreen = ({navigation}) => {
             {newData.length > 0 && (
               <ScrollView>
                 <>
-                  <SliderBox
-                    images={images}
-                    sliderBoxHeight={150}
-                    dotColor="#fff"
-                    inactiveDotColor={COLORS.transparent}
-                    autoplay={true}
-                    circleLoop={true}
-                    imageLoadingColor={COLORS.primary}
-                    ImageComponentStyle={styles.ImageComponentStyle}
-                    dotStyle={styles.dotStyle}
-                    autoplayInterval={3000}
-                    onCurrentImagePressed={index => ImageZoom(index)}
-                  />
-
+                  <View style={styles.slide2}>
+                    <Swiper
+                      automaticallyAdjustContentInsets
+                      activeDotColor={COLORS.white}
+                      dotColor={COLORS.transparent}
+                      dotStyle={styles.dotStyle}
+                      showsButtons={false}
+                      autoplay={true}>
+                      {SliderImage.map((data, imgIndex) => (
+                        <TouchableOpacity
+                          activeOpacity={0.8}
+                          key={imgIndex}
+                          onPress={() => ImageZoom(imgIndex)}
+                          style={styles.slide2}>
+                          <Image
+                            resizeMode="stretch"
+                            source={{uri: data.banner_image}}
+                            style={styles.wrap}
+                          />
+                        </TouchableOpacity>
+                      ))}
+                    </Swiper>
+                  </View>
                   <FourList navigation={navigation} />
                   <View style={genericStyles.mh(20)}>
                     <Text style={styles.topText}>Top Categories</Text>
@@ -286,5 +297,15 @@ const styles = StyleSheet.create({
     width: '30%',
     alignSelf: 'center',
     marginBottom: 15,
+  },
+  wrap: {
+    width: WIDTH / 1.12,
+    height: HIGHT * 0.25,
+  },
+  slide2: {
+    height: 180,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.white,
   },
 });

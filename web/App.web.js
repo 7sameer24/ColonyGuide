@@ -9,7 +9,7 @@ import {Platform, StatusBar} from 'react-native';
 import {COLORS} from '../src/constants';
 import SplashScreen from 'react-native-splash-screen';
 
-const App = () => {
+const AppWeb = () => {
   const [showInternetPopup, setNetAvailable] = useState(false);
   const [forceUpdate, setForceUpdate] = useState(false);
 
@@ -65,4 +65,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default AppWeb;
