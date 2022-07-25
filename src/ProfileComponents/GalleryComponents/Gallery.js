@@ -4,10 +4,11 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  Image,
+  useWindowDimensions,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
-import {Image} from 'react-native-elements';
 import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 import axios from 'axios';
@@ -18,6 +19,7 @@ const Gallery = ({navigation}) => {
   const [imgData, setimgData] = useState([]);
   const [loading, setIsLoading] = useState(false);
   const {Userdata, UserToken} = useApp();
+  const {width, height} = useWindowDimensions();
 
   const idx = async () => {
     try {
@@ -52,16 +54,17 @@ const Gallery = ({navigation}) => {
             {imgData.map(data => (
               <TouchableOpacity
                 key={data.id}
+                activeOpacity={0.8}
                 onPress={() =>
                   navigation.navigate('MoreImg', {
                     name: data.gallery_name,
                     NewData: data.gallery_image,
                   })
                 }
-                style={genericStyles.ai('center')}>
+                style={styles.containerStyle(width, height)}>
                 <Image
-                  source={require('../../../assets/Rectangle.png')}
-                  style={{width: 64, height: 64}}
+                  source={{uri: data.gallery_image[0].gallery_image}}
+                  style={{width: 64, height: 64, borderRadius: 10}}
                 />
                 <Text style={styles.title}>{data.gallery_name}</Text>
               </TouchableOpacity>
@@ -82,11 +85,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 10,
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
   },
   title: {
-    fontSize: 13,
+    fontSize: 11,
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
+    marginTop: 5,
   },
+
+  containerStyle: (width, height) => ({
+    width: width / 5,
+    borderRadius: 10,
+    marginHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+  }),
 });

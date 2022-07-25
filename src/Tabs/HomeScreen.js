@@ -303,7 +303,7 @@ const styles = StyleSheet.create({
     height: HIGHT * 0.25,
   },
   slide2: {
-    height: 180,
+    height: 160,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: COLORS.white,

@@ -44,9 +44,10 @@ import MemberInfo from '../Tabs/Members/MemberInfo';
 import EditMember from '../Tabs/Members/EditMember';
 import MMFemale from '../Tabs/Matrimonial/MMFemale';
 import MMMale from '../Tabs/Matrimonial/MMMale';
-import Events from '../ProfileComponents/Events';
+import Events from '../ProfileComponents/EventsComponets/Events';
 import Gallery from '../ProfileComponents/GalleryComponents/Gallery';
 import MoreImg from '../ProfileComponents/GalleryComponents/MoreImg';
+import EventInfo from '../ProfileComponents/EventsComponets/EventInfo';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -278,6 +279,11 @@ const HomeStack = () => {
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
       component: Events,
+    },
+    {
+      name: 'EventInfo',
+      component: EventInfo,
+      headerShown: false,
     },
   ];
 

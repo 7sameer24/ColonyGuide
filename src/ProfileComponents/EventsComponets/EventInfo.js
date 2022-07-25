@@ -1,9 +1,9 @@
 import {View, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import {genericStyles} from '../../constants';
-import ImgCards from './ImgCards';
+import ImgCards from '../GalleryComponents/ImgCards';
 
-const MoreImg = ({navigation, route}) => {
+const EventInfo = ({navigation, route}) => {
   const [visible, setIsvisible] = useState(false);
   const [imageIndex, setimageIndex] = useState(0);
   const ImageZoom = index => {
@@ -12,12 +12,13 @@ const MoreImg = ({navigation, route}) => {
   };
 
   const ImageView = route.params.NewData.map(data => ({
-    url: data.gallery_image,
+    url: data.event_image,
   }));
   return (
     <View style={genericStyles.container}>
       <ImgCards
         NewData={route.params.NewData}
+        description={route.params.description}
         setimageIndex={setimageIndex}
         setIsvisible={setIsvisible}
         name={route.params.name}
@@ -31,7 +32,7 @@ const MoreImg = ({navigation, route}) => {
   );
 };
 
-export default MoreImg;
+export default EventInfo;
 
 const styles = StyleSheet.create({
   Container: {
