@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Dimensions,
   ScrollView,
   StatusBar,
@@ -131,7 +132,7 @@ const HomeScreen = ({navigation}) => {
       // (required) Called when a remote is received or opened, or local notification is opened
       onNotification: function (notification) {
         console.log('onNotification:', notification);
-        navigation.navigate('Notification');
+        // navigation.navigate('Notification');
 
         notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
@@ -162,7 +163,6 @@ const HomeScreen = ({navigation}) => {
     setIsvisible(true);
   };
 
-  const images = SliderImage.map(data => data.banner_image);
   const ImageView = SliderImage.map(data => ({url: data.banner_image}));
 
   useEffect(() => {
@@ -228,6 +228,10 @@ const HomeScreen = ({navigation}) => {
                             resizeMode="stretch"
                             source={{uri: data.banner_image}}
                             style={styles.wrap}
+                            placeholderStyle={genericStyles.bg(COLORS.white)}
+                            PlaceholderContent={
+                              <ActivityIndicator color={COLORS.primary} />
+                            }
                           />
                         </TouchableOpacity>
                       ))}

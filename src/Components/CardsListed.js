@@ -1,5 +1,4 @@
 import {
-  Image,
   StyleSheet,
   Text,
   View,
@@ -7,9 +6,10 @@ import {
   ToastAndroid,
   Platform,
   useWindowDimensions,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
-import {Card, Icon} from 'react-native-elements';
+import {Card, Icon, Image} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import BaseURL from '../constants/BaseURL';
 import axios from 'axios';
@@ -91,7 +91,13 @@ const CardsListed = ({
             {alignItems: 'center', justifyContent: 'space-between'},
           ]}>
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
-            <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
+            <Image
+              source={source}
+              style={styles.ImageStyle}
+              fadeDuration={0}
+              placeholderStyle={genericStyles.bg(COLORS.white)}
+              PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
+            />
             <View style={genericStyles.row}>
               <View style={{width: width / 3.1}}>
                 <Text style={[styles.title]} numberOfLines={1}>

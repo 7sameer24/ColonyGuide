@@ -1,7 +1,7 @@
-import {Image, StyleSheet, Text, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
-import {Icon} from 'react-native-elements';
+import {Image, Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
@@ -58,7 +58,9 @@ const BusinessSaved = ({route, navigation}) => {
                   : {uri: Userdata.logo_image}
               }
               fadeDuration={0}
-              style={styles.ImageStyle}
+              containerStyle={styles.ImageStyle}
+              placeholderStyle={genericStyles.bg(COLORS.white)}
+              PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
             <View style={genericStyles.column}>
               <Text style={[styles.title, {color: COLORS.textColor}]}>

@@ -1,15 +1,15 @@
 import {
-  Image,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import HeaderBar from '../Components/HeaderBar';
-import {Divider} from 'react-native-elements';
+import {Image, Divider} from 'react-native-elements';
 import ProfileComponents from '../Components/ProfileComponents';
 import IconImg from '../../assets/ProfileSvg/PD.svg';
 import Group from '../../assets/ProfileSvg/Group.svg';
@@ -18,6 +18,10 @@ import Settings from '../../assets/ProfileSvg/settings.svg';
 import Feedback from '../../assets/ProfileSvg/feedback.svg';
 import Terms from '../../assets/ProfileSvg/TC.svg';
 import Contact from '../../assets/ProfileSvg/contact.svg';
+import AddMember from '../../assets/ProfileSvg/AddMember.svg';
+import MM from '../../assets/ProfileSvg/MM.svg';
+import Event from '../../assets/ProfileSvg/event.svg';
+import Gallery from '../../assets/ProfileSvg/Gallery.svg';
 import Poweredby from '../Components/Poweredby';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 import axios from 'axios';
@@ -83,7 +87,11 @@ const ProfileScreen = ({navigation}) => {
                     ? Images.Ellipse
                     : {uri: Userdata.userData.profile_image}
                 }
-                style={styles.ImageStyle}
+                placeholderStyle={genericStyles.bg(COLORS.white)}
+                PlaceholderContent={
+                  <ActivityIndicator color={COLORS.primary} />
+                }
+                containerStyle={styles.ImageStyle}
               />
               <View style={[genericStyles.column, {alignSelf: 'center'}]}>
                 <Text
@@ -182,25 +190,25 @@ const ProfileScreen = ({navigation}) => {
                       })
                     }
                     iconName="chevron-forward-outline"
-                    IconSvg={<IconImg />}
+                    IconSvg={<AddMember />}
                     title="Add Members"
                   />
                   <ProfileComponents
                     onPress={() => navigation.navigate('Matrimonial')}
                     iconName="chevron-forward-outline"
-                    IconSvg={<IconImg />}
+                    IconSvg={<MM />}
                     title="Matrimonial"
                   />
                   <ProfileComponents
                     onPress={() => navigation.navigate('Events')}
                     iconName="chevron-forward-outline"
-                    IconSvg={<IconImg />}
+                    IconSvg={<Event />}
                     title="Events"
                   />
                   <ProfileComponents
                     onPress={() => navigation.navigate('Gallery')}
                     iconName="chevron-forward-outline"
-                    IconSvg={<IconImg />}
+                    IconSvg={<Gallery />}
                     title="Gallery"
                   />
                 </>

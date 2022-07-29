@@ -4,8 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
-  Image,
-  useWindowDimensions,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
@@ -14,12 +13,12 @@ import BaseURL from '../../constants/BaseURL';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import NoDataAni from '../../Components/NoDataAni';
+import {Image} from 'react-native-elements';
 
 const Gallery = ({navigation}) => {
   const [imgData, setimgData] = useState([]);
   const [loading, setIsLoading] = useState(false);
   const {Userdata, UserToken} = useApp();
-  const {width, height} = useWindowDimensions();
 
   const idx = async () => {
     try {
@@ -61,19 +60,25 @@ const Gallery = ({navigation}) => {
                     NewData: data.gallery_image,
                   })
                 }
-                style={styles.containerStyle(width, height)}>
-                <Image
-                  source={{uri: data.gallery_image[0].gallery_image}}
-                  style={{width: 64, height: 64, borderRadius: 10}}
-                />
-                <Text style={styles.title}>{data.gallery_name}</Text>
+                style={styles.containerStyle}>
+                <View style={{flex: 1, borderRadius: 10, alignItems: 'center'}}>
+                  <Image
+                    source={{uri: data.gallery_image[0].gallery_image}}
+                    style={{width: 64, height: 64, borderRadius: 10}}
+                    placeholderStyle={genericStyles.bg(COLORS.white)}
+                    PlaceholderContent={
+                      <ActivityIndicator color={COLORS.primary} />
+                    }
+                  />
+                  <Text style={styles.title}>{data.gallery_name}</Text>
+                </View>
               </TouchableOpacity>
             ))}
           </View>
         </ScrollView>
       )}
       {loading && <Spinner />}
-      {!loading && !imgData && <NoDataAni />}
+      {!loading && imgData.length == [] && <NoDataAni />}
     </View>
   );
 };
@@ -82,11 +87,10 @@ export default Gallery;
 
 const styles = StyleSheet.create({
   Container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 10,
-    justifyContent: 'space-between',
+    flex: 1,
+    padding: 5,
     flexWrap: 'wrap',
+    flexDirection: 'row',
   },
   title: {
     fontSize: 11,
@@ -95,12 +99,9 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 
-  containerStyle: (width, height) => ({
-    width: width / 5,
-    borderRadius: 10,
-    marginHorizontal: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  }),
+  containerStyle: {
+    width: '25%',
+    height: '52%',
+    padding: 5,
+  },
 });

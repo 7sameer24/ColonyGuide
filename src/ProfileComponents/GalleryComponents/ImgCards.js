@@ -1,21 +1,18 @@
 import {
-  Image,
   View,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
   Text,
-  useWindowDimensions,
+  ActivityIndicator,
 } from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import ImageZoomComponent from '../../Components/ImageZoomComponent';
 import HeaderBar from '../../Components/HeaderBar';
-import {Card} from 'react-native-elements';
+import {Card, Image} from 'react-native-elements';
 
 const ImgCards = props => {
-  const {width, height} = useWindowDimensions();
-
   return (
     <View style={genericStyles.container}>
       {props.visible ? (
@@ -51,15 +48,22 @@ const ImgCards = props => {
                   key={index}
                   activeOpacity={0.8}
                   onPress={() => props.ImageZoom(index)}
-                  style={styles.containerStyle(width, height)}>
-                  <Image
-                    source={{
-                      uri: props.description
-                        ? data.event_image
-                        : data.gallery_image,
-                    }}
-                    style={{width: 64, height: 64, borderRadius: 10}}
-                  />
+                  style={styles.containerStyle}>
+                  <View
+                    style={{flex: 1, borderRadius: 10, alignItems: 'center'}}>
+                    <Image
+                      source={{
+                        uri: props.description
+                          ? data.event_image
+                          : data.gallery_image,
+                      }}
+                      placeholderStyle={genericStyles.bg(COLORS.white)}
+                      PlaceholderContent={
+                        <ActivityIndicator color={COLORS.primary} />
+                      }
+                      style={{width: 64, height: 64, borderRadius: 10}}
+                    />
+                  </View>
                 </TouchableOpacity>
               ))}
             </View>
@@ -74,20 +78,17 @@ export default ImgCards;
 
 const styles = StyleSheet.create({
   Container: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flex: 1,
+    padding: 5,
     marginTop: 10,
-    justifyContent: 'space-between',
     flexWrap: 'wrap',
+    flexDirection: 'row',
   },
-  containerStyle: (width, height) => ({
-    width: width / 5,
-    borderRadius: 10,
-    marginHorizontal: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 20,
-  }),
+  containerStyle: {
+    width: '25%',
+    height: '52%',
+    padding: 5,
+  },
   DesContainer: {
     marginHorizontal: 20,
     borderRadius: 10,

@@ -1,21 +1,17 @@
 import {
-  Image,
   StyleSheet,
   Text,
   View,
   useWindowDimensions,
   Linking,
+  ActivityIndicator,
 } from 'react-native';
-import React, {useState} from 'react';
-import {Card, Icon} from 'react-native-elements';
+import React from 'react';
+import {Image, Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../../constants';
-import {useApp} from '../../../Context/AppContext';
-import SpinnerModal from '../../Components/SpinnerModal';
 
 const MemberCard = ({category, title, subTitle, source, phoneNumber}) => {
   const {width} = useWindowDimensions();
-  const {UserToken} = useApp();
-  const [loading, updateLoading] = useState(false);
 
   return (
     <View>
@@ -26,7 +22,13 @@ const MemberCard = ({category, title, subTitle, source, phoneNumber}) => {
             {alignItems: 'center', justifyContent: 'space-between'},
           ]}>
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
-            <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
+            <Image
+              source={source}
+              style={styles.ImageStyle}
+              fadeDuration={0}
+              placeholderStyle={genericStyles.bg(COLORS.white)}
+              PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
+            />
             <View style={genericStyles.row}>
               <View style={{width: width / 2.4}}>
                 <Text style={[styles.title]} numberOfLines={1}>
@@ -54,7 +56,6 @@ const MemberCard = ({category, title, subTitle, source, phoneNumber}) => {
           </View>
         </View>
       </Card>
-      <SpinnerModal visible={loading} />
     </View>
   );
 };

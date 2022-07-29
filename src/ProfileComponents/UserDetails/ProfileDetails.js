@@ -1,11 +1,18 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {FONTS, genericStyles, Images} from '../../constants';
+import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import HeaderBar from '../../Components/HeaderBar';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import Poweredby from '../../Components/Poweredby';
 import BaseURL from '../../constants/BaseURL';
+import {Image} from 'react-native-elements';
 
 const ProfileDetails = ({navigation, route}) => {
   const {userID, userToken} = route.params;
@@ -60,7 +67,11 @@ const ProfileDetails = ({navigation, route}) => {
                     ? Images.Ellipse
                     : {uri: userData.profile_image}
                 }
-                style={styles.ImageStyle}
+                placeholderStyle={genericStyles.bg(COLORS.white)}
+                PlaceholderContent={
+                  <ActivityIndicator color={COLORS.primary} />
+                }
+                containerStyle={styles.ImageStyle}
               />
             </View>
             <View style={styles.midd}>

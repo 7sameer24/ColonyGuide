@@ -1,14 +1,14 @@
 import {
-  Image,
   StyleSheet,
   Text,
   View,
   ToastAndroid,
   useWindowDimensions,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useState} from 'react';
-import {Card, Icon} from 'react-native-elements';
+import {Image, Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {useApp} from '../../../Context/AppContext';
 import SpinnerModal from '../../Components/SpinnerModal';
@@ -72,7 +72,13 @@ const MemberCard = ({
             {alignItems: 'center', justifyContent: 'space-between'},
           ]}>
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
-            <Image source={source} style={styles.ImageStyle} fadeDuration={0} />
+            <Image
+              source={source}
+              fadeDuration={0}
+              style={styles.ImageStyle}
+              placeholderStyle={genericStyles.bg(COLORS.white)}
+              PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
+            />
             <View style={genericStyles.row}>
               <View style={{width: width / 3.1}}>
                 <Text style={[styles.title]} numberOfLines={1}>

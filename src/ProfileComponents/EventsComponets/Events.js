@@ -1,10 +1,10 @@
 import {
-  Image,
   View,
   Text,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
@@ -13,6 +13,7 @@ import axios from 'axios';
 import {useApp} from '../../../Context/AppContext';
 import Spinner from '../../Components/Spinner';
 import NoDataAni from '../../Components/NoDataAni';
+import {Image} from 'react-native-elements';
 
 const Events = ({navigation}) => {
   const [imgData, setimgData] = useState([]);
@@ -30,7 +31,9 @@ const Events = ({navigation}) => {
         },
       });
       setIsLoading(false);
-      setimgData(response.data.event);
+      if (response.data.success) {
+        setimgData(response.data.event);
+      }
     } catch (error) {
       setIsLoading(false);
       alert(error);
@@ -61,6 +64,11 @@ const Events = ({navigation}) => {
               <Image
                 source={{uri: e.event_image[0].event_image}}
                 style={styles.wrap}
+                progressiveRenderingEnabled
+                placeholderStyle={genericStyles.bg(COLORS.white)}
+                PlaceholderContent={
+                  <ActivityIndicator color={COLORS.primary} />
+                }
               />
               <Text style={styles.title}>{e.event_description}</Text>
             </TouchableOpacity>
@@ -68,7 +76,7 @@ const Events = ({navigation}) => {
         </ScrollView>
       )}
       {loading && <Spinner />}
-      {!loading && !imgData && <NoDataAni />}
+      {!loading && imgData.length == [] && <NoDataAni />}
     </View>
   );
 };

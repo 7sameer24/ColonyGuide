@@ -1,6 +1,13 @@
-import {Image, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import React from 'react';
-import {COLORS, FONTS, Images} from '../constants';
+import {COLORS, FONTS, genericStyles} from '../constants';
+import {Image} from 'react-native-elements';
 
 const CommiteeList = ({cardContainer, ViewContainer, data}) => {
   const {width, height} = useWindowDimensions();
@@ -10,6 +17,8 @@ const CommiteeList = ({cardContainer, ViewContainer, data}) => {
       {data.map(data => (
         <View key={data.id}>
           <Image
+            placeholderStyle={genericStyles.bg(COLORS.white)}
+            PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             resizeMode="contain"
             source={{uri: data.image}}
             style={styles.containerStyle(width, height)}

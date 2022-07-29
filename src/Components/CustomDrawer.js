@@ -1,5 +1,5 @@
 import {
-  Image,
+  ActivityIndicator,
   StyleSheet,
   Text,
   ToastAndroid,
@@ -10,7 +10,7 @@ import React from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import ProfileComponents from './ProfileComponents';
-import {Divider} from 'react-native-elements';
+import {Image, Divider} from 'react-native-elements';
 import Group from '../../assets/ProfileSvg/Group.svg';
 import Settings from '../../assets/ProfileSvg/settings.svg';
 import Feedback from '../../assets/ProfileSvg/feedback.svg';
@@ -73,6 +73,10 @@ const CustomDrawer = props => {
                         })
                   }>
                   <Image
+                    placeholderStyle={genericStyles.bg(COLORS.white)}
+                    PlaceholderContent={
+                      <ActivityIndicator color={COLORS.primary} />
+                    }
                     source={
                       Userdata.userData.app_role_id == 2
                         ? {uri: Userdata.userData.logo_image}
@@ -81,7 +85,7 @@ const CustomDrawer = props => {
                         ? Images.Ellipse
                         : {uri: Userdata.userData.profile_image}
                     }
-                    style={styles.ImageStyle}
+                    containerStyle={styles.ImageStyle}
                   />
                   {/* <View style={genericStyles.column}> */}
                   <Text
