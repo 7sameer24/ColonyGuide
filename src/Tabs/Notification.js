@@ -1,9 +1,16 @@
-import {Image, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import Spinner from '../Components/Spinner';
 import BaseURL from '../constants/BaseURL';
+import {Image} from 'react-native-elements';
 
 const Notification = () => {
   const [data, setData] = useState('');
@@ -32,8 +39,12 @@ const Notification = () => {
               <View key={newData.id} style={[genericStyles.mt(10)]}>
                 <Image
                   source={{uri: newData.image}}
-                  style={styles.imageStyle}
+                  containerStyle={styles.imageStyle}
                   fadeDuration={0}
+                  placeholderStyle={genericStyles.bg(COLORS.white)}
+                  PlaceholderContent={
+                    <ActivityIndicator color={COLORS.primary} />
+                  }
                 />
                 <Text style={styles.topText}>{newData.message}</Text>
               </View>

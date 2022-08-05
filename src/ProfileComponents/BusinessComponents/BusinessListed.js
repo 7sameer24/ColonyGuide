@@ -4,10 +4,10 @@ import {genericStyles} from '../../constants';
 import HeaderBar from '../../Components/HeaderBar';
 import CardsListed from '../../Components/CardsListed';
 import axios from 'axios';
-import ListedAnimation from '../../Components/ListedAnimation';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import {useApp} from '../../../Context/AppContext';
+import SkeletonView from '../../Components/SkeletonView';
 
 const BusinessListed = ({navigation}) => {
   const [newData, setNewData] = useState([]);
@@ -74,7 +74,12 @@ const BusinessListed = ({navigation}) => {
           <View style={genericStyles.height(20)} />
         </ScrollView>
       )}
-      {loading && <ListedAnimation />}
+      {loading && (
+        <ScrollView>
+          <SkeletonView />
+          <View style={genericStyles.height(20)} />
+        </ScrollView>
+      )}
       {!loading && newData.length == [] && <NoDataAni />}
     </View>
   );

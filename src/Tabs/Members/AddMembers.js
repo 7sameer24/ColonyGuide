@@ -5,10 +5,10 @@ import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
 import axios from 'axios';
 import MemberCard from './MemberCard';
-import Spinner from '../../Components/Spinner';
 import {ScrollView} from 'react-native-gesture-handler';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
+import SkeletonView from '../../Components/SkeletonView';
 
 const AddMembers = ({navigation, route}) => {
   const {userID, userToken} = route.params;
@@ -78,7 +78,12 @@ const AddMembers = ({navigation, route}) => {
           <View style={genericStyles.mb(20)} />
         </ScrollView>
       )}
-      {loading && <Spinner />}
+      {loading && (
+        <ScrollView>
+          <SkeletonView />
+          <View style={genericStyles.height(20)} />
+        </ScrollView>
+      )}
       {!loading && data.length == [] && <NoDataAni />}
       <ButtonComponent
         title="Add Member"

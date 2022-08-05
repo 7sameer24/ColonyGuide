@@ -4,10 +4,10 @@ import {genericStyles} from '../../constants';
 import HeaderBar from '../../Components/HeaderBar';
 import HouseOnwersList from '../../Components/HouseOnwersList';
 import axios from 'axios';
-import ListedAnimation from '../../Components/ListedAnimation';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import {useApp} from '../../../Context/AppContext';
+import SkeletonView from '../../Components/SkeletonView';
 
 const HouseOwners = ({navigation}) => {
   const [newData, setData] = useState([]);
@@ -60,7 +60,12 @@ const HouseOwners = ({navigation}) => {
           <View style={genericStyles.height(20)} />
         </ScrollView>
       )}
-      {loading && <ListedAnimation />}
+      {loading && (
+        <ScrollView>
+          <SkeletonView />
+          <View style={genericStyles.height(20)} />
+        </ScrollView>
+      )}
       {!loading && newData.length == [] && <NoDataAni />}
     </View>
   );

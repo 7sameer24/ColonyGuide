@@ -192,7 +192,10 @@ const CustomDrawer = props => {
           <>
             <View style={styles.ProfileContanier}>
               <View style={genericStyles.column}>
-                <Image source={Images.Ellipse} style={styles.ImageStyle} />
+                <Image
+                  source={Images.Ellipse}
+                  containerStyle={styles.ImageStyle}
+                />
                 <View style={genericStyles.column}>
                   <TouchableOpacity onPress={() => backToLogin()}>
                     <Text style={styles.subTitle}>Login</Text>

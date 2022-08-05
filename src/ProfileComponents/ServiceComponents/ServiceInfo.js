@@ -5,10 +5,10 @@ import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
 import axios from 'axios';
 import CardsListed from '../../Components/CardsListed';
-import Spinner from '../../Components/Spinner';
 import {ScrollView} from 'react-native-gesture-handler';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
+import SkeletonView from '../../Components/SkeletonView';
 
 const ServiceInfo = ({navigation, route}) => {
   const {userID, Role} = route.params;
@@ -68,7 +68,10 @@ const ServiceInfo = ({navigation, route}) => {
                 <View style={genericStyles.mb(20)} />
               </ScrollView>
             ) : (
-              <Spinner />
+              <ScrollView>
+                <SkeletonView />
+                <View style={genericStyles.height(20)} />
+              </ScrollView>
             )}
           </>
         )}

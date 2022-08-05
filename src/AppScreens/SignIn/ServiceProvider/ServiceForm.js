@@ -177,7 +177,7 @@ const ServiceForm = ({UserNewData}) => {
   const CategoryFetch = async () => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
-      updateNewData(response.data.categories);
+      updateNewData(response.data.categories_all);
       setLocalityData(response.data.localities);
     } catch (error) {
       console.log(error);

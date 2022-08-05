@@ -47,9 +47,11 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
           <Text style={styles.subTitle} numberOfLines={1}>
             {AddressLine}
           </Text>
-          <Text style={styles.subTitle} numberOfLines={1}>
-            {Landmark}
-          </Text>
+          {Landmark && (
+            <Text style={styles.subTitle} numberOfLines={1}>
+              {Landmark}
+            </Text>
+          )}
         </View>
         <View style={{flexDirection: 'column', justifyContent: 'space-evenly'}}>
           <Icon

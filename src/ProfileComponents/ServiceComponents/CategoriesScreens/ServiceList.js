@@ -4,9 +4,9 @@ import HeaderBar from '../../../Components/HeaderBar';
 import {genericStyles} from '../../../constants';
 import CardsListed from '../../../Components/CardsListed';
 import axios from 'axios';
-import ListedAnimation from '../../../Components/ListedAnimation';
 import BaseURL from '../../../constants/BaseURL';
 import NoDataAni from '../../../Components/NoDataAni';
+import SkeletonView from '../../../Components/SkeletonView';
 
 const ServiceList = ({navigation, route}) => {
   const {ID, Name, BannerImg} = route.params;
@@ -94,7 +94,10 @@ const ServiceList = ({navigation, route}) => {
               <View style={genericStyles.height(20)} />
             </ScrollView>
           ) : (
-            <ListedAnimation />
+            <ScrollView>
+              <SkeletonView />
+              <View style={genericStyles.height(20)} />
+            </ScrollView>
           )}
         </>
       )}

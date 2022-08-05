@@ -4,13 +4,13 @@ import {COLORS, genericStyles} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
 import {useApp} from '../../../Context/AppContext';
-import ListedAnimation from '../../Components/ListedAnimation';
 import Poweredby from '../../Components/Poweredby';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import {Icon} from 'react-native-elements';
 import FilterModal from '../../Components/FilterModal';
 import RoomsCard from '../../Components/RoomsCard';
+import SkeletonView from '../../Components/SkeletonView';
 
 const AllRoomsHostals = ({navigation}) => {
   const {Userdata, FilterData, setIsFilterData, GSaveLocalID} = useApp();
@@ -111,7 +111,9 @@ const AllRoomsHostals = ({navigation}) => {
                     renter_type={
                       data.renter_type === 1
                         ? 'Only Boys'
-                        : data.renter_type === 2 && 'Only Girls'
+                        : data.renter_type === 2
+                        ? 'Only Girls'
+                        : 'Family'
                     }
                     ID={data.id}
                     googleNavigate={`${data.house_no}+${data.address}, Udaipur, Rajasthan`}
@@ -145,7 +147,10 @@ const AllRoomsHostals = ({navigation}) => {
               ) : null}
             </>
           ) : (
-            <ListedAnimation />
+            <ScrollView>
+              <SkeletonView />
+              <View style={genericStyles.height(20)} />
+            </ScrollView>
           )}
         </>
       )}

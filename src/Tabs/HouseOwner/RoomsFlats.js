@@ -1,17 +1,16 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, genericStyles} from '../../constants';
-import CardsListed from '../../Components/CardsListed';
 import ButtonComponent from '../../Components/ButtonComponent';
 import axios from 'axios';
 import {useApp} from '../../../Context/AppContext';
-import ListedAnimation from '../../Components/ListedAnimation';
 import Poweredby from '../../Components/Poweredby';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import FilterModal from '../../Components/FilterModal';
 import {Icon} from 'react-native-elements';
 import RoomsCard from '../../Components/RoomsCard';
+import SkeletonView from '../../Components/SkeletonView';
 
 const RoomsFlats = ({navigation, route}) => {
   const {Userdata, GSaveLocalID} = useApp();
@@ -154,7 +153,10 @@ const RoomsFlats = ({navigation, route}) => {
               ) : null}
             </>
           ) : (
-            <ListedAnimation />
+            <ScrollView>
+              <SkeletonView />
+              <View style={genericStyles.height(20)} />
+            </ScrollView>
           )}
         </>
       )}

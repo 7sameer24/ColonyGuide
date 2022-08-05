@@ -5,8 +5,8 @@ import {useApp} from '../../../Context/AppContext';
 import axios from 'axios';
 import BaseURL from '../../constants/BaseURL';
 import MatrimonialCard from '../Matrimonial/MatrimonialCard';
-import Spinner from '../../Components/Spinner';
 import NoDataAni from '../../Components/NoDataAni';
+import SkeletonView from '../../Components/SkeletonView';
 
 const MMMale = ({route}) => {
   const {UserToken} = useApp();
@@ -60,7 +60,12 @@ const MMMale = ({route}) => {
           <View style={genericStyles.height(20)} />
         </ScrollView>
       )}
-      {loading && <Spinner />}
+      {loading && (
+        <ScrollView>
+          <SkeletonView />
+          <View style={genericStyles.height(20)} />
+        </ScrollView>
+      )}
       {!loading && maleData.length == [] && <NoDataAni />}
     </View>
   );
