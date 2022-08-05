@@ -69,7 +69,7 @@ const MembersFrom = ({
         labelField="name"
         valueField="ID"
         value={relationValue}
-        maxHeight={100}
+        maxHeight={200}
         onChange={relationOnchange}
       />
       <InputComponent

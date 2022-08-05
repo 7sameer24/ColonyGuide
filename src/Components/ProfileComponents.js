@@ -10,9 +10,12 @@ const ProfileComponents = ({
   onPress,
   iconName,
   ImageContainer,
+  iconView,
 }) => {
   return (
-    <TouchableOpacity style={styles.iconView} onPress={onPress}>
+    <TouchableOpacity
+      style={[styles.iconView, {...iconView}]}
+      onPress={onPress}>
       <View style={[styles.ImageContainer, {...ImageContainer}]}>
         {IconSvg}
       </View>

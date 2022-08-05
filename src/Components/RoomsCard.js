@@ -103,7 +103,7 @@ const RoomsCard = ({
               placeholderStyle={genericStyles.bg(COLORS.white)}
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
-            <View style={{width: width / 3.3}}>
+            <View style={{width: width / 3}}>
               <View>
                 <Text style={[styles.title]} numberOfLines={1}>
                   {title}
@@ -128,7 +128,7 @@ const RoomsCard = ({
               name="phone-outgoing"
               type="material-community"
               color="#407BFF"
-              size={18}
+              size={16}
               reverse
               onPress={() =>
                 Userdata === null ? setIsLoginPop(true) : callCount(1)
@@ -138,7 +138,7 @@ const RoomsCard = ({
             <Icon
               name="whatsapp"
               type="material-community"
-              size={18}
+              size={16}
               color="#25D366"
               reverse
               onPress={() =>

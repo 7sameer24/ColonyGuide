@@ -56,7 +56,7 @@ const EditProfile = ({route, navigation}) => {
       onChagneText: setFHN,
     },
     {
-      title: 'Address line',
+      title: 'Address',
       placeHolder: 'Address',
       value: Address,
       onChagneText: setAddress,
@@ -68,59 +68,62 @@ const EditProfile = ({route, navigation}) => {
       onChagneText: setLandmark,
     },
   ];
-
   const SaveDetail = async () => {
-    try {
-      setSpinner(true);
-      const URL =
-        'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
+    if (!Address || !PersonName) {
+      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+    } else {
+      try {
+        setSpinner(true);
+        const URL =
+          'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
 
-      const SaveData = new FormData();
-      SaveData.append('user_id', data.id);
-      SaveData.append('full_name', PersonName);
-      Email === null ? null : SaveData.append('email', Email);
-      Address === null ? null : SaveData.append('address', Address);
-      FHN === null ? null : SaveData.append('house_no', FHN);
-      Landmark === null ? null : SaveData.append('landmark', Landmark);
-      SaveData.append('locality_id', LocalityValue);
-      SaveData.append('shop_name', data.shop_name);
-      SaveData.append('category_id', data.shop_category);
-      SaveData.append('whatsapp_no', data.whatsapp_no);
-      SaveData.append('about', data.about);
-      SaveData.append('hostel_name', HostelName);
-      SaveData.append('hostel_address', hostel_address);
-      SaveData.append(
-        data.app_role_id == 2 ? 'logo_image' : 'profile_image',
-        imageUp
-          ? {
-              uri: imageUp[0].uri,
-              type: imageUp[0].type,
-              name: imageUp[0].fileName,
-            }
-          : '',
-      );
+        const SaveData = new FormData();
+        SaveData.append('user_id', data.id);
+        SaveData.append('full_name', PersonName);
+        Email === null ? null : SaveData.append('email', Email);
+        Address === null ? null : SaveData.append('address', Address);
+        FHN === null ? null : SaveData.append('house_no', FHN);
+        Landmark === null ? null : SaveData.append('landmark', Landmark);
+        SaveData.append('locality_id', LocalityValue);
+        SaveData.append('shop_name', data.shop_name);
+        SaveData.append('category_id', data.shop_category);
+        SaveData.append('whatsapp_no', data.whatsapp_no);
+        SaveData.append('about', data.about);
+        SaveData.append('hostel_name', HostelName);
+        SaveData.append('hostel_address', hostel_address);
+        SaveData.append(
+          data.app_role_id == 2 ? 'logo_image' : 'profile_image',
+          imageUp
+            ? {
+                uri: imageUp[0].uri,
+                type: imageUp[0].type,
+                name: imageUp[0].fileName,
+              }
+            : '',
+        );
 
-      const res = await fetch(URL, {
-        method: 'post',
-        body: SaveData,
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      let response = await res.json();
-      setSpinner(false);
-      if (response.success === true) {
-        setNewData(response);
-        navigation.navigate('Profile');
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
-      } else {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        const res = await fetch(URL, {
+          method: 'post',
+          body: SaveData,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        let response = await res.json();
+        setSpinner(false);
+        if (response.success === true) {
+          setNewData(response);
+          navigation.navigate('Profile');
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        }
+      } catch (error) {
+        setSpinner(false);
+        console.log(error);
+        alert(error);
       }
-    } catch (error) {
-      setSpinner(false);
-      console.log(error);
-      alert(error);
     }
   };
 
@@ -205,7 +208,7 @@ const EditProfile = ({route, navigation}) => {
         />
         <View style={styles.midd}>
           {data.app_role_id === 1 ? (
-            <View style={genericStyles.mb(15)}>
+            <View style={genericStyles.mb(10)}>
               <Text style={styles.text}>Your Name</Text>
               <InputComponent
                 placeholder="Your Name"
@@ -246,7 +249,7 @@ const EditProfile = ({route, navigation}) => {
           ) : (
             <View>
               {arr.map(data => (
-                <View key={data.title}>
+                <View key={data.title} style={genericStyles.mb(10)}>
                   <Text style={styles.text}>{data.title}</Text>
                   <InputComponent
                     placeholder={data.placeHolder}
@@ -258,7 +261,7 @@ const EditProfile = ({route, navigation}) => {
                   />
                 </View>
               ))}
-              <Text style={styles.text}>Locality</Text>
+              {/* <Text style={styles.text}>Locality</Text>
               <DropDownComponent
                 maxHeight={100}
                 data={localityData}
@@ -268,7 +271,7 @@ const EditProfile = ({route, navigation}) => {
                 valueField="id"
                 onChange={item => setLocality(item.id)}
                 dropdownStyle={styles.dropdownStyle}
-              />
+              /> */}
             </View>
           )}
         </View>

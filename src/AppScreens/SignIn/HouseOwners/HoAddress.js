@@ -30,9 +30,11 @@ const HoAddress = ({data}) => {
       ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
     } else if (!LocalityValue) {
       ToastAndroid.show('Please choose locality!', ToastAndroid.SHORT);
-    } else if (!colonyNo) {
-      ToastAndroid.show('Please choose colony no.!', ToastAndroid.SHORT);
-    } else if (
+    }
+    // else if (!colonyNo) {
+    //   ToastAndroid.show('Please choose colony no.!', ToastAndroid.SHORT);
+    // }
+    else if (
       data != undefined ? data.app_role_id == 3 : resumeDetails.app_role_id == 3
     ) {
       !HOName
@@ -133,7 +135,7 @@ const HoAddress = ({data}) => {
             />
             <View style={genericStyles.mb('5%')}>
               <InputComponent
-                placeholder="Full name"
+                placeholder="Full name (required)"
                 value={HOName}
                 onChangeText={text => setHOName(text)}
                 autoCapitalize="words"
@@ -145,7 +147,7 @@ const HoAddress = ({data}) => {
                 autoCapitalize="words"
               />
               <InputComponent
-                placeholder="Address"
+                placeholder="Address (required)"
                 value={Address}
                 onChangeText={text => setAddress(text)}
                 autoCapitalize="words"
@@ -160,7 +162,7 @@ const HoAddress = ({data}) => {
                 data={newData}
                 labelField="name"
                 valueField="id"
-                placeholder="Locality"
+                placeholder="Locality (required)"
                 value={LocalityValue}
                 maxHeight={100}
                 onChange={item => {
@@ -168,16 +170,17 @@ const HoAddress = ({data}) => {
                   fetchStreetNo(item.id);
                 }}
               />
-
-              <DropDownComponent
-                data={colonyData}
-                labelField="street_no"
-                valueField="id"
-                placeholder="Colony No."
-                value={colonyNo}
-                maxHeight={100}
-                onChange={item => updateColonyNo(item.id)}
-              />
+              {LocalityValue !== 8 && (
+                <DropDownComponent
+                  data={colonyData}
+                  labelField="street_no"
+                  valueField="id"
+                  placeholder="Colony No."
+                  value={colonyNo}
+                  maxHeight={200}
+                  onChange={item => updateColonyNo(item.id)}
+                />
+              )}
             </View>
           </ScrollView>
           <ButtonComponent

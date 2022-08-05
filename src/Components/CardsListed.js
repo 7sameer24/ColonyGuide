@@ -99,7 +99,7 @@ const CardsListed = ({
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
             <View style={genericStyles.row}>
-              <View style={{width: width / 3.1}}>
+              <View style={{width: width / 2.9}}>
                 <Text style={[styles.title]} numberOfLines={1}>
                   {title}
                 </Text>
@@ -117,7 +117,7 @@ const CardsListed = ({
               name="phone-outgoing"
               type="material-community"
               color="#407BFF"
-              size={16}
+              size={14}
               reverse
               onPress={() =>
                 Userdata === null ? setIsLoginPop(true) : callCount(1)
@@ -127,7 +127,7 @@ const CardsListed = ({
             <Icon
               name="whatsapp"
               type="material-community"
-              size={16}
+              size={14}
               color="#25D366"
               reverse
               onPress={() =>
@@ -138,7 +138,7 @@ const CardsListed = ({
             <Icon
               name="navigate"
               type="ionicon"
-              size={16}
+              size={14}
               color={COLORS.primary}
               reverse
               onPress={() =>
@@ -177,7 +177,6 @@ const styles = StyleSheet.create({
   View3: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 10,
   },
   title: {
     fontSize: 14,

@@ -22,6 +22,9 @@ import Logout from '../../assets/ProfileSvg/logout.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 import Terms from '../../assets/ProfileSvg/TC.svg';
+import MM from '../../assets/ProfileSvg/MM.svg';
+import Event from '../../assets/ProfileSvg/event.svg';
+import Gallery from '../../assets/ProfileSvg/Gallery.svg';
 
 const CustomDrawer = props => {
   const {
@@ -141,6 +144,25 @@ const CustomDrawer = props => {
               IconSvg={<Help />}
               onPress={() => props.navigation.navigate('Helpline')}
             />
+            {Userdata.userData.app_role_id === 3 && (
+              <>
+                <ProfileComponents
+                  onPress={() => props.navigation.navigate('Matrimonial')}
+                  IconSvg={<MM />}
+                  title="Matrimonial"
+                />
+                <ProfileComponents
+                  onPress={() => props.navigation.navigate('Events')}
+                  IconSvg={<Event />}
+                  title="Events"
+                />
+                <ProfileComponents
+                  onPress={() => props.navigation.navigate('Gallery')}
+                  IconSvg={<Gallery />}
+                  title="Gallery"
+                />
+              </>
+            )}
             <Divider style={styles.Divider} color="#F3EBF9" width={1} />
             <ProfileComponents
               title="Change Password"
@@ -182,6 +204,7 @@ const CustomDrawer = props => {
               }
             />
             <ProfileComponents
+              iconView={genericStyles.mb(10)}
               title="Log Out"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Logout />}

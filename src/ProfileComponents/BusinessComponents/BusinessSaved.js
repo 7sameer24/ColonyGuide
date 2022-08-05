@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     color: COLORS.primary,
     fontFamily: FONTS.InterMedium,
     marginBottom: 10,
+    width: 250,
   },
   subTitle: {
     fontSize: 14,
