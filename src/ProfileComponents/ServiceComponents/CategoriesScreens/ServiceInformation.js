@@ -5,7 +5,6 @@ import {
   Share,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -19,8 +18,11 @@ import {useApp} from '../../../../Context/AppContext';
 import SpinnerModal from '../../../Components/SpinnerModal';
 import ImageZoomComponent from '../../../Components/ImageZoomComponent';
 import HeaderBar from '../../../Components/HeaderBar';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../../Components/Toast';
 
 const ServiceInformation = ({route, navigation}) => {
+  const toast = useToast();
   const {ID} = route.params;
   const [infoData, setInfoData] = useState('');
   const {Userdata, setIsLoginPop} = useApp();
@@ -101,16 +103,13 @@ const ServiceInformation = ({route, navigation}) => {
       let url = 'whatsapp://send?text=' + '&phone=' + mobile;
       Linking.openURL(url)
         .then(() => {
-          ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
+          Toast(toast, 'WhatsApp Opened');
         })
         .catch(() => {
-          ToastAndroid.show(
-            'Make sure WhatsApp installed on your device',
-            ToastAndroid.SHORT,
-          );
+          Toast(toast, 'Make sure WhatsApp installed on your device');
         });
     } else {
-      ToastAndroid.show('Please insert mobile no', ToastAndroid.SHORT);
+      Toast(toast, 'Please insert mobile no');
     }
   };
 

@@ -8,6 +8,7 @@ import CheckUpdate from './src/Components/CheckUpdate';
 import {Platform, StatusBar} from 'react-native';
 import {COLORS} from './src/constants';
 import SplashScreen from 'react-native-splash-screen';
+import {ToastProvider} from 'react-native-toast-notifications';
 
 const App = () => {
   const [showInternetPopup, setNetAvailable] = useState(false);
@@ -58,7 +59,9 @@ const App = () => {
   return (
     <AppContext>
       <StatusBar backgroundColor={COLORS.primary} />
-      <MainStack />
+      <ToastProvider>
+        <MainStack />
+      </ToastProvider>
       <CheckUpdate checkVersionApi={checkVersionApi} visible={forceUpdate} />
       <InternetConnectionModel visible={showInternetPopup} />
     </AppContext>

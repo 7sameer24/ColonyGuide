@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -19,8 +18,12 @@ import Poweredby from '../../Components/Poweredby';
 import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 import ModalPopup from '../../Components/ModalPopup';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
 
 const BusinessDetails = ({navigation}) => {
+  const toast = useToast();
+
   const {Userdata, UserToken, setCheckStatus} = useApp();
   const [businessCategoryData, setBusinessCategoryData] = useState([]);
   const [businessValue, updateBusinessValue] = useState('');
@@ -98,15 +101,9 @@ const BusinessDetails = ({navigation}) => {
 
   const SaveDetail = async () => {
     if (mobile_no.length < 10) {
-      ToastAndroid.show(
-        'Please check your Mobile number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your Mobile number and try again');
     } else if (WhatsappNo.length < 10) {
-      ToastAndroid.show(
-        'Please check your Whatsapp number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your Whatsapp number and try again');
     } else {
       try {
         setSpinner(true);
@@ -149,13 +146,13 @@ const BusinessDetails = ({navigation}) => {
         if (response.success === true) {
           setCheckStatus(1);
           navigation.navigate('Profile');
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         } else {
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         }
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };

@@ -1,10 +1,4 @@
-import {
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  ToastAndroid,
-  View,
-} from 'react-native';
+import {ScrollView, StatusBar, View} from 'react-native';
 import React, {useState} from 'react';
 import {COLORS, genericStyles} from '../../constants';
 import HeaderBody from '../../Components/HeaderBody';
@@ -14,16 +8,19 @@ import ImgIcon from '../../../assets/svg/Frame 8.svg';
 import axios from 'axios';
 import Poweredby from '../../Components/Poweredby';
 import {CommonActions} from '@react-navigation/native';
+import Toast from '../../Components/Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const ResetPassScreen = ({navigation, route}) => {
   const {user_id} = route.params.data;
   const [password, setPassword] = useState('');
   const [c_password, setC_password] = useState('');
   const [spinner, setSpinner] = useState(false);
+  const toast = useToast();
 
   const idx = async () => {
     if (!password || !c_password) {
-      ToastAndroid.show('The password field is required.', ToastAndroid.SHORT);
+      Toast(toast, 'The password field is required.');
     } else {
       try {
         setSpinner(true);
@@ -43,15 +40,15 @@ const ResetPassScreen = ({navigation, route}) => {
                   routes: [{name: 'Login'}],
                 }),
               );
-              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              Toast(toast, response.data.message);
             } else {
               setSpinner(false);
-              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              Toast(toast, response.data.message);
             }
           });
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };

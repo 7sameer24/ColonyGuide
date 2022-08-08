@@ -1,4 +1,4 @@
-import {PermissionsAndroid, StyleSheet, ToastAndroid, View} from 'react-native';
+import {PermissionsAndroid, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, genericStyles, Images} from '../../../constants';
 import ButtonComponent from '../../../Components/ButtonComponent';
@@ -6,8 +6,11 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import Poweredby from '../../../Components/Poweredby';
 import {useApp} from '../../../../Context/AppContext';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../../Components/Toast';
 
 const OwnerLocation = ({navigation, data}) => {
+  const toast = useToast();
   const [latitude, setLatitude] = useState(24.5826);
   const [longitude, setLongitude] = useState(73.7191);
   const {resumeDetails} = useApp();
@@ -37,10 +40,10 @@ const OwnerLocation = ({navigation, data}) => {
           setLongitude(info.coords.longitude),
         );
       } else {
-        ToastAndroid.show('Location permission denied', ToastAndroid.SHORT);
+        Toast(toast, 'Location permission denied');
       }
     } catch (err) {
-      ToastAndroid.show(JSON.stringify(err), ToastAndroid.SHORT);
+      Toast(toast, JSON.stringify(err));
     }
   };
   return (

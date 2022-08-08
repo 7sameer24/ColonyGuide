@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -16,8 +15,12 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import Poweredby from '../../Components/Poweredby';
 import {useApp} from '../../../Context/AppContext';
 import ModalPopup from '../../Components/ModalPopup';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
 
 const ServiceEdit = ({navigation, route}) => {
+  const toast = useToast();
+
   const {data, token} = route.params;
   const [Category, setCategory] = useState(parseInt(data.shop_category));
   const [imageUp, setImage] = useState('');
@@ -81,10 +84,7 @@ const ServiceEdit = ({navigation, route}) => {
 
   const SaveDetail = async () => {
     if (WhatsappNo.length < 10) {
-      ToastAndroid.show(
-        'Please check your Whatsapp number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your Whatsapp number and try again');
     } else {
       try {
         setSpinner(true);
@@ -125,13 +125,13 @@ const ServiceEdit = ({navigation, route}) => {
         if (response.success === true) {
           setNewData(response);
           navigation.navigate('Profile');
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         } else {
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         }
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };

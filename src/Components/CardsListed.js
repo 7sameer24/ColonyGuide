@@ -3,7 +3,6 @@ import {
   Text,
   View,
   Linking,
-  ToastAndroid,
   Platform,
   useWindowDimensions,
   ActivityIndicator,
@@ -15,6 +14,8 @@ import BaseURL from '../constants/BaseURL';
 import axios from 'axios';
 import {useApp} from '../../Context/AppContext';
 import SpinnerModal from './SpinnerModal';
+import Toast from './Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const CardsListed = ({
   category,
@@ -31,6 +32,7 @@ const CardsListed = ({
   businessId,
   googleNavigate,
 }) => {
+  const toast = useToast();
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
   const {width} = useWindowDimensions();
@@ -67,16 +69,13 @@ const CardsListed = ({
       let url = 'whatsapp://send?text=' + '&phone=' + mobile;
       Linking.openURL(url)
         .then(() => {
-          ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
+          Toast(toast, 'WhatsApp Opened');
         })
         .catch(() => {
-          ToastAndroid.show(
-            'Make sure WhatsApp installed on your device',
-            ToastAndroid.SHORT,
-          );
+          Toast(toast, 'Make sure WhatsApp installed on your device');
         });
     } else {
-      ToastAndroid.show('Please insert mobile no', ToastAndroid.SHORT);
+      Toast(toast, 'Please insert mobile no');
     }
   };
 
@@ -106,9 +105,11 @@ const CardsListed = ({
                 <Text style={[styles.subTitle1]} numberOfLines={1}>
                   {subTitle}
                 </Text>
-                <Text numberOfLines={1} style={[styles.subTitle]}>
-                  {category}
-                </Text>
+                {category && (
+                  <Text numberOfLines={1} style={[styles.subTitle]}>
+                    {category}
+                  </Text>
+                )}
               </View>
             </View>
           </View>

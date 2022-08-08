@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -18,6 +17,8 @@ import axios from 'axios';
 import BaseURL from '../../constants/BaseURL';
 import {useApp} from '../../../Context/AppContext';
 import Spinner from '../../Components/Spinner';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
 
 const EditMember = ({navigation, route}) => {
   const {editData} = route.params;
@@ -39,6 +40,7 @@ const EditMember = ({navigation, route}) => {
   const [MSValue, updateMSValue] = useState('');
   const [LookingValue, updateLookingValue] = useState('');
   const {UserToken} = useApp();
+  const toast = useToast();
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -148,10 +150,7 @@ const EditMember = ({navigation, route}) => {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       return true;
     }
-    ToastAndroid.show(
-      'You have entered an invalid email address!',
-      ToastAndroid.SHORT,
-    );
+    Toast(toast, 'You have entered an invalid email address!');
     return false;
   };
 
@@ -167,12 +166,9 @@ const EditMember = ({navigation, route}) => {
       !LookingValue ||
       !genderValue
     ) {
-      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+      Toast(toast, 'Please fill all required fields');
     } else if (number.length < 10) {
-      ToastAndroid.show(
-        'Please check your number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your number and try again');
     } else {
       if (email.length > 0) {
         ValidateEmail();
@@ -223,9 +219,9 @@ const EditMember = ({navigation, route}) => {
         setSpinner(false);
         if (response.success == true) {
           navigation.navigate('Profile');
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         } else {
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         }
       } catch (error) {
         setSpinner(false);

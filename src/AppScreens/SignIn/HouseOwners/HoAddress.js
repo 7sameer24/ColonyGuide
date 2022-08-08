@@ -1,4 +1,4 @@
-import {ScrollView, ToastAndroid, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBody from '../../../Components/HeaderBody';
 import {genericStyles} from '../../../constants';
@@ -11,8 +11,11 @@ import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
 import {useApp} from '../../../../Context/AppContext';
 import BaseURL from '../../../constants/BaseURL';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../../Components/Toast';
 
 const HoAddress = ({data}) => {
+  const toast = useToast();
   const [HOName, setHOName] = useState('');
   const [house, setHouseNo] = useState();
   const [Address, setAddress] = useState('');
@@ -27,19 +30,17 @@ const HoAddress = ({data}) => {
 
   const VelidationCheck = async () => {
     if (!house || !Address) {
-      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+      Toast(toast, 'Please fill all required fields');
     } else if (!LocalityValue) {
-      ToastAndroid.show('Please choose locality!', ToastAndroid.SHORT);
+      Toast(toast, 'Please choose locality!');
     }
     // else if (!colonyNo) {
-    //   ToastAndroid.show('Please choose colony no.!', ToastAndroid.SHORT);
+    //   Toast(toast,'Please choose colony no.!');
     // }
     else if (
       data != undefined ? data.app_role_id == 3 : resumeDetails.app_role_id == 3
     ) {
-      !HOName
-        ? ToastAndroid.show('Please enter full name!', ToastAndroid.SHORT)
-        : handleOnSubmit();
+      !HOName ? Toast(toast, 'Please enter full name!') : handleOnSubmit();
     } else {
       handleOnSubmit();
     }
@@ -80,18 +81,18 @@ const HoAddress = ({data}) => {
       if (response.success === true) {
         setNewData(response);
         setUserToken(data != undefined ? data.token : resumeDetails.token);
-        // ToastAndroid.show(
+        // Toast(toast,
         //   UserData.app_role_id === 3
         //     ? `Welcome ${HOName}`
         //     : `Welcome ${FullName}`,
-        //   ToastAndroid.SHORT,
+        // ,
         // );
       } else {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        Toast(toast, response.message);
       }
     } catch (error) {
       setSpinner(false);
-      alert(error);
+      Toast(toast, error);
     }
   };
 
@@ -100,7 +101,7 @@ const HoAddress = ({data}) => {
       const response = await axios.post(BaseURL('get-all-master'));
       setData(response.data.localities);
     } catch (error) {
-      console.log(error);
+      Toast(toast, error);
     }
   };
 
@@ -111,7 +112,7 @@ const HoAddress = ({data}) => {
       });
       updateColonyData(response.data);
     } catch (error) {
-      console.log(error);
+      Toast(toast, error);
     }
   };
 

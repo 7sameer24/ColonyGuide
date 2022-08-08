@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -20,8 +19,11 @@ import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 import ModalPopup from '../../Components/ModalPopup';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
 
 const EditProfile = ({route, navigation}) => {
+  const toast = useToast();
   const {data, token} = route.params;
   const [spinner, setSpinner] = useState(false);
   const [LocalityValue, setLocality] = useState(data.locality_id);
@@ -70,7 +72,7 @@ const EditProfile = ({route, navigation}) => {
   ];
   const SaveDetail = async () => {
     if (!Address || !PersonName) {
-      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+      Toast(toast, 'Please fill all required fields');
     } else {
       try {
         setSpinner(true);
@@ -115,14 +117,14 @@ const EditProfile = ({route, navigation}) => {
         if (response.success === true) {
           setNewData(response);
           navigation.navigate('Profile');
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         } else {
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         }
       } catch (error) {
         setSpinner(false);
         console.log(error);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };

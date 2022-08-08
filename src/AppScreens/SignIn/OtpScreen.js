@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, ToastAndroid, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useRef, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {Input} from 'react-native-elements';
@@ -10,6 +10,8 @@ import axios from 'axios';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 import ResendTimer from '../../Components/ResendTimer';
+import Toast from '../../Components/Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const OtpScreen = ({route, navigation}) => {
   const {DATA, userMobile} = route.params;
@@ -25,6 +27,7 @@ const OtpScreen = ({route, navigation}) => {
   const {setNewData, setUserToken, setNavigationState} = useApp();
   const [resendingOTP, setResendingOTP] = useState(false);
   const [resendStatus, setResendStatus] = useState('Resend');
+  const toast = useToast();
 
   // Resend Timer
   const [timeLeft, setTimeLeft] = useState(null);
@@ -86,13 +89,13 @@ const OtpScreen = ({route, navigation}) => {
         } else {
           navigation.navigate('Registration', {UserData: DATA});
         }
-        ToastAndroid.show('OTP verified successfully', ToastAndroid.SHORT);
+        Toast(toast, 'OTP verified successfully');
       } else {
-        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+        Toast(toast, response.data.message);
       }
     } catch (error) {
       setSpinner(false);
-      alert(error);
+      Toast(toast, error);
     }
   };
 

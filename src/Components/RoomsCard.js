@@ -3,7 +3,6 @@ import {
   Text,
   View,
   Linking,
-  ToastAndroid,
   Platform,
   useWindowDimensions,
   ActivityIndicator,
@@ -15,6 +14,8 @@ import BaseURL from '../constants/BaseURL';
 import axios from 'axios';
 import {useApp} from '../../Context/AppContext';
 import SpinnerModal from './SpinnerModal';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from './Toast';
 
 const RoomsCard = ({
   category,
@@ -34,6 +35,8 @@ const RoomsCard = ({
   ID,
   googleNavigate,
 }) => {
+  const toast = useToast();
+
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
   const {width} = useWindowDimensions();
@@ -72,16 +75,13 @@ const RoomsCard = ({
       let url = 'whatsapp://send?text=' + '&phone=' + mobile;
       Linking.openURL(url)
         .then(() => {
-          ToastAndroid.show('WhatsApp Opened', ToastAndroid.SHORT);
+          Toast(toast, 'WhatsApp Opened');
         })
         .catch(() => {
-          ToastAndroid.show(
-            'Make sure WhatsApp installed on your device',
-            ToastAndroid.SHORT,
-          );
+          Toast(toast, 'Make sure WhatsApp installed on your device');
         });
     } else {
-      ToastAndroid.show('Please insert mobile no', ToastAndroid.SHORT);
+      Toast(toast, 'Please insert mobile no');
     }
   };
 

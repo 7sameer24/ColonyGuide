@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -20,8 +19,12 @@ import Poweredby from '../../Components/Poweredby';
 import BaseURL from '../../constants/BaseURL';
 import ModalPopup from '../../Components/ModalPopup';
 import {useApp} from '../../../Context/AppContext';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
 
 const BusinessEdit = ({navigation, route}) => {
+  const toast = useToast();
+
   const {data, token} = route.params;
   const [CategoryData, setCategoryData] = useState('');
   const [Category, setCategory] = useState(parseInt(data.category_id));
@@ -99,10 +102,7 @@ const BusinessEdit = ({navigation, route}) => {
 
   const businessUpdate = async () => {
     if (WhatsappNo.length < 10) {
-      ToastAndroid.show(
-        'Please check your Whatsapp number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your Whatsapp number and try again');
     } else {
       try {
         setSpinner(true);
@@ -141,13 +141,13 @@ const BusinessEdit = ({navigation, route}) => {
         setSpinner(false);
         if (response.success === true) {
           navigation.navigate('Profile');
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         } else {
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         }
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };

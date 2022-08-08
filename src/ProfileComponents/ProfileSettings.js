@@ -1,4 +1,4 @@
-import {Keyboard, ToastAndroid, View} from 'react-native';
+import {Keyboard, View} from 'react-native';
 import React, {useState} from 'react';
 import {genericStyles} from '../constants';
 import InputComponent from '../Components/InputComponent';
@@ -6,8 +6,12 @@ import ButtonComponent from '../Components/ButtonComponent';
 import axios from 'axios';
 import Poweredby from '../Components/Poweredby';
 import BaseURL from '../constants/BaseURL';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../Components/Toast';
 
 const ProfileSettings = ({route}) => {
+  const toast = useToast();
+
   const {userID, userToken} = route.params;
   const [spinner, setSpinner] = useState(false);
   const [Password, setPassword] = useState('');
@@ -31,13 +35,13 @@ const ProfileSettings = ({route}) => {
       setSpinner(false);
       Keyboard.dismiss();
       if (response.data.success === true) {
-        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+        Toast(toast, response.data.message);
       } else {
-        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+        Toast(toast, response.data.message);
       }
     } catch (error) {
       setSpinner(false);
-      alert(error);
+      Toast(toast, error);
     }
   };
 

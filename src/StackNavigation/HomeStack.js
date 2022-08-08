@@ -48,6 +48,8 @@ import Events from '../ProfileComponents/EventsComponets/Events';
 import Gallery from '../ProfileComponents/GalleryComponents/Gallery';
 import MoreImg from '../ProfileComponents/GalleryComponents/MoreImg';
 import EventInfo from '../ProfileComponents/EventsComponets/EventInfo';
+import SearchBus from '../Tabs/SearchScreens/SearchBus';
+import SearchBusResult from '../Tabs/SearchScreens/SearchBusResult';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -284,6 +286,21 @@ const HomeStack = () => {
       name: 'EventInfo',
       component: EventInfo,
       headerShown: false,
+    },
+    {
+      name: 'Search Business',
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      component: SearchBus,
+    },
+    {
+      name: 'SearchBusResult',
+      component: SearchBusResult,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+      title: 'Search Result',
     },
   ];
 

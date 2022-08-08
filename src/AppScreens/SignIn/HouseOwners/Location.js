@@ -1,11 +1,15 @@
-import {PermissionsAndroid, StyleSheet, ToastAndroid, View} from 'react-native';
+import {PermissionsAndroid, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {COLORS, genericStyles, Images} from '../../../constants';
+import {COLORS, genericStyles} from '../../../constants';
 import ButtonComponent from '../../../Components/ButtonComponent';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
+import Toast from '../../../Components/Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const Location = ({navigation, route}) => {
+  const toast = useToast();
+
   const {
     shopName,
     fullName,
@@ -43,10 +47,10 @@ const Location = ({navigation, route}) => {
           setLongitude(info.coords.longitude),
         );
       } else {
-        ToastAndroid.show('Location permission denied', ToastAndroid.SHORT);
+        Toast(toast, 'Location permission denied');
       }
     } catch (err) {
-      ToastAndroid.show(JSON.stringify(err), ToastAndroid.SHORT);
+      Toast(toast, JSON.stringify(err));
     }
   };
   return (

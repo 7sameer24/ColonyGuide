@@ -1,4 +1,4 @@
-import {ScrollView, ToastAndroid, View} from 'react-native';
+import {ScrollView, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBody from '../../../Components/HeaderBody';
 import {genericStyles} from '../../../constants';
@@ -11,6 +11,8 @@ import Spinner from '../../../Components/Spinner';
 import Poweredby from '../../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
 import BaseURL from '../../../constants/BaseURL';
+import Toast from '../../../Components/Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const AddressScreen = ({route}) => {
   const {
@@ -32,12 +34,13 @@ const AddressScreen = ({route}) => {
   const [newData, setData] = useState([]);
   const [LocalityValue, setLocality] = useState('');
   const {setNewData, setUserToken, setNavigationState} = useApp();
+  const toast = useToast();
 
   const VelidationCheck = async () => {
     if (!house || !Address) {
-      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+      Toast(toast, 'Please fill all required fields');
     } else if (!LocalityValue) {
-      ToastAndroid.show('Please select locality!', ToastAndroid.SHORT);
+      Toast(toast, 'Please select locality!');
     } else {
       handleOnSubmit();
     }
@@ -86,18 +89,18 @@ const AddressScreen = ({route}) => {
       if (response.success === true) {
         setNewData(response);
         setUserToken(UserData.token);
-        // ToastAndroid.show(
+        // Toast(
         //   UserData.app_role_id === 3
         //     ? `Welcome ${HOName}`
         //     : `Welcome ${FullName}`,
-        //   ToastAndroid.SHORT,
+        //   ,
         // );
       } else {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        Toast(toast, response.message);
       }
     } catch (error) {
       setSpinner(false);
-      alert(error);
+      Toast(toast, error);
     }
   };
 

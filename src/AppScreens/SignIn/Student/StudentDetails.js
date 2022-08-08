@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, ToastAndroid, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBody from '../../../Components/HeaderBody';
 import {COLORS, FONTS, genericStyles} from '../../../constants';
@@ -10,6 +10,8 @@ import Poweredby from '../../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../../Context/AppContext';
 import BaseURL from '../../../constants/BaseURL';
 import DropDownComponent from '../../../Components/DropDownComponent';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../../Components/Toast';
 
 const StudentDetails = ({data, navigation}) => {
   const [FullName, setFullName] = useState('');
@@ -21,17 +23,15 @@ const StudentDetails = ({data, navigation}) => {
   const [LocalityValue, setLocality] = useState('');
   const {setNewData, setUserToken, setNavigationState, resumeDetails} =
     useApp();
+  const toast = useToast();
 
   const handleOnSubmit = async () => {
     if (!FullName || !hostelName || !hostelAdd) {
-      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+      Toast(toast, 'Please fill all required fields');
     } else if (WhatsappNo.length < 10 || WhatsappNo.length > 10) {
-      ToastAndroid.show(
-        'Please check your number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your number and try again');
     } else if (!LocalityValue) {
-      ToastAndroid.show('Please select locality!', ToastAndroid.SHORT);
+      Toast(toast, 'Please select locality!');
     } else {
       try {
         setSpinner(true);
@@ -58,13 +58,13 @@ const StudentDetails = ({data, navigation}) => {
         if (response.data.success === true) {
           setNewData(response.data);
           setUserToken(data == undefined ? resumeDetails.token : data.token);
-          // ToastAndroid.show(`Welcome ${FullName}`, ToastAndroid.SHORT);
+          // Toast(toast,`Welcome ${FullName}`);
         } else {
           alert(response.data);
         }
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };

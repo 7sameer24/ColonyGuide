@@ -1,4 +1,4 @@
-import {ScrollView, ToastAndroid} from 'react-native';
+import {ScrollView} from 'react-native';
 import React, {useState} from 'react';
 import {genericStyles} from '../../constants';
 import HeaderBody from '../../Components/HeaderBody';
@@ -8,15 +8,18 @@ import FooterButton from '../../Components/FooterButton';
 import ImgIcon from '../../../assets/svg/Frame 7.svg';
 import axios from 'axios';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
+import Toast from '../../Components/Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const ForgotScreen = ({navigation}) => {
   const [mobile_no, setMobile] = useState('');
   const [spinner, setSpinner] = useState(false);
   const {setNavigationState} = useApp();
+  const toast = useToast();
 
   const idx = async () => {
     if (!mobile_no) {
-      ToastAndroid.show('The mobile no field is required.', ToastAndroid.SHORT);
+      Toast(toast, 'The mobile no field is required.');
     } else {
       try {
         setSpinner(true);
@@ -31,10 +34,10 @@ const ForgotScreen = ({navigation}) => {
                 DATA: response.data,
                 userMobile: mobile_no,
               });
-              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              Toast(toast, response.data.message);
             } else {
               setSpinner(false);
-              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              Toast(toast, response.data.message);
             }
           });
       } catch (error) {

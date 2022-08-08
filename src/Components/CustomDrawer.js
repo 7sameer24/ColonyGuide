@@ -2,7 +2,6 @@ import {
   ActivityIndicator,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -25,6 +24,8 @@ import Terms from '../../assets/ProfileSvg/TC.svg';
 import MM from '../../assets/ProfileSvg/MM.svg';
 import Event from '../../assets/ProfileSvg/event.svg';
 import Gallery from '../../assets/ProfileSvg/Gallery.svg';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from './Toast';
 
 const CustomDrawer = props => {
   const {
@@ -37,6 +38,7 @@ const CustomDrawer = props => {
     updateGSaveLocalID,
     updateResumeDtails,
   } = useApp();
+  const toast = useToast();
 
   const removeValue = async () => {
     const keys = ['UserLogin', 'UserToken'];
@@ -56,7 +58,7 @@ const CustomDrawer = props => {
     updateGSaveLocalID(null);
     updateResumeDtails(null);
     setNavigationState(navigationStateType.AUTH);
-    ToastAndroid.show('Logout Successfully', ToastAndroid.SHORT);
+    Toast(toast, 'Logout Successfully');
   };
   return (
     <View style={genericStyles.fill}>

@@ -2,7 +2,6 @@ import {
   StyleSheet,
   Text,
   View,
-  ToastAndroid,
   useWindowDimensions,
   Alert,
   ActivityIndicator,
@@ -14,6 +13,8 @@ import {useApp} from '../../../Context/AppContext';
 import SpinnerModal from '../../Components/SpinnerModal';
 import axios from 'axios';
 import BaseURL from '../../constants/BaseURL';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
 
 const MemberCard = ({
   category,
@@ -25,6 +26,8 @@ const MemberCard = ({
   onUpdate,
   onEdit,
 }) => {
+  const toast = useToast();
+
   const {width} = useWindowDimensions();
   const {UserToken} = useApp();
   const [loading, updateLoading] = useState(false);
@@ -56,7 +59,7 @@ const MemberCard = ({
       updateLoading(false);
       onUpdate([]);
       fetchMemberList();
-      ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+      Toast(toast, response.data.message);
     } catch (error) {
       updateLoading(false);
       console.log(error);

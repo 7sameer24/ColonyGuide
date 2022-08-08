@@ -1,4 +1,4 @@
-import {Keyboard, StyleSheet, Text, ToastAndroid, View} from 'react-native';
+import {Keyboard, StyleSheet, Text, View} from 'react-native';
 import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import StarRating from 'react-native-star-rating';
@@ -8,8 +8,12 @@ import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
 import {useApp} from '../../Context/AppContext';
 import Poweredby from '../Components/Poweredby';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../Components/Toast';
 
 const FeedBacks = ({route, navigation}) => {
+  const toast = useToast();
+
   const {ID, token} = route.params;
   const [star, setStar] = useState(null);
 
@@ -40,13 +44,13 @@ const FeedBacks = ({route, navigation}) => {
       Keyboard.dismiss();
       if (response.data.success === true) {
         navigation.navigate('Homee');
-        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+        Toast(toast, response.data.message);
       } else {
-        ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+        Toast(toast, response.data.message);
       }
     } catch (error) {
       setSpinner(false);
-      alert(error);
+      Toast(toast, error);
     }
   };
 

@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, ToastAndroid, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import BaseURL from '../constants/BaseURL';
 import ButtonComponent from './ButtonComponent';
 import DropDownComponent from './DropDownComponent';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from './Toast';
 
 const LocalModal = ({route}) => {
   const [newData, setData] = useState([]);
@@ -18,13 +20,15 @@ const LocalModal = ({route}) => {
     setUserToken,
     resumeDetails,
   } = useApp();
+  const toast = useToast();
+
   const fetchLocalities = async () => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
       if (response.data.success) {
         setData(response.data.localities);
       } else {
-        ToastAndroid.show(response.data.message);
+        Toast(toast, response.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -60,7 +64,7 @@ const LocalModal = ({route}) => {
           route.params != undefined ? route.params.token : resumeDetails.token,
         );
       } else {
-        ToastAndroid.show(response.data.message);
+        Toast(toast, response.data.message);
       }
     } catch (error) {
       updateLoading(false);
@@ -77,7 +81,7 @@ const LocalModal = ({route}) => {
 
   const goNext = () => {
     if (!LocalityValue) {
-      ToastAndroid.show('Please select your locality', ToastAndroid.SHORT);
+      Toast(toast, 'Please select your locality');
     } else {
       if (route.params == undefined && resumeDetails == null) {
         updateGSaveLocalID(LocalityValue);

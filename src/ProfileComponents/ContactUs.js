@@ -4,7 +4,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -16,8 +15,12 @@ import {Icon} from 'react-native-elements';
 import Poweredby from '../Components/Poweredby';
 import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../Components/Toast';
 
 const ContactUs = ({route, navigation}) => {
+  const toast = useToast();
+
   const {userID, userToken} = route.params;
   const [spinner, setSpinner] = useState(false);
   const [message, setMessage] = useState('');
@@ -43,10 +46,7 @@ const ContactUs = ({route, navigation}) => {
 
   const SendContact = async () => {
     if (mobile.length < 10 || mobile.length > 10) {
-      ToastAndroid.show(
-        'Please check your number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your number and try again');
     } else {
       try {
         setSpinner(true);
@@ -65,13 +65,13 @@ const ContactUs = ({route, navigation}) => {
         Keyboard.dismiss();
         if (response.data.success === true) {
           navigation.navigate('Homee');
-          ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+          Toast(toast, response.data.message);
         } else {
-          ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+          Toast(toast, response.data.message);
         }
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };

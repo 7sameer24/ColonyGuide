@@ -1,7 +1,6 @@
 import {
   ScrollView,
   StyleSheet,
-  ToastAndroid,
   View,
   Image,
   TouchableOpacity,
@@ -19,6 +18,8 @@ import Poweredby from '../../../Components/Poweredby';
 import BaseURL from '../../../constants/BaseURL';
 import ModalPopup from '../../../Components/ModalPopup';
 import {useApp} from '../../../../Context/AppContext';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../../Components/Toast';
 
 const ServiceForm = ({UserNewData}) => {
   const [imageUp, setImage] = useState('');
@@ -36,22 +37,20 @@ const ServiceForm = ({UserNewData}) => {
   const [Address, setAddress] = useState('');
   const [Landmark, setLandmark] = useState('');
   const [spinner, setSpinner] = useState(false);
+  const toast = useToast();
 
   const [modalVisible, setModalVisible] = useState(false);
   const {resumeDetails, setNewData, setUserToken} = useApp();
 
   const validationCheck = async () => {
     if (!WhatsappNo || !fullName || !Category || !house || !Address) {
-      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+      Toast(toast, 'Please fill all required fields');
     } else if (WhatsappNo.length < 10) {
-      ToastAndroid.show(
-        'Please check your Whatsapp number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your Whatsapp number and try again');
     } else if (!imageUp) {
-      ToastAndroid.show('Please select image', ToastAndroid.SHORT);
+      Toast(toast, 'Please select image');
     } else if (!LocalityValue) {
-      ToastAndroid.show('Please select locality!', ToastAndroid.SHORT);
+      Toast(toast, 'Please select locality!');
     } else {
       handleOnSubmit();
     }
@@ -110,18 +109,18 @@ const ServiceForm = ({UserNewData}) => {
         setUserToken(
           UserNewData != undefined ? UserNewData.token : resumeDetails.token,
         );
-        // ToastAndroid.show(
+        // Toast(toast,
         //   UserData.app_role_id === 3
         //     ? `Welcome ${HOName}`
         //     : `Welcome ${FullName}`,
-        //   ToastAndroid.SHORT,
+        // ,
         // );
       } else {
-        ToastAndroid.show(response.message, ToastAndroid.SHORT);
+        Toast(toast, response.message);
       }
     } catch (error) {
       setSpinner(false);
-      alert(error);
+      Toast(toast, error);
     }
   };
 

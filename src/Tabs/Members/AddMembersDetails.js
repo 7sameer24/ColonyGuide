@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,6 +16,8 @@ import MembersFrom from '../../Components/Forms/MembersFrom';
 import axios from 'axios';
 import BaseURL from '../../constants/BaseURL';
 import {useApp} from '../../../Context/AppContext';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
 
 const AddMembersDetails = ({navigation}) => {
   const [imageUp, setImage] = useState('');
@@ -36,6 +37,7 @@ const AddMembersDetails = ({navigation}) => {
   const [MSValue, updateMSValue] = useState('');
   const [LookingValue, updateLookingValue] = useState('');
   const {Userdata, UserToken} = useApp();
+  const toast = useToast();
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -130,10 +132,7 @@ const AddMembersDetails = ({navigation}) => {
     if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       return true;
     }
-    ToastAndroid.show(
-      'You have entered an invalid email address!',
-      ToastAndroid.SHORT,
-    );
+    Toast(toast, 'You have entered an invalid email address!');
     return false;
   };
 
@@ -149,12 +148,9 @@ const AddMembersDetails = ({navigation}) => {
       !LookingValue ||
       !genderValue
     ) {
-      ToastAndroid.show('Please fill all required fields', ToastAndroid.SHORT);
+      Toast(toast, 'Please fill all required fields');
     } else if (number.length < 10) {
-      ToastAndroid.show(
-        'Please check your number and try again',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please check your number and try again');
     } else {
       if (email.length > 0) {
         ValidateEmail();
@@ -203,13 +199,13 @@ const AddMembersDetails = ({navigation}) => {
         setSpinner(false);
         if (response.success == true) {
           navigation.navigate('Profile');
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         } else {
-          ToastAndroid.show(response.message, ToastAndroid.SHORT);
+          Toast(toast, response.message);
         }
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };

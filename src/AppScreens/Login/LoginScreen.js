@@ -3,7 +3,6 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,8 +16,11 @@ import axios from 'axios';
 import LoginLogo from '../../../assets/svg/pana.svg';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
 
 const LoginScreen = ({navigation}) => {
+  const toast = useToast();
   const [spinner, setSpinner] = useState(false);
   const [visible, setVisible] = useState(true);
   const [MN, setMobile] = useState('');
@@ -28,7 +30,7 @@ const LoginScreen = ({navigation}) => {
 
   const Login = async () => {
     if (MN.length < 10 || MN.length > 10) {
-      ToastAndroid.show('Please enter 10 digit number', ToastAndroid.SHORT);
+      Toast(toast, 'Please enter 10 digit number');
     } else {
       try {
         setSpinner(true);
@@ -42,10 +44,10 @@ const LoginScreen = ({navigation}) => {
             if (response.data.success === true) {
               setNewData(response.data);
               setUserToken(response.data.token);
-              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              Toast(toast, response.data.message);
             } else {
               if (response.data.otp_status === false) {
-                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+                Toast(toast, response.data.message);
               } else {
                 if (response.data.message.includes('Service provider')) {
                   updateResumeDtails({
@@ -77,12 +79,12 @@ const LoginScreen = ({navigation}) => {
                   setNavigationState(navigationStateType.CHOOSELOCALID);
                 }
               }
-              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              Toast(toast, response.data.message);
             }
           });
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, response.data.message);
       }
     }
   };

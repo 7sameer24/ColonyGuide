@@ -39,8 +39,13 @@ const BusinessListed = ({navigation}) => {
       <HeaderBar
         firstIcon="arrow-back-outline"
         title="Our Business"
-        // searchIcon="search"
+        searchIcon="search"
         // bellIcon="filter"
+        searchTouchable={() =>
+          navigation.navigate('Search Business', {
+            data: newData,
+          })
+        }
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />

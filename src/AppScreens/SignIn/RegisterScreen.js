@@ -3,7 +3,6 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -17,6 +16,8 @@ import axios from 'axios';
 import Poweredby from '../../Components/Poweredby';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
+import Toast from '../../Components/Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const RegisterScreen = ({navigation, route}) => {
   const {width, height} = Dimensions.get('window');
@@ -28,17 +29,15 @@ const RegisterScreen = ({navigation, route}) => {
   const [pass, setPass] = useState('');
   const [CPASS, setCPASS] = useState('');
   const {setNavigationState} = useApp();
+  const toast = useToast();
 
   const register = async () => {
     if (mobileNo.length < 10 || mobileNo.length > 10) {
-      ToastAndroid.show('Please enter 10 digit number', ToastAndroid.SHORT);
+      Toast(toast, 'Please enter 10 digit number');
     } else if (pass !== CPASS) {
-      ToastAndroid.show('Password does not match', ToastAndroid.SHORT);
+      Toast(toast, 'Password does not match');
     } else if (pass.length < 8 || CPASS.length < 8) {
-      ToastAndroid.show(
-        'Please enter 8 or more characters',
-        ToastAndroid.SHORT,
-      );
+      Toast(toast, 'Please enter 8 or more characters');
     } else {
       try {
         setSpinner(true);
@@ -52,26 +51,26 @@ const RegisterScreen = ({navigation, route}) => {
           .then(response => {
             setSpinner(false);
             if (response.data.success === true) {
-              ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+              Toast(toast, response.data.message);
               navigation.navigate('Otp', {
                 DATA: response.data,
                 userMobile: mobileNo,
               });
             } else {
               if (response.data.otp_status === false) {
-                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+                Toast(toast, response.data.message);
                 navigation.navigate('Otp', {
                   DATA: response.data,
                   userMobile: mobileNo,
                 });
               } else {
-                ToastAndroid.show(response.data.message, ToastAndroid.SHORT);
+                Toast(toast, response.data.message);
               }
             }
           });
       } catch (error) {
         setSpinner(false);
-        alert(error);
+        Toast(toast, error);
       }
     }
   };
