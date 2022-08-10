@@ -13,10 +13,12 @@ import Second from '../../assets/svg/Vector-1.svg';
 import Third from '../../assets/svg/Vector-2.svg';
 import Four from '../../assets/svg/Vector-3.svg';
 import {useApp} from '../../Context/AppContext';
+import Toast from './Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const FourList = ({navigation}) => {
-  const {Userdata, setIsLoginPop} = useApp();
-
+  const {Userdata} = useApp();
+  const toast = useToast();
   const arr = [
     {
       image: <First width={30} height={30} />,
@@ -51,11 +53,19 @@ const FourList = ({navigation}) => {
         <TouchableOpacity
           key={data.Id}
           activeOpacity={0.9}
-          onPress={() =>
-            Userdata !== null
-              ? navigation.navigate(data.navigation)
-              : setIsLoginPop(true)
-          }>
+          onPress={() => {
+            if (Userdata.userData.app_role_id === 1) {
+              if (data.navigation === 'House Owners') {
+                Toast(
+                  toast,
+                  'You are not authorized to view this section, Please login as Resident',
+                  5000,
+                );
+                return;
+              }
+            }
+            navigation.navigate(data.navigation);
+          }}>
           <Card containerStyle={styles.containerStyle(width, height)}>
             {data.image}
           </Card>

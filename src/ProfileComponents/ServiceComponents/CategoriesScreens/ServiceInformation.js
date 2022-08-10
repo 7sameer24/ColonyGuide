@@ -8,11 +8,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
-import Spinner from '../../../Components/Spinner';
 import BaseURL from '../../../constants/BaseURL';
 import {useApp} from '../../../../Context/AppContext';
 import SpinnerModal from '../../../Components/SpinnerModal';
@@ -23,8 +22,7 @@ import Toast from '../../../Components/Toast';
 
 const ServiceInformation = ({route, navigation}) => {
   const toast = useToast();
-  const {ID} = route.params;
-  const [infoData, setInfoData] = useState('');
+  const {ID, infoData} = route.params;
   const {Userdata, setIsLoginPop} = useApp();
   const [loading, updateLoading] = useState(false);
   const [visible, setIsvisible] = useState(false);
@@ -78,23 +76,6 @@ const ServiceInformation = ({route, navigation}) => {
     }
   };
 
-  const FetchData = async () => {
-    try {
-      const response = await axios.post(BaseURL('service-view'), {
-        service_id: ID,
-      });
-      setInfoData(response.data.data);
-    } catch (error) {
-      alert(error);
-    }
-  };
-  useEffect(() => {
-    FetchData();
-    return () => {
-      setInfoData('');
-    };
-  }, []);
-
   const sendWhatsApp = () => {
     let phoneWithCountryCode = `91${infoData.contact_person_whatsapp}`;
     let mobile =
@@ -124,14 +105,18 @@ const ServiceInformation = ({route, navigation}) => {
     },
   ];
 
+  const start = infoData && infoData.contact_person_mobile.slice(0, 2);
+  const end = infoData && infoData.contact_person_mobile.slice(8, 10);
+  const start2 = infoData && infoData.contact_person_whatsapp.slice(0, 2);
+  const end2 = infoData && infoData.contact_person_whatsapp.slice(8, 10);
+
   return (
     <View style={genericStyles.Container}>
       {visible ? (
         <ImageZoomComponent
           visible={visible}
           ImageView={
-            infoData.logo_image ===
-            'https://colonyguide.garimaartgallery.com/storage'
+            infoData.logo_image === 'https://colonyguide.com/portal/storage'
               ? images
               : ImageView
           }
@@ -140,7 +125,7 @@ const ServiceInformation = ({route, navigation}) => {
           onSwipeDown={() => setIsvisible(false)}
           onRequestClose={() => setIsvisible(false)}
         />
-      ) : infoData !== '' ? (
+      ) : (
         <>
           <HeaderBar
             IconColor={COLORS.white}
@@ -158,7 +143,7 @@ const ServiceInformation = ({route, navigation}) => {
               <Image
                 source={
                   infoData.logo_image ===
-                  'https://colonyguide.garimaartgallery.com/storage'
+                  'https://colonyguide.com/portal/storage'
                     ? Images.Ellipse
                     : {uri: infoData.logo_image}
                 }
@@ -186,9 +171,7 @@ const ServiceInformation = ({route, navigation}) => {
                   color="#407BFF"
                   size={20}
                 />
-                <Text style={styles.text}>
-                  {infoData.contact_person_mobile}
-                </Text>
+                <Text style={styles.text}>+91-{`${start}xxxxxx${end}`} </Text>
               </TouchableOpacity>
               <View style={genericStyles.row}>
                 <Icon
@@ -212,9 +195,7 @@ const ServiceInformation = ({route, navigation}) => {
                   size={20}
                   color="#25D366"
                 />
-                <Text style={styles.text}>
-                  {infoData.contact_person_whatsapp}
-                </Text>
+                <Text style={styles.text}>+91-{`${start2}xxxxxx${end2}`} </Text>
               </TouchableOpacity>
 
               <TouchableOpacity
@@ -257,8 +238,6 @@ const ServiceInformation = ({route, navigation}) => {
           </View>
           <View style={styles.buttonView}></View>
         </>
-      ) : (
-        <Spinner />
       )}
       <SpinnerModal visible={loading} />
     </View>

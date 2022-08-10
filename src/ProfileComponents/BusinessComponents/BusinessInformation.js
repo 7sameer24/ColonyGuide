@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import {Icon} from 'react-native-elements';
 import axios from 'axios';
@@ -24,8 +24,7 @@ import Toast from '../../Components/Toast';
 const BusinessInformation = ({route, navigation}) => {
   const toast = useToast();
 
-  const {ID} = route.params;
-  const [busInfoData, setBusData] = useState('');
+  const {ID, busInfoData} = route.params;
   const [loading, updateLoading] = useState(false);
   const [visible, setIsvisible] = useState(false);
 
@@ -79,23 +78,6 @@ const BusinessInformation = ({route, navigation}) => {
     }
   };
 
-  const FetchData = async () => {
-    try {
-      const response = await axios.post(BaseURL('business-view'), {
-        business_id: ID,
-      });
-      setBusData(response.data.data);
-    } catch (error) {
-      alert(error);
-    }
-  };
-  useEffect(() => {
-    FetchData();
-    return () => {
-      setBusData('');
-    };
-  }, []);
-
   const sendWhatsApp = () => {
     let phoneWithCountryCode = `91${busInfoData.contact_person_whatsapp}`;
     let mobile =
@@ -124,14 +106,19 @@ const BusinessInformation = ({route, navigation}) => {
       },
     },
   ];
+
+  const start = busInfoData && busInfoData.contact_person_mobile.slice(0, 2);
+  const end = busInfoData && busInfoData.contact_person_mobile.slice(8, 10);
+  const start2 = busInfoData && busInfoData.contact_person_whatsapp.slice(0, 2);
+  const end2 = busInfoData && busInfoData.contact_person_whatsapp.slice(8, 10);
+
   return (
     <View style={genericStyles.Container}>
       {visible ? (
         <ImageZoomComponent
           visible={visible}
           ImageView={
-            busInfoData.logo_image ===
-            'https://colonyguide.garimaartgallery.com/storage'
+            busInfoData.logo_image === 'https://colonyguide.com/portal/storage'
               ? images
               : ImageView
           }
@@ -140,7 +127,7 @@ const BusinessInformation = ({route, navigation}) => {
           onSwipeDown={() => setIsvisible(false)}
           onRequestClose={() => setIsvisible(false)}
         />
-      ) : busInfoData !== '' ? (
+      ) : (
         <>
           <HeaderBar
             IconColor={COLORS.white}
@@ -158,7 +145,7 @@ const BusinessInformation = ({route, navigation}) => {
               <Image
                 source={
                   busInfoData.logo_image ===
-                  'https://colonyguide.garimaartgallery.com/storage'
+                  'https://colonyguide.com/portal/storage'
                     ? Images.Ellipse
                     : {uri: busInfoData.logo_image}
                 }
@@ -182,9 +169,7 @@ const BusinessInformation = ({route, navigation}) => {
                   color="#407BFF"
                   size={20}
                 />
-                <Text style={styles.text}>
-                  {busInfoData.contact_person_mobile}
-                </Text>
+                <Text style={styles.text}>+91-{`${start}xxxxxx${end}`} </Text>
               </TouchableOpacity>
               <View style={genericStyles.row}>
                 <Icon
@@ -209,7 +194,7 @@ const BusinessInformation = ({route, navigation}) => {
                     color="#25D366"
                   />
                   <Text style={styles.text}>
-                    {busInfoData.contact_person_whatsapp}
+                    +91-{`${start2}xxxxxx${end2}`}
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -251,8 +236,6 @@ const BusinessInformation = ({route, navigation}) => {
           </View>
           <View style={styles.buttonView}></View>
         </>
-      ) : (
-        <Spinner />
       )}
 
       <SpinnerModal visible={loading} />

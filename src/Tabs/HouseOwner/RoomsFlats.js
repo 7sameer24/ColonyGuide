@@ -81,7 +81,9 @@ const RoomsFlats = ({navigation, route}) => {
                     styles.iconContainer,
                     {
                       bottom:
-                        Userdata.userData.app_role_id === 3 ? '12%' : '1%',
+                        Userdata && Userdata.userData.app_role_id === 3
+                          ? '12%'
+                          : '1%',
                     },
                   ]}
                   reverse
@@ -134,7 +136,12 @@ const RoomsFlats = ({navigation, route}) => {
                 size={27}
                 containerStyle={[
                   styles.iconContainer,
-                  {bottom: Userdata.userData.app_role_id === 3 ? '12%' : '1%'},
+                  {
+                    bottom:
+                      Userdata && Userdata.userData.app_role_id === 3
+                        ? '12%'
+                        : '1%',
+                  },
                 ]}
                 reverse
                 onPress={() => setIsvisible(true)}

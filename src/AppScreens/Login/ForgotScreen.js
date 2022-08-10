@@ -10,6 +10,7 @@ import axios from 'axios';
 import {navigationStateType, useApp} from '../../../Context/AppContext';
 import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
+import BaseURL from '../../constants/BaseURL';
 
 const ForgotScreen = ({navigation}) => {
   const [mobile_no, setMobile] = useState('');
@@ -23,8 +24,7 @@ const ForgotScreen = ({navigation}) => {
     } else {
       try {
         setSpinner(true);
-        const URL =
-          'https://colonyguide.garimaartgallery.com/api/forgot-password';
+        const URL = BaseURL('forgot-password');
         const response = await axios
           .post(URL, {mobile_no: mobile_no})
           .then(response => {

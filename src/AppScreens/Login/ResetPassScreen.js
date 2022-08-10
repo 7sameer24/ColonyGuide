@@ -10,6 +10,7 @@ import Poweredby from '../../Components/Poweredby';
 import {CommonActions} from '@react-navigation/native';
 import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
+import BaseURL from '../../constants/BaseURL';
 
 const ResetPassScreen = ({navigation, route}) => {
   const {user_id} = route.params.data;
@@ -24,8 +25,7 @@ const ResetPassScreen = ({navigation, route}) => {
     } else {
       try {
         setSpinner(true);
-        const URL =
-          'https://colonyguide.garimaartgallery.com/api/reset-password';
+        const URL = BaseURL('reset-password');
         const response = await axios
           .post(URL, {
             user_id: user_id,

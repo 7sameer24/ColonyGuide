@@ -140,7 +140,7 @@ const ContactUs = ({route, navigation}) => {
             />
           ))}
         </View>
-        <Poweredby />
+        <Poweredby container={genericStyles.mt(20)} />
       </ScrollView>
     </View>
   );

@@ -17,6 +17,7 @@ import {useApp} from '../../../Context/AppContext';
 import ModalPopup from '../../Components/ModalPopup';
 import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../Components/Toast';
+import BaseURL from '../../constants/BaseURL';
 
 const ServiceEdit = ({navigation, route}) => {
   const toast = useToast();
@@ -88,8 +89,7 @@ const ServiceEdit = ({navigation, route}) => {
     } else {
       try {
         setSpinner(true);
-        const URL =
-          'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
+        const URL = BaseURL('update-personal-detail');
 
         const SaveData = new FormData();
         SaveData.append('user_id', data.id);
@@ -101,6 +101,8 @@ const ServiceEdit = ({navigation, route}) => {
         SaveData.append('house_no', buildFL);
         SaveData.append('landmark', Landmark);
         SaveData.append('address', AL1);
+        SaveData.append('locality_id', data.locality_id);
+
         SaveData.append(
           'logo_image',
           imageUp !== ''
@@ -150,7 +152,7 @@ const ServiceEdit = ({navigation, route}) => {
                   imageUp
                     ? imageUp
                     : data.logo_image ==
-                      'https://colonyguide.garimaartgallery.com/storage'
+                      'https://colonyguide.com/portal/storage'
                     ? Images.Ellipse
                     : {uri: data.logo_image}
                 }

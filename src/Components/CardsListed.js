@@ -40,24 +40,31 @@ const CardsListed = ({
   const [loading, updateLoading] = useState(false);
 
   const callCount = async number => {
-    try {
-      updateLoading(true);
-      const response = await axios.post(BaseURL('click-count'), {
-        user_id: userId,
-        service_id: serviceId,
-        businessId: businessId,
-        type: number === 1 ? 1 : 2,
-        clicked_user_id: Userdata.userData.id,
-      });
-      updateLoading(false);
-      if (response.data.success) {
-        number === 1 ? Linking.openURL(`tel:${phoneNumber}`) : sendWhatsApp();
-      } else {
-        alert(response.data.message);
+    if (
+      Userdata.userData.app_role_id === 3 &&
+      Userdata.userData.is_private == 1
+    ) {
+      Toast(toast, 'These user hide their number');
+    } else {
+      try {
+        updateLoading(true);
+        const response = await axios.post(BaseURL('click-count'), {
+          user_id: userId,
+          service_id: serviceId,
+          businessId: businessId,
+          type: number === 1 ? 1 : 2,
+          clicked_user_id: Userdata.userData.id,
+        });
+        updateLoading(false);
+        if (response.data.success) {
+          number === 1 ? Linking.openURL(`tel:${phoneNumber}`) : sendWhatsApp();
+        } else {
+          alert(response.data.message);
+        }
+      } catch (error) {
+        updateLoading(false);
+        alert(error);
       }
-    } catch (error) {
-      updateLoading(false);
-      alert(error);
     }
   };
 

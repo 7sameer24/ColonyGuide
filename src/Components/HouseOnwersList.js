@@ -1,10 +1,30 @@
-import {Share, StyleSheet, Text, useWindowDimensions, View} from 'react-native';
+import {
+  Linking,
+  Share,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import React from 'react';
 import {Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
+import {useApp} from '../../Context/AppContext';
+import Toast from './Toast';
+import {useToast} from 'react-native-toast-notifications';
 
-const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
+const HouseOnwersList = ({
+  title,
+  subTitle,
+  AddressLine,
+  Landmark,
+  phoneNumber,
+  hideNumber,
+}) => {
   const {width} = useWindowDimensions();
+  const {Userdata, setIsLoginPop} = useApp();
+  const toast = useToast();
+
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -36,8 +56,7 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
         <View style={styles.CutNameConatiner}>
           <Text style={styles.CutName}>{CutName}</Text>
         </View>
-        <View
-          style={[genericStyles.column, {width: width / 1.8, marginRight: 5}]}>
+        <View style={[genericStyles.column, {width: width / 2.3}]}>
           <Text style={styles.title} numberOfLines={1}>
             {title}
           </Text>
@@ -53,20 +72,49 @@ const HouseOnwersList = ({title, subTitle, AddressLine, Landmark}) => {
             </Text>
           )}
         </View>
-        <View style={{flexDirection: 'column', justifyContent: 'space-evenly'}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginRight: 10,
+          }}>
           <Icon
             name="share-social"
             type="ionicon"
-            color={COLORS.primary}
-            size={20}
-            onPress={() => onShare()}
+            color="#407BFF"
+            size={15}
+            reverse
+            onPress={() =>
+              Userdata === null ? setIsLoginPop(true) : onShare()
+            }
           />
-          {/* <Icon
-            name="map-marker-radius"
+          <Icon
+            name="phone-outgoing"
             type="material-community"
-            size={20}
-            color={COLORS.textColor}
-          /> */}
+            size={15}
+            reverse
+            containerStyle={genericStyles.shadow}
+            color="#25D366"
+            onPress={() => {
+              if (Userdata === null) {
+                setIsLoginPop(true);
+              } else {
+                if (Userdata.userData.app_role_id === 2) {
+                  Toast(
+                    toast,
+                    'You are not authorized to call this number',
+                    5000,
+                  );
+                  return;
+                } else if (hideNumber == 1) {
+                  Toast(toast, 'These user hide their number');
+                  return;
+                }
+
+                Linking.openURL(`tel:${phoneNumber}`);
+              }
+            }}
+          />
         </View>
       </View>
     </Card>

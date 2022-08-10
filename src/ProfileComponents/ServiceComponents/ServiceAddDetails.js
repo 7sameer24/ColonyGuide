@@ -17,6 +17,7 @@ import {useApp} from '../../../Context/AppContext';
 import ModalPopup from '../../Components/ModalPopup';
 import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../Components/Toast';
+import BaseURL from '../../constants/BaseURL';
 
 const ServiceAddDetails = ({navigation}) => {
   const {Userdata, UserToken, categories} = useApp();
@@ -90,8 +91,7 @@ const ServiceAddDetails = ({navigation}) => {
     } else {
       try {
         setSpinner(true);
-        const URL =
-          'https://colonyguide.garimaartgallery.com/api/add-service-detail';
+        const URL = BaseURL('add-service-detail');
 
         const data = new FormData();
         data.append('user_id', Userdata.userData.id);
@@ -214,7 +214,7 @@ const ServiceAddDetails = ({navigation}) => {
           onChangeText={text => setBuildFL(text)}
         />
         <InputComponent
-          placeholder="Address Line 1"
+          placeholder="Address"
           value={AL1}
           autoCapitalize="words"
           onChangeText={text => setAL1(text)}

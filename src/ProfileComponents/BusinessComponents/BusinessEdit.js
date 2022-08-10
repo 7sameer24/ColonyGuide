@@ -175,7 +175,7 @@ const BusinessEdit = ({navigation, route}) => {
                     imageUp
                       ? imageUp
                       : data.logo_image ==
-                        'https://colonyguide.garimaartgallery.com/storage'
+                        'https://colonyguide.com/portal/storage'
                       ? Images.Ellipse
                       : {uri: data.logo_image}
                   }

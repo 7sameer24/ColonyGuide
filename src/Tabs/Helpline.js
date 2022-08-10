@@ -5,6 +5,7 @@ import {Card, Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
 import BaseURL from '../constants/BaseURL';
+import Poweredby from '../Components/Poweredby';
 
 const Helpline = () => {
   const [helpData, setHelpData] = useState('');
@@ -121,6 +122,7 @@ const Helpline = () => {
       ) : (
         <Spinner />
       )}
+      <Poweredby />
     </View>
   );
 };

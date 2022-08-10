@@ -25,6 +25,7 @@ const MemberCard = ({
   fetchMemberList,
   onUpdate,
   onEdit,
+  onServiceDelete,
 }) => {
   const toast = useToast();
 
@@ -43,7 +44,39 @@ const MemberCard = ({
       {cancelable: false},
     );
   };
+  const openLockAlert2 = () => {
+    Alert.alert(
+      'Delete Service',
+      'Are you sure you want to delete service ?',
+      [
+        {text: 'Ok', onPress: () => deleteService()},
+        {text: 'Cancel', style: 'cancel'},
+      ],
+      {cancelable: false},
+    );
+  };
 
+  const deleteService = async () => {
+    try {
+      updateLoading(true);
+      const response = await axios(BaseURL('Delete-Service'), {
+        method: 'post',
+        data: {
+          id: userId,
+        },
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      updateLoading(false);
+      onUpdate('');
+      fetchMemberList();
+      Toast(toast, response.data.message);
+    } catch (error) {
+      updateLoading(false);
+      console.log(error);
+    }
+  };
   const deleteList = async () => {
     try {
       updateLoading(true);
@@ -112,7 +145,13 @@ const MemberCard = ({
               size={18}
               color={COLORS.red}
               reverse
-              onPress={openLockAlert}
+              onPress={() => {
+                if (onServiceDelete) {
+                  openLockAlert2();
+                } else {
+                  openLockAlert();
+                }
+              }}
               containerStyle={genericStyles.shadow}
             />
           </View>

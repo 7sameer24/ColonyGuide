@@ -55,6 +55,8 @@ const HouseOwners = ({navigation}) => {
               Landmark={data.landmark}
               key={data.id}
               subTitle={data.house_no}
+              phoneNumber={data.mobile_no}
+              hideNumber={data.is_private}
             />
           ))}
           <View style={genericStyles.height(20)} />

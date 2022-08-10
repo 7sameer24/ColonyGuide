@@ -10,7 +10,7 @@ import React from 'react';
 import {Image, Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 
-const MemberCard = ({category, title, subTitle, source, phoneNumber}) => {
+const MatrimonialCard = ({category, title, subTitle, source, phoneNumber}) => {
   const {width} = useWindowDimensions();
 
   return (
@@ -60,7 +60,7 @@ const MemberCard = ({category, title, subTitle, source, phoneNumber}) => {
   );
 };
 
-export default MemberCard;
+export default MatrimonialCard;
 
 const styles = StyleSheet.create({
   CardContainer: {

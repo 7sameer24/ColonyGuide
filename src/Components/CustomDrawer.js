@@ -86,7 +86,7 @@ const CustomDrawer = props => {
                       Userdata.userData.app_role_id == 2
                         ? {uri: Userdata.userData.logo_image}
                         : Userdata.userData.profile_image ===
-                          'https://colonyguide.garimaartgallery.com/storage'
+                          'https://colonyguide.com/portal/storage'
                         ? Images.Ellipse
                         : {uri: Userdata.userData.profile_image}
                     }
@@ -178,7 +178,7 @@ const CustomDrawer = props => {
               }
             />
             <Divider style={styles.Divider} color="#F3EBF9" width={1} />
-            <ProfileComponents
+            {/* <ProfileComponents
               title="Feedback"
               ImageContainer={styles.DrawerIcon}
               IconSvg={<Feedback />}
@@ -193,7 +193,7 @@ const CustomDrawer = props => {
               onPress={() => props.navigation.navigate('Terms & Condition')}
               IconSvg={<Terms />}
               title="Terms & Condition"
-            />
+            /> */}
             <ProfileComponents
               title="Contact Us"
               ImageContainer={styles.DrawerIcon}

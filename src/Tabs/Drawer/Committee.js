@@ -6,6 +6,7 @@ import HeaderBar from '../../Components/HeaderBar';
 import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
+import Poweredby from '../../Components/Poweredby';
 
 const Committee = ({navigation}) => {
   const [newData, setNewData] = useState([]);
@@ -43,6 +44,7 @@ const Committee = ({navigation}) => {
       ) : (
         <Spinner />
       )}
+      <Poweredby />
     </View>
   );
 };

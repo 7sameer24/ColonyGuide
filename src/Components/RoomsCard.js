@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
   View3: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 10,
+    marginRight: 20,
   },
   title: {
     fontSize: 14,

@@ -25,12 +25,15 @@ const HoAddress = ({data}) => {
   const [LocalityValue, setLocality] = useState('');
   const [colonyData, updateColonyData] = useState([]);
   const [colonyNo, updateColonyNo] = useState('');
+  const [hideNmber, setHideNmber] = useState('');
 
   const {setNewData, setUserToken, resumeDetails} = useApp();
 
   const VelidationCheck = async () => {
     if (!house || !Address) {
       Toast(toast, 'Please fill all required fields');
+    } else if (!hideNmber) {
+      Toast(toast, 'Please choose hide or not your number');
     } else if (!LocalityValue) {
       Toast(toast, 'Please choose locality!');
     }
@@ -65,6 +68,7 @@ const HoAddress = ({data}) => {
       Form.append('landmark', Landmark);
       Form.append('locality_id', LocalityValue);
       Form.append('street_id', colonyNo);
+      Form.append('is_private', hideNmber);
 
       const res = await fetch(BaseURL('add-details'), {
         method: 'post',
@@ -122,6 +126,12 @@ const HoAddress = ({data}) => {
       setData([]);
     };
   }, []);
+
+  const HideNumber = [
+    {name: 'Yes', id: '1'},
+    {name: 'No', id: '0'},
+  ];
+
   return (
     <View style={genericStyles.Container}>
       {newData.length > 0 ? (
@@ -158,6 +168,17 @@ const HoAddress = ({data}) => {
                 value={Landmark}
                 onChangeText={text => setLandmark(text)}
                 autoCapitalize="words"
+              />
+              <DropDownComponent
+                data={HideNumber}
+                labelField="name"
+                valueField="id"
+                placeholder="Hide your contact number (required)"
+                value={hideNmber}
+                maxHeight={100}
+                onChange={item => {
+                  setHideNmber(item.id);
+                }}
               />
               <DropDownComponent
                 data={newData}

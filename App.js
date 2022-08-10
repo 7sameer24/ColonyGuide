@@ -9,6 +9,7 @@ import {Platform, StatusBar} from 'react-native';
 import {COLORS} from './src/constants';
 import SplashScreen from 'react-native-splash-screen';
 import {ToastProvider} from 'react-native-toast-notifications';
+import BaseURL from './src/constants/BaseURL';
 
 const App = () => {
   const [showInternetPopup, setNetAvailable] = useState(false);
@@ -34,9 +35,7 @@ const App = () => {
 
   const checkVersionApi = async () => {
     try {
-      const versionRes = await axios.post(
-        'https://colonyguide.garimaartgallery.com/api/app-version',
-      );
+      const versionRes = await axios.post(BaseURL('app-version'));
       if (versionRes.data.success == true) {
         if (
           Platform.OS == 'android' &&

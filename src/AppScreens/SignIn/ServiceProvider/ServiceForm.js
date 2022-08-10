@@ -109,12 +109,11 @@ const ServiceForm = ({UserNewData}) => {
         setUserToken(
           UserNewData != undefined ? UserNewData.token : resumeDetails.token,
         );
-        // Toast(toast,
-        //   UserData.app_role_id === 3
-        //     ? `Welcome ${HOName}`
-        //     : `Welcome ${FullName}`,
-        // ,
-        // );
+        Toast(
+          toast,
+          'Your profile is under review, Please wait for some time',
+          5000,
+        );
       } else {
         Toast(toast, response.message);
       }
@@ -206,7 +205,7 @@ const ServiceForm = ({UserNewData}) => {
       {newData.length > 0 ? (
         <>
           <ScrollView keyboardShouldPersistTaps="handled">
-            <View style={genericStyles.mb(20)}>
+            <View>
               <Text style={styles.text}>Service Details</Text>
               <Text style={styles.subText}>
                 Enter the details below to continue

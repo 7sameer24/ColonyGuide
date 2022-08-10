@@ -17,7 +17,7 @@ const SearchBusResult = ({route, navigation}) => {
         <CardsListed
           source={
             route.params.userData.logo_image ===
-            'https://colonyguide.garimaartgallery.com/storage'
+            'https://colonyguide.com/portal/storage'
               ? require('../../../assets/Image_not_available.png')
               : {uri: route.params.userData.logo_image}
           }

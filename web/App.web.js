@@ -8,6 +8,7 @@ import CheckUpdate from '../src/Components/CheckUpdate';
 import {Platform, StatusBar} from 'react-native';
 import {COLORS} from '../src/constants';
 import SplashScreen from 'react-native-splash-screen';
+import BaseURL from '../src/constants/BaseURL';
 
 const AppWeb = () => {
   const [showInternetPopup, setNetAvailable] = useState(false);
@@ -33,9 +34,7 @@ const AppWeb = () => {
 
   const checkVersionApi = async () => {
     try {
-      const versionRes = await axios.post(
-        'https://colonyguide.garimaartgallery.com/api/app-version',
-      );
+      const versionRes = await axios.post(BaseURL('app-version'));
       if (versionRes.data.success == true) {
         if (
           Platform.OS == 'android' &&

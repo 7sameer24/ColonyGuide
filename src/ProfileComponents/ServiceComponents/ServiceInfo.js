@@ -4,16 +4,18 @@ import {COLORS, FONTS, genericStyles} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
 import axios from 'axios';
-import CardsListed from '../../Components/CardsListed';
 import {ScrollView} from 'react-native-gesture-handler';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import SkeletonView from '../../Components/SkeletonView';
+import MemberCard from '../../Tabs/Members/MemberCard';
+import {useApp} from '../../../Context/AppContext';
 
 const ServiceInfo = ({navigation, route}) => {
   const {userID, Role} = route.params;
   const [data, setUserData] = useState('');
   const [check, setCheck] = useState('');
+  const {Userdata, UserToken} = useApp();
 
   const idx = async () => {
     try {
@@ -48,21 +50,28 @@ const ServiceInfo = ({navigation, route}) => {
             {data.length > 0 ? (
               <ScrollView>
                 {data.map((newData, index) => (
-                  <CardsListed
+                  <MemberCard
                     key={newData.id}
                     index={index}
+                    onUpdate={setUserData}
+                    fetchMemberList={idx}
+                    onServiceDelete={true}
+                    userId={newData.id}
                     category={newData.categoryName}
                     subTitle={`${newData.house_no} ${newData.address} ${newData.landmark}`}
                     title={newData.name}
-                    phoneNumber={newData.contact_person_mobile}
-                    WhatsAppNumber={newData.contact_person_whatsapp}
                     source={
                       newData.logo_image ===
-                      'https://colonyguide.garimaartgallery.com/storage'
+                      'https://colonyguide.com/portal/storage'
                         ? require('../../../assets/Image_not_available.png')
                         : {uri: newData.logo_image}
                     }
-                    googleNavigate={`${newData.house_no}+${newData.address}, Udaipur, Rajasthan`}
+                    onEdit={() =>
+                      navigation.navigate('ServiceEdit', {
+                        data: Userdata.userData,
+                        token: UserToken,
+                      })
+                    }
                   />
                 ))}
                 <View style={genericStyles.mb(20)} />

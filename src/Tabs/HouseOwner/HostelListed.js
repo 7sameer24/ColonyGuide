@@ -75,7 +75,9 @@ const HostelListed = ({navigation}) => {
                         styles.iconContainer,
                         {
                           bottom:
-                            Userdata.userData.app_role_id === 3 ? '12%' : '1%',
+                            Userdata && Userdata.userData.app_role_id === 3
+                              ? '12%'
+                              : '1%',
                         },
                       ]}
                       reverse
@@ -134,7 +136,9 @@ const HostelListed = ({navigation}) => {
                       styles.iconContainer,
                       {
                         bottom:
-                          Userdata.userData.app_role_id === 3 ? '12%' : '1%',
+                          Userdata && Userdata.userData.app_role_id === 3
+                            ? '12%'
+                            : '1%',
                       },
                     ]}
                     reverse

@@ -65,12 +65,15 @@ const ServiceList = ({navigation, route}) => {
                   key={data.id}
                   activeOpacity={0.9}
                   onPress={() =>
-                    navigation.navigate('Service Information', {ID: data.id})
+                    navigation.navigate('Service Information', {
+                      ID: data.id,
+                      infoData: data,
+                    })
                   }>
                   <CardsListed
                     source={
                       data.logo_image ===
-                      'https://colonyguide.garimaartgallery.com/storage'
+                      'https://colonyguide.com/portal/storage'
                         ? require('../../../../assets/Image_not_available.png')
                         : {uri: data.logo_image}
                     }

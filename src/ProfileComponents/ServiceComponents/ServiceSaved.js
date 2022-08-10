@@ -53,8 +53,7 @@ const ServiceSaved = ({route, navigation}) => {
           <View style={styles.radiusView}>
             <Image
               source={
-                Userdata.logo_image ===
-                'https://colonyguide.garimaartgallery.com/storage'
+                Userdata.logo_image === 'https://colonyguide.com/portal/storage'
                   ? Images.Ellipse
                   : {uri: Userdata.logo_image}
               }

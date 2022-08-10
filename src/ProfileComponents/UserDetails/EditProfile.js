@@ -35,8 +35,9 @@ const EditProfile = ({route, navigation}) => {
   const [hostel_address, setHostelAdd] = useState(data.hostel_address);
   const [FHN, setFHN] = useState(data.house_no);
   const [imageUp, setImage] = useState('');
-  const {setNewData, localityData} = useApp();
+  const {setNewData, localityData, Userdata} = useApp();
   const [modalVisible, setModalVisible] = useState(false);
+  const [hideNmber, setHideNmber] = useState(String(data.is_private));
 
   const arr = [
     {
@@ -76,8 +77,7 @@ const EditProfile = ({route, navigation}) => {
     } else {
       try {
         setSpinner(true);
-        const URL =
-          'https://colonyguide.garimaartgallery.com/api/update-personal-detail';
+        const URL = BaseURL('update-personal-detail');
 
         const SaveData = new FormData();
         SaveData.append('user_id', data.id);
@@ -86,6 +86,10 @@ const EditProfile = ({route, navigation}) => {
         Address === null ? null : SaveData.append('address', Address);
         FHN === null ? null : SaveData.append('house_no', FHN);
         Landmark === null ? null : SaveData.append('landmark', Landmark);
+        data.app_role_id == 3 && hideNmber
+          ? SaveData.append('is_private', hideNmber)
+          : null;
+
         SaveData.append('locality_id', LocalityValue);
         SaveData.append('shop_name', data.shop_name);
         SaveData.append('category_id', data.shop_category);
@@ -176,6 +180,10 @@ const EditProfile = ({route, navigation}) => {
       }
     });
   };
+  const HideNumber = [
+    {name: 'Yes', id: '1'},
+    {name: 'No', id: '0'},
+  ];
 
   return (
     <View style={genericStyles.Container}>
@@ -192,7 +200,7 @@ const EditProfile = ({route, navigation}) => {
                   : data.app_role_id == 2
                   ? {uri: data.logo_image}
                   : data.profile_image ==
-                    'https://colonyguide.garimaartgallery.com/storage'
+                    'https://colonyguide.com/portal/storage'
                   ? Images.Ellipse
                   : {uri: data.profile_image}
               }
@@ -263,17 +271,21 @@ const EditProfile = ({route, navigation}) => {
                   />
                 </View>
               ))}
-              {/* <Text style={styles.text}>Locality</Text>
-              <DropDownComponent
-                maxHeight={100}
-                data={localityData}
-                placeholder="Locality"
-                value={LocalityValue}
-                labelField="name"
-                valueField="id"
-                onChange={item => setLocality(item.id)}
-                dropdownStyle={styles.dropdownStyle}
-              /> */}
+              {data.app_role_id == 3 && (
+                <>
+                  <Text style={styles.text}>Hide your number</Text>
+                  <DropDownComponent
+                    data={HideNumber}
+                    labelField="name"
+                    valueField="id"
+                    placeholder=""
+                    value={hideNmber}
+                    maxHeight={100}
+                    dropdownStyle={styles.dropdownStyle}
+                    onChange={item => setHideNmber(item.id)}
+                  />
+                </>
+              )}
             </View>
           )}
         </View>

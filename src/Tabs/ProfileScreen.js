@@ -5,8 +5,9 @@ import {
   TouchableOpacity,
   View,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../constants';
 import HeaderBar from '../Components/HeaderBar';
 import {Image, Divider} from 'react-native-elements';
@@ -22,10 +23,12 @@ import AddMember from '../../assets/ProfileSvg/AddMember.svg';
 import MM from '../../assets/ProfileSvg/MM.svg';
 import Event from '../../assets/ProfileSvg/event.svg';
 import Gallery from '../../assets/ProfileSvg/Gallery.svg';
+import DeleteAccount from '../../assets/ProfileSvg/DeleteAccount.svg';
 import Poweredby from '../Components/Poweredby';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
+import SpinnerModal from '../Components/SpinnerModal';
 
 const ProfileScreen = ({navigation}) => {
   const {
@@ -37,7 +40,7 @@ const ProfileScreen = ({navigation}) => {
     setIsLoginPop,
     updateGSaveLocalID,
   } = useApp();
-
+  const [loading, updateLoading] = useState(false);
   const checkBusinessStauts = async () => {
     try {
       const response = await axios(BaseURL('check-business'), {
@@ -66,6 +69,40 @@ const ProfileScreen = ({navigation}) => {
     updateGSaveLocalID(null);
     setNavigationState(navigationStateType.AUTH);
   };
+
+  const openLockAlert = () => {
+    Alert.alert(
+      'Delete Account',
+      'Are you sure you want to delete your account ?',
+      [
+        {text: 'Ok', onPress: () => deleteAccount()},
+        {text: 'Cancel', style: 'cancel'},
+      ],
+      {cancelable: false},
+    );
+  };
+  const deleteAccount = async () => {
+    try {
+      updateLoading(true);
+      const response = await axios(BaseURL('Delete Account'), {
+        method: 'post',
+        data: {
+          userId: Userdata.userData.id,
+        },
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      updateLoading(false);
+      if (response.data.success) {
+        Toast(toast, response.data.message);
+      }
+    } catch (error) {
+      updateLoading(false);
+      console.log(error);
+    }
+  };
+
   return (
     <View style={genericStyles.Container}>
       <HeaderBar
@@ -83,7 +120,7 @@ const ProfileScreen = ({navigation}) => {
                   Userdata.userData.app_role_id == 2
                     ? {uri: Userdata.userData.logo_image}
                     : Userdata.userData.profile_image ===
-                      'https://colonyguide.garimaartgallery.com/storage'
+                      'https://colonyguide.com/portal/storage'
                     ? Images.Ellipse
                     : {uri: Userdata.userData.profile_image}
                 }
@@ -176,7 +213,7 @@ const ProfileScreen = ({navigation}) => {
                   title={
                     Userdata.userData.app_role_id === 2
                       ? 'Service Information'
-                      : 'My Service Provider'
+                      : 'Service Provider'
                   }
                 />
               )}
@@ -256,6 +293,13 @@ const ProfileScreen = ({navigation}) => {
             IconSvg={<Contact />}
             title="Contact Us"
           />
+          <ProfileComponents
+            onPress={() => openLockAlert()}
+            iconName="chevron-forward-outline"
+            IconSvg={<DeleteAccount />}
+            title="Delete your account"
+            titleStyle={genericStyles.color(COLORS.red)}
+          />
           <Divider style={styles.Divider2} color="#F3EBF9" width={1} />
           <Poweredby container={{flex: 0}} />
         </ScrollView>
@@ -323,6 +367,7 @@ const ProfileScreen = ({navigation}) => {
           <Poweredby container={{flex: 0}} />
         </ScrollView>
       )}
+      <SpinnerModal visible={loading} />
     </View>
   );
 };

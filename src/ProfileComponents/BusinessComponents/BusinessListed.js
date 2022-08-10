@@ -56,12 +56,14 @@ const BusinessListed = ({navigation}) => {
               key={data.id}
               activeOpacity={0.9}
               onPress={() =>
-                navigation.navigate('Business Information', {ID: data.id})
+                navigation.navigate('Business Information', {
+                  ID: data.id,
+                  busInfoData: data,
+                })
               }>
               <CardsListed
                 source={
-                  data.logo_image ===
-                  'https://colonyguide.garimaartgallery.com/storage'
+                  data.logo_image === 'https://colonyguide.com/portal/storage'
                     ? require('../../../assets/Image_not_available.png')
                     : {uri: data.logo_image}
                 }

@@ -107,8 +107,7 @@ const BusinessDetails = ({navigation}) => {
     } else {
       try {
         setSpinner(true);
-        const URL =
-          'https://colonyguide.garimaartgallery.com/api/add-service-detail';
+        const URL = BaseURL('add-service-detail');
 
         const data = new FormData();
         data.append('user_id', Userdata.userData.id);
