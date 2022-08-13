@@ -92,7 +92,7 @@ const FilterModal = ({
                 textStyle={styles.CheckText}
               />
               <CheckBox
-                title="No Vegetarian"
+                title="Non-Vegetarian"
                 checked={noVeg}
                 onPress={() => setIsnoVeg(!noVeg)}
                 checkedColor={COLORS.primary}

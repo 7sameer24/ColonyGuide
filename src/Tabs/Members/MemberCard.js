@@ -26,6 +26,7 @@ const MemberCard = ({
   onUpdate,
   onEdit,
   onServiceDelete,
+  ServiceId,
 }) => {
   const toast = useToast();
 
@@ -59,10 +60,11 @@ const MemberCard = ({
   const deleteService = async () => {
     try {
       updateLoading(true);
-      const response = await axios(BaseURL('Delete-Service'), {
+      const response = await axios(BaseURL('delete-service'), {
         method: 'post',
         data: {
-          id: userId,
+          user_id: userId,
+          service_id: ServiceId,
         },
         headers: {
           Authorization: `Bearer ${UserToken}`,

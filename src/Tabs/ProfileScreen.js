@@ -29,6 +29,8 @@ import {navigationStateType, useApp} from '../../Context/AppContext';
 import axios from 'axios';
 import BaseURL from '../constants/BaseURL';
 import SpinnerModal from '../Components/SpinnerModal';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../Components/Toast';
 
 const ProfileScreen = ({navigation}) => {
   const {
@@ -36,11 +38,15 @@ const ProfileScreen = ({navigation}) => {
     UserToken,
     setNavigationState,
     setCheckStatus,
+    setNewData,
     checkStatus,
     setIsLoginPop,
     updateGSaveLocalID,
+    setUserToken,
+    updateResumeDtails,
   } = useApp();
   const [loading, updateLoading] = useState(false);
+  const toast = useToast();
   const checkBusinessStauts = async () => {
     try {
       const response = await axios(BaseURL('check-business'), {
@@ -81,13 +87,14 @@ const ProfileScreen = ({navigation}) => {
       {cancelable: false},
     );
   };
+
   const deleteAccount = async () => {
     try {
       updateLoading(true);
-      const response = await axios(BaseURL('Delete Account'), {
+      const response = await axios(BaseURL('delete-account'), {
         method: 'post',
         data: {
-          userId: Userdata.userData.id,
+          user_id: Userdata.userData.id,
         },
         headers: {
           Authorization: `Bearer ${UserToken}`,
@@ -95,6 +102,11 @@ const ProfileScreen = ({navigation}) => {
       });
       updateLoading(false);
       if (response.data.success) {
+        setNavigationState(navigationStateType.AUTH);
+        setNewData(null);
+        setUserToken(null);
+        updateGSaveLocalID(null);
+        updateResumeDtails(null);
         Toast(toast, response.data.message);
       }
     } catch (error) {

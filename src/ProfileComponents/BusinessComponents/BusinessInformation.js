@@ -31,26 +31,33 @@ const BusinessInformation = ({route, navigation}) => {
   const {Userdata, setIsLoginPop} = useApp();
 
   const callCount = async number => {
-    try {
-      updateLoading(true);
-      const response = await axios.post(BaseURL('click-count'), {
-        user_id: busInfoData.user_id,
-        service_id: ID,
-        type: number === 1 ? 1 : 2,
-        clicked_user_id: Userdata.userData.id,
-      });
-      updateLoading(false);
-      if (response.data.success) {
-        number === 1
-          ? Linking.openURL(`tel:${busInfoData.contact_person_mobile}`)
-          : sendWhatsApp();
-      } else {
+    if (
+      Userdata.userData.app_role_id === 3 &&
+      Userdata.userData.is_private == 1
+    ) {
+      Toast(toast, 'These user hide their number');
+    } else {
+      try {
+        updateLoading(true);
+        const response = await axios.post(BaseURL('click-count'), {
+          user_id: busInfoData.user_id,
+          service_id: ID,
+          type: number === 1 ? 1 : 2,
+          clicked_user_id: Userdata.userData.id,
+        });
         updateLoading(false);
-        alert(response.data.message);
+        if (response.data.success) {
+          number === 1
+            ? Linking.openURL(`tel:${busInfoData.contact_person_mobile}`)
+            : sendWhatsApp();
+        } else {
+          updateLoading(false);
+          alert(response.data.message);
+        }
+      } catch (error) {
+        updateLoading(false);
+        alert(error);
       }
-    } catch (error) {
-      updateLoading(false);
-      alert(error);
     }
   };
   const onShare = async () => {

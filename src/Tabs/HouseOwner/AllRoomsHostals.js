@@ -23,7 +23,7 @@ const AllRoomsHostals = ({navigation}) => {
     try {
       setIsloading(true);
       const response = await axios.post(BaseURL('filtered-room-hostel-list'), {
-        type: 'room',
+        type: 'all',
         is_veg: Fil[3] === 'true' ? 1 : Fil[4] === 'true' ? 0 : null,
         renter_type:
           Fil[0] === 'true'

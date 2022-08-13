@@ -56,9 +56,12 @@ const ServiceInfo = ({navigation, route}) => {
                     onUpdate={setUserData}
                     fetchMemberList={idx}
                     onServiceDelete={true}
-                    userId={newData.id}
+                    userId={newData.user_id}
+                    ServiceId={newData.id}
                     category={newData.categoryName}
-                    subTitle={`${newData.house_no} ${newData.address} ${newData.landmark}`}
+                    subTitle={`${newData.house_no} ${newData.address} ${
+                      newData.landmark ? newData.landmark : ''
+                    }`}
                     title={newData.name}
                     source={
                       newData.logo_image ===
@@ -67,8 +70,8 @@ const ServiceInfo = ({navigation, route}) => {
                         : {uri: newData.logo_image}
                     }
                     onEdit={() =>
-                      navigation.navigate('ServiceEdit', {
-                        data: Userdata.userData,
+                      navigation.navigate('HOServiceEdit', {
+                        data: newData,
                         token: UserToken,
                       })
                     }

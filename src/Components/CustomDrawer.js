@@ -18,7 +18,6 @@ import Committe from '../../assets/ProfileSvg/committe.svg';
 import Help from '../../assets/ProfileSvg/help.svg';
 import HouseOwners from '../../assets/ProfileSvg/HouseOwners.svg';
 import Logout from '../../assets/ProfileSvg/logout.svg';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {navigationStateType, useApp} from '../../Context/AppContext';
 import Terms from '../../assets/ProfileSvg/TC.svg';
 import MM from '../../assets/ProfileSvg/MM.svg';
@@ -40,24 +39,16 @@ const CustomDrawer = props => {
   } = useApp();
   const toast = useToast();
 
-  const removeValue = async () => {
-    const keys = ['UserLogin', 'UserToken'];
-    try {
-      await AsyncStorage.multiRemove(keys);
-    } catch (e) {
-      alert(e);
-    }
-  };
   const backToLogin = () => {
     updateGSaveLocalID(null);
     setNavigationState(navigationStateType.AUTH);
   };
   const clearLogin = () => {
-    removeValue(), setNewData(null);
+    setNavigationState(navigationStateType.AUTH);
+    setNewData(null);
     setUserToken(null);
     updateGSaveLocalID(null);
     updateResumeDtails(null);
-    setNavigationState(navigationStateType.AUTH);
     Toast(toast, 'Logout Successfully');
   };
   return (

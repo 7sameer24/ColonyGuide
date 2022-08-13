@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import InputComponent from '../../Components/InputComponent';
 import ButtonComponent from '../../Components/ButtonComponent';
@@ -19,23 +19,35 @@ import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../Components/Toast';
 import BaseURL from '../../constants/BaseURL';
 
-const ServiceEdit = ({navigation, route}) => {
+const HOServiceEdit = ({navigation, route}) => {
   const toast = useToast();
 
   const {data, token} = route.params;
-  const [Category, setCategory] = useState(parseInt(data.shop_category));
+  const [Category, setCategory] = useState('');
   const [imageUp, setImage] = useState('');
   const [spinner, setSpinner] = useState(false);
-  const [ShopBusName, setShopBusName] = useState(data.shop_name);
-  const [PersonName, setPersonName] = useState(data.name);
-  const [WhatsappNo, setWhatsappNo] = useState(data.whatsapp_no);
-  const [About, setAbout] = useState(data.about);
-  const [buildFL, setBuildFL] = useState(data.house_no);
-  const [AL1, setAL1] = useState(data.address);
-  const [Landmark, setLandmark] = useState(data.landmark);
+  const [ShopBusName, setShopBusName] = useState('');
+  const [PersonName, setPersonName] = useState('');
+  const [WhatsappNo, setWhatsappNo] = useState('');
+  const [About, setAbout] = useState('');
+  const [buildFL, setBuildFL] = useState('');
+  const [AL1, setAL1] = useState('');
+  const [Landmark, setLandmark] = useState('');
   const {setNewData, categories, localityData} = useApp();
   const [modalVisible, setModalVisible] = useState(false);
-  const [LocalityValue, setLocality] = useState(data.locality_id);
+  const [LocalityValue, setLocality] = useState('');
+
+  const HouseOwnerUpdate = () => {
+    setShopBusName(data.contact_person);
+    setWhatsappNo(data.contact_person_whatsapp);
+    setCategory(data.category_id);
+    setPersonName(data.name);
+    setAbout(data.about);
+    setBuildFL(data.house_no);
+    setAL1(data.address);
+    setLandmark(data.landmark);
+    setLocality(data.locality_id);
+  };
 
   const openGallery = () => {
     setModalVisible(false);
@@ -90,10 +102,11 @@ const ServiceEdit = ({navigation, route}) => {
     } else {
       try {
         setSpinner(true);
-        const URL = BaseURL('update-personal-detail');
+        const URL = BaseURL('edit-service-details');
 
         const SaveData = new FormData();
-        SaveData.append('user_id', data.id);
+        SaveData.append('id', data.id);
+        SaveData.append('user_id', data.user_id);
         SaveData.append('shop_name', ShopBusName);
         SaveData.append('full_name', PersonName);
         SaveData.append('whatsapp_no', WhatsappNo);
@@ -114,7 +127,6 @@ const ServiceEdit = ({navigation, route}) => {
               }
             : '',
         );
-
         const res = await fetch(URL, {
           method: 'post',
           body: SaveData,
@@ -126,9 +138,8 @@ const ServiceEdit = ({navigation, route}) => {
         let response = await res.json();
         setSpinner(false);
         if (response.success === true) {
-          setNewData(response);
           navigation.navigate('Profile');
-          Toast(toast, response.message);
+          Toast(toast, 'Your service updated successfully');
         } else {
           Toast(toast, response.message);
         }
@@ -138,6 +149,10 @@ const ServiceEdit = ({navigation, route}) => {
       }
     }
   };
+
+  useEffect(() => {
+    HouseOwnerUpdate();
+  }, []);
 
   return (
     <View style={genericStyles.Container}>
@@ -238,7 +253,7 @@ const ServiceEdit = ({navigation, route}) => {
         </ScrollView>
         <ButtonComponent
           title="Save"
-          loading={spinner ? true : false}
+          loading={spinner}
           onPress={() => SaveDetail()}
         />
         <Poweredby container={{flex: 0}} />
@@ -247,7 +262,7 @@ const ServiceEdit = ({navigation, route}) => {
   );
 };
 
-export default ServiceEdit;
+export default HOServiceEdit;
 
 const styles = StyleSheet.create({
   imageConatiner: imageUp => ({

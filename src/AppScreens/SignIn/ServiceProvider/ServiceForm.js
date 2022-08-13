@@ -231,6 +231,8 @@ const ServiceForm = ({UserNewData}) => {
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}
             />
+            <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
+
             <InputComponent
               placeholder="Shop Name (Optional)"
               value={shopName}
@@ -360,4 +362,11 @@ const styles = StyleSheet.create({
   ButtonContainer: imageUp => ({
     marginTop: '5%',
   }),
+  BusinessDetails: {
+    fontSize: 16,
+    color: COLORS.textColor,
+    fontFamily: FONTS.InterMedium,
+    marginLeft: 20,
+    marginBottom: 5,
+  },
 });

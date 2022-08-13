@@ -56,7 +56,7 @@ const HouseOnwersList = ({
         <View style={styles.CutNameConatiner}>
           <Text style={styles.CutName}>{CutName}</Text>
         </View>
-        <View style={[genericStyles.column, {width: width / 2.3}]}>
+        <View style={[genericStyles.column, {width: width / 2.4}]}>
           <Text style={styles.title} numberOfLines={1}>
             {title}
           </Text>

@@ -128,7 +128,7 @@ const RoomsCard = ({
               name="phone-outgoing"
               type="material-community"
               color="#407BFF"
-              size={16}
+              size={15}
               reverse
               onPress={() =>
                 Userdata === null ? setIsLoginPop(true) : callCount(1)
@@ -138,7 +138,7 @@ const RoomsCard = ({
             <Icon
               name="whatsapp"
               type="material-community"
-              size={16}
+              size={15}
               color="#25D366"
               reverse
               onPress={() =>
@@ -149,7 +149,7 @@ const RoomsCard = ({
             <Icon
               name="navigate"
               type="ionicon"
-              size={16}
+              size={15}
               color={COLORS.primary}
               reverse
               onPress={() =>

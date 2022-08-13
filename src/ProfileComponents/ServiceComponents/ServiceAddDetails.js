@@ -20,7 +20,7 @@ import Toast from '../../Components/Toast';
 import BaseURL from '../../constants/BaseURL';
 
 const ServiceAddDetails = ({navigation}) => {
-  const {Userdata, UserToken, categories} = useApp();
+  const {Userdata, UserToken, categories, localityData} = useApp();
   const [Category, setCategory] = useState('');
   const [imageUp, setImage] = useState('');
   const [spinner, setSpinner] = useState(false);
@@ -33,6 +33,8 @@ const ServiceAddDetails = ({navigation}) => {
   const [AL1, setAL1] = useState('');
   const [Landmark, setLandmark] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [LocalityValue, setLocality] = useState('');
+
   const toast = useToast();
 
   const openGallery = () => {
@@ -106,6 +108,7 @@ const ServiceAddDetails = ({navigation}) => {
         data.append('house_no', buildFL);
         data.append('landmark', Landmark);
         data.append('business_address', AL1);
+        data.append('locality_id', LocalityValue);
         data.append(
           'logo_image',
           imageUp !== ''
@@ -128,7 +131,10 @@ const ServiceAddDetails = ({navigation}) => {
         setSpinner(false);
         if (response.success === true) {
           navigation.navigate('Profile');
-          Toast(toast, response.message);
+          Toast(
+            toast,
+            'Your profile is under review, Please wait for some time',
+          );
         } else {
           Toast(toast, response.message);
         }
@@ -224,6 +230,17 @@ const ServiceAddDetails = ({navigation}) => {
           value={Landmark}
           autoCapitalize="words"
           onChangeText={text => setLandmark(text)}
+        />
+        <DropDownComponent
+          data={localityData}
+          labelField="name"
+          valueField="id"
+          placeholder="Locality (required)"
+          value={LocalityValue}
+          maxHeight={100}
+          onChange={item => {
+            setLocality(item.id);
+          }}
         />
       </ScrollView>
       <ButtonComponent

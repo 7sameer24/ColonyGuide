@@ -54,7 +54,7 @@ const FourList = ({navigation}) => {
           key={data.Id}
           activeOpacity={0.9}
           onPress={() => {
-            if (Userdata.userData.app_role_id === 1) {
+            if (Userdata && Userdata.userData.app_role_id === 1) {
               if (data.navigation === 'House Owners') {
                 Toast(
                   toast,

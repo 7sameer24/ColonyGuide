@@ -50,6 +50,7 @@ import MoreImg from '../ProfileComponents/GalleryComponents/MoreImg';
 import EventInfo from '../ProfileComponents/EventsComponets/EventInfo';
 import SearchBus from '../Tabs/SearchScreens/SearchBus';
 import SearchBusResult from '../Tabs/SearchScreens/SearchBusResult';
+import HOServiceEdit from '../Tabs/HouseOwner/HOServiceEdit';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -301,6 +302,14 @@ const HomeStack = () => {
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
       title: 'Search Result',
+    },
+    {
+      name: 'HOServiceEdit',
+      component: HOServiceEdit,
+      title: 'Service Edit',
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
     },
   ];
 
