@@ -27,6 +27,8 @@ const MemberCard = ({
   onEdit,
   onServiceDelete,
   ServiceId,
+  OnRoomDelete,
+  RoomId,
 }) => {
   const toast = useToast();
 
@@ -45,6 +47,41 @@ const MemberCard = ({
       {cancelable: false},
     );
   };
+  const openLockAlert3 = () => {
+    Alert.alert(
+      'Room',
+      'Are you sure you want to delete room/pg ?',
+      [
+        {text: 'Ok', onPress: () => deleteRoom()},
+        {text: 'Cancel', style: 'cancel'},
+      ],
+      {cancelable: false},
+    );
+  };
+
+  const deleteRoom = async () => {
+    try {
+      updateLoading(true);
+      const response = await axios(BaseURL('delete-hostel-room'), {
+        method: 'post',
+        data: {
+          id: RoomId,
+          user_id: userId,
+        },
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      updateLoading(false);
+      onUpdate('');
+      fetchMemberList();
+      Toast(toast, response.data.message);
+    } catch (error) {
+      updateLoading(false);
+      console.log(error);
+    }
+  };
+
   const openLockAlert2 = () => {
     Alert.alert(
       'Delete Service',
@@ -150,6 +187,8 @@ const MemberCard = ({
               onPress={() => {
                 if (onServiceDelete) {
                   openLockAlert2();
+                } else if (OnRoomDelete) {
+                  openLockAlert3();
                 } else {
                   openLockAlert();
                 }

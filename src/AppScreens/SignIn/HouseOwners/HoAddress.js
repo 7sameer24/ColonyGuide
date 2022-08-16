@@ -26,6 +26,8 @@ const HoAddress = ({data}) => {
   const [colonyData, updateColonyData] = useState([]);
   const [colonyNo, updateColonyNo] = useState('');
   const [hideNmber, setHideNmber] = useState('');
+  const [casteData, setCasteData] = useState([]);
+  const [caste, setCaste] = useState([]);
 
   const {setNewData, setUserToken, resumeDetails} = useApp();
 
@@ -168,6 +170,17 @@ const HoAddress = ({data}) => {
                 value={Landmark}
                 onChangeText={text => setLandmark(text)}
                 autoCapitalize="words"
+              />
+              <DropDownComponent
+                data={casteData}
+                labelField="name"
+                valueField="id"
+                placeholder="Select your caste (required)"
+                value={caste}
+                maxHeight={100}
+                onChange={item => {
+                  setCaste(item.id);
+                }}
               />
               <DropDownComponent
                 data={HideNumber}

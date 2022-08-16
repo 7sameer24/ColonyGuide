@@ -233,6 +233,17 @@ const ProfileScreen = ({navigation}) => {
                 <>
                   <ProfileComponents
                     onPress={() =>
+                      navigation.navigate('MyRooms', {
+                        userID: Userdata.userData.id,
+                        userToken: UserToken,
+                      })
+                    }
+                    iconName="chevron-forward-outline"
+                    IconSvg={<AddMember />}
+                    title="Rooms/PG"
+                  />
+                  <ProfileComponents
+                    onPress={() =>
                       navigation.navigate('Add Members', {
                         userID: Userdata.userData.id,
                         userToken: UserToken,

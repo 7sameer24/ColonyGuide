@@ -4,7 +4,7 @@ import {COLORS, FONTS, genericStyles} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
 import axios from 'axios';
-import MemberCard from './MemberCard';
+import MemberCard from '../Members/MemberCard';
 import {ScrollView} from 'react-native-gesture-handler';
 import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
@@ -18,10 +18,10 @@ const MyRooms = ({navigation, route}) => {
   const fetchMemberList = async () => {
     try {
       updateLoading(true);
-      const response = await axios(BaseURL('family-member-list'), {
+      const response = await axios(BaseURL('get-user-hostel-rooms-list'), {
         method: 'post',
         data: {
-          resident_id: userID,
+          user_id: userID,
         },
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -29,7 +29,7 @@ const MyRooms = ({navigation, route}) => {
       });
       updateLoading(false);
       if (response.data.success == true) {
-        setUserData(response.data.family_member);
+        setUserData(response.data.list);
       }
     } catch (error) {
       updateLoading(false);
@@ -48,28 +48,25 @@ const MyRooms = ({navigation, route}) => {
       {data.length > 0 && (
         <ScrollView>
           {data.map((newData, index) => (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('Member Information', {infoData: newData})
-              }
-              activeOpacity={0.9}
-              key={newData.id}>
+            <TouchableOpacity activeOpacity={0.9} key={newData.id}>
               <MemberCard
                 fetchMemberList={fetchMemberList}
                 onUpdate={setUserData}
-                userId={newData.id}
+                userId={newData.user_id}
+                OnRoomDelete={true}
+                RoomId={newData.id}
                 index={index}
-                category={newData.relation}
-                subTitle={newData.education}
-                title={newData.name}
+                category={newData.category === 0 ? 'Hostel' : 'Rooms/Flats'}
+                subTitle={newData.contact_person}
+                title={newData.building_name}
                 onEdit={() =>
-                  navigation.navigate('Edit Member Details', {
+                  navigation.navigate('Edit Room Details', {
                     editData: newData,
                   })
                 }
                 source={
-                  newData.photo.includes('photo')
-                    ? {uri: newData.photo}
+                  newData.logo_image.includes('jpg')
+                    ? {uri: newData.logo_image}
                     : require('../../../assets/Image_not_available.png')
                 }
               />

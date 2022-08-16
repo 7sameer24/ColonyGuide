@@ -22,7 +22,8 @@ import ModalPopup from '../../Components/ModalPopup';
 import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
 
-const Addroom = ({navigation}) => {
+const EditRoom = ({navigation, route}) => {
+  const {editData} = route.params;
   const [spinner, setSpinner] = useState(false);
   const [check1, setCheck1] = useState(false);
   const [check2, setCheck2] = useState(true);
@@ -39,9 +40,9 @@ const Addroom = ({navigation}) => {
   const [Landmark, setLandmark] = useState('');
   const [mobile_no, setMobile] = useState('');
   const [WhatsappNo, setWhatsappNo] = useState('');
-  const {Userdata, UserToken} = useApp();
+  const {UserToken} = useApp();
   const [modalVisible, setModalVisible] = useState(false);
-  const [newData, setData] = useState([]);
+  const [LocalData, setLocalData] = useState([]);
   const [LocalityValue, setLocality] = useState('');
   const toast = useToast();
 
@@ -104,9 +105,7 @@ const Addroom = ({navigation}) => {
   };
 
   const Velidation = async () => {
-    if (!imageUp) {
-      Toast(toast, 'Please Add Rooms/Hostel Image');
-    } else if (Category == 1) {
+    if (Category == 1) {
       !roomType ? Toast(toast, 'Please select room type') : Saved();
     } else {
       Saved();
@@ -124,7 +123,8 @@ const Addroom = ({navigation}) => {
       try {
         setSpinner(true);
         const data = new FormData();
-        data.append('user_id', Userdata.userData.id);
+        data.append('id', editData.id);
+        data.append('user_id', editData.user_id);
         data.append('building_name', building_name);
         data.append('contact_person', PersonName);
         data.append('mobile_no', mobile_no);
@@ -154,7 +154,7 @@ const Addroom = ({navigation}) => {
               }
             : '',
         );
-        const res = await fetch(BaseURL('add-room-hostel'), {
+        const res = await fetch(BaseURL('edit-room-hostel'), {
           method: 'post',
           body: data,
           headers: {
@@ -181,17 +181,36 @@ const Addroom = ({navigation}) => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
       setRoomData(response.data.room_type);
-      setData(response.data.localities);
+      setLocalData(response.data.localities);
     } catch (error) {
       console.log(error);
     }
   };
 
+  const UpdateData = () => {
+    const AddressData = editData.address.split(',');
+    setBN(editData.building_name);
+    setPersonName(editData.contact_person);
+    setMobile(editData.mobile_no);
+    setWhatsappNo(editData.whatsapp_no);
+    setCategory(String(editData.category));
+    editData.room_type_id && setRoomType(editData.room_type_id);
+    setCheck1(editData.is_veg === 1 ? true : false);
+    setLocality(editData.locality_id);
+    setCheck2(editData.renter_type === 1 ? true : false);
+    setCheck3(editData.renter_type === 2 ? true : false);
+    setCheck4(editData.renter_type === 3 ? true : false);
+    setBuildFL(AddressData[0]);
+    setAL1(AddressData[1]);
+    AddressData[2] && setLandmark(AddressData[2]);
+  };
+
   useEffect(() => {
     idx();
+    UpdateData();
     return () => {
       setRoomData('');
-      setData([]);
+      setLocalData([]);
     };
   }, []);
 
@@ -215,7 +234,13 @@ const Addroom = ({navigation}) => {
               onPress={() => setModalVisible(true)}>
               <View style={styles.imageConatiner(imageUp)}>
                 <Image
-                  source={imageUp ? imageUp : Images.BusinessProfile}
+                  source={
+                    imageUp
+                      ? imageUp
+                      : editData.logo_image.includes('jpg')
+                      ? {uri: editData.logo_image}
+                      : Images.Ellipse
+                  }
                   style={styles.imageStyle(imageUp)}
                 />
               </View>
@@ -262,7 +287,13 @@ const Addroom = ({navigation}) => {
               data={CategoryData}
               value={Category}
               maxHeight={110}
-              onChange={item => setCategory(item.value)}
+              onChange={item => {
+                setCategory(item.value);
+                setRoomType('');
+                setCheck2(true);
+                setCheck3(false);
+                setCheck4(false);
+              }}
             />
             {Category == 0 ? null : (
               <>
@@ -348,7 +379,7 @@ const Addroom = ({navigation}) => {
               onChangeText={text => setLandmark(text)}
             />
             <DropDownComponent
-              data={newData}
+              data={LocalData}
               labelField="name"
               valueField="id"
               placeholder="Locality"
@@ -371,7 +402,7 @@ const Addroom = ({navigation}) => {
   );
 };
 
-export default Addroom;
+export default EditRoom;
 
 const styles = StyleSheet.create({
   textStyle: {
@@ -394,20 +425,19 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
   },
   imageConatiner: imageUp => ({
-    backgroundColor: imageUp ? COLORS.white : COLORS.secondary,
-    padding: imageUp ? 0 : 15,
+    backgroundColor: imageUp ? COLORS.secondary : COLORS.white,
     borderRadius: 50,
     alignSelf: 'center',
   }),
   imageStyle: imageUp => ({
-    width: imageUp ? 70 : 40,
-    height: imageUp ? 70 : 40,
-    borderRadius: imageUp ? 50 : 0,
+    width: 70,
+    height: 70,
+    borderRadius: 50,
   }),
   AddLogoText: {
     fontSize: 12,
     color: COLORS.third,
-    marginBottom: 10,
+    marginVertical: 5,
     fontFamily: FONTS.InterMedium,
   },
 });

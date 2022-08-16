@@ -51,6 +51,8 @@ import EventInfo from '../ProfileComponents/EventsComponets/EventInfo';
 import SearchBus from '../Tabs/SearchScreens/SearchBus';
 import SearchBusResult from '../Tabs/SearchScreens/SearchBusResult';
 import HOServiceEdit from '../Tabs/HouseOwner/HOServiceEdit';
+import MyRooms from '../Tabs/HouseOwner/MyRooms';
+import EditRoom from '../Tabs/HouseOwner/EditRoom';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -307,6 +309,21 @@ const HomeStack = () => {
       name: 'HOServiceEdit',
       component: HOServiceEdit,
       title: 'Service Edit',
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'MyRooms',
+      component: MyRooms,
+      title: 'Rooms/PG',
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Edit Room Details',
+      component: EditRoom,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,

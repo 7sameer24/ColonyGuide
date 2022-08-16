@@ -68,6 +68,7 @@ with your account"
         iconName="call"
         iconSize={25}
         value={mobile_no}
+        maxLength={10}
         onChangeText={num => setMobile(num)}
         keyboardType="number-pad"
         errorStyle={genericStyles.fontSize(5)}

@@ -53,24 +53,26 @@ const HouseOnwersList = ({
   return (
     <Card containerStyle={styles.CardContainer}>
       <View style={styles.mainContainer}>
-        <View style={styles.CutNameConatiner}>
-          <Text style={styles.CutName}>{CutName}</Text>
-        </View>
-        <View style={[genericStyles.column, {width: width / 2.4}]}>
-          <Text style={styles.title} numberOfLines={1}>
-            {title}
-          </Text>
-          <Text style={styles.subTitle} numberOfLines={1}>
-            {subTitle}
-          </Text>
-          <Text style={styles.subTitle} numberOfLines={1}>
-            {AddressLine}
-          </Text>
-          {Landmark && (
-            <Text style={styles.subTitle} numberOfLines={1}>
-              {Landmark}
+        <View style={genericStyles.row}>
+          <View style={styles.CutNameConatiner}>
+            <Text style={styles.CutName}>{CutName}</Text>
+          </View>
+          <View style={[genericStyles.column, {width: width / 2.4}]}>
+            <Text style={styles.title} numberOfLines={1}>
+              {title}
             </Text>
-          )}
+            <Text style={styles.subTitle} numberOfLines={1}>
+              {subTitle}
+            </Text>
+            <Text style={styles.subTitle} numberOfLines={1}>
+              {AddressLine}
+            </Text>
+            {Landmark && (
+              <Text style={styles.subTitle} numberOfLines={1}>
+                {Landmark}
+              </Text>
+            )}
+          </View>
         </View>
         <View
           style={{
@@ -94,7 +96,7 @@ const HouseOnwersList = ({
             size={15}
             reverse
             containerStyle={genericStyles.shadow}
-            color="#25D366"
+            color={hideNumber == 1 ? COLORS.darkgray : '#25D366'}
             onPress={() => {
               if (Userdata === null) {
                 setIsLoginPop(true);
@@ -148,6 +150,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   CutNameConatiner: {
     backgroundColor: COLORS.primary,
