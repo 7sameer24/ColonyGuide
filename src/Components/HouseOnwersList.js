@@ -53,7 +53,7 @@ const HouseOnwersList = ({
   return (
     <Card containerStyle={styles.CardContainer}>
       <View style={styles.mainContainer}>
-        <View style={genericStyles.row}>
+        <View style={[genericStyles.row, {alignItems: 'center'}]}>
           <View style={styles.CutNameConatiner}>
             <Text style={styles.CutName}>{CutName}</Text>
           </View>
@@ -86,6 +86,7 @@ const HouseOnwersList = ({
             color="#407BFF"
             size={15}
             reverse
+            containerStyle={genericStyles.shadow}
             onPress={() =>
               Userdata === null ? setIsLoginPop(true) : onShare()
             }
@@ -127,7 +128,6 @@ export default HouseOnwersList;
 
 const styles = StyleSheet.create({
   CardContainer: {
-    borderWidth: 0,
     elevation: 5,
     borderRadius: 10,
     marginHorizontal: 20,

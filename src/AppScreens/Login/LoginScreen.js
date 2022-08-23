@@ -25,8 +25,14 @@ const LoginScreen = ({navigation}) => {
   const [visible, setVisible] = useState(true);
   const [MN, setMobile] = useState('');
   const [password, setPass] = useState('');
-  const {setNewData, setUserToken, setNavigationState, updateResumeDtails} =
-    useApp();
+  const {
+    setNewData,
+    setUserToken,
+    setNavigationState,
+    updateResumeDtails,
+    setAdminData,
+    setAdminToken,
+  } = useApp();
 
   const Login = async () => {
     if (MN.length < 10 || MN.length > 10) {
@@ -42,9 +48,17 @@ const LoginScreen = ({navigation}) => {
           .then(async response => {
             setSpinner(false);
             if (response.data.success === true) {
-              setNewData(response.data);
-              setUserToken(response.data.token);
-              Toast(toast, response.data.message);
+              if (response.data.userData.app_role_id === 6) {
+                // SuperAdmin login
+                setAdminData(response.data);
+                setAdminToken(response.data.token);
+                Toast(toast, response.data.message);
+              } else {
+                // Normal user login
+                setNewData(response.data);
+                setUserToken(response.data.token);
+                Toast(toast, response.data.message);
+              }
             } else {
               if (response.data.otp_status === false) {
                 Toast(toast, response.data.message);

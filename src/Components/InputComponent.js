@@ -24,6 +24,7 @@ const InputComponent = ({
   autoCapitalize,
   onKeyPress,
   autoFocus,
+  iconContainerStyle,
 }) => {
   return (
     <Input
@@ -42,6 +43,7 @@ const InputComponent = ({
         color: COLORS.primary,
         size: iconSize,
         onPress: iconOnpress,
+        containerStyle: iconContainerStyle,
       }}
       value={value}
       onChangeText={onChangeText}

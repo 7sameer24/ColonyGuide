@@ -17,19 +17,31 @@ import ResumeServiceForm from './ResumeFormsStack/ResumeServiceForm';
 import ResumeHouseForm from './ResumeFormsStack/ResumeHouseForm';
 import ResumeHostelForm from './ResumeFormsStack/ResumeHostelForm';
 import ModalStack from './ModalStack';
+import AdminStack from './AdminStack';
 
 const MainStack = () => {
-  const {navigationState, setNavigationState, setNewData, setUserToken} =
-    useApp();
+  const {
+    navigationState,
+    setNavigationState,
+    setNewData,
+    setUserToken,
+    setAdminData,
+    setAdminToken,
+  } = useApp();
 
   useEffect(() => {
     const setUserDetail = async () => {
       const userData = await AsyncStorage.getItem('UserLogin');
       const userToken = await AsyncStorage.getItem('UserToken');
+      const adminData = await AsyncStorage.getItem('adminLogin');
+      const adminToken = await AsyncStorage.getItem('adminToken');
       const isOnboardingShowed = await AsyncStorage.getItem('alreadyLaunch');
       if (JSON.parse(userToken)) {
         setNewData(JSON.parse(userData));
         setUserToken(JSON.parse(userToken));
+      } else if (JSON.parse(adminToken)) {
+        setAdminData(JSON.parse(adminData));
+        setAdminToken(JSON.parse(adminToken));
       } else if (isOnboardingShowed === null) {
         AsyncStorage.setItem('alreadyLaunch', 'true');
         setNavigationState(navigationStateType.ONBOADRING);
@@ -68,6 +80,9 @@ const MainStack = () => {
 
       case navigationStateType.CHOOSELOCALID:
         return <ModalStack />;
+
+      case navigationStateType.SUPERADMIN:
+        return <AdminStack />;
 
       default:
         return <LoadingStack />;

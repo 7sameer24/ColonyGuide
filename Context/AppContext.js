@@ -13,6 +13,7 @@ export const navigationStateType = {
   HOUSE_FORM: 'HOUSE_FORM',
   HOSTEL_FORM: 'HOSTEL_FORM',
   CHOOSELOCALID: 'CHOOSELOCALID',
+  SUPERADMIN: 'SUPERADMIN',
 };
 const AppContext = ({children}) => {
   const [navigationState, setNavigationState] = useState(
@@ -29,19 +30,25 @@ const AppContext = ({children}) => {
   const [GSaveLocalID, updateGSaveLocalID] = useState(null);
   const [categories, updateCategories] = useState([]);
   const [localityData, updateLocalData] = useState([]);
+  const [adminData, setAdminData] = useState(null);
+  const [adminToken, setAdminToken] = useState(null);
 
   useEffect(() => {
     const saveDetail = async () => {
       await AsyncStorage.setItem('UserLogin', JSON.stringify(Userdata));
       await AsyncStorage.setItem('UserToken', JSON.stringify(UserToken));
+      await AsyncStorage.setItem('adminLogin', JSON.stringify(adminData));
+      await AsyncStorage.setItem('adminToken', JSON.stringify(adminToken));
     };
     saveDetail();
     if (UserToken) {
       setNavigationState(navigationStateType.HOME);
+    } else if (adminToken) {
+      setNavigationState(navigationStateType.SUPERADMIN);
     } else if (navigationStateType.LOADING !== navigationState) {
       setNavigationState(navigationStateType.AUTH);
     }
-  }, [Userdata, UserToken]);
+  }, [Userdata, UserToken, adminData, adminToken]);
 
   return (
     <App.Provider
@@ -68,6 +75,10 @@ const AppContext = ({children}) => {
         updateCategories,
         localityData,
         updateLocalData,
+        adminData,
+        setAdminData,
+        adminToken,
+        setAdminToken,
       }}>
       {children}
     </App.Provider>

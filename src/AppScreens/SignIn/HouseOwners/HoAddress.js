@@ -38,11 +38,9 @@ const HoAddress = ({data}) => {
       Toast(toast, 'Please choose hide or not your number');
     } else if (!LocalityValue) {
       Toast(toast, 'Please choose locality!');
-    }
-    // else if (!colonyNo) {
-    //   Toast(toast,'Please choose colony no.!');
-    // }
-    else if (
+    } else if (!caste) {
+      Toast(toast, 'Please choose your caste!');
+    } else if (
       data != undefined ? data.app_role_id == 3 : resumeDetails.app_role_id == 3
     ) {
       !HOName ? Toast(toast, 'Please enter full name!') : handleOnSubmit();
@@ -71,6 +69,7 @@ const HoAddress = ({data}) => {
       Form.append('locality_id', LocalityValue);
       Form.append('street_id', colonyNo);
       Form.append('is_private', hideNmber);
+      Form.append('caste_id', caste);
 
       const res = await fetch(BaseURL('add-details'), {
         method: 'post',
@@ -106,6 +105,7 @@ const HoAddress = ({data}) => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
       setData(response.data.localities);
+      setCasteData(response.data.caste);
     } catch (error) {
       Toast(toast, error);
     }
@@ -177,7 +177,7 @@ const HoAddress = ({data}) => {
                 valueField="id"
                 placeholder="Select your caste (required)"
                 value={caste}
-                maxHeight={100}
+                maxHeight={150}
                 onChange={item => {
                   setCaste(item.id);
                 }}

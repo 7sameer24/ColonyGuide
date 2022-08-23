@@ -1,6 +1,6 @@
 import {ScrollView, StyleSheet, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
-import {genericStyles} from '../../constants';
+import {COLORS, genericStyles} from '../../constants';
 import HeaderBar from '../../Components/HeaderBar';
 import HouseOnwersList from '../../Components/HouseOnwersList';
 import axios from 'axios';
@@ -8,28 +8,45 @@ import BaseURL from '../../constants/BaseURL';
 import NoDataAni from '../../Components/NoDataAni';
 import {useApp} from '../../../Context/AppContext';
 import SkeletonView from '../../Components/SkeletonView';
+import DropDownComponent from '../../Components/DropDownComponent';
 
 const HouseOwners = ({navigation}) => {
   const [newData, setData] = useState([]);
   const [loading, updateLoading] = useState(true);
   const {Userdata, GSaveLocalID} = useApp();
+  const [casteData, setCasteData] = useState([]);
+  const [caste, setCaste] = useState([]);
 
-  const idx = async () => {
+  const idx = async casteId => {
     try {
       const response = await axios.post(BaseURL('house-owner-list'), {
         locality_id: GSaveLocalID
           ? GSaveLocalID
           : Userdata.userData.locality_id,
+        caste_id: casteId,
       });
       updateLoading(false);
-      setData(response.data.houseowner);
+      if (response.data.success) {
+        setData(response.data.houseowner);
+      }
     } catch (error) {
       updateLoading(false);
       alert(error);
     }
   };
+
+  const fetchCasteData = async () => {
+    try {
+      const response = await axios.post(BaseURL('get-all-master'));
+      setCasteData(response.data.caste);
+    } catch (error) {
+      Toast(toast, error);
+    }
+  };
+
   useEffect(() => {
     idx();
+    fetchCasteData();
     return () => {
       setData([]);
     };
@@ -45,6 +62,19 @@ const HouseOwners = ({navigation}) => {
         // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
+      />
+      <DropDownComponent
+        data={casteData}
+        labelField="name"
+        valueField="id"
+        placeholder="Select caste"
+        value={caste}
+        maxHeight={150}
+        dropdownStyle={styles.dropdownStyle}
+        onChange={item => {
+          setCaste(item.id);
+          idx(item.id);
+        }}
       />
       {newData.length > 0 && (
         <ScrollView>
@@ -75,4 +105,13 @@ const HouseOwners = ({navigation}) => {
 
 export default HouseOwners;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  dropdownStyle: {
+    borderColor: COLORS.secondary,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 10,
+    paddingHorizontal: 16,
+    marginHorizontal: 20,
+  },
+});
