@@ -1,9 +1,7 @@
 import React from 'react';
-import {
-  createNativeStackNavigator,
-  createMaterialTopTabNavigator,
-} from '@react-navigation/native-stack';
-import Dashbord from '../SuperAdmin/AdminScreens/Dashbord';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
+import Dashboard from '../SuperAdmin/AdminScreens/Dashboard';
 import AdminGallery from '../SuperAdmin/AdminScreens/AdminGallery';
 import {COLORS, FONTS} from '../constants';
 import AddGallery from '../SuperAdmin/AdminScreens/AddGallery';
@@ -12,15 +10,18 @@ import AddEvent from '../SuperAdmin/AdminScreens/AddEvent';
 import SendNotification from '../SuperAdmin/AdminScreens/SendNotification';
 import ResidentApproval from '../SuperAdmin/AdminScreens/ResidentApproval';
 import ServiceApproval from '../SuperAdmin/AdminScreens/ServiceApproval';
+import BlockScreen from '../SuperAdmin/AdminScreens/BlockScreen';
+import UnblockScreen from '../SuperAdmin/AdminScreens/UnblockScreen';
+
+const Stack = createNativeStackNavigator();
+const TopTab = createMaterialTopTabNavigator();
 
 export default function AdminStack() {
-  const Stack = createNativeStackNavigator();
-
   return (
     <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
       <Stack.Screen
         name="Admin"
-        component={Dashbord}
+        component={Dashboard}
         options={() => ({
           headerShown: false,
         })}
@@ -78,7 +79,16 @@ export default function AdminStack() {
           headerStyle: {backgroundColor: COLORS.primary},
           headerTitleStyle: {color: COLORS.white},
           headerTintColor: COLORS.white,
-          title: 'Approvals',
+        })}
+      />
+      <Stack.Screen
+        name="BlockUnblock"
+        component={BlockUnblock}
+        options={() => ({
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerTitleStyle: {color: COLORS.white},
+          headerTintColor: COLORS.white,
+          title: 'Block',
         })}
       />
     </Stack.Navigator>
@@ -86,13 +96,44 @@ export default function AdminStack() {
 }
 
 function Approvals() {
-  const TopTab = createMaterialTopTabNavigator();
   const TopTabsArr = [
     {component: ResidentApproval, name: 'Resident', ID: 'Resident'},
     {
       component: ServiceApproval,
       name: 'Service Provider',
       ID: 'Service Provider',
+    },
+  ];
+  return (
+    <TopTab.Navigator>
+      {TopTabsArr.map(data => {
+        return (
+          <TopTab.Screen
+            key={data.name}
+            name={data.ID}
+            component={data.component}
+            options={{
+              tabBarActiveTintColor: COLORS.primary,
+              tabBarInactiveTintColor: COLORS.textColor,
+              tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
+              tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
+              tabBarPressColor: '#f2f2f2',
+              title: data.name,
+            }}
+          />
+        );
+      })}
+    </TopTab.Navigator>
+  );
+}
+
+function BlockUnblock() {
+  const TopTabsArr = [
+    {component: BlockScreen, name: 'Block', ID: 'Block'},
+    {
+      component: UnblockScreen,
+      name: 'Unblock',
+      ID: 'Unblock',
     },
   ];
   return (

@@ -9,7 +9,21 @@ import React from 'react';
 import {Image, Card, Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 
-const GalleryCard = ({title, subTitle, source, onEdit, deleteItem}) => {
+const GalleryCard = ({
+  title,
+  subTitle,
+  source,
+  onEdit,
+  deleteItem,
+  AddressLine,
+  Landmark,
+  twoMore,
+  iconName,
+  iconType,
+  iconName2,
+  iconType2,
+  IconColorChange,
+}) => {
   const {width} = useWindowDimensions();
 
   return (
@@ -36,24 +50,38 @@ const GalleryCard = ({title, subTitle, source, onEdit, deleteItem}) => {
                 <Text style={[styles.subTitle1]} numberOfLines={1}>
                   {subTitle}
                 </Text>
+                {twoMore && (
+                  <>
+                    <Text style={styles.subTitle} numberOfLines={1}>
+                      {AddressLine}
+                    </Text>
+                    {Landmark && (
+                      <Text style={styles.subTitle} numberOfLines={1}>
+                        {Landmark}
+                      </Text>
+                    )}
+                  </>
+                )}
               </View>
             </View>
           </View>
           <View style={styles.View3}>
+            {iconName && (
+              <Icon
+                name={iconName}
+                type={iconType}
+                size={18}
+                reverse
+                color={IconColorChange ? '#6DD351' : COLORS.primary}
+                onPress={onEdit}
+                containerStyle={genericStyles.shadow}
+              />
+            )}
             <Icon
-              name="square-edit-outline"
-              type="material-community"
+              name={iconName2}
+              type={iconType2}
               size={18}
-              reverse
-              color={COLORS.primary}
-              onPress={onEdit}
-              containerStyle={genericStyles.shadow}
-            />
-            <Icon
-              name="trash"
-              type="ionicon"
-              size={18}
-              color={COLORS.red}
+              color={IconColorChange ? '#6DD351' : COLORS.red}
               reverse
               onPress={deleteItem}
               containerStyle={genericStyles.shadow}

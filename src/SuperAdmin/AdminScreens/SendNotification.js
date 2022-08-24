@@ -16,7 +16,12 @@ const SendNotification = () => {
         inputContainerStyle={styles.inputContainerStyle}
       />
       <CustomView />
-      <GalleryCard />
+      <GalleryCard
+        iconName="square-edit-outline"
+        iconType="material-community"
+        iconName2="trash"
+        iconType2="ionicon"
+      />
     </View>
   );
 };

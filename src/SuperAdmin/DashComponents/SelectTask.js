@@ -2,18 +2,17 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {Card} from 'react-native-elements';
 import {COLORS, FONTS} from '../../constants';
-import {SvgUri} from 'react-native-svg';
 
-const SelectTask = ({onPress}) => {
+const SelectTask = ({onPress, title, SvgCompoent}) => {
   return (
     <TouchableOpacity
       onPress={onPress}
       activeOpacity={0.9}
       style={styles.containerStyle2}>
       <Card containerStyle={styles.cardContainer}>
-        <SvgUri width={30} height={30} />
+        <SvgCompoent />
       </Card>
-      <Text style={styles.text3}>Gallery</Text>
+      <Text style={styles.text3}>{title}</Text>
     </TouchableOpacity>
   );
 };
@@ -41,6 +40,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderRadius: 10,
     alignItems: 'center',
+    justifyContent: 'center',
     margin: 0,
     padding: 0,
   },

@@ -2,22 +2,24 @@ import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {Card} from 'react-native-elements';
-import Student from '../../../assets/adminSvg/Student.svg';
 
-const CounterBox = () => {
+const CounterBox = props => {
+  const {SvgComponent} = props;
   return (
     <Card containerStyle={[styles.cardContainer, genericStyles.shadow]}>
-      <View style={styles.fourCategoriesContainer('#FF6F91')}>
-        <Text style={styles.text}>100</Text>
+      <View style={styles.fourCategoriesContainer(props.color)}>
+        <Text style={styles.text}>{props.totalNumber}</Text>
       </View>
       <View style={styles.fourCategoriesContainer2}>
         <View style={[genericStyles.row, styles.whiteContainer]}>
           <Card containerStyle={[genericStyles.shadow, styles.iconContainer]}>
-            <Student />
+            <SvgComponent />
           </Card>
           <View>
-            <Text style={styles.text2}>Total</Text>
-            <Text style={styles.text2}>Residence</Text>
+            <Text style={styles.text2}>{props.title}</Text>
+            <Text style={styles.text2} numberOfLines={1}>
+              {props.subTitle}
+            </Text>
           </View>
         </View>
       </View>
@@ -55,6 +57,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: COLORS.black,
     textAlign: 'left',
+    width: 70,
   },
   cardContainer: {
     borderWidth: 0,
