@@ -4,6 +4,7 @@ import {
   View,
   useWindowDimensions,
   ActivityIndicator,
+  Switch,
 } from 'react-native';
 import React from 'react';
 import {Image, Card, Icon} from 'react-native-elements';
@@ -23,6 +24,9 @@ const GalleryCard = ({
   iconName2,
   iconType2,
   IconColorChange,
+  switchButton,
+  toggleSwitch,
+  isEnabled,
 }) => {
   const {width} = useWindowDimensions();
 
@@ -65,28 +69,38 @@ const GalleryCard = ({
               </View>
             </View>
           </View>
-          <View style={styles.View3}>
-            {iconName && (
+          {switchButton ? (
+            <Switch
+              trackColor={{false: 'red', true: '#6DD351'}}
+              thumbColor={'#ffffff'}
+              ios_backgroundColor="#fff"
+              onValueChange={toggleSwitch}
+              value={isEnabled}
+            />
+          ) : (
+            <View style={styles.View3}>
+              {iconName && (
+                <Icon
+                  name={iconName}
+                  type={iconType}
+                  size={18}
+                  reverse
+                  color={IconColorChange ? '#6DD351' : COLORS.primary}
+                  onPress={onEdit}
+                  containerStyle={genericStyles.shadow}
+                />
+              )}
               <Icon
-                name={iconName}
-                type={iconType}
+                name={iconName2}
+                type={iconType2}
                 size={18}
+                color={IconColorChange ? '#6DD351' : COLORS.red}
                 reverse
-                color={IconColorChange ? '#6DD351' : COLORS.primary}
-                onPress={onEdit}
+                onPress={deleteItem}
                 containerStyle={genericStyles.shadow}
               />
-            )}
-            <Icon
-              name={iconName2}
-              type={iconType2}
-              size={18}
-              color={IconColorChange ? '#6DD351' : COLORS.red}
-              reverse
-              onPress={deleteItem}
-              containerStyle={genericStyles.shadow}
-            />
-          </View>
+            </View>
+          )}
         </View>
       </Card>
     </View>

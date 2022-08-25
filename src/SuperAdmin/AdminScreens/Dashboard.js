@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {useApp} from '../../../Context/AppContext';
@@ -15,6 +15,7 @@ import AddEvent from '../../../assets/adminSvg/AddEvent.svg';
 import Approval from '../../../assets/adminSvg/Approval.svg';
 import SendNotification from '../../../assets/adminSvg/SendNotification.svg';
 import Block from '../../../assets/adminSvg/Block.svg';
+import Commercials from '../../../assets/adminSvg/Commercials.svg';
 import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../Components/Toast';
 import Spinner from '../../Components/Spinner';
@@ -23,28 +24,28 @@ const Dashboard = ({navigation}) => {
   const {adminToken} = useApp();
   const [data, updateData] = useState([]);
 
-  const fetchData = async () => {
-    try {
-      const {data} = await axios(BaseURL('admin-dashboard'), {
-        method: 'post',
-        data: {
-          locality_id: 1,
-        },
-        headers: {
-          Authorization: `Bearer ${adminToken}`,
-        },
-      });
-      if (data.success) {
-        updateData(data.dashboardData);
-      }
-    } catch (error) {
-      Toast(toast, error);
-    }
-  };
+  // const fetchData = async () => {
+  //   try {
+  //     const {data} = await axios(BaseURL('admin-dashboard'), {
+  //       method: 'post',
+  //       data: {
+  //         locality_id: 1,
+  //       },
+  //       headers: {
+  //         Authorization: `Bearer ${adminToken}`,
+  //       },
+  //     });
+  //     if (data.success) {
+  //       updateData(data.dashboardData);
+  //     }
+  //   } catch (error) {
+  //     Toast(toast, error);
+  //   }
+  // };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   return (
     <View style={genericStyles.container}>
@@ -53,46 +54,41 @@ const Dashboard = ({navigation}) => {
       </View>
       {data ? (
         <>
-          <View
-            style={[
-              genericStyles.row,
-              {justifyContent: 'space-evenly', marginBottom: 20},
-            ]}>
-            <CounterBox
-              title="Total"
-              color="#FF6F91"
-              subTitle="Registered"
-              totalNumber={data.total_user}
-              SvgComponent={TotalRegistered}
-            />
-            <CounterBox
-              title="Total"
-              color="#D65DB1"
-              subTitle="Residence"
-              SvgComponent={TotalResident}
-              totalNumber={data.total_house_owner}
-            />
-          </View>
-          <View
-            style={[
-              genericStyles.row,
-              {justifyContent: 'space-evenly', marginBottom: 20},
-            ]}>
-            <CounterBox
-              title="Total"
-              color="#FF8066"
-              SvgComponent={TotalService}
-              subTitle="Service Providers"
-              totalNumber={data.total_service}
-            />
-            <CounterBox
-              title="Total"
-              color="#00C2A8"
-              subTitle="Student"
-              SvgComponent={Student}
-              totalNumber={data.total_student}
-            />
-          </View>
+          <ScrollView
+            horizontal
+            style={{flexGrow: 0}}
+            showsHorizontalScrollIndicator={false}>
+            <View style={genericStyles.row}>
+              <CounterBox
+                title="Total"
+                color="#FF6F91"
+                subTitle="Registered"
+                totalNumber={data.total_user}
+                SvgComponent={TotalRegistered}
+              />
+              <CounterBox
+                title="Total"
+                color="#D65DB1"
+                subTitle="Residence"
+                SvgComponent={TotalResident}
+                totalNumber={data.total_house_owner}
+              />
+              <CounterBox
+                title="Total"
+                color="#FF8066"
+                SvgComponent={TotalService}
+                subTitle="Service Providers"
+                totalNumber={data.total_service}
+              />
+              <CounterBox
+                title="Total"
+                color="#00C2A8"
+                subTitle="Student"
+                SvgComponent={Student}
+                totalNumber={data.total_student}
+              />
+            </View>
+          </ScrollView>
           <View style={genericStyles.mh(24)}>
             <Text style={styles.topText}>Select Task</Text>
           </View>
@@ -122,6 +118,11 @@ const Dashboard = ({navigation}) => {
               onPress={() => navigation.navigate('Admin notification')}
             />
             <SelectTask
+              title="Commercial"
+              SvgCompoent={Commercials}
+              onPress={() => navigation.navigate('BlockUnblock')}
+            />
+            <SelectTask
               title="Block"
               SvgCompoent={Block}
               onPress={() => navigation.navigate('BlockUnblock')}
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterMedium,
     fontSize: 20,
     color: COLORS.white,
-    marginLeft: 24,
+    marginLeft: 10,
   },
   container: {
     backgroundColor: COLORS.primary,
@@ -165,6 +166,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterMedium,
     color: COLORS.textColor,
     marginLeft: 5,
+    marginTop: 20,
   },
   container2: {
     flex: 1,

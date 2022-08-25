@@ -3,7 +3,7 @@ import React from 'react';
 import {genericStyles} from '../../constants';
 import GalleryCard from '../DashComponents/GalleryCard';
 
-const ResidentApproval = () => {
+const StudentApproval = () => {
   return (
     <View style={genericStyles.Container}>
       <ScrollView>
@@ -24,6 +24,6 @@ const ResidentApproval = () => {
   );
 };
 
-export default ResidentApproval;
+export default StudentApproval;
 
 const styles = StyleSheet.create({});

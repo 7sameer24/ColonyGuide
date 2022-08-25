@@ -5,12 +5,13 @@ import {Card} from 'react-native-elements';
 
 const CounterBox = props => {
   const {SvgComponent} = props;
+  const mapData = [
+    {name: 'Total', name2: 'Today'},
+    {name: 'Active', name2: 'Deactive'},
+  ];
   return (
     <Card containerStyle={[styles.cardContainer, genericStyles.shadow]}>
       <View style={styles.fourCategoriesContainer(props.color)}>
-        <Text style={styles.text}>{props.totalNumber}</Text>
-      </View>
-      <View style={styles.fourCategoriesContainer2}>
         <View style={[genericStyles.row, styles.whiteContainer]}>
           <Card containerStyle={[genericStyles.shadow, styles.iconContainer]}>
             <SvgComponent />
@@ -22,6 +23,38 @@ const CounterBox = props => {
             </Text>
           </View>
         </View>
+      </View>
+      <View style={styles.fourCategoriesContainer2}>
+        {mapData.map((d, ind) => (
+          <View key={ind} style={genericStyles.mv(10)}>
+            <View style={genericStyles.ai('center')}>
+              <Card
+                containerStyle={[
+                  genericStyles.shadow,
+                  styles.iconContainer,
+                  {backgroundColor: props.color, borderRadius: 10},
+                ]}>
+                <Text style={[styles.text, genericStyles.color(COLORS.white)]}>
+                  {'65'}
+                </Text>
+              </Card>
+              <Text style={[styles.text, genericStyles.mv(4)]}>{d.name}</Text>
+            </View>
+            <View style={{marginTop: 10, alignItems: 'center'}}>
+              <Card
+                containerStyle={[
+                  genericStyles.shadow,
+                  styles.iconContainer,
+                  {backgroundColor: props.color, borderRadius: 10},
+                ]}>
+                <Text style={[styles.text, genericStyles.color(COLORS.white)]}>
+                  {'65'}
+                </Text>
+              </Card>
+              <Text style={[styles.text, genericStyles.mv(4)]}>{d.name2}</Text>
+            </View>
+          </View>
+        ))}
       </View>
     </Card>
   );
@@ -37,7 +70,7 @@ const styles = StyleSheet.create({
   },
   fourCategoriesContainer: bg => ({
     backgroundColor: bg,
-    alignItems: 'center',
+    // alignItems: 'center',
     justifyContent: 'center',
     height: 55,
     borderTopRightRadius: 10,
@@ -46,16 +79,18 @@ const styles = StyleSheet.create({
   fourCategoriesContainer2: {
     borderBottomStartRadius: 10,
     borderBottomEndRadius: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
   },
   text: {
     fontFamily: FONTS.InterMedium,
-    fontSize: 20,
-    color: COLORS.white,
+    fontSize: 12,
+    color: COLORS.black,
   },
   text2: {
     fontFamily: FONTS.InterMedium,
     fontSize: 12,
-    color: COLORS.black,
+    color: COLORS.white,
     textAlign: 'left',
     width: 70,
   },
@@ -64,8 +99,9 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     borderRadius: 10,
-    width: 160,
-    height: 112,
+    width: 170,
+    marginHorizontal: 12,
+    marginBottom: 10,
   },
   iconContainer: {
     borderRadius: 50,

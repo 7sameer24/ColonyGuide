@@ -12,6 +12,9 @@ import ResidentApproval from '../SuperAdmin/AdminScreens/ResidentApproval';
 import ServiceApproval from '../SuperAdmin/AdminScreens/ServiceApproval';
 import BlockScreen from '../SuperAdmin/AdminScreens/BlockScreen';
 import UnblockScreen from '../SuperAdmin/AdminScreens/UnblockScreen';
+import CommercialsBusiness from '../SuperAdmin/AdminScreens/CommercialsBusiness';
+import CommercialsService from '../SuperAdmin/AdminScreens/CommercialsService';
+import StudentApproval from '../SuperAdmin/AdminScreens/StudentApproval';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -91,6 +94,16 @@ export default function AdminStack() {
           title: 'Block',
         })}
       />
+      <Stack.Screen
+        name="Commercials"
+        component={Commercials}
+        options={() => ({
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerTitleStyle: {color: COLORS.white},
+          headerTintColor: COLORS.white,
+          title: 'Block',
+        })}
+      />
     </Stack.Navigator>
   );
 }
@@ -103,6 +116,7 @@ function Approvals() {
       name: 'Service Provider',
       ID: 'Service Provider',
     },
+    {component: StudentApproval, name: 'Student', ID: 'Student'},
   ];
   return (
     <TopTab.Navigator>
@@ -134,6 +148,37 @@ function BlockUnblock() {
       component: UnblockScreen,
       name: 'Unblock',
       ID: 'Unblock',
+    },
+  ];
+  return (
+    <TopTab.Navigator>
+      {TopTabsArr.map(data => {
+        return (
+          <TopTab.Screen
+            key={data.name}
+            name={data.ID}
+            component={data.component}
+            options={{
+              tabBarActiveTintColor: COLORS.primary,
+              tabBarInactiveTintColor: COLORS.textColor,
+              tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
+              tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
+              tabBarPressColor: '#f2f2f2',
+              title: data.name,
+            }}
+          />
+        );
+      })}
+    </TopTab.Navigator>
+  );
+}
+function Commercials() {
+  const TopTabsArr = [
+    {component: CommercialsBusiness, name: 'Business', ID: 'Business'},
+    {
+      component: CommercialsService,
+      name: 'Service',
+      ID: 'Service',
     },
   ];
   return (
