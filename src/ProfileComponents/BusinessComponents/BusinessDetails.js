@@ -24,7 +24,7 @@ import Toast from '../../Components/Toast';
 const BusinessDetails = ({navigation}) => {
   const toast = useToast();
 
-  const {Userdata, UserToken, setCheckStatus} = useApp();
+  const {Userdata, UserToken, setCheckStatus, localityData} = useApp();
   const [businessCategoryData, setBusinessCategoryData] = useState([]);
   const [businessValue, updateBusinessValue] = useState('');
   const [imageUp, setImage] = useState('');
@@ -38,6 +38,7 @@ const BusinessDetails = ({navigation}) => {
   const [AL1, setAL1] = useState('');
   const [Landmark, setLandmark] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+  const [LocalityValue, setLocality] = useState('');
 
   const idx = async () => {
     try {
@@ -104,6 +105,8 @@ const BusinessDetails = ({navigation}) => {
       Toast(toast, 'Please check your Mobile number and try again');
     } else if (WhatsappNo.length < 10) {
       Toast(toast, 'Please check your Whatsapp number and try again');
+    } else if (!LocalityValue) {
+      Toast(toast, 'Please choose your locality!');
     } else {
       try {
         setSpinner(true);
@@ -122,6 +125,8 @@ const BusinessDetails = ({navigation}) => {
         data.append('house_no', buildFL);
         data.append('landmark', Landmark);
         data.append('business_address', AL1);
+        data.append('locality_id', LocalityValue);
+
         data.append(
           'logo_image',
           imageUp !== ''
@@ -145,7 +150,10 @@ const BusinessDetails = ({navigation}) => {
         if (response.success === true) {
           setCheckStatus(1);
           navigation.navigate('Profile');
-          Toast(toast, response.message);
+          Toast(
+            toast,
+            'Your profile is under review, Please wait for some time',
+          );
         } else {
           Toast(toast, response.message);
         }
@@ -248,6 +256,17 @@ const BusinessDetails = ({navigation}) => {
               value={Landmark}
               autoCapitalize="words"
               onChangeText={text => setLandmark(text)}
+            />
+            <DropDownComponent
+              data={localityData}
+              labelField="name"
+              valueField="id"
+              placeholder="Locality (required)"
+              value={LocalityValue}
+              maxHeight={100}
+              onChange={item => {
+                setLocality(item.id);
+              }}
             />
           </ScrollView>
           <ButtonComponent

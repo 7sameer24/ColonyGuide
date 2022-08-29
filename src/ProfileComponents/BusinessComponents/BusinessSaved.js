@@ -21,7 +21,9 @@ const BusinessSaved = ({route, navigation}) => {
           Authorization: `Bearer ${userToken}`,
         },
       });
-      setUserData(response.data.data);
+      if (response.data.success) {
+        setUserData(response.data.data);
+      }
     } catch (error) {
       alert(error);
     }

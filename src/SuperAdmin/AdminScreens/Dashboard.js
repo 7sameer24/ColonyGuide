@@ -24,28 +24,28 @@ const Dashboard = ({navigation}) => {
   const {adminToken} = useApp();
   const [data, updateData] = useState([]);
 
-  // const fetchData = async () => {
-  //   try {
-  //     const {data} = await axios(BaseURL('admin-dashboard'), {
-  //       method: 'post',
-  //       data: {
-  //         locality_id: 1,
-  //       },
-  //       headers: {
-  //         Authorization: `Bearer ${adminToken}`,
-  //       },
-  //     });
-  //     if (data.success) {
-  //       updateData(data.dashboardData);
-  //     }
-  //   } catch (error) {
-  //     Toast(toast, error);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const {data} = await axios(BaseURL('admin-dashboard'), {
+        method: 'post',
+        data: {
+          locality_id: 1,
+        },
+        headers: {
+          Authorization: `Bearer ${adminToken}`,
+        },
+      });
+      if (data.success) {
+        updateData(data.dashboardData);
+      }
+    } catch (error) {
+      Toast(toast, error);
+    }
+  };
 
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <View style={genericStyles.container}>
@@ -58,12 +58,15 @@ const Dashboard = ({navigation}) => {
             horizontal
             style={{flexGrow: 0}}
             showsHorizontalScrollIndicator={false}>
-            <View style={genericStyles.row}>
+            <View style={[genericStyles.row, {marginHorizontal: 20}]}>
               <CounterBox
                 title="Total"
                 color="#FF6F91"
                 subTitle="Registered"
+                todayNumber={data.today_user}
                 totalNumber={data.total_user}
+                activeNumber={data.active_user}
+                deactiveNumber={data.deactive_user}
                 SvgComponent={TotalRegistered}
               />
               <CounterBox
@@ -71,6 +74,9 @@ const Dashboard = ({navigation}) => {
                 color="#D65DB1"
                 subTitle="Residence"
                 SvgComponent={TotalResident}
+                todayNumber={data.today_house_owner}
+                activeNumber={data.active_house_owner}
+                deactiveNumber={data.deactive_house_owner}
                 totalNumber={data.total_house_owner}
               />
               <CounterBox
@@ -79,6 +85,9 @@ const Dashboard = ({navigation}) => {
                 SvgComponent={TotalService}
                 subTitle="Service Providers"
                 totalNumber={data.total_service}
+                todayNumber={data.today_service}
+                activeNumber={data.active_service}
+                deactiveNumber={data.deactive_service}
               />
               <CounterBox
                 title="Total"
@@ -86,10 +95,13 @@ const Dashboard = ({navigation}) => {
                 subTitle="Student"
                 SvgComponent={Student}
                 totalNumber={data.total_student}
+                todayNumber={data.today_student}
+                activeNumber={data.active_student}
+                deactiveNumber={data.deactive_student}
               />
             </View>
           </ScrollView>
-          <View style={genericStyles.mh(24)}>
+          <View style={genericStyles.ml(30)}>
             <Text style={styles.topText}>Select Task</Text>
           </View>
           <View style={styles.container2}>
@@ -120,7 +132,7 @@ const Dashboard = ({navigation}) => {
             <SelectTask
               title="Commercial"
               SvgCompoent={Commercials}
-              onPress={() => navigation.navigate('BlockUnblock')}
+              onPress={() => navigation.navigate('Commercials')}
             />
             <SelectTask
               title="Block"
@@ -143,7 +155,7 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.InterMedium,
     fontSize: 20,
     color: COLORS.white,
-    marginLeft: 10,
+    marginLeft: 20,
   },
   container: {
     backgroundColor: COLORS.primary,

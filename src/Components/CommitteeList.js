@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     width: 64,
     height: 64,
-    alignSelf: 'center',
+    // alignSelf: 'center',
     borderRadius: 10,
   },
 });

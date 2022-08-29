@@ -90,6 +90,8 @@ const ServiceAddDetails = ({navigation}) => {
       Toast(toast, 'Please check your Mobile number and try again');
     } else if (WhatsappNo.length < 10) {
       Toast(toast, 'Please check your Whatsapp number and try again');
+    } else if (!LocalityValue) {
+      Toast(toast, 'Please choose your locality!');
     } else {
       try {
         setSpinner(true);

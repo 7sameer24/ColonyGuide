@@ -7,13 +7,16 @@ import axios from 'axios';
 import Spinner from '../../Components/Spinner';
 import BaseURL from '../../constants/BaseURL';
 import Poweredby from '../../Components/Poweredby';
+import {useApp} from '../../../Context/AppContext';
 
 const Committee = ({navigation}) => {
   const [newData, setNewData] = useState([]);
-
+  const {Userdata} = useApp();
   const idx = async () => {
     try {
-      const response = await axios.post(BaseURL('get-committee'));
+      const response = await axios.post(BaseURL('get-committee'), {
+        locality_id: Userdata.userData.locality_id,
+      });
       setNewData(response.data.committee);
     } catch (error) {
       alert(error);

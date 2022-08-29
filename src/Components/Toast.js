@@ -5,7 +5,9 @@ const Toast = (toast, msg, type, duration) => {
     type: type === undefined || type === null ? 'normal' : type,
     placement: 'bottom',
     duration: duration === undefined || duration === null ? 3000 : duration,
-    offset: 30,
+    offset: 50, // offset for both top and bottom toasts
+    offsetTop: 30,
+    offsetBottom: 40,
     textStyle: {
       color: COLORS.white,
       fontSize: 14,

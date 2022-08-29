@@ -9,12 +9,12 @@ import AdminEditGallery from '../SuperAdmin/AdminScreens/AdminEditGallery';
 import AddEvent from '../SuperAdmin/AdminScreens/AddEvent';
 import SendNotification from '../SuperAdmin/AdminScreens/SendNotification';
 import ResidentApproval from '../SuperAdmin/AdminScreens/ResidentApproval';
-import ServiceApproval from '../SuperAdmin/AdminScreens/ServiceApproval';
 import BlockScreen from '../SuperAdmin/AdminScreens/BlockScreen';
 import UnblockScreen from '../SuperAdmin/AdminScreens/UnblockScreen';
 import CommercialsBusiness from '../SuperAdmin/AdminScreens/CommercialsBusiness';
 import CommercialsService from '../SuperAdmin/AdminScreens/CommercialsService';
 import StudentApproval from '../SuperAdmin/AdminScreens/StudentApproval';
+import ServiceProviderApproval from '../SuperAdmin/AdminScreens/ServiceProviderApproval';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -101,7 +101,6 @@ export default function AdminStack() {
           headerStyle: {backgroundColor: COLORS.primary},
           headerTitleStyle: {color: COLORS.white},
           headerTintColor: COLORS.white,
-          title: 'Block',
         })}
       />
     </Stack.Navigator>
@@ -110,13 +109,12 @@ export default function AdminStack() {
 
 function Approvals() {
   const TopTabsArr = [
-    {component: ResidentApproval, name: 'Resident', ID: 'Resident'},
+    {component: StudentApproval, name: 'Student'},
     {
-      component: ServiceApproval,
+      component: ServiceProviderApproval,
       name: 'Service Provider',
-      ID: 'Service Provider',
     },
-    {component: StudentApproval, name: 'Student', ID: 'Student'},
+    {component: ResidentApproval, name: 'Resident'},
   ];
   return (
     <TopTab.Navigator>
@@ -124,12 +122,12 @@ function Approvals() {
         return (
           <TopTab.Screen
             key={data.name}
-            name={data.ID}
+            name={data.name}
             component={data.component}
             options={{
               tabBarActiveTintColor: COLORS.primary,
               tabBarInactiveTintColor: COLORS.textColor,
-              tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
+              tabBarLabelStyle: {fontSize: 10.3, fontFamily: FONTS.InterMedium},
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
@@ -161,7 +159,7 @@ function BlockUnblock() {
             options={{
               tabBarActiveTintColor: COLORS.primary,
               tabBarInactiveTintColor: COLORS.textColor,
-              tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
+              tabBarLabelStyle: {fontSize: 10.3, fontFamily: FONTS.InterMedium},
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
@@ -174,11 +172,10 @@ function BlockUnblock() {
 }
 function Commercials() {
   const TopTabsArr = [
-    {component: CommercialsBusiness, name: 'Business', ID: 'Business'},
+    {component: CommercialsBusiness, name: 'Business'},
     {
       component: CommercialsService,
       name: 'Service',
-      ID: 'Service',
     },
   ];
   return (
@@ -187,12 +184,12 @@ function Commercials() {
         return (
           <TopTab.Screen
             key={data.name}
-            name={data.ID}
+            name={data.name}
             component={data.component}
             options={{
               tabBarActiveTintColor: COLORS.primary,
               tabBarInactiveTintColor: COLORS.textColor,
-              tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
+              tabBarLabelStyle: {fontSize: 10.3, fontFamily: FONTS.InterMedium},
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,

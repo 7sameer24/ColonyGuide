@@ -1,21 +1,27 @@
 import {Linking, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
-import {Card, Icon} from 'react-native-elements';
+import {Icon} from 'react-native-elements';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
 import BaseURL from '../constants/BaseURL';
 import Poweredby from '../Components/Poweredby';
+import {useApp} from '../../Context/AppContext';
 
 const Helpline = () => {
   const [helpData, setHelpData] = useState('');
   const [fire_brigade, setFB] = useState('');
   const [other, setOther] = useState('');
   const [policeData, setPolice] = useState('');
+  const {Userdata, GSaveLocalID} = useApp();
 
   const HelplineData = async () => {
     try {
-      const response = await axios.post(BaseURL('get-helpline'));
+      const response = await axios.post(BaseURL('get-helpline'), {
+        locality_id: GSaveLocalID
+          ? GSaveLocalID
+          : Userdata.userData.locality_id,
+      });
       setFB(response.data.fire_brigade);
       setOther(response.data.other);
       setPolice(response.data.police);
@@ -38,86 +44,98 @@ const Helpline = () => {
     <View style={genericStyles.Container}>
       {helpData.length > 0 ? (
         <ScrollView>
-          <View style={styles.topTexConyainer}>
-            <Text style={styles.topText}>Medical</Text>
-          </View>
-          {/* <Card containerStyle={styles.cardConatiner}> */}
-          {helpData.map(data => (
-            <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
-              <Text style={styles.topText2}>{data.name}</Text>
-              <Text style={styles.topText3}>{data.department}</Text>
-              <Icon
-                name="phone-outgoing"
-                type="material-community"
-                color="#407BFF"
-                size={20}
-                onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
-              />
+          {helpData && (
+            <View style={styles.topTexConyainer}>
+              <Text style={styles.topText}>Medical</Text>
             </View>
-          ))}
-          {/* </Card> */}
-          <View style={styles.topTexConyainer}>
-            <Text style={styles.topText}>Police</Text>
-          </View>
-          {/* <Card containerStyle={styles.cardConatiner}> */}
-          {policeData.map(data => (
-            <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
-              <Text style={styles.topText2}>{data.name}</Text>
-              <Text style={styles.topText3}>{data.department}</Text>
-              <Icon
-                name="phone-outgoing"
-                type="material-community"
-                color="#407BFF"
-                size={20}
-                onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
-              />
+          )}
+          {helpData &&
+            helpData.map(data => (
+              <View
+                style={[styles.middComen, {marginBottom: 10}]}
+                key={data.id}>
+                <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
+                <Text style={styles.topText2}>{data.name}</Text>
+                <Text style={styles.topText3}>{data.department}</Text>
+                <Icon
+                  name="phone-outgoing"
+                  type="material-community"
+                  color="#407BFF"
+                  size={20}
+                  onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
+                />
+              </View>
+            ))}
+          {policeData && (
+            <View style={styles.topTexConyainer}>
+              <Text style={styles.topText}>Police</Text>
             </View>
-          ))}
-          {/* </Card> */}
-          <View style={styles.topTexConyainer}>
-            <Text style={styles.topText}>Fire Brigade</Text>
-          </View>
-          {/* <Card containerStyle={styles.cardConatiner}> */}
-          {fire_brigade.map(data => (
-            <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
-              <Text style={styles.topText2}>{data.name}</Text>
-              <Text style={styles.topText3}>{data.department}</Text>
-              <Icon
-                name="phone-outgoing"
-                type="material-community"
-                color="#407BFF"
-                size={20}
-                onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
-              />
+          )}
+          {policeData &&
+            policeData.map(data => (
+              <View
+                style={[styles.middComen, {marginBottom: 10}]}
+                key={data.id}>
+                <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
+                <Text style={styles.topText2}>{data.name}</Text>
+                <Text style={styles.topText3}>{data.department}</Text>
+                <Icon
+                  name="phone-outgoing"
+                  type="material-community"
+                  color="#407BFF"
+                  size={20}
+                  onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
+                />
+              </View>
+            ))}
+          {fire_brigade && (
+            <View style={styles.topTexConyainer}>
+              <Text style={styles.topText}>Fire Brigade</Text>
             </View>
-          ))}
-          {/* </Card> */}
-          <View style={styles.topTexConyainer}>
-            <Text style={styles.topText}>Other</Text>
-          </View>
-          {/* <Card containerStyle={[styles.cardConatiner, {marginBottom: 10}]}> */}
-          {other.map(data => (
-            <View style={[styles.middComen, {marginBottom: 10}]} key={data.id}>
-              <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
-              <Text style={styles.topText2} numberOfLines={1}>
-                {data.name}
-              </Text>
-              <Text style={styles.topText3} numberOfLines={1}>
-                {data.department}
-              </Text>
-              <Icon
-                name="phone-outgoing"
-                type="material-community"
-                color="#407BFF"
-                size={20}
-                onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
-              />
+          )}
+          {fire_brigade &&
+            fire_brigade.map(data => (
+              <View
+                style={[styles.middComen, {marginBottom: 10}]}
+                key={data.id}>
+                <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
+                <Text style={styles.topText2}>{data.name}</Text>
+                <Text style={styles.topText3}>{data.department}</Text>
+                <Icon
+                  name="phone-outgoing"
+                  type="material-community"
+                  color="#407BFF"
+                  size={20}
+                  onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
+                />
+              </View>
+            ))}
+          {other && (
+            <View style={styles.topTexConyainer}>
+              <Text style={styles.topText}>Other</Text>
             </View>
-          ))}
-          {/* </Card> */}
+          )}
+          {other &&
+            other.map(data => (
+              <View
+                style={[styles.middComen, {marginBottom: 10}]}
+                key={data.id}>
+                <Text style={[styles.topText2, {width: 20}]}>{data.id}.</Text>
+                <Text style={styles.topText2} numberOfLines={1}>
+                  {data.name}
+                </Text>
+                <Text style={styles.topText3} numberOfLines={1}>
+                  {data.department}
+                </Text>
+                <Icon
+                  name="phone-outgoing"
+                  type="material-community"
+                  color="#407BFF"
+                  size={20}
+                  onPress={() => Linking.openURL(`tel:${data.contact_no}`)}
+                />
+              </View>
+            ))}
         </ScrollView>
       ) : (
         <Spinner />

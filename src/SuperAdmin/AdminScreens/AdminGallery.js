@@ -106,6 +106,7 @@ const AdminGallery = ({navigation, route}) => {
               subTitle={`${items.gallery_image.length} Images`}
               onEdit={() => navigation.navigate('Edit gallery')}
               source={{uri: items.gallery_image[0].gallery_image}}
+              longText={3.1}
             />
           ))}
         </ScrollView>

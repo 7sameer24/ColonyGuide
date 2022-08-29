@@ -5,9 +5,20 @@ import {Card} from 'react-native-elements';
 
 const CounterBox = props => {
   const {SvgComponent} = props;
+
   const mapData = [
-    {name: 'Total', name2: 'Today'},
-    {name: 'Active', name2: 'Deactive'},
+    {
+      name: 'Total',
+      name2: 'Today',
+      totalNumber: props.totalNumber,
+      totalNumber2: props.todayNumber,
+    },
+    {
+      name: 'Active',
+      name2: 'Deactive',
+      totalNumber: props.activeNumber,
+      totalNumber2: props.deactiveNumber,
+    },
   ];
   return (
     <Card containerStyle={[styles.cardContainer, genericStyles.shadow]}>
@@ -35,7 +46,7 @@ const CounterBox = props => {
                   {backgroundColor: props.color, borderRadius: 10},
                 ]}>
                 <Text style={[styles.text, genericStyles.color(COLORS.white)]}>
-                  {'65'}
+                  {d.totalNumber}
                 </Text>
               </Card>
               <Text style={[styles.text, genericStyles.mv(4)]}>{d.name}</Text>
@@ -48,7 +59,7 @@ const CounterBox = props => {
                   {backgroundColor: props.color, borderRadius: 10},
                 ]}>
                 <Text style={[styles.text, genericStyles.color(COLORS.white)]}>
-                  {'65'}
+                  {d.totalNumber2}
                 </Text>
               </Card>
               <Text style={[styles.text, genericStyles.mv(4)]}>{d.name2}</Text>
@@ -100,7 +111,7 @@ const styles = StyleSheet.create({
     padding: 0,
     borderRadius: 10,
     width: 170,
-    marginHorizontal: 12,
+    marginHorizontal: 10,
     marginBottom: 10,
   },
   iconContainer: {

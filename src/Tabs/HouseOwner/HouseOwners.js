@@ -18,6 +18,7 @@ const HouseOwners = ({navigation}) => {
   const [caste, setCaste] = useState([]);
 
   const idx = async casteId => {
+    updateLoading(true);
     try {
       const response = await axios.post(BaseURL('house-owner-list'), {
         locality_id: GSaveLocalID
@@ -73,6 +74,7 @@ const HouseOwners = ({navigation}) => {
         dropdownStyle={styles.dropdownStyle}
         onChange={item => {
           setCaste(item.id);
+          setData([]);
           idx(item.id);
         }}
       />

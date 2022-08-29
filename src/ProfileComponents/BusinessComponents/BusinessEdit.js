@@ -38,7 +38,9 @@ const BusinessEdit = ({navigation, route}) => {
   const [AL1, setAL1] = useState(data.address);
   const [Landmark, setLandmark] = useState(data.landmark);
   const [modalVisible, setModalVisible] = useState(false);
-  const {Userdata} = useApp();
+  const [LocalityValue, setLocality] = useState(data.locality_id);
+
+  const {Userdata, localityData} = useApp();
 
   const idx = async () => {
     try {
@@ -103,6 +105,8 @@ const BusinessEdit = ({navigation, route}) => {
   const businessUpdate = async () => {
     if (WhatsappNo.length < 10) {
       Toast(toast, 'Please check your Whatsapp number and try again');
+    } else if (!LocalityValue) {
+      Toast(toast, 'Please choose your locality!');
     } else {
       try {
         setSpinner(true);
@@ -118,6 +122,8 @@ const BusinessEdit = ({navigation, route}) => {
         SaveData.append('house_no', buildFL);
         SaveData.append('landmark', Landmark);
         SaveData.append('business_address', AL1);
+        SaveData.append('locality_id', LocalityValue);
+
         SaveData.append(
           'logo_image',
           imageUp !== ''
@@ -245,6 +251,17 @@ const BusinessEdit = ({navigation, route}) => {
               value={Landmark}
               autoCapitalize="words"
               onChangeText={text => setLandmark(text)}
+            />
+            <DropDownComponent
+              data={localityData}
+              labelField="name"
+              valueField="id"
+              placeholder="Locality (required)"
+              value={LocalityValue}
+              maxHeight={100}
+              onChange={item => {
+                setLocality(item.id);
+              }}
             />
           </ScrollView>
           <ButtonComponent

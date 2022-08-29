@@ -10,9 +10,9 @@ import {useApp} from '../../../Context/AppContext';
 import Spinner from '../../Components/Spinner';
 import NoDataAni from '../../Components/NoDataAni';
 
-const BlockScreen = () => {
+const ServiceProviderApproval = () => {
   const toast = useToast();
-  const {adminToken, onRefresh, setRefresh} = useApp();
+  const {adminToken} = useApp();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
   const [activeLoading, activeUpdateLoading] = useState(false);
@@ -21,17 +21,18 @@ const BlockScreen = () => {
     updateLoading(true);
 
     try {
-      const {data} = await axios(BaseURL('blocked-user-list'), {
+      const {data} = await axios(BaseURL('admin-user-data'), {
         method: 'post',
         data: {
           locality_id: 1,
-          is_block: 1,
+          type: 2,
         },
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
       });
       updateLoading(false);
+
       if (data.success) {
         updateData(data.userData);
       }
@@ -43,19 +44,16 @@ const BlockScreen = () => {
 
   useEffect(() => {
     fetchData();
-    return () => {
-      updateData([]);
-    };
-  }, [onRefresh]);
+  }, []);
 
-  const onChangeActiveDeactive = async user_id => {
+  const onChangeActiveDeactive = async (user_id, status) => {
     // activeUpdateLoading(true);
     try {
-      const {data} = await axios(BaseURL('admin-user-block'), {
+      const {data} = await axios(BaseURL('admin-user-approve'), {
         method: 'post',
         data: {
           user_id: user_id,
-          is_block: 0,
+          status: status === 0 ? 1 : 0,
         },
         headers: {
           Authorization: `Bearer ${adminToken}`,
@@ -63,7 +61,7 @@ const BlockScreen = () => {
       });
       // activeUpdateLoading(false);
       if (data.success) {
-        setRefresh(!onRefresh);
+        fetchData();
         Toast(toast, data.message, 'success');
       }
     } catch (error) {
@@ -72,6 +70,10 @@ const BlockScreen = () => {
     }
   };
 
+  const selectRow = (index, isSelected) => {
+    data[index].status = isSelected;
+    updateData([...data]);
+  };
   return (
     <View style={genericStyles.Container}>
       {activeLoading ? (
@@ -87,21 +89,27 @@ const BlockScreen = () => {
                   <GalleryCard
                     title={item.name}
                     source={
-                      item.logo_image.includes('jpg')
-                        ? {uri: item.logo_image}
+                      item.profile_image.includes('jpg')
+                        ? {uri: item.profile_image}
                         : require('../../../assets/Image_not_available.png')
                     }
                     key={index}
-                    deleteItem={() => {
-                      onChangeActiveDeactive(item.id);
+                    toggleSwitch={() => {
+                      onChangeActiveDeactive(item.id, item.status);
+                      selectRow(index, item.status === 0 ? 1 : 0);
                     }}
                     AddressLine={item.address}
                     Landmark={item.landmark}
                     subTitle={item.house_no}
+                    isEnabled={item.status === 0 ? true : false}
+                    switchButton={true}
+                    iconName="checkmark"
+                    iconType="ionicon"
+                    IconColorChange={true}
                     iconName2="cancel"
                     iconType2="material-community"
                     twoMore={true}
-                    longText={3.1}
+                    longText={2}
                   />
                 );
               })}
@@ -114,4 +122,6 @@ const BlockScreen = () => {
   );
 };
 
-export default BlockScreen;
+export default ServiceProviderApproval;
+
+const styles = StyleSheet.create({});

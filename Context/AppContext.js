@@ -32,6 +32,7 @@ const AppContext = ({children}) => {
   const [localityData, updateLocalData] = useState([]);
   const [adminData, setAdminData] = useState(null);
   const [adminToken, setAdminToken] = useState(null);
+  const [onRefresh, setRefresh] = useState(false);
 
   useEffect(() => {
     const saveDetail = async () => {
@@ -79,6 +80,8 @@ const AppContext = ({children}) => {
         setAdminData,
         adminToken,
         setAdminToken,
+        onRefresh,
+        setRefresh,
       }}>
       {children}
     </App.Provider>

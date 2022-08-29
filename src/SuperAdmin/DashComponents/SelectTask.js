@@ -12,7 +12,9 @@ const SelectTask = ({onPress, title, SvgCompoent}) => {
       <Card containerStyle={styles.cardContainer}>
         <SvgCompoent />
       </Card>
-      <Text style={styles.text3}>{title}</Text>
+      <Text style={styles.text3} numberOfLines={1}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -21,10 +23,10 @@ export default SelectTask;
 
 const styles = StyleSheet.create({
   containerStyle2: {
-    width: '20%',
-    height: '35%',
+    width: 70,
+    height: 100,
     padding: 5,
-    marginHorizontal: 25,
+    marginHorizontal: 28,
     marginTop: 10,
   },
   text3: {

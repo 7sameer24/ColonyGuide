@@ -27,6 +27,7 @@ const GalleryCard = ({
   switchButton,
   toggleSwitch,
   isEnabled,
+  longText,
 }) => {
   const {width} = useWindowDimensions();
 
@@ -47,7 +48,7 @@ const GalleryCard = ({
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
             <View style={genericStyles.row}>
-              <View style={{width: width / 3.1}}>
+              <View style={{width: width / longText}}>
                 <Text style={[styles.title]} numberOfLines={1}>
                   {title}
                 </Text>
@@ -90,15 +91,17 @@ const GalleryCard = ({
                   containerStyle={genericStyles.shadow}
                 />
               )}
-              <Icon
-                name={iconName2}
-                type={iconType2}
-                size={18}
-                color={IconColorChange ? '#6DD351' : COLORS.red}
-                reverse
-                onPress={deleteItem}
-                containerStyle={genericStyles.shadow}
-              />
+              {iconName2 && (
+                <Icon
+                  name={iconName2}
+                  type={iconType2}
+                  size={18}
+                  color={IconColorChange ? '#6DD351' : COLORS.red}
+                  reverse
+                  onPress={deleteItem}
+                  containerStyle={genericStyles.shadow}
+                />
+              )}
             </View>
           )}
         </View>
@@ -111,11 +114,12 @@ export default GalleryCard;
 
 const styles = StyleSheet.create({
   CardContainer: {
-    borderWidth: 0,
+    borderWidth: 1,
     borderRadius: 10,
     marginHorizontal: 20,
     paddingHorizontal: 10,
     paddingVertical: 13,
+    borderColor: COLORS.primary,
   },
   ImageStyle: {
     width: 50,
