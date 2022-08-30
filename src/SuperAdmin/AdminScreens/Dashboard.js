@@ -71,7 +71,7 @@ const Dashboard = ({navigation}) => {
               />
               <CounterBox
                 title="Total"
-                color="#D65DB1"
+                color="#00C2A8"
                 subTitle="Residence"
                 SvgComponent={TotalResident}
                 todayNumber={data.today_house_owner}
@@ -91,7 +91,7 @@ const Dashboard = ({navigation}) => {
               />
               <CounterBox
                 title="Total"
-                color="#00C2A8"
+                color="#D65DB1"
                 subTitle="Student"
                 SvgComponent={Student}
                 totalNumber={data.total_student}

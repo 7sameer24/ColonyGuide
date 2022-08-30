@@ -4,10 +4,10 @@ import {COLORS} from '../constants';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import {Card} from 'react-native-elements';
 
-const SkeletonView = () => {
+const SkeletonView = ({containerStyle}) => {
   const skArr = [1, 2, 3, 4, 5, 6, 7, 8];
   return (
-    <View>
+    <View style={[{...containerStyle}]}>
       {skArr.map((d, i) => (
         <Card key={i} containerStyle={styles.container}>
           <SkeletonPlaceholder>

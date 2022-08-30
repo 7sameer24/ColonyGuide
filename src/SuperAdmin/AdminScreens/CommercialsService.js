@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../constants';
 import GalleryCard from '../DashComponents/GalleryCard';
@@ -7,15 +7,14 @@ import BaseURL from '../../constants/BaseURL';
 import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
 import {useApp} from '../../../Context/AppContext';
-import Spinner from '../../Components/Spinner';
 import NoDataAni from '../../Components/NoDataAni';
+import SkeletonView from '../../Components/SkeletonView';
 
-const CommercialService = () => {
+const CommercialService = ({navigation}) => {
   const toast = useToast();
   const {adminToken} = useApp();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
-  const [activeLoading, activeUpdateLoading] = useState(false);
 
   const fetchData = async () => {
     updateLoading(true);
@@ -44,10 +43,12 @@ const CommercialService = () => {
 
   useEffect(() => {
     fetchData();
+    return () => {
+      updateData([]);
+    };
   }, []);
 
   const onChangeActiveDeactive = async (user_id, status) => {
-    // activeUpdateLoading(true);
     try {
       const {data} = await axios(BaseURL('admin-service-approve'), {
         method: 'post',
@@ -59,13 +60,10 @@ const CommercialService = () => {
           Authorization: `Bearer ${adminToken}`,
         },
       });
-      // activeUpdateLoading(false);
       if (data.success) {
-        fetchData();
-        Toast(toast, data.message, 'success');
+        Toast(toast, data.message);
       }
     } catch (error) {
-      // activeUpdateLoading(false);
       Toast(toast, error);
     }
   };
@@ -76,41 +74,57 @@ const CommercialService = () => {
   };
   return (
     <View style={genericStyles.Container}>
-      {activeLoading ? (
-        <Spinner />
-      ) : loading ? (
-        <Spinner />
+      {loading ? (
+        <SkeletonView containerStyle={genericStyles.mt(10)} />
       ) : (
         data.length > 0 && (
           <ScrollView>
             <View style={genericStyles.mt(10)}>
               {data.map((item, index) => {
+                console.log(item);
                 return (
-                  <GalleryCard
-                    title={item.name}
-                    source={
-                      item.logo_image.includes('jpg')
-                        ? {uri: item.logo_image}
-                        : require('../../../assets/Image_not_available.png')
-                    }
+                  <TouchableOpacity
                     key={index}
-                    toggleSwitch={() => {
-                      onChangeActiveDeactive(item.id, item.status);
-                      selectRow(index, item.status === 0 ? 1 : 0);
-                    }}
-                    AddressLine={item.address}
-                    Landmark={item.landmark}
-                    subTitle={item.house_no}
-                    isEnabled={item.status === 0 ? true : false}
-                    switchButton={true}
-                    iconName="checkmark"
-                    iconType="ionicon"
-                    IconColorChange={true}
-                    iconName2="cancel"
-                    iconType2="material-community"
-                    twoMore={true}
-                    longText={2}
-                  />
+                    activeOpacity={0.9}
+                    onPress={() =>
+                      navigation.navigate('User Information', {
+                        name: item.name,
+                        image: item.logo_image,
+                        mobileNumber: item.contact_person_mobile,
+                        whatsappNumber: item.contact_person_whatsapp,
+                        contact_person: item.shop_name,
+                        about: item.about,
+                        categoryName: item.categoryName,
+                        houseNumber: item.house_no,
+                        address: item.address,
+                        landmark: item.landmark,
+                      })
+                    }>
+                    <GalleryCard
+                      title={item.name}
+                      source={
+                        item.logo_image.includes('jpg')
+                          ? {uri: item.logo_image}
+                          : require('../../../assets/Image_not_available.png')
+                      }
+                      toggleSwitch={() => {
+                        onChangeActiveDeactive(item.id, item.status);
+                        selectRow(index, item.status === 0 ? 1 : 0);
+                      }}
+                      AddressLine={item.address}
+                      Landmark={item.landmark}
+                      subTitle={item.house_no}
+                      isEnabled={item.status === 0 ? true : false}
+                      switchButton={true}
+                      iconName="checkmark"
+                      iconType="ionicon"
+                      IconColorChange={true}
+                      iconName2="cancel"
+                      iconType2="material-community"
+                      twoMore={true}
+                      longText={2}
+                    />
+                  </TouchableOpacity>
                 );
               })}
             </View>

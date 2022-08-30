@@ -8,9 +8,9 @@ import axios from 'axios';
 import InputComponent from '../../Components/InputComponent';
 import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
-import Spinner from '../../Components/Spinner';
 import NoDataAni from '../../Components/NoDataAni';
 import SpinnerModal from '../../Components/SpinnerModal';
+import SkeletonView from '../../Components/SkeletonView';
 
 const AdminGallery = ({navigation, route}) => {
   const toast = useToast();
@@ -111,7 +111,7 @@ const AdminGallery = ({navigation, route}) => {
           ))}
         </ScrollView>
       )}
-      {loading && <Spinner />}
+      {loading && <SkeletonView />}
       {!loading && data.length == [] && <NoDataAni />}
       <ButtonComponent
         title="Add"

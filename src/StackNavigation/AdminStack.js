@@ -15,6 +15,8 @@ import CommercialsBusiness from '../SuperAdmin/AdminScreens/CommercialsBusiness'
 import CommercialsService from '../SuperAdmin/AdminScreens/CommercialsService';
 import StudentApproval from '../SuperAdmin/AdminScreens/StudentApproval';
 import ServiceProviderApproval from '../SuperAdmin/AdminScreens/ServiceProviderApproval';
+import AdminUserInfo from '../SuperAdmin/AdminScreens/AdminUserInfo';
+import AddNotification from '../SuperAdmin/AdminScreens/AdminNotification/AddNotification';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -103,6 +105,22 @@ export default function AdminStack() {
           headerTintColor: COLORS.white,
         })}
       />
+      <Stack.Screen
+        name="Add Notification"
+        component={AddNotification}
+        options={() => ({
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerTitleStyle: {color: COLORS.white},
+          headerTintColor: COLORS.white,
+        })}
+      />
+      <Stack.Screen
+        name="User Information"
+        component={AdminUserInfo}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
     </Stack.Navigator>
   );
 }
@@ -110,10 +128,7 @@ export default function AdminStack() {
 function Approvals() {
   const TopTabsArr = [
     {component: StudentApproval, name: 'Student'},
-    {
-      component: ServiceProviderApproval,
-      name: 'Service Provider',
-    },
+    {component: ServiceProviderApproval, name: 'Service Provider'},
     {component: ResidentApproval, name: 'Resident'},
   ];
   return (
@@ -141,12 +156,8 @@ function Approvals() {
 
 function BlockUnblock() {
   const TopTabsArr = [
-    {component: BlockScreen, name: 'Block', ID: 'Block'},
-    {
-      component: UnblockScreen,
-      name: 'Unblock',
-      ID: 'Unblock',
-    },
+    {component: BlockScreen, name: 'Blocked'},
+    {component: UnblockScreen, name: 'Unblocked'},
   ];
   return (
     <TopTab.Navigator>
@@ -154,7 +165,7 @@ function BlockUnblock() {
         return (
           <TopTab.Screen
             key={data.name}
-            name={data.ID}
+            name={data.name}
             component={data.component}
             options={{
               tabBarActiveTintColor: COLORS.primary,

@@ -167,7 +167,7 @@ export const genericStyles = StyleSheet.create({
     shadowOpacity: 0.14,
     shadowRadius: 5,
 
-    elevation: 5,
+    elevation: 3,
     // backgroundColor: '#fff',
   },
   headerIcon: backgroundColor => ({

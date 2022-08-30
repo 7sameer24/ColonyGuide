@@ -50,6 +50,7 @@ const HouseOwners = ({navigation}) => {
     fetchCasteData();
     return () => {
       setData([]);
+      setCasteData([]);
     };
   }, []);
 

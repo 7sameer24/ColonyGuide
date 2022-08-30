@@ -16,8 +16,8 @@ import axios from 'axios';
 import BaseURL from '../../constants/BaseURL';
 import Toast from '../../Components/Toast';
 import SpinnerModal from '../../Components/SpinnerModal';
-import Spinner from '../../Components/Spinner';
 import NoDataAni from '../../Components/NoDataAni';
+import SkeletonView from '../../Components/SkeletonView';
 
 const AddEvent = ({source, route}) => {
   const toast = useToast();
@@ -134,7 +134,7 @@ const AddEvent = ({source, route}) => {
           ))}
         </ScrollView>
       )}
-      {loading && <Spinner />}
+      {loading && <SkeletonView />}
       {!loading && data.length == [] && <NoDataAni />}
       <SpinnerModal visible={deleteLoading} />
     </View>

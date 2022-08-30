@@ -38,19 +38,6 @@ const CounterBox = props => {
       <View style={styles.fourCategoriesContainer2}>
         {mapData.map((d, ind) => (
           <View key={ind} style={genericStyles.mv(10)}>
-            <View style={genericStyles.ai('center')}>
-              <Card
-                containerStyle={[
-                  genericStyles.shadow,
-                  styles.iconContainer,
-                  {backgroundColor: props.color, borderRadius: 10},
-                ]}>
-                <Text style={[styles.text, genericStyles.color(COLORS.white)]}>
-                  {d.totalNumber}
-                </Text>
-              </Card>
-              <Text style={[styles.text, genericStyles.mv(4)]}>{d.name}</Text>
-            </View>
             <View style={{marginTop: 10, alignItems: 'center'}}>
               <Card
                 containerStyle={[
@@ -63,6 +50,19 @@ const CounterBox = props => {
                 </Text>
               </Card>
               <Text style={[styles.text, genericStyles.mv(4)]}>{d.name2}</Text>
+            </View>
+            <View style={genericStyles.ai('center')}>
+              <Card
+                containerStyle={[
+                  genericStyles.shadow,
+                  styles.iconContainer,
+                  {backgroundColor: props.color, borderRadius: 10},
+                ]}>
+                <Text style={[styles.text, genericStyles.color(COLORS.white)]}>
+                  {d.totalNumber}
+                </Text>
+              </Card>
+              <Text style={[styles.text, genericStyles.mv(4)]}>{d.name}</Text>
             </View>
           </View>
         ))}

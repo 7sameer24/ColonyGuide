@@ -9,11 +9,11 @@ import BaseURL from '../../constants/BaseURL';
 import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
 import NoDataAni from '../../Components/NoDataAni';
-import Spinner from '../../Components/Spinner';
 import ButtonComponent from '../../Components/ButtonComponent';
 import moment from 'moment';
+import SkeletonView from '../../Components/SkeletonView';
 
-const SendNotification = () => {
+const SendNotification = ({navigation}) => {
   const toast = useToast();
   const {adminToken} = useApp();
   const [data, updateData] = useState([]);
@@ -50,7 +50,6 @@ const SendNotification = () => {
   const timeFormatter = cell => {
     if (cell !== null || cell !== undefined) {
       let correctDate = moment(new Date(cell)).format('DD-MMM-YYYY hh:mm');
-      console.log(correctDate);
       return correctDate;
     } else {
       return 'NA';
@@ -66,7 +65,7 @@ const SendNotification = () => {
         inputContainerStyle={styles.inputContainerStyle}
       />
       {loading ? (
-        <Spinner />
+        <SkeletonView containerStyle={genericStyles.mt(10)} />
       ) : (
         data.length > 0 && (
           <ScrollView>
@@ -79,12 +78,12 @@ const SendNotification = () => {
                     title={item.message}
                     source={{uri: item.image}}
                     AddressLine={timeFormatter(item.created_at)}
+                    twoMore={true}
                     subTitle={`Notification sent : ${
                       item.notification_sent_count
                         ? item.notification_sent_count
                         : 0
                     }`}
-                    twoMore={true}
                   />
                 );
               })}
@@ -95,6 +94,7 @@ const SendNotification = () => {
       {!loading && data.length == [] && <NoDataAni />}
       <ButtonComponent
         title="Add"
+        onPress={() => navigation.navigate('Add Notification')}
         ButtonContainer={genericStyles.width('90%')}
       />
       <View style={genericStyles.height(20)} />
