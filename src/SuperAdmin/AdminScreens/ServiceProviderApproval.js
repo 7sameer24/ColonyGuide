@@ -93,7 +93,7 @@ const ServiceProviderApproval = ({navigation}) => {
                         whatsappNumber: item.whatsapp_no,
                         contact_person: item.shop_name,
                         about: item.about,
-                        categoryName: item.categoryName,
+                        categoryName: item.category_name,
                         houseNumber: item.house_no,
                         address: item.address,
                         landmark: item.landmark,

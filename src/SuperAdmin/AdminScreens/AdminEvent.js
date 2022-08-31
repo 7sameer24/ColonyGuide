@@ -19,7 +19,7 @@ import SpinnerModal from '../../Components/SpinnerModal';
 import NoDataAni from '../../Components/NoDataAni';
 import SkeletonView from '../../Components/SkeletonView';
 
-const AddEvent = ({source, route}) => {
+const AdminEvent = ({route, navigation}) => {
   const toast = useToast();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
@@ -92,8 +92,11 @@ const AddEvent = ({source, route}) => {
 
   return (
     <View style={genericStyles.container}>
-      <CustomView text="Events" />
-      {data.length > 0 && (
+      <CustomView
+        text="Events"
+        onPress={() => navigation.navigate('Add Event')}
+      />
+      {/* {data.length > 0 && (
         <ScrollView>
           {data.map((items, index) => (
             <TouchableOpacity
@@ -133,7 +136,7 @@ const AddEvent = ({source, route}) => {
             </TouchableOpacity>
           ))}
         </ScrollView>
-      )}
+      )} */}
       {loading && <SkeletonView />}
       {!loading && data.length == [] && <NoDataAni />}
       <SpinnerModal visible={deleteLoading} />
@@ -141,7 +144,7 @@ const AddEvent = ({source, route}) => {
   );
 };
 
-export default AddEvent;
+export default AdminEvent;
 
 const styles = StyleSheet.create({
   wrap: {

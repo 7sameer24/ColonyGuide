@@ -88,27 +88,30 @@ const AdminGallery = ({navigation, route}) => {
       <InputComponent
         iconName="search"
         placeholder="Search"
+        containerStyle={genericStyles.width('95%')}
         inputStyle={genericStyles.ml(10)}
         iconContainerStyle={genericStyles.mr(10)}
         inputContainerStyle={styles.inputContainerStyle}
       />
       {data.length > 0 && (
         <ScrollView>
-          {data.map((items, index) => (
-            <GalleryCard
-              key={index}
-              iconName2="trash"
-              iconType2="ionicon"
-              title={items.gallery_name}
-              iconName="square-edit-outline"
-              iconType="material-community"
-              deleteItem={() => openLockAlert2(items.id)}
-              subTitle={`${items.gallery_image.length} Images`}
-              onEdit={() => navigation.navigate('Edit gallery')}
-              source={{uri: items.gallery_image[0].gallery_image}}
-              longText={3.1}
-            />
-          ))}
+          {data.map((items, index) => {
+            return (
+              <GalleryCard
+                key={index}
+                iconName2="trash"
+                iconType2="ionicon"
+                title={items.gallery_name}
+                iconName="square-edit-outline"
+                iconType="material-community"
+                deleteItem={() => openLockAlert2(items.id)}
+                // subTitle={`${items.gallery_image.length} Images`}
+                onEdit={() => navigation.navigate('Edit gallery')}
+                // source={{uri: items.gallery_image[0].gallery_image}}
+                longText={3.1}
+              />
+            );
+          })}
         </ScrollView>
       )}
       {loading && <SkeletonView />}

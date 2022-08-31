@@ -116,7 +116,7 @@ const Dashboard = ({navigation}) => {
               title="Event Add"
               SvgCompoent={AddEvent}
               onPress={() =>
-                navigation.navigate('Add event', {adminToken: adminToken})
+                navigation.navigate('Event', {adminToken: adminToken})
               }
             />
             <SelectTask

@@ -1,54 +1,33 @@
 import {View} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {genericStyles} from '../../../constants';
 import AddComponent from '../../DashComponents/AddComponent';
-import axios from 'axios';
-import BaseURL from '../../../constants/BaseURL';
 import ImagePicker from 'react-native-image-crop-picker';
+import BaseURL from '../../../constants/BaseURL';
 import Toast from '../../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
 import {useApp} from '../../../../Context/AppContext';
 
-const AddNotification = ({navigation}) => {
+const AddGallery = ({navigation}) => {
   const toast = useToast();
   const {adminToken} = useApp();
-  const [msgBox, setMsg] = useState('');
-  const [caste, setCaste] = useState('');
-  const [casteData, setCasteData] = useState([]);
-  const [imageData, setImageData] = useState('');
   const [spinner, setSpinner] = useState(false);
+  const [imageData, setImageData] = useState([]);
+  const [galleryName, updateGalleryName] = useState('');
+  const [descriptionValue, updateDescriptionValue] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(msgBox);
-  const fetchCasteData = async () => {
-    try {
-      const response = await axios.post(BaseURL('get-all-master'));
-      if (response.data.success) {
-        const fruits = [{name: 'All', id: '0'}, ...response.data.caste];
-        setCasteData(fruits);
-      }
-    } catch (error) {
-      Toast(toast, error);
-    }
-  };
-
-  useEffect(() => {
-    fetchCasteData();
-    return () => {
-      setCasteData([]);
-    };
-  }, []);
 
   const openGallery = () => {
     setModalVisible(false);
     let opetions = {
       width: 300,
-      height: 400,
-      cropping: true,
+      hight: 400,
+      multiple: true,
       mediaType: 'photo',
     };
     ImagePicker.openPicker(opetions)
       .then(image => {
-        setImageData(image);
+        setImageData([...imageData, ...image]);
       })
       .catch(e => {
         console.log(e);
@@ -58,41 +37,52 @@ const AddNotification = ({navigation}) => {
   const openCamera = () => {
     setModalVisible(false);
     let opetions = {
-      width: 300,
-
-      height: 400,
-      cropping: true,
+      cropping: false,
       mediaType: 'photo',
     };
 
     ImagePicker.openCamera(opetions)
       .then(image => {
-        setImageData(image);
+        setImageData([...imageData, image]);
       })
       .catch(e => {
         console.log(e);
       });
   };
 
+  const deleteImg = id => {
+    const filterData = imageData.filter((element, index) => {
+      return index !== id;
+    });
+    setImageData(filterData);
+  };
+
   const Saved = async () => {
-    if (!caste) {
-      Toast(toast, 'Please choose caste!');
-    } else if (!msgBox) {
-      Toast(toast, 'Please add description!');
+    if (!galleryName) {
+      Toast(toast, 'Please enter gallery name!');
+    } else if (!descriptionValue) {
+      Toast(toast, 'Please enter description!');
     } else if (!imageData) {
       Toast(toast, 'Please select image!');
     } else {
       try {
         setSpinner(true);
         const data = new FormData();
-        data.append('locality_id', caste);
-        data.append('message', msgBox);
-        data.append('image', {
-          uri: imageData.path,
-          type: imageData.mime,
-          name: imageData.path,
-        });
-        const res = await fetch(BaseURL('admin-add-notification'), {
+
+        data.append('event_name', galleryName);
+        data.append('event_description', descriptionValue);
+        data.append('status', 'Active');
+        data.append('locality_id', '1');
+
+        for (const [index, img] of imageData.entries()) {
+          data.append(`event_image[${index}]`, {
+            uri: img.path,
+            type: img.mime,
+            name: img.path,
+          });
+        }
+
+        const res = await fetch(BaseURL('admin-add-event'), {
           method: 'post',
           body: data,
           headers: {
@@ -102,10 +92,9 @@ const AddNotification = ({navigation}) => {
         });
         let response = await res.json();
         setSpinner(false);
-        console.log(response);
         if (response.success) {
           navigation.navigate('Admin');
-          Toast(toast, 'Notification sent successfully');
+          Toast(toast, response.message);
         }
       } catch (error) {
         setSpinner(false);
@@ -117,27 +106,29 @@ const AddNotification = ({navigation}) => {
   return (
     <View style={genericStyles.Container}>
       <AddComponent
-        categoryName="Send to"
-        description="Message"
-        buttonTitle="Add"
-        descriptionValue={msgBox}
+        input={true}
         loading={spinner}
-        onUpload={() => setModalVisible(true)}
-        onChangeDescriptionText={text => setMsg(text)}
-        dropdownData={casteData}
-        dropdownValue={caste}
+        deleteImg={deleteImg}
         visible={modalVisible}
-        uploadFiles="Uploaded Files"
-        singleImage={imageData.path}
         onPress={() => Saved()}
+        inputValue={galleryName}
+        buttonTitle="Add Gallery"
+        uploadFiles="upload Files"
+        multipleImages={imageData}
+        categoryName="Event Title"
+        description="Event Description"
         CameraOnpress={() => openCamera()}
+        descriptionValue={descriptionValue}
+        inputPlaceholder="Type gallery name"
         GalleryOnpress={() => openGallery()}
+        onUpload={() => setModalVisible(true)}
         OnPressCancel={() => setModalVisible(false)}
         onRequestClose={() => setModalVisible(false)}
-        onChangeDropDown={item => setCaste(item.id)}
+        onChangeText={text => updateGalleryName(text)}
+        onChangeDescriptionText={text => updateDescriptionValue(text)}
       />
     </View>
   );
 };
 
-export default AddNotification;
+export default AddGallery;

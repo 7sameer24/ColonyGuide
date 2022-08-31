@@ -6,7 +6,7 @@ import AdminGallery from '../SuperAdmin/AdminScreens/AdminGallery';
 import {COLORS, FONTS} from '../constants';
 import AddGallery from '../SuperAdmin/AdminScreens/AddGallery';
 import AdminEditGallery from '../SuperAdmin/AdminScreens/AdminEditGallery';
-import AddEvent from '../SuperAdmin/AdminScreens/AddEvent';
+import AdminEvent from '../SuperAdmin/AdminScreens/AdminEvent';
 import SendNotification from '../SuperAdmin/AdminScreens/SendNotification';
 import ResidentApproval from '../SuperAdmin/AdminScreens/ResidentApproval';
 import BlockScreen from '../SuperAdmin/AdminScreens/BlockScreen';
@@ -17,6 +17,7 @@ import StudentApproval from '../SuperAdmin/AdminScreens/StudentApproval';
 import ServiceProviderApproval from '../SuperAdmin/AdminScreens/ServiceProviderApproval';
 import AdminUserInfo from '../SuperAdmin/AdminScreens/AdminUserInfo';
 import AddNotification from '../SuperAdmin/AdminScreens/AdminNotification/AddNotification';
+import AddEvent from '../SuperAdmin/AdminScreens/AdminEvent/AddEvent';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -59,7 +60,16 @@ export default function AdminStack() {
         })}
       />
       <Stack.Screen
-        name="Add event"
+        name="Event"
+        component={AdminEvent}
+        options={() => ({
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerTitleStyle: {color: COLORS.white},
+          headerTintColor: COLORS.white,
+        })}
+      />
+      <Stack.Screen
+        name="Add Event"
         component={AddEvent}
         options={() => ({
           headerStyle: {backgroundColor: COLORS.primary},

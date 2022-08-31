@@ -12,6 +12,8 @@ import DropDownComponent from '../../Components/DropDownComponent';
 import {Card, Icon, Image} from 'react-native-elements';
 import ButtonComponent from '../../Components/ButtonComponent';
 import ModalPopup from '../../Components/ModalPopup';
+import InputComponent from '../../Components/InputComponent';
+import EditGComponent from './EditGComponent';
 
 const AddComponent = props => {
   return (
@@ -26,16 +28,25 @@ const AddComponent = props => {
                 genericStyles.shadow,
                 {padding: 0, height: 47},
               ]}>
-              <DropDownComponent
-                data={props.dropdownData}
-                labelField="name"
-                valueField="id"
-                value={props.dropdownValue}
-                maxHeight={150}
-                onChange={props.onChangeDropDown}
-                placeholderStyle={{fontFamily: FONTS.InterMedium}}
-                dropdownStyle={styles.dropdownStyle}
-              />
+              {props.input ? (
+                <InputComponent
+                  value={props.inputValue}
+                  onChangeText={props.onChangeText}
+                  placeholder={props.inputPlaceholder}
+                  inputContainerStyle={{borderBottomWidth: 0}}
+                />
+              ) : (
+                <DropDownComponent
+                  data={props.dropdownData}
+                  labelField="name"
+                  valueField="id"
+                  value={props.dropdownValue}
+                  maxHeight={150}
+                  onChange={props.onChangeDropDown}
+                  placeholderStyle={{fontFamily: FONTS.InterMedium}}
+                  dropdownStyle={styles.dropdownStyle}
+                />
+              )}
             </Card>
           </>
         )}
@@ -51,8 +62,8 @@ const AddComponent = props => {
                 placeholderTextColor="grey"
                 numberOfLines={5}
                 multiline={true}
-                value={props.msgValue}
-                onChangeText={props.onChangeText}
+                value={props.descriptionValue}
+                onChangeText={props.onChangeDescriptionText}
                 maxLength={300}
                 autoCapitalize="words"
                 autoCorrect={false}
@@ -61,7 +72,7 @@ const AddComponent = props => {
             <Text style={styles.allowText}>300 characters only allowed</Text>
           </>
         )}
-        <Text style={styles.categoryTex}>Upload Images</Text>
+        <Text style={styles.categoryTex}>Upload Image</Text>
         <Text style={styles.categorySub}>{'(PNG, JPG files only)'}</Text>
         <TouchableOpacity activeOpacity={0.9} onPress={props.onUpload}>
           <Card containerStyle={styles.cardContainer}>
@@ -77,13 +88,15 @@ const AddComponent = props => {
             </View>
           </Card>
         </TouchableOpacity>
-        <ModalPopup
-          visible={props.visible}
-          CameraOnpress={props.CameraOnpress}
-          GalleryOnpress={props.GalleryOnpress}
-          OnPressCancel={props.OnPressCancel}
-          onRequestClose={props.onRequestClose}
-        />
+        {props.visible && (
+          <ModalPopup
+            visible={props.visible}
+            CameraOnpress={props.CameraOnpress}
+            GalleryOnpress={props.GalleryOnpress}
+            OnPressCancel={props.OnPressCancel}
+            onRequestClose={props.onRequestClose}
+          />
+        )}
         {props.uploadFiles && (
           <>
             <Text style={styles.categoryTex}>{props.uploadFiles}</Text>
@@ -98,6 +111,20 @@ const AddComponent = props => {
                   }}
                 />
               </Card>
+            )}
+            {props.multipleImages && (
+              <ScrollView contentContainerStyle={styles.Container}>
+                {props.multipleImages.map((item, index) => {
+                  // console.log(item.path);
+                  return (
+                    <EditGComponent
+                      deleteImage={() => props.deleteImg(index)}
+                      source={{uri: item.path}}
+                      key={index}
+                    />
+                  );
+                })}
+              </ScrollView>
             )}
           </>
         )}
@@ -197,5 +224,12 @@ const styles = StyleSheet.create({
     padding: 0,
     borderRadius: 5,
     marginBottom: 10,
+  },
+  Container: {
+    flex: 1,
+    padding: 5,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    marginVertical: 10,
   },
 });

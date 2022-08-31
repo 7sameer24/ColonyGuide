@@ -10,7 +10,7 @@ import {useApp} from '../../../Context/AppContext';
 import NoDataAni from '../../Components/NoDataAni';
 import SkeletonView from '../../Components/SkeletonView';
 
-const CommercialBusiness = () => {
+const CommercialBusiness = ({navigation}) => {
   const toast = useToast();
   const {adminToken} = useApp();
   const [data, updateData] = useState([]);
@@ -93,7 +93,7 @@ const CommercialBusiness = () => {
                         whatsappNumber: item.contact_person_whatsapp,
                         contact_person: item.contact_person,
                         about: item.about,
-                        categoryName: item.category_name,
+                        categoryName: item.categoryName,
                         houseNumber: item.house_no,
                         address: item.address,
                         landmark: item.landmark,

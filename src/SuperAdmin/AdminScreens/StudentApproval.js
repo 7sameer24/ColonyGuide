@@ -89,6 +89,7 @@ const StudentApproval = ({navigation}) => {
                       navigation.navigate('User Information', {
                         contact_person: item.hostel_name,
                         name: item.name,
+                        categoryName: 'No Category',
                         image: item.profile_image,
                         mobileNumber: item.mobile_no,
                         whatsappNumber: item.whatsapp_no,

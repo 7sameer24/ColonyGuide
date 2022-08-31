@@ -8,16 +8,16 @@ const CounterBox = props => {
 
   const mapData = [
     {
-      name: 'Total',
-      name2: 'Today',
-      totalNumber: props.totalNumber,
-      totalNumber2: props.todayNumber,
+      name: 'Active',
+      name2: 'Total',
+      totalNumber: props.activeNumber,
+      totalNumber2: props.totalNumber,
     },
     {
-      name: 'Active',
-      name2: 'Deactive',
-      totalNumber: props.activeNumber,
-      totalNumber2: props.deactiveNumber,
+      name: 'Deactive',
+      name2: 'Today',
+      totalNumber: props.deactiveNumber,
+      totalNumber2: props.todayNumber,
     },
   ];
   return (

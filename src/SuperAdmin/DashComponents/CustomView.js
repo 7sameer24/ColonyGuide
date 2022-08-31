@@ -2,11 +2,11 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS} from '../../constants';
 
-const CustomView = ({text}) => {
+const CustomView = ({text, onPress}) => {
   return (
     <View style={styles.container}>
       <Text style={styles.categoryTex}>{text}</Text>
-      <TouchableOpacity style={styles.addbtn}>
+      <TouchableOpacity style={styles.addbtn} onPress={onPress}>
         <Text style={[styles.categoryTex, {color: COLORS.white}]}>Add +</Text>
       </TouchableOpacity>
     </View>

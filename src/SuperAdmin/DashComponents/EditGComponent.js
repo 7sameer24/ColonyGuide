@@ -8,9 +8,12 @@ import React from 'react';
 import {Icon, Image} from 'react-native-elements';
 import {COLORS, genericStyles} from '../../constants';
 
-const EditGComponent = ({source}) => {
+const EditGComponent = ({source, deleteImage}) => {
   return (
-    <TouchableOpacity activeOpacity={0.8} style={styles.containerStyle}>
+    <TouchableOpacity
+      activeOpacity={0.8}
+      style={styles.containerStyle}
+      onPress={deleteImage}>
       <View style={{flex: 1, borderRadius: 10, alignItems: 'center'}}>
         <Image
           source={source}
@@ -21,7 +24,7 @@ const EditGComponent = ({source}) => {
         <Icon
           name="close-outline"
           type="ionicon"
-          size={20}
+          size={15}
           color={COLORS.white}
           containerStyle={styles.deleteIcon}
         />
@@ -34,22 +37,21 @@ export default EditGComponent;
 
 const styles = StyleSheet.create({
   containerStyle: {
-    width: '25%',
-    height: '17%',
+    width: 95,
+    height: 95,
     padding: 5,
-    backgroundColor: COLORS.RoyalBlue,
   },
   deleteIcon: {
     position: 'absolute',
     alignSelf: 'flex-end',
     backgroundColor: COLORS.red,
-    borderRadius: 50,
-    right: 10,
+    borderRadius: 100,
+    right: 5,
+    top: -8,
   },
   img: {
     width: 64,
     height: 64,
     borderRadius: 10,
-    marginTop: 10,
   },
 });

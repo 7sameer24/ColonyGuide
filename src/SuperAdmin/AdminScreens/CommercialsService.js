@@ -81,7 +81,6 @@ const CommercialService = ({navigation}) => {
           <ScrollView>
             <View style={genericStyles.mt(10)}>
               {data.map((item, index) => {
-                console.log(item);
                 return (
                   <TouchableOpacity
                     key={index}
