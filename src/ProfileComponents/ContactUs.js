@@ -71,7 +71,7 @@ const ContactUs = ({route, navigation}) => {
         }
       } catch (error) {
         setSpinner(false);
-        Toast(toast, error);
+        console.log(error);
       }
     }
   };

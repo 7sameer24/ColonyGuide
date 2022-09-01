@@ -97,7 +97,7 @@ const HoAddress = ({data}) => {
       }
     } catch (error) {
       setSpinner(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -107,7 +107,7 @@ const HoAddress = ({data}) => {
       setData(response.data.localities);
       setCasteData(response.data.caste);
     } catch (error) {
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -118,7 +118,7 @@ const HoAddress = ({data}) => {
       });
       updateColonyData(response.data);
     } catch (error) {
-      Toast(toast, error);
+      console.log(error);
     }
   };
 

@@ -1,4 +1,10 @@
-import {Alert, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  Alert,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, genericStyles} from '../../constants';
 import GalleryCard from '../DashComponents/GalleryCard';
@@ -36,7 +42,7 @@ const AdminGallery = ({navigation, route}) => {
       }
     } catch (error) {
       updateLoading(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -93,32 +99,49 @@ const AdminGallery = ({navigation, route}) => {
         iconContainerStyle={genericStyles.mr(10)}
         inputContainerStyle={styles.inputContainerStyle}
       />
-      {data.length > 0 && (
-        <ScrollView>
-          {data.map((items, index) => {
-            return (
-              <GalleryCard
-                key={index}
-                iconName2="trash"
-                iconType2="ionicon"
-                title={items.gallery_name}
-                iconName="square-edit-outline"
-                iconType="material-community"
-                deleteItem={() => openLockAlert2(items.id)}
-                // subTitle={`${items.gallery_image.length} Images`}
-                onEdit={() => navigation.navigate('Edit gallery')}
-                // source={{uri: items.gallery_image[0].gallery_image}}
-                longText={3.1}
-              />
-            );
-          })}
-        </ScrollView>
+      {loading ? (
+        <SkeletonView />
+      ) : (
+        data.length > 0 && (
+          <ScrollView>
+            {data.map((items, index) => {
+              return (
+                <TouchableOpacity
+                  key={index}
+                  activeOpacity={0.9}
+                  onPress={() =>
+                    navigation.navigate('MoreImg', {
+                      name: items.gallery_name,
+                      NewData: items.gallery_image,
+                    })
+                  }>
+                  <GalleryCard
+                    key={index}
+                    iconName2="trash"
+                    iconType2="ionicon"
+                    title={items.gallery_name}
+                    iconName="square-edit-outline"
+                    iconType="material-community"
+                    deleteItem={() => openLockAlert2(items.id)}
+                    subTitle={`${items.gallery_image.length} Images`}
+                    onEdit={() =>
+                      navigation.navigate('Add Gallery', {
+                        galleryData: items,
+                      })
+                    }
+                    source={{uri: items.gallery_image[0].gallery_image}}
+                    longText={3.1}
+                  />
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+        )
       )}
-      {loading && <SkeletonView />}
       {!loading && data.length == [] && <NoDataAni />}
       <ButtonComponent
         title="Add"
-        onPress={() => navigation.navigate('Add gallery')}
+        onPress={() => navigation.navigate('Add Gallery')}
         ButtonContainer={genericStyles.width('90%')}
       />
       <View style={genericStyles.height(20)} />

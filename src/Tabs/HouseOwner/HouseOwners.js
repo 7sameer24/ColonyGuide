@@ -13,7 +13,7 @@ import DropDownComponent from '../../Components/DropDownComponent';
 const HouseOwners = ({navigation}) => {
   const [newData, setData] = useState([]);
   const [loading, updateLoading] = useState(true);
-  const {Userdata, GSaveLocalID} = useApp();
+  const {Userdata, GSaveLocalID, adminData} = useApp();
   const [casteData, setCasteData] = useState([]);
   const [caste, setCaste] = useState([]);
 
@@ -23,7 +23,11 @@ const HouseOwners = ({navigation}) => {
       const response = await axios.post(BaseURL('house-owner-list'), {
         locality_id: GSaveLocalID
           ? GSaveLocalID
-          : Userdata.userData.locality_id,
+          : Userdata
+          ? Userdata.userData.locality_id
+          : adminData.userData.locality_id
+          ? adminData.userData.locality_id
+          : 1,
         caste_id: casteId,
       });
       updateLoading(false);
@@ -41,7 +45,7 @@ const HouseOwners = ({navigation}) => {
       const response = await axios.post(BaseURL('get-all-master'));
       setCasteData(response.data.caste);
     } catch (error) {
-      Toast(toast, error);
+      console.log(error);
     }
   };
 

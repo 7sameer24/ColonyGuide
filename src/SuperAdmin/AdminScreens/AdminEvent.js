@@ -43,7 +43,7 @@ const AdminEvent = ({route, navigation}) => {
       }
     } catch (error) {
       updateLoading(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -96,48 +96,62 @@ const AdminEvent = ({route, navigation}) => {
         text="Events"
         onPress={() => navigation.navigate('Add Event')}
       />
-      {/* {data.length > 0 && (
-        <ScrollView>
-          {data.map((items, index) => (
-            <TouchableOpacity
-              key={index}
-              activeOpacity={0.8}
-              style={styles.slide2}>
-              <Image
-                source={{uri: items.event_image[0].event_image}}
-                style={styles.wrap}
-                progressiveRenderingEnabled
-                placeholderStyle={genericStyles.bg(COLORS.white)}
-                PlaceholderContent={
-                  <ActivityIndicator color={COLORS.primary} />
+      {loading ? (
+        <SkeletonView />
+      ) : (
+        data.length > 0 && (
+          <ScrollView>
+            {data.map((items, index) => (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate('EventInfo', {
+                    description: items.event_description,
+                    NewData: items.event_image,
+                    name: items.event_name,
+                  })
                 }
-              />
-              <View style={styles.IconView}>
-                <Icon
-                  name="square-edit-outline"
-                  type="material-community"
-                  size={18}
-                  reverse
-                  color={COLORS.primary}
-                  //   onPress={onEdit}
-                  containerStyle={genericStyles.shadow}
+                activeOpacity={0.9}
+                key={index}
+                style={styles.slide2}>
+                <Image
+                  source={{uri: items.event_image[0].event_image}}
+                  style={styles.wrap}
+                  progressiveRenderingEnabled
+                  placeholderStyle={genericStyles.bg(COLORS.white)}
+                  PlaceholderContent={
+                    <ActivityIndicator color={COLORS.primary} />
+                  }
                 />
-                <Icon
-                  name="trash"
-                  type="ionicon"
-                  size={18}
-                  color={COLORS.red}
-                  reverse
-                  onPress={() => openLockAlert2(items.id)}
-                  containerStyle={genericStyles.shadow}
-                />
-              </View>
-              <Text style={styles.title}>{items.event_description}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      )} */}
-      {loading && <SkeletonView />}
+                <View style={styles.IconView}>
+                  <Icon
+                    name="square-edit-outline"
+                    type="material-community"
+                    size={18}
+                    reverse
+                    color={COLORS.primary}
+                    onPress={() =>
+                      navigation.navigate('Add Event', {
+                        eventData: items,
+                      })
+                    }
+                    containerStyle={genericStyles.shadow}
+                  />
+                  <Icon
+                    name="trash"
+                    type="ionicon"
+                    size={18}
+                    color={COLORS.red}
+                    reverse
+                    onPress={() => openLockAlert2(items.id)}
+                    containerStyle={genericStyles.shadow}
+                  />
+                </View>
+                <Text style={styles.title}>{items.event_description}</Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        )
+      )}
       {!loading && data.length == [] && <NoDataAni />}
       <SpinnerModal visible={deleteLoading} />
     </View>
@@ -150,8 +164,10 @@ const styles = StyleSheet.create({
   wrap: {
     width: '100%',
     height: 140,
+    borderWidth: 1,
     borderRadius: 10,
     alignSelf: 'center',
+    borderColor: COLORS.primary,
   },
   slide2: {
     marginHorizontal: 20,

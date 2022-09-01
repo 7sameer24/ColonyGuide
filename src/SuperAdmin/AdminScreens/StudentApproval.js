@@ -36,7 +36,7 @@ const StudentApproval = ({navigation}) => {
       }
     } catch (error) {
       updateLoading(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -63,7 +63,7 @@ const StudentApproval = ({navigation}) => {
         Toast(toast, data.message);
       }
     } catch (error) {
-      Toast(toast, error);
+      console.log(error);
     }
   };
 

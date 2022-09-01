@@ -19,6 +19,7 @@ import Commercials from '../../../assets/adminSvg/Commercials.svg';
 import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../Components/Toast';
 import Spinner from '../../Components/Spinner';
+import {Icon} from 'react-native-elements';
 const Dashboard = ({navigation}) => {
   const toast = useToast();
   const {adminToken} = useApp();
@@ -39,7 +40,7 @@ const Dashboard = ({navigation}) => {
         updateData(data.dashboardData);
       }
     } catch (error) {
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -50,7 +51,16 @@ const Dashboard = ({navigation}) => {
   return (
     <View style={genericStyles.container}>
       <View style={[styles.container, genericStyles.shadow]}>
-        <Text style={styles.heading}>Dashboard</Text>
+        <View style={genericStyles.row}>
+          <Icon
+            color={COLORS.white}
+            name="menu"
+            type="ionicon"
+            size={25}
+            onPress={() => navigation.openDrawer()}
+          />
+          <Text style={styles.heading}>Dashboard</Text>
+        </View>
       </View>
       {data ? (
         <>

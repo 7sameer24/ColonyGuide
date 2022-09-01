@@ -37,9 +37,11 @@ const AdminUserInfo = ({route, navigation}) => {
       const result = await Share.share({
         message: `Colony Guide Sharing This ${
           contact_person === null ? '' : contact_person
-        } ${name === null ? '' : name} ${house_no === null ? '' : house_no} ${
-          address === null ? '' : address
-        } ${landmark === null ? '' : landmark}`,
+        } ${name === null ? '' : name} ${
+          houseNumber === null ? '' : houseNumber
+        } ${address === null ? '' : address} ${
+          landmark === null ? '' : landmark
+        }`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -121,7 +123,7 @@ const AdminUserInfo = ({route, navigation}) => {
               onPress={() => setIsvisible(true)}>
               <Image
                 source={
-                  image === 'https://colonyguide.com/portal/storage'
+                  image == 'https://colonyguide.com/portal/storage'
                     ? Images.Ellipse
                     : {uri: image}
                 }

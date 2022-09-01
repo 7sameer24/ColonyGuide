@@ -1,4 +1,4 @@
-import {Alert, ScrollView, View} from 'react-native';
+import {Alert, ScrollView, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../constants';
 import GalleryCard from '../DashComponents/GalleryCard';
@@ -11,7 +11,7 @@ import NoDataAni from '../../Components/NoDataAni';
 import SkeletonView from '../../Components/SkeletonView';
 import SpinnerModal from '../../Components/SpinnerModal';
 
-const BlockScreen = () => {
+const BlockScreen = ({navigation}) => {
   const toast = useToast();
   const {adminToken, onRefresh, setRefresh} = useApp();
   const [data, updateData] = useState([]);
@@ -38,7 +38,7 @@ const BlockScreen = () => {
       }
     } catch (error) {
       updateLoading(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -81,7 +81,7 @@ const BlockScreen = () => {
       }
     } catch (error) {
       activeUpdateLoading(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -97,25 +97,45 @@ const BlockScreen = () => {
             <View style={genericStyles.mt(10)}>
               {data.map((item, index) => {
                 return (
-                  <GalleryCard
-                    title={item.name}
-                    source={
-                      item.logo_image.includes('jpg')
-                        ? {uri: item.logo_image}
-                        : require('../../../assets/Image_not_available.png')
-                    }
+                  <TouchableOpacity
                     key={index}
-                    deleteItem={() => {
-                      openLockAlert(item.id);
-                    }}
-                    AddressLine={item.address}
-                    Landmark={item.landmark}
-                    subTitle={item.house_no}
-                    iconName2="cancel"
-                    iconType2="material-community"
-                    twoMore={true}
-                    longText={3.1}
-                  />
+                    activeOpacity={0.9}
+                    onPress={() =>
+                      navigation.navigate('User Information', {
+                        name: item.name,
+                        image:
+                          item.app_role_id === 2
+                            ? item.logo_image
+                            : item.profile_image,
+                        mobileNumber: item.mobile_no,
+                        whatsappNumber: item.whatsapp_no,
+                        contact_person: item.shop_name,
+                        about: item.about,
+                        categoryName: item.category_name,
+                        houseNumber: item.house_no,
+                        address: item.address,
+                        landmark: item.landmark,
+                      })
+                    }>
+                    <GalleryCard
+                      title={item.name}
+                      source={
+                        item.logo_image.includes('jpg')
+                          ? {uri: item.logo_image}
+                          : require('../../../assets/Image_not_available.png')
+                      }
+                      deleteItem={() => {
+                        openLockAlert(item.id);
+                      }}
+                      AddressLine={item.address}
+                      Landmark={item.landmark}
+                      subTitle={item.house_no}
+                      iconName2="cancel"
+                      iconType2="material-community"
+                      twoMore={true}
+                      longText={3.1}
+                    />
+                  </TouchableOpacity>
                 );
               })}
             </View>

@@ -1,4 +1,6 @@
 import React from 'react';
+import {StyleSheet} from 'react-native';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Dashboard from '../SuperAdmin/AdminScreens/Dashboard';
@@ -18,11 +20,20 @@ import ServiceProviderApproval from '../SuperAdmin/AdminScreens/ServiceProviderA
 import AdminUserInfo from '../SuperAdmin/AdminScreens/AdminUserInfo';
 import AddNotification from '../SuperAdmin/AdminScreens/AdminNotification/AddNotification';
 import AddEvent from '../SuperAdmin/AdminScreens/AdminEvent/AddEvent';
+import MoreImg from '../ProfileComponents/GalleryComponents/MoreImg';
+import EventInfo from '../ProfileComponents/EventsComponets/EventInfo';
+import AdminCustomDrawer from '../SuperAdmin/AdminScreens/AdminDrawer/AdminCustomDrawer';
+import BusinessListed from '../ProfileComponents/BusinessComponents/BusinessListed';
+import HouseOwners from '../Tabs/HouseOwner/HouseOwners';
+import Helpline from '../Tabs/Helpline';
+import Events from '../ProfileComponents/EventsComponets/Events';
+import Gallery from '../ProfileComponents/GalleryComponents/Gallery';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
+const Drawer = createDrawerNavigator();
 
-export default function AdminStack() {
+const ScreenStack = () => {
   return (
     <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
       <Stack.Screen
@@ -42,7 +53,7 @@ export default function AdminStack() {
         })}
       />
       <Stack.Screen
-        name="Add gallery"
+        name="Add Gallery"
         component={AddGallery}
         options={() => ({
           headerStyle: {backgroundColor: COLORS.primary},
@@ -131,9 +142,65 @@ export default function AdminStack() {
           headerShown: false,
         })}
       />
+      <Stack.Screen
+        name="MoreImg"
+        component={MoreImg}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+
+      <Stack.Screen
+        name="EventInfo"
+        component={EventInfo}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="Business listed"
+        component={BusinessListed}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="House Owners"
+        component={HouseOwners}
+        options={() => ({
+          headerShown: false,
+        })}
+      />
+      <Stack.Screen
+        name="Helpline"
+        component={Helpline}
+        options={() => ({
+          headerTitleStyle: styles.headerStyle,
+          headerTintColor: COLORS.textColor,
+          headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="Events"
+        component={Events}
+        options={() => ({
+          headerTitleStyle: styles.headerStyle,
+          headerTintColor: COLORS.textColor,
+          headerShadowVisible: false,
+        })}
+      />
+      <Stack.Screen
+        name="Gallery"
+        component={Gallery}
+        options={() => ({
+          headerTitleStyle: styles.headerStyle,
+          headerTintColor: COLORS.textColor,
+          headerShadowVisible: false,
+        })}
+      />
     </Stack.Navigator>
   );
-}
+};
 
 function Approvals() {
   const TopTabsArr = [
@@ -221,3 +288,47 @@ function Commercials() {
     </TopTab.Navigator>
   );
 }
+
+function AdminStack() {
+  return (
+    <Drawer.Navigator
+      drawerContent={props => <AdminCustomDrawer {...props} />}
+      screenOptions={{
+        drawerInactiveBackgroundColor: COLORS.transparent,
+        drawerActiveBackgroundColor: COLORS.transparent,
+        drawerLabelStyle: styles.drawerLabelStyle,
+        drawerInactiveTintColor: COLORS.textColor,
+        drawerActiveTintColor: COLORS.textColor,
+        drawerStyle: styles.drawerStyle,
+        swipeEnabled: false,
+      }}>
+      <Drawer.Screen
+        name="AdminDrawer"
+        component={ScreenStack}
+        options={{
+          headerShown: false,
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
+
+export default AdminStack;
+
+const styles = StyleSheet.create({
+  drawerLabelStyle: {
+    fontSize: 16,
+    fontFamily: FONTS.InterRegular,
+    marginLeft: -15,
+  },
+  drawerStyle: {
+    borderTopEndRadius: 20,
+    borderBottomEndRadius: 20,
+    width: '67%',
+  },
+  headerStyle: {
+    color: COLORS.textColor,
+    fontSize: 18,
+    fontFamily: FONTS.InterSemiBold,
+  },
+});

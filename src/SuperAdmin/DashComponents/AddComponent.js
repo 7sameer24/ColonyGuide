@@ -69,7 +69,9 @@ const AddComponent = props => {
                 autoCorrect={false}
               />
             </Card>
-            <Text style={styles.allowText}>300 characters only allowed</Text>
+            <Text style={styles.allowText}>{`${
+              300 - props.descriptionValue.length
+            }/300`}</Text>
           </>
         )}
         <Text style={styles.categoryTex}>Upload Image</Text>
@@ -115,7 +117,6 @@ const AddComponent = props => {
             {props.multipleImages && (
               <ScrollView contentContainerStyle={styles.Container}>
                 {props.multipleImages.map((item, index) => {
-                  // console.log(item.path);
                   return (
                     <EditGComponent
                       deleteImage={() => props.deleteImg(index)}

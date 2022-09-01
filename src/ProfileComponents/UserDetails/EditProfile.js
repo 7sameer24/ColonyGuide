@@ -128,7 +128,7 @@ const EditProfile = ({route, navigation}) => {
       } catch (error) {
         setSpinner(false);
         console.log(error);
-        Toast(toast, error);
+        console.log(error);
       }
     }
   };

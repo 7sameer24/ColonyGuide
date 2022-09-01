@@ -18,16 +18,22 @@ import {Image} from 'react-native-elements';
 const Events = ({navigation}) => {
   const [imgData, setimgData] = useState([]);
   const [loading, setIsLoading] = useState(false);
-  const {Userdata, UserToken} = useApp();
+  const {Userdata, UserToken, adminData, adminToken} = useApp();
 
   const idx = async () => {
     try {
       setIsLoading(true);
       const response = await axios(BaseURL('events'), {
         method: 'post',
-        data: {locality_id: Userdata.userData.locality_id},
+        data: {
+          locality_id: Userdata
+            ? Userdata.userData.locality_id
+            : adminData.userData.locality_id
+            ? adminData.userData.locality_id
+            : 1,
+        },
         headers: {
-          Authorization: `Bearer ${UserToken}`,
+          Authorization: `Bearer ${Userdata ? UserToken : adminToken}`,
         },
       });
       setIsLoading(false);

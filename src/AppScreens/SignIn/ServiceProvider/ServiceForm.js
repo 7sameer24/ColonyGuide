@@ -119,7 +119,7 @@ const ServiceForm = ({UserNewData}) => {
       }
     } catch (error) {
       setSpinner(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
 

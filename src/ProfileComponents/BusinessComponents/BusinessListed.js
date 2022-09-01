@@ -12,14 +12,18 @@ import SkeletonView from '../../Components/SkeletonView';
 const BusinessListed = ({navigation}) => {
   const [newData, setNewData] = useState([]);
   const [loading, updateLoading] = useState(true);
-  const {Userdata, GSaveLocalID} = useApp();
+  const {Userdata, GSaveLocalID, adminData} = useApp();
 
   const idx = async () => {
     try {
       const response = await axios.post(BaseURL('business-list'), {
         locality_id: GSaveLocalID
           ? GSaveLocalID
-          : Userdata.userData.locality_id,
+          : Userdata
+          ? Userdata.userData.locality_id
+          : adminData.userData.locality_id
+          ? adminData.userData.locality_id
+          : 1,
       });
       updateLoading(false);
       setNewData(response.data.business);

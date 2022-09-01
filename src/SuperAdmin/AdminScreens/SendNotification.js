@@ -18,6 +18,8 @@ const SendNotification = ({navigation}) => {
   const {adminToken} = useApp();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
+  const [filterData, setFilterData] = useState([]);
+  const [search, setSearch] = useState('');
 
   const fetchData = async () => {
     updateLoading(true);
@@ -37,7 +39,7 @@ const SendNotification = ({navigation}) => {
       }
     } catch (error) {
       updateLoading(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
   useEffect(() => {
@@ -55,22 +57,41 @@ const SendNotification = ({navigation}) => {
       return 'NA';
     }
   };
+
+  const setFilter = text => {
+    if (text) {
+      const newData = data.filter(item => {
+        const itemData = item.name ? item.name.toLowerCase() : ''.toUpperCase();
+        const textData = text.toLowerCase();
+        return itemData.search(textData) > -1;
+      });
+      console.log(data);
+      setFilterData(newData);
+      setSearch(text);
+    } else {
+      setFilterData([]);
+      setSearch(text);
+    }
+  };
+
   return (
     <View style={genericStyles.Container}>
       <InputComponent
         iconName="search"
         placeholder="Search"
+        value={search}
         inputStyle={genericStyles.ml(10)}
+        onChangeText={text => setFilter(text)}
         iconContainerStyle={genericStyles.mr(10)}
         inputContainerStyle={styles.inputContainerStyle}
       />
       {loading ? (
         <SkeletonView containerStyle={genericStyles.mt(10)} />
       ) : (
-        data.length > 0 && (
+        filterData.length > 0 && (
           <ScrollView>
             <View style={genericStyles.mt(10)}>
-              {data.map((item, index) => {
+              {filterData.map((item, index) => {
                 return (
                   <GalleryCard
                     key={index}
@@ -91,7 +112,7 @@ const SendNotification = ({navigation}) => {
           </ScrollView>
         )
       )}
-      {!loading && data.length == [] && <NoDataAni />}
+      {!loading && filterData.length == [] && <NoDataAni />}
       <ButtonComponent
         title="Add"
         onPress={() => navigation.navigate('Add Notification')}

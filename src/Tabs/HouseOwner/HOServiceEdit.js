@@ -145,7 +145,7 @@ const HOServiceEdit = ({navigation, route}) => {
         }
       } catch (error) {
         setSpinner(false);
-        Toast(toast, error);
+        console.log(error);
       }
     }
   };

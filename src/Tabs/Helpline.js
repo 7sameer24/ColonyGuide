@@ -13,14 +13,18 @@ const Helpline = () => {
   const [fire_brigade, setFB] = useState('');
   const [other, setOther] = useState('');
   const [policeData, setPolice] = useState('');
-  const {Userdata, GSaveLocalID} = useApp();
+  const {Userdata, GSaveLocalID, adminData} = useApp();
 
   const HelplineData = async () => {
     try {
       const response = await axios.post(BaseURL('get-helpline'), {
         locality_id: GSaveLocalID
           ? GSaveLocalID
-          : Userdata.userData.locality_id,
+          : Userdata
+          ? Userdata.userData.locality_id
+          : adminData.userData.locality_id
+          ? adminData.userData.locality_id
+          : 1,
       });
       setFB(response.data.fire_brigade);
       setOther(response.data.other);

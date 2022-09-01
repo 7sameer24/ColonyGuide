@@ -18,7 +18,7 @@ const AddNotification = ({navigation}) => {
   const [imageData, setImageData] = useState('');
   const [spinner, setSpinner] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
-  console.log(msgBox);
+
   const fetchCasteData = async () => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
@@ -27,7 +27,7 @@ const AddNotification = ({navigation}) => {
         setCasteData(fruits);
       }
     } catch (error) {
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -109,7 +109,7 @@ const AddNotification = ({navigation}) => {
         }
       } catch (error) {
         setSpinner(false);
-        Toast(toast, error);
+        console.log(error);
       }
     }
   };

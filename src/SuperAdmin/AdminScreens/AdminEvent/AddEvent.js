@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../../constants';
 import AddComponent from '../../DashComponents/AddComponent';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -8,7 +8,7 @@ import Toast from '../../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
 import {useApp} from '../../../../Context/AppContext';
 
-const AddGallery = ({navigation}) => {
+const AddEvent = ({navigation, route}) => {
   const toast = useToast();
   const {adminToken} = useApp();
   const [spinner, setSpinner] = useState(false);
@@ -73,11 +73,12 @@ const AddGallery = ({navigation}) => {
         data.append('event_description', descriptionValue);
         data.append('status', 'Active');
         data.append('locality_id', '1');
-
+        route.params && data.append('event_id', route.params.eventData.id);
         for (const [index, img] of imageData.entries()) {
+          console.log(img.mime);
           data.append(`event_image[${index}]`, {
             uri: img.path,
-            type: img.mime,
+            type: 'image/jpeg',
             name: img.path,
           });
         }
@@ -98,10 +99,27 @@ const AddGallery = ({navigation}) => {
         }
       } catch (error) {
         setSpinner(false);
-        Toast(toast, error);
+        console.log('error', error);
       }
     }
   };
+
+  const updateResponse = () =>
+    route.params.eventData.event_image.map(data => {
+      data.path = data.event_image;
+      return data;
+    });
+
+  const updateValues = () => {
+    updateResponse();
+    updateGalleryName(route.params.eventData.event_name);
+    updateDescriptionValue(route.params.eventData.event_description);
+    setImageData(route.params.eventData.event_image);
+  };
+
+  useEffect(() => {
+    route.params && updateValues();
+  }, []);
 
   return (
     <View style={genericStyles.Container}>
@@ -112,8 +130,7 @@ const AddGallery = ({navigation}) => {
         visible={modalVisible}
         onPress={() => Saved()}
         inputValue={galleryName}
-        buttonTitle="Add Gallery"
-        uploadFiles="upload Files"
+        uploadFiles="Upload Files"
         multipleImages={imageData}
         categoryName="Event Title"
         description="Event Description"
@@ -125,10 +142,11 @@ const AddGallery = ({navigation}) => {
         OnPressCancel={() => setModalVisible(false)}
         onRequestClose={() => setModalVisible(false)}
         onChangeText={text => updateGalleryName(text)}
+        buttonTitle={route.params ? 'Update Event' : 'Add Event'}
         onChangeDescriptionText={text => updateDescriptionValue(text)}
       />
     </View>
   );
 };
 
-export default AddGallery;
+export default AddEvent;

@@ -1,5 +1,5 @@
 import {View} from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../constants';
 import AddComponent from '../DashComponents/AddComponent';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -8,7 +8,7 @@ import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
 import {useApp} from '../../../Context/AppContext';
 
-const AddGallery = ({navigation}) => {
+const AddGallery = ({navigation, route}) => {
   const toast = useToast();
   const {adminToken} = useApp();
   const [spinner, setSpinner] = useState(false);
@@ -67,11 +67,12 @@ const AddGallery = ({navigation}) => {
         const data = new FormData();
         data.append('gallery_name', galleryName);
         data.append('status', 'Active');
+        route.params && data.append('gallery_id', route.params.galleryData.id);
         data.append('locality_id', '1');
         for (const [index, img] of imageData.entries()) {
           data.append(`gallery_image[${index}]`, {
             uri: img.path,
-            type: img.mime,
+            type: 'image/jpeg',
             name: img.path,
           });
         }
@@ -91,12 +92,27 @@ const AddGallery = ({navigation}) => {
           Toast(toast, response.message);
         }
       } catch (error) {
-        console.log(error);
         setSpinner(false);
-        Toast(toast, error);
+        console.log(error);
       }
     }
   };
+
+  const updateResponse = () =>
+    route.params.galleryData.gallery_image.map(data => {
+      data.path = data.gallery_image;
+      return data;
+    });
+
+  const updateValues = () => {
+    updateGalleryName(route.params.galleryData.gallery_name);
+    setImageData(route.params.galleryData.gallery_image);
+    updateResponse();
+  };
+
+  useEffect(() => {
+    route.params && updateValues();
+  }, []);
 
   return (
     <View style={genericStyles.Container}>
@@ -108,8 +124,8 @@ const AddGallery = ({navigation}) => {
         visible={modalVisible}
         onPress={() => Saved()}
         inputValue={galleryName}
-        buttonTitle="Add Gallery"
-        uploadFiles="upload Files"
+        buttonTitle={route.params ? 'Update Gallery' : 'Add Gallery'}
+        uploadFiles="Upload Files"
         multipleImages={imageData}
         CameraOnpress={() => openCamera()}
         inputPlaceholder="Type gallery name"

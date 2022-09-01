@@ -36,7 +36,7 @@ const CommercialBusiness = ({navigation}) => {
       }
     } catch (error) {
       updateLoading(false);
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
@@ -64,7 +64,7 @@ const CommercialBusiness = ({navigation}) => {
         Toast(toast, data.message);
       }
     } catch (error) {
-      Toast(toast, error);
+      console.log(error);
     }
   };
 
