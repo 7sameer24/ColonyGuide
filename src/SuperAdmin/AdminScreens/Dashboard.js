@@ -15,14 +15,14 @@ import AddEvent from '../../../assets/adminSvg/AddEvent.svg';
 import Approval from '../../../assets/adminSvg/Approval.svg';
 import SendNotification from '../../../assets/adminSvg/SendNotification.svg';
 import Block from '../../../assets/adminSvg/Block.svg';
+import AddUser from '../../../assets/adminSvg/AddUser.svg';
 import Commercials from '../../../assets/adminSvg/Commercials.svg';
 import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../Components/Toast';
 import Spinner from '../../Components/Spinner';
 import {Icon} from 'react-native-elements';
 const Dashboard = ({navigation}) => {
-  const toast = useToast();
-  const {adminToken} = useApp();
+  const {adminToken, adminData, onRefresh} = useApp();
   const [data, updateData] = useState([]);
 
   const fetchData = async () => {
@@ -30,7 +30,9 @@ const Dashboard = ({navigation}) => {
       const {data} = await axios(BaseURL('admin-dashboard'), {
         method: 'post',
         data: {
-          locality_id: 1,
+          locality_id: adminData.userData.locality_id
+            ? adminData.userData.locality_id
+            : 1,
         },
         headers: {
           Authorization: `Bearer ${adminToken}`,
@@ -46,7 +48,7 @@ const Dashboard = ({navigation}) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [onRefresh]);
 
   return (
     <View style={genericStyles.container}>
@@ -62,7 +64,7 @@ const Dashboard = ({navigation}) => {
           <Text style={styles.heading}>Dashboard</Text>
         </View>
       </View>
-      {data ? (
+      {Object.keys(data).length > 0 ? (
         <>
           <ScrollView
             horizontal
@@ -149,6 +151,18 @@ const Dashboard = ({navigation}) => {
               SvgCompoent={Block}
               onPress={() => navigation.navigate('BlockUnblock')}
             />
+            {adminData.userData.app_role_id == 6 && (
+              <SelectTask
+                title="Add Admin User"
+                SvgCompoent={AddUser}
+                onPress={() =>
+                  navigation.navigate('Admin List', {
+                    adminToken: adminToken,
+                    adminData: adminData,
+                  })
+                }
+              />
+            )}
           </View>
         </>
       ) : (

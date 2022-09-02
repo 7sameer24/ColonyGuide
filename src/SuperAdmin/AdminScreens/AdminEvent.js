@@ -18,9 +18,11 @@ import Toast from '../../Components/Toast';
 import SpinnerModal from '../../Components/SpinnerModal';
 import NoDataAni from '../../Components/NoDataAni';
 import SkeletonView from '../../Components/SkeletonView';
+import {useApp} from '../../../Context/AppContext';
 
 const AdminEvent = ({route, navigation}) => {
   const toast = useToast();
+  const {adminData, adminToken} = useApp();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
   const [deleteLoading, updatedeleteLoading] = useState(false);
@@ -31,10 +33,10 @@ const AdminEvent = ({route, navigation}) => {
       const {data} = await axios(BaseURL('admin-event-list'), {
         method: 'post',
         data: {
-          locality_id: 1,
+          locality_id: adminData.userData.locality_id,
         },
         headers: {
-          Authorization: `Bearer ${route.params.adminToken}`,
+          Authorization: `Bearer ${adminToken}`,
         },
       });
       updateLoading(false);

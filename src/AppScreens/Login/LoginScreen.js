@@ -48,7 +48,10 @@ const LoginScreen = ({navigation}) => {
           .then(async response => {
             setSpinner(false);
             if (response.data.success === true) {
-              if (response.data.userData.app_role_id === 6) {
+              if (
+                response.data.userData.app_role_id === 6 ||
+                response.data.userData.app_role_id === 5
+              ) {
                 // SuperAdmin login
                 setAdminData(response.data);
                 setAdminToken(response.data.token);

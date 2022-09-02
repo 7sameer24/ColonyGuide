@@ -17,12 +17,17 @@ import {useToast} from 'react-native-toast-notifications';
 import NoDataAni from '../../Components/NoDataAni';
 import SpinnerModal from '../../Components/SpinnerModal';
 import SkeletonView from '../../Components/SkeletonView';
+import ImgIcon from '../../../assets/svg/amico.svg';
+import {useApp} from '../../../Context/AppContext';
 
 const AdminGallery = ({navigation, route}) => {
   const toast = useToast();
   const [data, updateData] = useState([]);
+  const [search, setSearch] = useState('');
+  const [filterData, setFilterData] = useState([]);
   const [loading, updateLoading] = useState(false);
   const [deleteLoading, updatedeleteLoading] = useState(false);
+  const {adminData, adminToken} = useApp();
 
   const fetchData = async () => {
     updateLoading(true);
@@ -30,15 +35,16 @@ const AdminGallery = ({navigation, route}) => {
       const {data} = await axios(BaseURL('admin-gallery-list'), {
         method: 'post',
         data: {
-          locality_id: 1,
+          locality_id: adminData.userData.locality_id,
         },
         headers: {
-          Authorization: `Bearer ${route.params.adminToken}`,
+          Authorization: `Bearer ${adminToken}`,
         },
       });
       updateLoading(false);
       if (data.success) {
         updateData(data.galleryData);
+        setFilterData(data.galleryData);
       }
     } catch (error) {
       updateLoading(false);
@@ -74,7 +80,7 @@ const AdminGallery = ({navigation, route}) => {
           gallery_id: id,
         },
         headers: {
-          Authorization: `Bearer ${route.params.adminToken}`,
+          Authorization: `Bearer ${adminToken}`,
         },
       });
       updatedeleteLoading(false);
@@ -89,14 +95,33 @@ const AdminGallery = ({navigation, route}) => {
     }
   };
 
+  const setFilter = text => {
+    if (text) {
+      const newData = filterData.filter(item => {
+        const itemData = item.gallery_name
+          ? item.gallery_name.toLowerCase()
+          : ''.toUpperCase();
+        const textData = text.toLowerCase();
+        return itemData.search(textData) > -1;
+      });
+      updateData(newData);
+      setSearch(text);
+    } else {
+      updateData(filterData);
+      setSearch(text);
+    }
+  };
+
   return (
     <View style={genericStyles.container}>
       <InputComponent
+        value={search}
         iconName="search"
         placeholder="Search"
-        containerStyle={genericStyles.width('95%')}
         inputStyle={genericStyles.ml(10)}
+        onChangeText={text => setFilter(text)}
         iconContainerStyle={genericStyles.mr(10)}
+        containerStyle={genericStyles.width('95%')}
         inputContainerStyle={styles.inputContainerStyle}
       />
       {loading ? (
@@ -138,7 +163,11 @@ const AdminGallery = ({navigation, route}) => {
           </ScrollView>
         )
       )}
-      {!loading && data.length == [] && <NoDataAni />}
+      {!loading && data.length == [] && (
+        <View style={styles.imageStyle}>
+          <ImgIcon />
+        </View>
+      )}
       <ButtonComponent
         title="Add"
         onPress={() => navigation.navigate('Add Gallery')}
@@ -166,5 +195,10 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
     marginTop: 20,
     borderRadius: 10,
+  },
+  imageStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
   },
 });

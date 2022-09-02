@@ -28,6 +28,8 @@ import HouseOwners from '../Tabs/HouseOwner/HouseOwners';
 import Helpline from '../Tabs/Helpline';
 import Events from '../ProfileComponents/EventsComponets/Events';
 import Gallery from '../ProfileComponents/GalleryComponents/Gallery';
+import AdminList from '../SuperAdmin/AdminScreens/AdminAdd/AdminList';
+import AddAdminUser from '../SuperAdmin/AdminScreens/AdminAdd/AddAdminUser';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -198,6 +200,24 @@ const ScreenStack = () => {
           headerShadowVisible: false,
         })}
       />
+      <Stack.Screen
+        name="Admin List"
+        component={AdminList}
+        options={() => ({
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerTitleStyle: {color: COLORS.white},
+          headerTintColor: COLORS.white,
+        })}
+      />
+      <Stack.Screen
+        name="Add User"
+        component={AddAdminUser}
+        options={() => ({
+          headerStyle: {backgroundColor: COLORS.primary},
+          headerTitleStyle: {color: COLORS.white},
+          headerTintColor: COLORS.white,
+        })}
+      />
     </Stack.Navigator>
   );
 };
@@ -289,7 +309,7 @@ function Commercials() {
   );
 }
 
-function AdminStack() {
+function MyDrawer() {
   return (
     <Drawer.Navigator
       drawerContent={props => <AdminCustomDrawer {...props} />}
@@ -312,7 +332,17 @@ function AdminStack() {
     </Drawer.Navigator>
   );
 }
-
+const AdminStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
+      <Stack.Screen
+        name={'MainStack'}
+        component={MyDrawer}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  );
+};
 export default AdminStack;
 
 const styles = StyleSheet.create({

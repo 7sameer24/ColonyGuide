@@ -13,7 +13,7 @@ import SpinnerModal from '../../Components/SpinnerModal';
 
 const BlockScreen = ({navigation}) => {
   const toast = useToast();
-  const {adminToken, onRefresh, setRefresh} = useApp();
+  const {adminToken, adminData, onRefresh, setRefresh} = useApp();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
   const [activeLoading, activeUpdateLoading] = useState(false);
@@ -25,7 +25,7 @@ const BlockScreen = ({navigation}) => {
       const {data} = await axios(BaseURL('blocked-user-list'), {
         method: 'post',
         data: {
-          locality_id: 1,
+          locality_id: adminData.userData.locality_id,
           is_block: 1,
         },
         headers: {

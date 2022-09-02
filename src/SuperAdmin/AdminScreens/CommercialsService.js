@@ -12,7 +12,7 @@ import SkeletonView from '../../Components/SkeletonView';
 
 const CommercialService = ({navigation}) => {
   const toast = useToast();
-  const {adminToken} = useApp();
+  const {adminData, adminToken} = useApp();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
 
@@ -23,7 +23,7 @@ const CommercialService = ({navigation}) => {
       const {data} = await axios(BaseURL('admin-business-service-list'), {
         method: 'post',
         data: {
-          locality_id: 1,
+          locality_id: adminData.userData.locality_id,
           type: 1,
         },
         headers: {

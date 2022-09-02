@@ -12,7 +12,7 @@ import SkeletonView from '../../Components/SkeletonView';
 
 const ResidentApproval = ({navigation}) => {
   const toast = useToast();
-  const {adminToken} = useApp();
+  const {adminData, adminToken} = useApp();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
 
@@ -23,7 +23,7 @@ const ResidentApproval = ({navigation}) => {
       const {data} = await axios(BaseURL('admin-user-data'), {
         method: 'post',
         data: {
-          locality_id: 1,
+          locality_id: adminData.userData.locality_id,
           type: 3,
         },
         headers: {

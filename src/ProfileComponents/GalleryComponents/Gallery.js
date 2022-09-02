@@ -28,9 +28,7 @@ const Gallery = ({navigation}) => {
         data: {
           locality_id: Userdata
             ? Userdata.userData.locality_id
-            : adminData.userData.locality_id
-            ? adminData.userData.locality_id
-            : 1,
+            : adminData.userData.locality_id,
         },
         headers: {
           Authorization: `Bearer ${Userdata ? UserToken : adminToken}`,

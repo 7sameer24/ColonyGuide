@@ -11,11 +11,12 @@ import {useToast} from 'react-native-toast-notifications';
 import NoDataAni from '../../Components/NoDataAni';
 import ButtonComponent from '../../Components/ButtonComponent';
 import moment from 'moment';
+import ImgIcon from '../../../assets/svg/amico.svg';
 import SkeletonView from '../../Components/SkeletonView';
 
 const SendNotification = ({navigation}) => {
   const toast = useToast();
-  const {adminToken} = useApp();
+  const {adminData, adminToken} = useApp();
   const [data, updateData] = useState([]);
   const [loading, updateLoading] = useState(false);
   const [filterData, setFilterData] = useState([]);
@@ -27,15 +28,17 @@ const SendNotification = ({navigation}) => {
       const {data} = await axios(BaseURL('admin-notification-list'), {
         method: 'post',
         data: {
-          locality_id: 1,
+          locality_id: adminData.userData.locality_id,
         },
         headers: {
           Authorization: `Bearer ${adminToken}`,
         },
       });
       updateLoading(false);
+
       if (data.success) {
         updateData(data.notificationData);
+        setFilterData(data.notificationData);
       }
     } catch (error) {
       updateLoading(false);
@@ -60,16 +63,17 @@ const SendNotification = ({navigation}) => {
 
   const setFilter = text => {
     if (text) {
-      const newData = data.filter(item => {
-        const itemData = item.name ? item.name.toLowerCase() : ''.toUpperCase();
+      const newData = filterData.filter(item => {
+        const itemData = item.message
+          ? item.message.toLowerCase()
+          : ''.toUpperCase();
         const textData = text.toLowerCase();
         return itemData.search(textData) > -1;
       });
-      console.log(data);
-      setFilterData(newData);
+      updateData(newData);
       setSearch(text);
     } else {
-      setFilterData([]);
+      updateData(filterData);
       setSearch(text);
     }
   };
@@ -88,10 +92,10 @@ const SendNotification = ({navigation}) => {
       {loading ? (
         <SkeletonView containerStyle={genericStyles.mt(10)} />
       ) : (
-        filterData.length > 0 && (
+        data.length > 0 && (
           <ScrollView>
             <View style={genericStyles.mt(10)}>
-              {filterData.map((item, index) => {
+              {data.map((item, index) => {
                 return (
                   <GalleryCard
                     key={index}
@@ -112,7 +116,11 @@ const SendNotification = ({navigation}) => {
           </ScrollView>
         )
       )}
-      {!loading && filterData.length == [] && <NoDataAni />}
+      {!loading && data.length == [] && (
+        <View style={styles.imageStyle}>
+          <ImgIcon />
+        </View>
+      )}
       <ButtonComponent
         title="Add"
         onPress={() => navigation.navigate('Add Notification')}
@@ -131,5 +139,11 @@ const styles = StyleSheet.create({
     borderColor: COLORS.primary,
     marginTop: 20,
     borderRadius: 10,
+  },
+  imageStyle: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginTop: '30%',
+    flex: 1,
   },
 });
