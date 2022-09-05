@@ -1,5 +1,6 @@
 import {
   Image,
+  PermissionsAndroid,
   ScrollView,
   StyleSheet,
   Text,
@@ -60,7 +61,28 @@ const ServiceAddDetails = ({navigation}) => {
       }
     });
   };
-
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'App Camera Permission',
+          message: 'App needs access to your camera ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        openCamera();
+        console.log('Camera permission given');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
   const openCamera = () => {
     setModalVisible(false);
     let opetions = {
@@ -165,13 +187,15 @@ const ServiceAddDetails = ({navigation}) => {
 
         <ModalPopup
           visible={modalVisible}
-          CameraOnpress={() => openCamera()}
+          CameraOnpress={() => requestCameraPermission()}
           GalleryOnpress={() => openGallery()}
           OnPressCancel={() => setModalVisible(false)}
           onRequestClose={() => setModalVisible(false)}
         />
 
-        <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
+        <Text style={styles.BusinessDetails}>
+          Shop / Service Details / दुकान / सेवा विवरण
+        </Text>
         <InputComponent
           placeholder="Shop / Service name (Optional)"
           value={ShopBusName}
@@ -214,7 +238,7 @@ const ServiceAddDetails = ({navigation}) => {
           value={About}
           onChangeText={text => setAbout(text)}
         />
-        <Text style={styles.BusinessDetails}>Shop address</Text>
+        <Text style={styles.BusinessDetails}>Shop address / दुकान का पता</Text>
         <InputComponent
           placeholder="Building / Flat Number"
           value={buildFL}
@@ -248,7 +272,7 @@ const ServiceAddDetails = ({navigation}) => {
       <ButtonComponent
         title="Save"
         ButtonContainer={styles.ButtonContainer}
-        loading={spinner ? true : false}
+        loading={spinner}
         onPress={() => SaveDetail()}
       />
       <Poweredby container={{flex: 0}} />

@@ -119,16 +119,16 @@ const AddGallery = ({navigation, route}) => {
       <AddComponent
         input={true}
         loading={spinner}
-        categoryName="Title"
+        categoryName="Title / शीर्षक"
         deleteImg={deleteImg}
         visible={modalVisible}
         onPress={() => Saved()}
         inputValue={galleryName}
         buttonTitle={route.params ? 'Update Gallery' : 'Add Gallery'}
-        uploadFiles="Upload Files"
+        uploadFiles="Upload Files / फाइल अपलोड करो"
         multipleImages={imageData}
         CameraOnpress={() => openCamera()}
-        inputPlaceholder="Type gallery name"
+        inputPlaceholder="Type gallery name / गैलरी का नाम टाइप करें"
         GalleryOnpress={() => openGallery()}
         onUpload={() => setModalVisible(true)}
         OnPressCancel={() => setModalVisible(false)}

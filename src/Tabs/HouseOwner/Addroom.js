@@ -1,5 +1,6 @@
 import {
   Image,
+  PermissionsAndroid,
   ScrollView,
   StyleSheet,
   Text,
@@ -78,6 +79,28 @@ const Addroom = ({navigation}) => {
         setImage(source);
       }
     });
+  };
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'App Camera Permission',
+          message: 'App needs access to your camera ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        openCamera();
+        console.log('Camera permission given');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   };
   const openCamera = () => {
     setModalVisible(false);
@@ -223,12 +246,12 @@ const Addroom = ({navigation}) => {
             </TouchableOpacity>
             <ModalPopup
               visible={modalVisible}
-              CameraOnpress={() => openCamera()}
+              CameraOnpress={() => requestCameraPermission()}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}
             />
-            <Text style={styles.textStyle}>Room Details</Text>
+            <Text style={styles.textStyle}>Room Details / कमरे का विवरण</Text>
             <InputComponent
               placeholder="Building / Hostel Name"
               value={building_name}
@@ -278,14 +301,16 @@ const Addroom = ({navigation}) => {
               </>
             )}
             <CheckBox
-              title="Only Vegetarian"
+              title="Only Vegetarian / केवल शाकाहारी"
               checked={check1}
               onPress={() => setCheck1(!check1)}
               checkedColor={COLORS.primary}
               containerStyle={styles.checkBoxContanier}
               textStyle={styles.CheckText}
             />
-            <Text style={styles.textStyle}>Renter Type</Text>
+            <Text style={styles.textStyle}>
+              Renter Type / किराएदार का प्रकार
+            </Text>
             <View style={genericStyles.row}>
               {checkBoxArr.map((data, index) => (
                 <View key={data.title}>
@@ -327,7 +352,7 @@ const Addroom = ({navigation}) => {
                 </View>
               ))}
             </View>
-            <Text style={styles.textStyle}>Address</Text>
+            <Text style={styles.textStyle}>Address / पता</Text>
             <InputComponent
               placeholder="Building / Flat Number"
               value={buildFL}

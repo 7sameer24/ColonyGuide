@@ -5,6 +5,7 @@ import {
   Image,
   TouchableOpacity,
   Text,
+  PermissionsAndroid,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
@@ -146,6 +147,28 @@ const ServiceForm = ({UserNewData}) => {
       }
     });
   };
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'App Camera Permission',
+          message: 'App needs access to your camera ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        openCamera();
+        console.log('Camera permission given');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
 
   const openCamera = () => {
     setModalVisible(false);
@@ -226,7 +249,7 @@ const ServiceForm = ({UserNewData}) => {
             </TouchableOpacity>
             <ModalPopup
               visible={modalVisible}
-              CameraOnpress={() => openCamera()}
+              CameraOnpress={() => requestCameraPermission()}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}

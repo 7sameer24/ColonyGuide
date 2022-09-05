@@ -15,7 +15,7 @@ import CategoriesList from './Categories/CategoriesList';
 import HeaderBar from '../Components/HeaderBar';
 import axios from 'axios';
 import Spinner from '../Components/Spinner';
-import {useApp} from '../../Context/AppContext';
+import {navigationStateType, useApp} from '../../Context/AppContext';
 import BaseURL from '../constants/BaseURL';
 import {Image} from 'react-native-elements';
 import PushNotification from 'react-native-push-notification';
@@ -26,10 +26,13 @@ import LoginAnimation from '../Components/LoginAnimation';
 import EmptyView from '../Components/EmptyView';
 import ImageZoomComponent from '../Components/ImageZoomComponent';
 import Swiper from 'react-native-swiper';
+import Toast from '../Components/Toast';
+import {useToast} from 'react-native-toast-notifications';
 
 const WIDTH = Dimensions.get('window').width;
 const HIGHT = Dimensions.get('window').height;
 const HomeScreen = ({navigation}) => {
+  const toast = useToast();
   const [newData, setData] = useState([]);
   const [SliderImage, setSliderImg] = useState([]);
   const [visible, setIsvisible] = useState(false);
@@ -46,6 +49,9 @@ const HomeScreen = ({navigation}) => {
     GSaveLocalID,
     updateCategories,
     updateLocalData,
+    setNavigationState,
+    setNewData,
+    setUserToken,
   } = useApp();
 
   const idx = async () => {
@@ -60,6 +66,9 @@ const HomeScreen = ({navigation}) => {
           ? GSaveLocalID
           : Userdata.userData.locality_id,
       });
+      const checkStatus = await axios.post(BaseURL('check-user-status'), {
+        user_id: Userdata.userData.id,
+      });
       Userdata === null
         ? null
         : await axios(BaseURL('update-device-token'), {
@@ -72,6 +81,19 @@ const HomeScreen = ({navigation}) => {
               Authorization: `Bearer ${UserToken}`,
             },
           });
+      if (checkStatus.data.success) {
+        if (checkStatus.data.userData.is_block === 1) {
+          setNavigationState(navigationStateType.AUTH);
+          setNewData(null);
+          setUserToken(null);
+          Toast(
+            toast,
+            'Your account is blocked please contact your administrator',
+            'normal',
+            5000,
+          );
+        }
+      }
       updateLoading(false);
       setData(response.data.categories);
       updateCategories(response2.data.categories);

@@ -63,6 +63,8 @@ const AddAdminUser = ({navigation}) => {
         if (response.data.success) {
           navigation.navigate('Admin');
           Toast(toast, response.data.message);
+        } else {
+          Toast(toast, response.data.message);
         }
       } catch (error) {
         setSpinner(false);

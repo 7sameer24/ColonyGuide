@@ -1,20 +1,18 @@
 import {
-  Alert,
   Image,
+  PermissionsAndroid,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
 import InputComponent from '../../Components/InputComponent';
 import DropDownComponent from '../../Components/DropDownComponent';
-import axios from 'axios';
-import Spinner from '../../Components/Spinner';
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
@@ -42,30 +40,30 @@ const EditProfile = ({route, navigation}) => {
   const arr = [
     {
       placeHolder: 'Name',
-      title: 'Your Name',
+      title: 'Your Name / आपका नाम',
       value: PersonName,
       onChagneText: setPersonName,
     },
     {
       placeHolder: 'Email',
-      title: 'Your Email',
+      title: 'Your Email / आपका ईमेल',
       value: Email,
       onChagneText: setEmail,
     },
     {
-      title: 'Flat / House number',
+      title: 'Flat / House number / फ्लैट / मकान नंबर',
       placeHolder: 'F/H number',
       value: FHN,
       onChagneText: setFHN,
     },
     {
-      title: 'Address',
+      title: 'Address / आपका पता',
       placeHolder: 'Address',
       value: Address,
       onChagneText: setAddress,
     },
     {
-      title: 'Landmark',
+      title: 'Landmark / सीमाचिह्न',
       placeHolder: 'Landmark (optional)',
       value: Landmark,
       onChagneText: setLandmark,
@@ -157,6 +155,29 @@ const EditProfile = ({route, navigation}) => {
     });
   };
 
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'App Camera Permission',
+          message: 'App needs access to your camera ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        openCamera();
+        console.log('Camera permission given');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  };
+
   const openCamera = () => {
     setModalVisible(false);
     let opetions = {
@@ -211,7 +232,7 @@ const EditProfile = ({route, navigation}) => {
         </TouchableOpacity>
         <ModalPopup
           visible={modalVisible}
-          CameraOnpress={() => openCamera()}
+          CameraOnpress={() => requestCameraPermission()}
           GalleryOnpress={() => openGallery()}
           OnPressCancel={() => setModalVisible(false)}
           onRequestClose={() => setModalVisible(false)}
@@ -219,7 +240,7 @@ const EditProfile = ({route, navigation}) => {
         <View style={styles.midd}>
           {data.app_role_id === 1 ? (
             <View style={genericStyles.mb(10)}>
-              <Text style={styles.text}>Your Name</Text>
+              <Text style={styles.text}>Your Name / आपका नाम</Text>
               <InputComponent
                 placeholder="Your Name"
                 inputContainerStyle={styles.inputContainerStyle}
@@ -228,7 +249,7 @@ const EditProfile = ({route, navigation}) => {
                 onChangeText={text => setPersonName(text)}
                 autoCapitalize="words"
               />
-              <Text style={styles.text}>Your Email</Text>
+              <Text style={styles.text}>Your Email / आपका ईमेल</Text>
               <InputComponent
                 placeholder="Email"
                 inputContainerStyle={styles.inputContainerStyle}
@@ -237,7 +258,7 @@ const EditProfile = ({route, navigation}) => {
                 onChangeText={text => setEmail(text)}
                 autoCapitalize="words"
               />
-              <Text style={styles.text}>Hostel Name</Text>
+              <Text style={styles.text}>Hostel Name / छात्रावास का नाम</Text>
               <InputComponent
                 placeholder="Hostel Name"
                 inputContainerStyle={styles.inputContainerStyle}
@@ -246,7 +267,7 @@ const EditProfile = ({route, navigation}) => {
                 onChangeText={text => setHostelName(text)}
                 autoCapitalize="words"
               />
-              <Text style={styles.text}>Hostel Address</Text>
+              <Text style={styles.text}>Hostel Address / छात्रावास का पता</Text>
               <InputComponent
                 placeholder="Hostel Address"
                 inputContainerStyle={styles.inputContainerStyle}
@@ -273,7 +294,9 @@ const EditProfile = ({route, navigation}) => {
               ))}
               {data.app_role_id == 3 && (
                 <>
-                  <Text style={styles.text}>Hide your number</Text>
+                  <Text style={styles.text}>
+                    Hide your number / अपना नंबर छुपाएं
+                  </Text>
                   <DropDownComponent
                     data={HideNumber}
                     labelField="name"
@@ -292,7 +315,7 @@ const EditProfile = ({route, navigation}) => {
       </ScrollView>
       <ButtonComponent
         title="Save"
-        loading={spinner ? true : false}
+        loading={spinner}
         onPress={() => SaveDetail()}
       />
       <Poweredby container={{flex: 0}} />

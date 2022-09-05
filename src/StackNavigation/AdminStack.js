@@ -7,7 +7,6 @@ import Dashboard from '../SuperAdmin/AdminScreens/Dashboard';
 import AdminGallery from '../SuperAdmin/AdminScreens/AdminGallery';
 import {COLORS, FONTS} from '../constants';
 import AddGallery from '../SuperAdmin/AdminScreens/AddGallery';
-import AdminEditGallery from '../SuperAdmin/AdminScreens/AdminEditGallery';
 import AdminEvent from '../SuperAdmin/AdminScreens/AdminEvent';
 import SendNotification from '../SuperAdmin/AdminScreens/SendNotification';
 import ResidentApproval from '../SuperAdmin/AdminScreens/ResidentApproval';
@@ -57,15 +56,6 @@ const ScreenStack = () => {
       <Stack.Screen
         name="Add Gallery"
         component={AddGallery}
-        options={() => ({
-          headerStyle: {backgroundColor: COLORS.primary},
-          headerTitleStyle: {color: COLORS.white},
-          headerTintColor: COLORS.white,
-        })}
-      />
-      <Stack.Screen
-        name="Edit gallery"
-        component={AdminEditGallery}
         options={() => ({
           headerStyle: {backgroundColor: COLORS.primary},
           headerTitleStyle: {color: COLORS.white},

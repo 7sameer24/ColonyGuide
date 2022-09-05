@@ -130,13 +130,13 @@ const AddEvent = ({navigation, route}) => {
         visible={modalVisible}
         onPress={() => Saved()}
         inputValue={galleryName}
-        uploadFiles="Upload Files"
+        uploadFiles="Upload Files / फाइल अपलोड करो"
         multipleImages={imageData}
-        categoryName="Event Title"
-        description="Event Description"
+        categoryName="Event Title / कार्यक्रम का शीर्षक"
+        description="Event Description / घटना विवरण"
         CameraOnpress={() => openCamera()}
         descriptionValue={descriptionValue}
-        inputPlaceholder="Type gallery name"
+        inputPlaceholder="Type gallery name / गैलरी का नाम टाइप करें"
         GalleryOnpress={() => openGallery()}
         onUpload={() => setModalVisible(true)}
         OnPressCancel={() => setModalVisible(false)}

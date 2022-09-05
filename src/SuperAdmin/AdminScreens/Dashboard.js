@@ -53,7 +53,7 @@ const Dashboard = ({navigation}) => {
   return (
     <View style={genericStyles.container}>
       <View style={[styles.container, genericStyles.shadow]}>
-        <View style={genericStyles.row}>
+        <View style={[genericStyles.row, {alignItems: 'center'}]}>
           <Icon
             color={COLORS.white}
             name="menu"

@@ -1,6 +1,7 @@
 import {
   Alert,
   Image,
+  PermissionsAndroid,
   ScrollView,
   StyleSheet,
   Text,
@@ -76,6 +77,28 @@ const BusinessEdit = ({navigation, route}) => {
         setImage(source);
       }
     });
+  };
+  const requestCameraPermission = async () => {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+        {
+          title: 'App Camera Permission',
+          message: 'App needs access to your camera ',
+          buttonNeutral: 'Ask Me Later',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        openCamera();
+        console.log('Camera permission given');
+      } else {
+        console.log('Camera permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   };
   const openCamera = () => {
     setModalVisible(false);
@@ -192,12 +215,14 @@ const BusinessEdit = ({navigation, route}) => {
             </TouchableOpacity>
             <ModalPopup
               visible={modalVisible}
-              CameraOnpress={() => openCamera()}
+              CameraOnpress={() => requestCameraPermission()}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}
             />
-            <Text style={styles.BusinessDetails}>Business Details</Text>
+            <Text style={styles.BusinessDetails}>
+              Business Details / व्यापार का विवरण
+            </Text>
             <InputComponent
               placeholder="Name of business"
               value={ShopBusName}
@@ -233,7 +258,9 @@ const BusinessEdit = ({navigation, route}) => {
               value={About}
               onChangeText={text => setAbout(text)}
             />
-            <Text style={styles.BusinessDetails}>Business address</Text>
+            <Text style={styles.BusinessDetails}>
+              Business address / व्यवसाय का पता
+            </Text>
             <InputComponent
               placeholder="Building / Flat Number"
               value={buildFL}
