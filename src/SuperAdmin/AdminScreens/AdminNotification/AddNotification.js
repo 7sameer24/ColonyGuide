@@ -117,8 +117,8 @@ const AddNotification = ({navigation}) => {
   return (
     <View style={genericStyles.Container}>
       <AddComponent
-        categoryName="Send to"
-        description="Message"
+        categoryName="Send to / भेजना"
+        description="Message / संदेश"
         buttonTitle="Add"
         descriptionValue={msgBox}
         loading={spinner}
@@ -127,7 +127,7 @@ const AddNotification = ({navigation}) => {
         dropdownData={casteData}
         dropdownValue={caste}
         visible={modalVisible}
-        uploadFiles="Uploaded Files"
+        uploadFiles="Upload Files / फाइल अपलोड करो"
         singleImage={imageData.path}
         onPress={() => Saved()}
         CameraOnpress={() => openCamera()}

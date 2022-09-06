@@ -134,12 +134,19 @@ const AdminGallery = ({navigation, route}) => {
                 <TouchableOpacity
                   key={index}
                   activeOpacity={0.9}
-                  onPress={() =>
-                    navigation.navigate('MoreImg', {
-                      name: items.gallery_name,
-                      NewData: items.gallery_image,
-                    })
-                  }>
+                  onPress={() => {
+                    if (items.gallery_image.length > 0) {
+                      navigation.navigate('MoreImg', {
+                        name: items.gallery_name,
+                        NewData: items.gallery_image,
+                      });
+                    } else {
+                      Toast(
+                        toast,
+                        `This gallery is empty and couldn't see more images`,
+                      );
+                    }
+                  }}>
                   <GalleryCard
                     key={index}
                     iconName2="trash"
@@ -154,7 +161,11 @@ const AdminGallery = ({navigation, route}) => {
                         galleryData: items,
                       })
                     }
-                    source={{uri: items.gallery_image[0].gallery_image}}
+                    source={
+                      items.gallery_image.length > 0
+                        ? {uri: items.gallery_image[0].gallery_image}
+                        : require('../../../assets/Image_not_available.png')
+                    }
                     longText={3.1}
                   />
                 </TouchableOpacity>

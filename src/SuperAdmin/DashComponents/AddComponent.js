@@ -74,7 +74,9 @@ const AddComponent = props => {
             }/300`}</Text>
           </>
         )}
-        <Text style={styles.categoryTex}>Upload Image</Text>
+        <Text style={styles.categoryTex}>
+          Upload Image / छवि इसे अपलोड करें
+        </Text>
         <Text style={styles.categorySub}>{'(PNG, JPG files only)'}</Text>
         <TouchableOpacity activeOpacity={0.9} onPress={props.onUpload}>
           <Card containerStyle={styles.cardContainer}>

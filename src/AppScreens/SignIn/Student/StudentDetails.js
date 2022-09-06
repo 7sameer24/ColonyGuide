@@ -89,7 +89,7 @@ const StudentDetails = ({data, navigation}) => {
         <HeaderBody
           Icon={<ImgIcon height={180} />}
           touchableOpacityStyle={genericStyles.mb(0)}
-          title="Personal Details"
+          title="Personal Details / व्यक्तिगत विवरण"
           subTitle="Enter the details below to continue"
           subTitleStyle={genericStyles.mb(0)}
         />

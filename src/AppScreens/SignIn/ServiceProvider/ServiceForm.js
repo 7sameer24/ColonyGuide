@@ -229,7 +229,7 @@ const ServiceForm = ({UserNewData}) => {
         <>
           <ScrollView keyboardShouldPersistTaps="handled">
             <View>
-              <Text style={styles.text}>Service Details</Text>
+              <Text style={styles.text}>Service Details / सेवा विवरण</Text>
               <Text style={styles.subText}>
                 Enter the details below to continue
               </Text>
@@ -254,7 +254,9 @@ const ServiceForm = ({UserNewData}) => {
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}
             />
-            <Text style={styles.BusinessDetails}>Shop / Service Details</Text>
+            <Text style={styles.BusinessDetails}>
+              Shop / Service Details / दुकान / सेवा विवरण
+            </Text>
 
             <InputComponent
               placeholder="Shop Name (Optional)"

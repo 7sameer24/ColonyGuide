@@ -116,7 +116,11 @@ const AdminEvent = ({route, navigation}) => {
                 key={index}
                 style={styles.slide2}>
                 <Image
-                  source={{uri: items.event_image[0].event_image}}
+                  source={
+                    items.event_image.length > 0
+                      ? {uri: items.event_image[0].event_image}
+                      : require('../../../assets/Image_not_available.png')
+                  }
                   style={styles.wrap}
                   progressiveRenderingEnabled
                   placeholderStyle={genericStyles.bg(COLORS.white)}
