@@ -113,7 +113,6 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} />
-      <ScrollView keyboardShouldPersistTaps="handled">
         <HeaderBody
           title="Welcome"
           subTitle="Log in to continue"
@@ -164,7 +163,6 @@ const LoginScreen = ({navigation}) => {
             <Text style={styles.signUpBtn2}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
       <Poweredby />
     </View>
   );

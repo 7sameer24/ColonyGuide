@@ -1,5 +1,6 @@
 import {
   Dimensions,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -41,7 +42,7 @@ const SelectRole = ({navigation}) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       {newData.length > 0 ? (
         <>
           <TouchableOpacity
@@ -84,7 +85,7 @@ const SelectRole = ({navigation}) => {
       ) : (
         <Spinner />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

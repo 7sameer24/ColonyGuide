@@ -66,7 +66,8 @@ const HomeScreen = ({navigation}) => {
           ? GSaveLocalID
           : Userdata.userData.locality_id,
       });
-      const checkStatus = await axios.post(BaseURL('check-user-status'), {
+     
+      const checkStatus =Userdata && await axios.post(BaseURL('check-user-status'), {
         user_id: Userdata.userData.id,
       });
       Userdata === null
@@ -81,7 +82,7 @@ const HomeScreen = ({navigation}) => {
               Authorization: `Bearer ${UserToken}`,
             },
           });
-      if (checkStatus.data.success) {
+      if (Userdata && checkStatus.data.success) {
         if (checkStatus.data.userData.is_block === 1) {
           setNavigationState(navigationStateType.AUTH);
           setNewData(null);

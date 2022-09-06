@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import {Icon} from 'react-native-elements';
 import {COLORS, FONTS, genericStyles} from '../constants';
@@ -20,7 +20,7 @@ const HeaderBar = ({
   iconColorChange,
 }) => {
   return (
-    <View style={[genericStyles.bg(COLORS.white), {...bgContainer}]}>
+    <SafeAreaView style={[genericStyles.bg(COLORS.white), {...bgContainer}]}>
       <View style={[styles.iconView, {...iconView}]}>
         <View style={genericStyles.row}>
           <Icon
@@ -50,7 +50,7 @@ const HeaderBar = ({
           />
         </View>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -60,8 +60,10 @@ const styles = StyleSheet.create({
   iconView: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 10,
+    marginTop: Platform.OS ==='ios'?0: 10,
     marginHorizontal: 20,
+    marginBottom: Platform.OS ==='ios'?10: 0,
+
   },
   title: {
     fontSize: 18,

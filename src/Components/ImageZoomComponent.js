@@ -1,4 +1,4 @@
-import {Modal, StyleSheet, View} from 'react-native';
+import {Modal, SafeAreaView, StyleSheet, View} from 'react-native';
 import React from 'react';
 import {COLORS} from '../constants';
 import ImageViewer from 'react-native-image-zoom-viewer';
@@ -21,14 +21,17 @@ const ImageZoomComponent = ({
         transparent={true}
         animationType="slide"
         onRequestClose={onRequestClose}>
-        <Icon
-          name="close-outline"
-          type="ionicon"
-          color={COLORS.white}
-          size={30}
-          onPress={iconOnPress}
-          containerStyle={[styles.iconContainer, {...iconContainer}]}
-        />
+        <SafeAreaView>
+          <Icon
+            name="close-outline"
+            type="ionicon"
+            color={COLORS.white}
+            size={30}
+            onPress={iconOnPress}
+            containerStyle={[styles.iconContainer, {...iconContainer}]}
+          />
+        </SafeAreaView>
+
         <ImageViewer
           imageUrls={ImageView}
           enableSwipeDown={true}

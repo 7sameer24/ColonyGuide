@@ -57,7 +57,7 @@ const HouseOnwersList = ({
           <View style={styles.CutNameConatiner}>
             <Text style={styles.CutName}>{CutName}</Text>
           </View>
-          <View style={[genericStyles.column, {width: width / 2.4}]}>
+          <View style={ {width: width / 2.4}}>
             <Text style={styles.title} numberOfLines={1}>
               {title}
             </Text>
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
   },
   CutNameConatiner: {
     backgroundColor: COLORS.primary,

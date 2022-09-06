@@ -81,7 +81,7 @@ const RegisterScreen = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView keyboardShouldPersistTaps="handled">
+      {/* <ScrollView keyboardShouldPersistTaps="handled"> */}
         <HeaderBody
           title="Create Account"
           subTitle="Sign Up to continue"
@@ -135,8 +135,8 @@ const RegisterScreen = ({navigation, route}) => {
             <Text style={styles.signUpBtn2}>Sign In</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
-      <Poweredby container={genericStyles.mb(10)} />
+      {/* </ScrollView> */}
+      <Poweredby />
     </View>
   );
 };

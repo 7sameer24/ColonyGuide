@@ -103,8 +103,7 @@ const RoomsCard = ({
               placeholderStyle={genericStyles.bg(COLORS.white)}
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
-            <View style={{width: width / 3}}>
-              <View>
+            <View style={{width: width / 3.5}}>
                 <Text style={[styles.title]} numberOfLines={1}>
                   {title}
                 </Text>
@@ -120,7 +119,6 @@ const RoomsCard = ({
                 <Text numberOfLines={1} style={[styles.subTitle]}>
                   {category}
                 </Text>
-              </View>
             </View>
           </View>
           <View style={styles.View3}>
@@ -189,7 +187,6 @@ const styles = StyleSheet.create({
   View3: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginRight: 20,
   },
   title: {
     fontSize: 14,

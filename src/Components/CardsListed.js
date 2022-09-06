@@ -91,11 +91,7 @@ const CardsListed = ({
   return (
     <View>
       <Card containerStyle={[styles.CardContainer]}>
-        <View
-          style={[
-            genericStyles.row,
-            {alignItems: 'center', justifyContent: 'space-between'},
-          ]}>
+      <View style={styles.mainContainer}>
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
             <Image
               source={source}
@@ -104,8 +100,7 @@ const CardsListed = ({
               placeholderStyle={genericStyles.bg(COLORS.white)}
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
-            <View style={genericStyles.row}>
-              <View style={{width: width / 2.9}}>
+            <View style={{width: width / 3.5}}>
                 <Text style={[styles.title]} numberOfLines={1}>
                   {title}
                 </Text>
@@ -117,9 +112,8 @@ const CardsListed = ({
                     {category}
                   </Text>
                 )}
-              </View>
             </View>
-          </View>
+           </View>
           <View style={styles.View3}>
             <Icon
               name="phone-outgoing"
@@ -156,7 +150,7 @@ const CardsListed = ({
               }
               containerStyle={genericStyles.shadow}
             />
-          </View>
+        </View>
         </View>
       </Card>
       <SpinnerModal visible={loading} />
@@ -200,5 +194,10 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: FONTS.InterRegular,
     color: '#7D7D7D',
+  },
+  mainContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
   },
 });

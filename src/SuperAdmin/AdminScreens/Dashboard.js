@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Platform, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {useApp} from '../../../Context/AppContext';
@@ -17,8 +17,6 @@ import SendNotification from '../../../assets/adminSvg/SendNotification.svg';
 import Block from '../../../assets/adminSvg/Block.svg';
 import AddUser from '../../../assets/adminSvg/AddUser.svg';
 import Commercials from '../../../assets/adminSvg/Commercials.svg';
-import {useToast} from 'react-native-toast-notifications';
-import Toast from '../../Components/Toast';
 import Spinner from '../../Components/Spinner';
 import {Icon} from 'react-native-elements';
 const Dashboard = ({navigation}) => {
@@ -53,7 +51,7 @@ const Dashboard = ({navigation}) => {
   return (
     <View style={genericStyles.container}>
       <View style={[styles.container, genericStyles.shadow]}>
-        <View style={[genericStyles.row, {alignItems: 'center'}]}>
+        <View style={[genericStyles.row, {alignItems: 'center',marginTop:Platform.OS ==='ios'? 30 : 0}]}>
           <Icon
             color={COLORS.white}
             name="menu"

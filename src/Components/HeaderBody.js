@@ -1,4 +1,4 @@
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles} from '../constants';
 
@@ -15,7 +15,7 @@ const HeaderBody = ({
   Icon,
 }) => {
   return (
-    <View>
+    <SafeAreaView>
       <TouchableOpacity
         style={[styles.TouchableOpacity, {...touchableOpacityStyle}]}
         activeOpacity={0.5}
@@ -27,7 +27,7 @@ const HeaderBody = ({
         <Text style={[styles.text, {...titleStyle}]}>{title}</Text>
         <Text style={[styles.subText, {...subTitleStyle}]}>{subTitle}</Text>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
