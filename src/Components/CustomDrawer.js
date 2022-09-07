@@ -95,18 +95,8 @@ const CustomDrawer = props => {
                       ? Userdata.userData.mobile_no
                       : Userdata.userData.name}
                   </Text>
+                  <Text style={styles.subTitle}>View profile</Text>
                 </TouchableOpacity>
-                {Userdata.userData.app_role_id === 4 ? null : (
-                  <TouchableOpacity
-                    onPress={() =>
-                      props.navigation.navigate('Personal Details', {
-                        userID: Userdata.userData.id,
-                        userToken: UserToken,
-                      })
-                    }>
-                    <Text style={styles.subTitle}>View profile</Text>
-                  </TouchableOpacity>
-                )}
               </View>
             </View>
             {Userdata.userData.app_role_id === 4 || 1 ? null : (

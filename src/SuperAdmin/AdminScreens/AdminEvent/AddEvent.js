@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../../constants';
 import AddComponent from '../../DashComponents/AddComponent';
@@ -18,7 +18,6 @@ const AddEvent = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openGallery = () => {
-    setModalVisible(false);
     let opetions = {
       width: 300,
       hight: 400,
@@ -28,14 +27,15 @@ const AddEvent = ({navigation, route}) => {
     ImagePicker.openPicker(opetions)
       .then(image => {
         setImageData([...imageData, ...image]);
+        setModalVisible(false);
       })
       .catch(e => {
+        setModalVisible(false);
         console.log(e);
       });
   };
 
   const openCamera = () => {
-    setModalVisible(false);
     let opetions = {
       cropping: false,
       mediaType: 'photo',
@@ -44,8 +44,10 @@ const AddEvent = ({navigation, route}) => {
     ImagePicker.openCamera(opetions)
       .then(image => {
         setImageData([...imageData, image]);
+        setModalVisible(false);
       })
       .catch(e => {
+        setModalVisible(false);
         console.log(e);
       });
   };
@@ -77,7 +79,7 @@ const AddEvent = ({navigation, route}) => {
         for (const [index, img] of imageData.entries()) {
           console.log(img.mime);
           data.append(`event_image[${index}]`, {
-            uri: img.path,
+            uri: Platform.OS === 'ios' ? `file:///${img.path}` : img.path,
             type: 'image/jpeg',
             name: img.path,
           });

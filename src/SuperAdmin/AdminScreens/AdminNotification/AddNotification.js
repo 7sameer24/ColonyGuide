@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../../constants';
 import AddComponent from '../../DashComponents/AddComponent';
@@ -39,7 +39,6 @@ const AddNotification = ({navigation}) => {
   }, []);
 
   const openGallery = () => {
-    setModalVisible(false);
     let opetions = {
       width: 300,
       height: 400,
@@ -49,14 +48,15 @@ const AddNotification = ({navigation}) => {
     ImagePicker.openPicker(opetions)
       .then(image => {
         setImageData(image);
+        setModalVisible(false);
       })
       .catch(e => {
+        setModalVisible(false);
         console.log(e);
       });
   };
 
   const openCamera = () => {
-    setModalVisible(false);
     let opetions = {
       width: 300,
 
@@ -68,8 +68,10 @@ const AddNotification = ({navigation}) => {
     ImagePicker.openCamera(opetions)
       .then(image => {
         setImageData(image);
+        setModalVisible(false);
       })
       .catch(e => {
+        setModalVisible(false);
         console.log(e);
       });
   };
@@ -88,8 +90,8 @@ const AddNotification = ({navigation}) => {
         data.append('locality_id', caste);
         data.append('message', msgBox);
         data.append('image', {
-          uri: imageData.path,
-          type: imageData.mime,
+          uri: Platform.OS === 'ios' ? `file:///${imageData.path}` : imageData.path,
+          type: 'image/jpeg',
           name: imageData.path,
         });
         const res = await fetch(BaseURL('admin-add-notification'), {

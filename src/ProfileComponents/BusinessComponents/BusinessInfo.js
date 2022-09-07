@@ -3,7 +3,6 @@ import React from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
 import HeaderBar from '../../Components/HeaderBar';
-import Poweredby from '../../Components/Poweredby';
 import Cuate from '../../../assets/svg/cuate.svg';
 
 const BusinessInfo = ({navigation}) => {
@@ -29,7 +28,6 @@ const BusinessInfo = ({navigation}) => {
         ButtonContainer={{position: 'absolute', bottom: 40, width: '90%'}}
         onPress={() => navigation.navigate('Business Details')}
       />
-      <Poweredby />
     </View>
   );
 };

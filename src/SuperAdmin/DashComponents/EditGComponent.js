@@ -1,5 +1,6 @@
 import {
   ActivityIndicator,
+  Platform,
   StyleSheet,
   TouchableOpacity,
   View,
@@ -40,6 +41,7 @@ const styles = StyleSheet.create({
     width: 95,
     height: 95,
     padding: 5,
+    marginRight:Platform.OS === 'ios' ? 20 : 0
   },
   deleteIcon: {
     position: 'absolute',

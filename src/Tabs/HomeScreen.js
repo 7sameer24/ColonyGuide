@@ -262,7 +262,7 @@ const HomeScreen = ({navigation}) => {
                   </View>
                   <FourList navigation={navigation} />
                   <View style={genericStyles.mh(20)}>
-                    <Text style={styles.topText}>Top Categories</Text>
+                    <Text style={styles.topText}>Service Provider</Text>
                     <CategoriesList navigation={navigation} data={newData} />
                   </View>
                 </>

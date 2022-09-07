@@ -1,4 +1,4 @@
-import {View} from 'react-native';
+import {Platform, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {genericStyles} from '../../constants';
 import AddComponent from '../DashComponents/AddComponent';
@@ -17,7 +17,6 @@ const AddGallery = ({navigation, route}) => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const openGallery = () => {
-    setModalVisible(false);
     let opetions = {
       width: 300,
       hight: 400,
@@ -27,14 +26,15 @@ const AddGallery = ({navigation, route}) => {
     ImagePicker.openPicker(opetions)
       .then(image => {
         setImageData([...imageData, ...image]);
+        setModalVisible(false);
       })
       .catch(e => {
+        setModalVisible(false);
         console.log(e);
       });
   };
 
   const openCamera = () => {
-    setModalVisible(false);
     let opetions = {
       cropping: false,
       mediaType: 'photo',
@@ -43,9 +43,11 @@ const AddGallery = ({navigation, route}) => {
     ImagePicker.openCamera(opetions)
       .then(image => {
         setImageData([...imageData, image]);
+        setModalVisible(false);
       })
       .catch(e => {
         console.log(e);
+        setModalVisible(false);
       });
   };
 
@@ -71,9 +73,9 @@ const AddGallery = ({navigation, route}) => {
         data.append('locality_id', '1');
         for (const [index, img] of imageData.entries()) {
           data.append(`gallery_image[${index}]`, {
-            uri: img.path,
-            type: 'image/jpeg',
-            name: img.path,
+            uri: Platform.OS === 'ios' ? `file:///${img.path}` : img.path,
+            type:  'image/jpeg',
+            name:img.path,
           });
         }
 

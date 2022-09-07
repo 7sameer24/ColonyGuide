@@ -1,6 +1,7 @@
 import {
   Image,
   PermissionsAndroid,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -58,8 +59,7 @@ const Addroom = ({navigation}) => {
   ];
 
   const openGallery = () => {
-    setModalVisible(false);
-    let opetions = {
+       let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -68,6 +68,7 @@ const Addroom = ({navigation}) => {
     };
 
     launchImageLibrary(opetions, response => {
+      setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -103,8 +104,7 @@ const Addroom = ({navigation}) => {
     }
   };
   const openCamera = () => {
-    setModalVisible(false);
-    let opetions = {
+       let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -112,7 +112,8 @@ const Addroom = ({navigation}) => {
       quality: 1,
     };
 
-    launchCamera(opetions, response => {
+     launchCamera(opetions, response => {
+      setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -246,7 +247,13 @@ const Addroom = ({navigation}) => {
             </TouchableOpacity>
             <ModalPopup
               visible={modalVisible}
-              CameraOnpress={() => requestCameraPermission()}
+              CameraOnpress={() => {
+                if (Platform.OS === 'android') {
+                  requestCameraPermission();
+                } else {
+                  openCamera();
+                }
+              }}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}

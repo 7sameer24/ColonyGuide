@@ -1,6 +1,7 @@
 import {
   Image,
   PermissionsAndroid,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -68,8 +69,6 @@ const EditMember = ({navigation, route}) => {
     return dateTimeString;
   };
   const openGallery = () => {
-    setModalVisible(false);
-
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -79,6 +78,7 @@ const EditMember = ({navigation, route}) => {
     };
 
     launchImageLibrary(opetions, response => {
+      setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -114,8 +114,6 @@ const EditMember = ({navigation, route}) => {
     }
   };
   const openCamera = () => {
-    setModalVisible(false);
-
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -124,7 +122,8 @@ const EditMember = ({navigation, route}) => {
       quality: 1,
     };
 
-    launchCamera(opetions, response => {
+     launchCamera(opetions, response => {
+      setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -278,7 +277,13 @@ const EditMember = ({navigation, route}) => {
             </TouchableOpacity>
             <ModalPopup
               visible={modalVisible}
-              CameraOnpress={() => requestCameraPermission()}
+              CameraOnpress={() => {
+                if (Platform.OS === 'android') {
+                  requestCameraPermission();
+                } else {
+                  openCamera();
+                }
+              }}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}

@@ -79,7 +79,7 @@ const AddComponent = props => {
         </Text>
         <Text style={styles.categorySub}>{'(PNG, JPG files only)'}</Text>
         <TouchableOpacity activeOpacity={0.9} onPress={props.onUpload}>
-          <Card containerStyle={styles.cardContainer}>
+          <Card containerStyle={[styles.cardContainer,genericStyles.shadow]}>
             <View style={genericStyles.selfCenter}>
               <Icon
                 type="ionicon"

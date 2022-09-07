@@ -2,6 +2,7 @@ import {
   Alert,
   Image,
   PermissionsAndroid,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -55,8 +56,6 @@ const BusinessEdit = ({navigation, route}) => {
   };
 
   const openGallery = () => {
-    setModalVisible(false);
-
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -66,6 +65,7 @@ const BusinessEdit = ({navigation, route}) => {
     };
 
     launchImageLibrary(opetions, response => {
+      setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -101,8 +101,6 @@ const BusinessEdit = ({navigation, route}) => {
     }
   };
   const openCamera = () => {
-    setModalVisible(false);
-
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -111,7 +109,8 @@ const BusinessEdit = ({navigation, route}) => {
       quality: 1,
     };
 
-    launchCamera(opetions, response => {
+     launchCamera(opetions, response => {
+      setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -215,7 +214,13 @@ const BusinessEdit = ({navigation, route}) => {
             </TouchableOpacity>
             <ModalPopup
               visible={modalVisible}
-              CameraOnpress={() => requestCameraPermission()}
+              CameraOnpress={() => {
+                if (Platform.OS === 'android') {
+                  requestCameraPermission();
+                } else {
+                  openCamera();
+                }
+              }}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}

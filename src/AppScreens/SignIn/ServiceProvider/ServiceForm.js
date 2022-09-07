@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Text,
   PermissionsAndroid,
+  Platform,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
@@ -125,7 +126,6 @@ const ServiceForm = ({UserNewData}) => {
   };
 
   const openGallery = () => {
-    setModalVisible(false);
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -135,6 +135,7 @@ const ServiceForm = ({UserNewData}) => {
     };
 
     launchImageLibrary(opetions, response => {
+      setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -171,8 +172,6 @@ const ServiceForm = ({UserNewData}) => {
   };
 
   const openCamera = () => {
-    setModalVisible(false);
-
     let opetions = {
       mediaType: 'photo',
       path: 'images',
@@ -182,6 +181,7 @@ const ServiceForm = ({UserNewData}) => {
     };
 
     launchCamera(opetions, response => {
+      setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
       } else if (response.errorCode) {
@@ -249,7 +249,13 @@ const ServiceForm = ({UserNewData}) => {
             </TouchableOpacity>
             <ModalPopup
               visible={modalVisible}
-              CameraOnpress={() => requestCameraPermission()}
+              CameraOnpress={() => {
+                if (Platform.OS === 'android') {
+                  requestCameraPermission();
+                } else {
+                  openCamera();
+                }
+              }}
               GalleryOnpress={() => openGallery()}
               OnPressCancel={() => setModalVisible(false)}
               onRequestClose={() => setModalVisible(false)}
