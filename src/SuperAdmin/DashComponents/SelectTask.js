@@ -1,4 +1,4 @@
-import {Platform, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Card} from 'react-native-elements';
 import {COLORS, FONTS} from '../../constants';
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     width: 70,
     height: 100,
     padding: 5,
-    marginHorizontal:Platform.OS === 'ios'? 25:28,
+    marginHorizontal: 24,
     marginTop: 5,
   },
   text3: {

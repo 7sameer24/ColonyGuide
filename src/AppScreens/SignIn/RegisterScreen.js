@@ -81,16 +81,16 @@ const RegisterScreen = ({navigation, route}) => {
 
   return (
     <View style={styles.container}>
-      {/* <ScrollView keyboardShouldPersistTaps="handled"> */}
-        <HeaderBody
-          title="Create Account"
-          subTitle="Sign Up to continue"
-          // Skip="Skip"
-          Icon={<ImgIcon height={160} />}
-          touchableOpacityStyle={genericStyles.mb(0)}
-          subTitleStyle={genericStyles.mb(10)}
-          // onPress={() => skipToHome()}
-        />
+      <HeaderBody
+        title="Create Account"
+        subTitle="Sign Up to continue"
+        // Skip="Skip"
+        Icon={<ImgIcon height={160} />}
+        touchableOpacityStyle={genericStyles.mb(0)}
+        subTitleStyle={genericStyles.mb(10)}
+        // onPress={() => skipToHome()}
+      />
+      <ScrollView keyboardShouldPersistTaps="handled">
         <View style={genericStyles.mb(10)}>
           <InputComponent
             placeholder="Mobile Number"
@@ -135,7 +135,7 @@ const RegisterScreen = ({navigation, route}) => {
             <Text style={styles.signUpBtn2}>Sign In</Text>
           </TouchableOpacity>
         </View>
-      {/* </ScrollView> */}
+      </ScrollView>
       <Poweredby />
     </View>
   );

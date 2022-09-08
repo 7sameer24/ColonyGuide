@@ -1,42 +1,41 @@
 {
   "project_info": {
-    "project_number": "640562065295",
-    "project_id": "colonyguide",
-    "storage_bucket": "colonyguide.appspot.com"
+    "project_number": "643146340069",
+    "project_id": "colony-guide",
+    "storage_bucket": "colony-guide.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:640562065295:android:b9841219385b67909c65fa",
+        "mobilesdk_app_id": "1:643146340069:android:9de69a0ae248c0d1dde60c",
         "android_client_info": {
           "package_name": "com.colonyguide"
         }
       },
       "oauth_client": [
         {
-          "client_id": "640562065295-7v649eaj7657l9kh6l8d044aocafqve4.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.colonyguide",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "640562065295-vvt2cqlst82nkpj072fnttjv2a66lhpl.apps.googleusercontent.com",
+          "client_id": "643146340069-9hmu7s7jl38mvvcobgoc4m4g11oddel9.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCwsQadwuIDf2AfWGE-x90sq7j0omd80_I"
+          "current_key": "AIzaSyCIIY1x7jCVdQGFCVHB77oI0r-jDynHm3s"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "640562065295-vvt2cqlst82nkpj072fnttjv2a66lhpl.apps.googleusercontent.com",
+              "client_id": "643146340069-9hmu7s7jl38mvvcobgoc4m4g11oddel9.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "643146340069-n0b6m7ks24k4tdl2olptkqvq1t3ojfjg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.phppoets.colony-guide"
+              }
             }
           ]
         }

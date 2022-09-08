@@ -119,16 +119,22 @@ const UnblockScreen = ({navigation}) => {
                     <GalleryCard
                       title={item.name}
                       source={
-                        item.logo_image.includes('jpg')
+                        item.app_role_id === 2
                           ? {uri: item.logo_image}
+                          : item.profile_image.includes('jpg' || 'png')
+                          ? {uri: item.profile_image}
                           : require('../../../assets/Image_not_available.png')
                       }
                       deleteItem={() => {
                         openLockAlert(item.id);
                       }}
-                      AddressLine={item.address}
+                      AddressLine={
+                        item.hostel_address ? item.hostel_address : item.address
+                      }
                       Landmark={item.landmark}
-                      subTitle={item.house_no}
+                      subTitle={
+                        item.hostel_name ? item.hostel_name : item.house_no
+                      }
                       iconName2="cancel"
                       iconType2="material-community"
                       twoMore={true}

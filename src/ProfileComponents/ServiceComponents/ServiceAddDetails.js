@@ -40,7 +40,7 @@ const ServiceAddDetails = ({navigation}) => {
   const toast = useToast();
 
   const openGallery = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -85,7 +85,7 @@ const ServiceAddDetails = ({navigation}) => {
     }
   };
   const openCamera = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -93,7 +93,7 @@ const ServiceAddDetails = ({navigation}) => {
       quality: 1,
     };
 
-     launchCamera(opetions, response => {
+    launchCamera(opetions, response => {
       setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -158,7 +158,7 @@ const ServiceAddDetails = ({navigation}) => {
           navigation.navigate('Profile');
           Toast(
             toast,
-            'Your profile is under review, Please wait for some time',
+            'Your Profile is under review, Please wait for some time',
           );
         } else {
           Toast(toast, response.message);
@@ -189,12 +189,12 @@ const ServiceAddDetails = ({navigation}) => {
         <ModalPopup
           visible={modalVisible}
           CameraOnpress={() => {
-                if (Platform.OS === 'android') {
-                  requestCameraPermission();
-                } else {
-                  openCamera();
-                }
-              }}
+            if (Platform.OS === 'android') {
+              requestCameraPermission();
+            } else {
+              openCamera();
+            }
+          }}
           GalleryOnpress={() => openGallery()}
           OnPressCancel={() => setModalVisible(false)}
           onRequestClose={() => setModalVisible(false)}

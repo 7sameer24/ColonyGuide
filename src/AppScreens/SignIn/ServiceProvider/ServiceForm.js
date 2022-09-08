@@ -113,7 +113,7 @@ const ServiceForm = ({UserNewData}) => {
         );
         Toast(
           toast,
-          'Your profile is under review, Please wait for some time',
+          'Your Profile is under review, Please wait for some time',
           5000,
         );
       } else {
