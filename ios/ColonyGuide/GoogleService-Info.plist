@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>643146340069-n0b6m7ks24k4tdl2olptkqvq1t3ojfjg.apps.googleusercontent.com</string>
+	<string>643146340069-ehbt5523s9aornumm3heeh0o356nh48j.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.643146340069-n0b6m7ks24k4tdl2olptkqvq1t3ojfjg</string>
+	<string>com.googleusercontent.apps.643146340069-ehbt5523s9aornumm3heeh0o356nh48j</string>
 	<key>API_KEY</key>
 	<string>AIzaSyB7SKMXNn7iv111eHKvkwIyAuZDd9DCa-w</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.phppoets.colony-guide</string>
+	<string>com.colonyguide</string>
 	<key>PROJECT_ID</key>
 	<string>colony-guide</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:643146340069:ios:bf564719c606761ddde60c</string>
+	<string>1:643146340069:ios:f895496fadcd3352dde60c</string>
 </dict>
 </plist>

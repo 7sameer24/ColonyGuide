@@ -206,6 +206,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 5,
     flexWrap: 'wrap',
+    marginLeft:5,
     flexDirection: 'row',
   },
 });

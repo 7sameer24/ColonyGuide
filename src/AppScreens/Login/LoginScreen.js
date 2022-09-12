@@ -113,6 +113,7 @@ const LoginScreen = ({navigation}) => {
   return (
     <View style={styles.container}>
       <StatusBar backgroundColor={COLORS.primary} />
+      <ScrollView keyboardShouldPersistTaps="handled">
       <HeaderBody
         title="Welcome"
         subTitle="Log in to continue"
@@ -120,7 +121,6 @@ const LoginScreen = ({navigation}) => {
         Skip="Skip"
         onPress={() => skipToHome()}
       />
-      <ScrollView keyboardShouldPersistTaps="handled">
         <View style={genericStyles.mb(10)}>
           <InputComponent
             placeholder="Mobile Number"
