@@ -28,7 +28,10 @@ import ImageZoomComponent from '../Components/ImageZoomComponent';
 import Swiper from 'react-native-swiper';
 import Toast from '../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
-import { notificationListner, requestUserPermission } from '../Notification/NotificationServices';
+import {
+  notificationListner,
+  requestUserPermission,
+} from '../Notification/NotificationServices';
 
 const WIDTH = Dimensions.get('window').width;
 const HIGHT = Dimensions.get('window').height;
@@ -67,10 +70,12 @@ const HomeScreen = ({navigation}) => {
           ? GSaveLocalID
           : Userdata.userData.locality_id,
       });
-     
-      const checkStatus =Userdata && await axios.post(BaseURL('check-user-status'), {
-        user_id: Userdata.userData.id,
-      });
+
+      const checkStatus =
+        Userdata &&
+        (await axios.post(BaseURL('check-user-status'), {
+          user_id: Userdata.userData.id,
+        }));
       Userdata === null
         ? null
         : await axios(BaseURL('update-device-token'), {
@@ -191,8 +196,8 @@ const HomeScreen = ({navigation}) => {
 
   useEffect(() => {
     idx();
-    requestUserPermission(setNotificationToken);
-    notificationListner();
+    Userdata && requestUserPermission(setNotificationToken);
+    Userdata && notificationListner();
     return () => {
       setData([]);
       setSliderImg([]);
