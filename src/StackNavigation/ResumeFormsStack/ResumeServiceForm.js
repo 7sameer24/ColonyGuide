@@ -1,7 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import ServiceForm from '../../AppScreens/SignIn/ServiceProvider/ServiceForm';
-import Location from '../../AppScreens/SignIn/HouseOwners/Location';
 import AddressScreen from '../../AppScreens/SignIn/HouseOwners/AddressScreen';
 
 export default function ResumeServiceForm() {
@@ -16,13 +15,6 @@ export default function ResumeServiceForm() {
           headerShown: false,
         })}
       />
-      {/* <Stack.Screen
-        name="Your location"
-        component={Location}
-        options={() => ({
-          headerShown: false,
-        })}
-      /> */}
       {/* <Stack.Screen
         name="Address"
         component={AddressScreen}

@@ -6,7 +6,6 @@ import RegisterScreen from '../AppScreens/SignIn/RegisterScreen';
 import OtpScreen from '../AppScreens/SignIn/OtpScreen';
 import AllRegistration from '../AppScreens/SignIn/AllRegistration';
 import AddressScreen from '../AppScreens/SignIn/HouseOwners/AddressScreen';
-import Location from '../AppScreens/SignIn/HouseOwners/Location';
 import ForgotScreen from '../AppScreens/Login/ForgotScreen';
 import ResetPassScreen from '../AppScreens/Login/ResetPassScreen';
 import LocalModal from '../Components/LocalModal';
@@ -20,12 +19,6 @@ const AuthStack = () => {
     {name: 'Register', component: RegisterScreen, headerShown: false},
     {name: 'Otp', component: OtpScreen, headerTransparent: true, title: null},
     {name: 'Registration', component: AllRegistration, headerShown: false},
-    {
-      name: 'Your location',
-      component: Location,
-      headerShown: true,
-      headerShadowVisible: false,
-    },
     {name: 'Address', component: AddressScreen, headerShown: false},
     {name: 'ForgotPassword', component: ForgotScreen, headerShown: false},
     {name: 'ResetPassword', component: ResetPassScreen, headerShown: false},
