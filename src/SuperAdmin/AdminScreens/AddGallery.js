@@ -36,8 +36,10 @@ const AddGallery = ({navigation, route}) => {
 
   const openCamera = () => {
     let opetions = {
-      cropping: false,
+      cropping: true,
       mediaType: 'photo',
+      compressImageMaxWidth: 300,
+      compressImageMaxHeight: 400,
     };
 
     ImagePicker.openCamera(opetions)
@@ -74,8 +76,8 @@ const AddGallery = ({navigation, route}) => {
         for (const [index, img] of imageData.entries()) {
           data.append(`gallery_image[${index}]`, {
             uri: Platform.OS === 'ios' ? `file:///${img.path}` : img.path,
-            type:  'image/jpeg',
-            name:img.path,
+            type: 'image/jpeg',
+            name: img.path,
           });
         }
 

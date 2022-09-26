@@ -37,8 +37,10 @@ const AddEvent = ({navigation, route}) => {
 
   const openCamera = () => {
     let opetions = {
-      cropping: false,
+      cropping: true,
       mediaType: 'photo',
+      compressImageMaxWidth: 300,
+      compressImageMaxHeight: 400,
     };
 
     ImagePicker.openCamera(opetions)

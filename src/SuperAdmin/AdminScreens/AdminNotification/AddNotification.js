@@ -58,11 +58,10 @@ const AddNotification = ({navigation}) => {
 
   const openCamera = () => {
     let opetions = {
-      width: 300,
-
-      height: 400,
       cropping: true,
       mediaType: 'photo',
+      compressImageMaxWidth: 300,
+      compressImageMaxHeight: 400,
     };
 
     ImagePicker.openCamera(opetions)
@@ -90,7 +89,10 @@ const AddNotification = ({navigation}) => {
         data.append('locality_id', caste);
         data.append('message', msgBox);
         data.append('image', {
-          uri: Platform.OS === 'ios' ? `file:///${imageData.path}` : imageData.path,
+          uri:
+            Platform.OS === 'ios'
+              ? `file:///${imageData.path}`
+              : imageData.path,
           type: 'image/jpeg',
           name: imageData.path,
         });

@@ -115,6 +115,8 @@ const ServiceAddDetails = ({navigation}) => {
       Toast(toast, 'Please check your Whatsapp number and try again');
     } else if (!LocalityValue) {
       Toast(toast, 'Please choose your locality!');
+    } else if (!imageUp) {
+      Toast(toast, 'Please select image');
     } else {
       try {
         setSpinner(true);
