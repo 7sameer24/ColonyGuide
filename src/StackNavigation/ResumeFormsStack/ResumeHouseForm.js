@@ -7,13 +7,6 @@ export default function ResumeHouseForm() {
 
   return (
     <Stack.Navigator screenOptions={{animation: 'fade_from_bottom'}}>
-      {/* <Stack.Screen
-        name="OwnerLocation"
-        component={OwnerLocation}
-        options={() => ({
-          headerShown: false,
-        })}
-      /> */}
       <Stack.Screen
         name="HoAddress"
         component={HoAddress}
