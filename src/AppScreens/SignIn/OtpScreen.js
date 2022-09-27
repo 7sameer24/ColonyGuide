@@ -1,33 +1,26 @@
 import {ScrollView, StyleSheet, Text, View} from 'react-native';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
-import {Input} from 'react-native-elements';
 import ButtonComponent from '../../Components/ButtonComponent';
 import FooterButton from '../../Components/FooterButton';
 import {CommonActions} from '@react-navigation/native';
 import ImgIcon from '../../../assets/svg/Frame 10.svg';
 import axios from 'axios';
-import {navigationStateType, useApp} from '../../../Context/AppContext';
+import {useApp} from '../../../Context/AppContext';
 import BaseURL from '../../constants/BaseURL';
 import ResendTimer from '../../Components/ResendTimer';
 import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
+import OtpInputs from 'react-native-otp-inputs';
 
 const OtpScreen = ({route, navigation}) => {
   const {DATA, userMobile} = route.params;
-  const [first, setFirst] = useState('');
-  const [second, setSecond] = useState('');
-  const [third, setThird] = useState('');
-  const [last, setLast] = useState('');
   const [spinner, setSpinner] = useState(false);
-  const FirstInput = useRef(null);
-  const secondInput = useRef(null);
-  const thirdInput = useRef(null);
-  const LastInput = useRef(null);
   const {setNewData, setUserToken, setNavigationState} = useApp();
   const [resendingOTP, setResendingOTP] = useState(false);
   const [resendStatus, setResendStatus] = useState('Resend');
   const toast = useToast();
+  const [otp, updateOtp] = useState('');
 
   // Resend Timer
   const [timeLeft, setTimeLeft] = useState(null);
@@ -64,12 +57,11 @@ const OtpScreen = ({route, navigation}) => {
   }, []);
 
   const checkOtp = async () => {
-    let idx = `${first}${second}${third}${last}`;
     try {
       setSpinner(true);
       const response = await axios.post(BaseURL('verify-otp'), {
         user_id: DATA.user_id,
-        otp: idx,
+        otp: otp,
       });
       setSpinner(false);
       if (response.data.success == true) {
@@ -127,82 +119,18 @@ const OtpScreen = ({route, navigation}) => {
           <Text style={styles.subText}>+91-{`${start}x-xxxx-x${end}`}</Text>
           <Text style={styles.subText}>Your OTP : {DATA.otp}</Text>
         </View>
-
-        <View style={styles.InputView}>
-          <Input
-            containerStyle={genericStyles.width(40)}
-            keyboardType="number-pad"
-            inputContainerStyle={genericStyles.borderColor(COLORS.secondary)}
-            maxLength={1}
-            value={first}
-            onChangeText={num => {
-              setFirst(num);
-              if (num != '') {
-                secondInput.current.focus();
-              }
-            }}
-            ref={FirstInput}
-            autoFocus={true}
-            onSubmitEditing={() => (first ? secondInput.current.focus() : null)}
-          />
-          <Input
-            containerStyle={genericStyles.width(40)}
-            keyboardType="number-pad"
-            inputContainerStyle={genericStyles.borderColor(COLORS.secondary)}
-            maxLength={1}
-            value={second}
-            onChangeText={num => {
-              setSecond(num);
-              if (num != '') {
-                thirdInput.current.focus();
-              }
-            }}
-            ref={secondInput}
-            onKeyPress={({nativeEvent}) => {
-              nativeEvent.key === 'Backspace'
-                ? FirstInput.current.focus()
-                : null;
-            }}
-            onSubmitEditing={() => (second ? thirdInput.current.focus() : null)}
-          />
-          <Input
-            containerStyle={genericStyles.width(40)}
-            keyboardType="number-pad"
-            inputContainerStyle={genericStyles.borderColor(COLORS.secondary)}
-            maxLength={1}
-            value={third}
-            onChangeText={num => {
-              setThird(num);
-              if (num != '') {
-                LastInput.current.focus();
-              }
-            }}
-            ref={thirdInput}
-            onKeyPress={({nativeEvent}) => {
-              nativeEvent.key === 'Backspace'
-                ? secondInput.current.focus()
-                : null;
-            }}
-            onSubmitEditing={() => (third ? LastInput.current.focus() : null)}
-          />
-          <Input
-            containerStyle={genericStyles.width(40)}
-            inputContainerStyle={genericStyles.borderColor(COLORS.secondary)}
-            keyboardType="number-pad"
-            maxLength={1}
-            value={last}
-            onChangeText={num => setLast(num)}
-            ref={LastInput}
-            clearButtonMode="always"
-            onKeyPress={({nativeEvent}) => {
-              nativeEvent.key === 'Backspace'
-                ? thirdInput.current.focus()
-                : null;
-            }}
-          />
-        </View>
+        <OtpInputs
+          style={styles.otpMain}
+          inputContainerStyles={styles.otpContainer}
+          inputStyles={[genericStyles.textCenter, styles.otpTextStyle]}
+          handleChange={code => updateOtp(code)}
+          numberOfInputs={4}
+        />
         <ButtonComponent
           title="Verify"
+          disabledTitleStyle={{color: COLORS.third}}
+          disabledStyle={{backgroundColor: COLORS.lightGray2}}
+          disabled={otp.length >= 4 ? false : true}
           onPress={() => checkOtp()}
           loading={spinner ? true : false}
         />
@@ -249,8 +177,21 @@ const styles = StyleSheet.create({
     marginTop: '15%',
     alignSelf: 'center',
   },
-  InputView: {
+  otpMain: {
+    justifyContent: 'center',
     flexDirection: 'row',
-    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  otpContainer: {
+    width: 20,
+    marginHorizontal: 10,
+    borderBottomWidth: 1,
+    borderColor: COLORS.secondary,
+  },
+  otpTextStyle: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: COLORS.black,
+    fontFamily: FONTS.InterMedium,
   },
 });
