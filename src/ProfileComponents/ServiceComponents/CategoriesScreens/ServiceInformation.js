@@ -224,11 +224,17 @@ const ServiceInformation = ({route, navigation}) => {
               Shop address
             </Text>
             <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(
-                  `google.navigation:q=${infoData.house_no}+${infoData.address}, Udaipur, Rajasthan`,
-                )
-              }>
+              onPress={() => {
+                if (Platform.OS === 'ios') {
+                  Linking.openURL(
+                    `http://maps.apple.com/maps?daddr=${infoData.house_no}+${infoData.address}, Udaipur, Rajasthan`,
+                  );
+                } else {
+                  Linking.openURL(
+                    `google.navigation:q=${infoData.house_no}+${infoData.address}, Udaipur, Rajasthan`,
+                  );
+                }
+              }}>
               <Text style={styles.VisitTitle}>
                 {`${infoData.house_no} ${infoData.address} ${
                   infoData.landmark == null ? '' : infoData.landmark

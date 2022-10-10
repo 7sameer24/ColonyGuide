@@ -70,34 +70,35 @@ const RoomsFlats = ({navigation, route}) => {
         <>
           <NoDataAni />
           {Userdata !== null ? (
-            Userdata.userData.app_role_id === 3 ? (
-              <>
+                Userdata.userData.app_role_id === 3? (
+                  <View style={[genericStyles.row,styles.iconContainer]}>
+                    <ButtonComponent
+                      title="Add room"
+                      ButtonContainer={genericStyles.width('68%')}
+                      onPress={() => navigation.navigate('Add room')}
+                    />
+                    <Icon
+                      color={COLORS.primary}
+                      name="filter"
+                      type="material-community"
+                      size={23}
+                      containerStyle={genericStyles.shadow}
+                      reverse
+                      onPress={() => setIsvisible(true)}
+                    />
+                  </View>
+                ) : <View style={{alignItems:"flex-end",marginBottom:15,marginRight:15}}>
                 <Icon
                   color={COLORS.primary}
                   name="filter"
                   type="material-community"
-                  size={27}
-                  containerStyle={[
-                    styles.iconContainer,
-                    {
-                      bottom:
-                        Userdata && Userdata.userData.app_role_id === 3
-                          ? '12%'
-                          : '1%',
-                    },
-                  ]}
+                  size={23}
+                  containerStyle={genericStyles.shadow}
                   reverse
                   onPress={() => setIsvisible(true)}
                 />
-                <ButtonComponent
-                  title="Add room"
-                  ButtonContainer={styles.ButtonContainer}
-                  onPress={() => navigation.navigate('Add room')}
-                />
-                <Poweredby container={{flex: 0}} />
-              </>
-            ) : null
-          ) : null}
+              </View>
+              ) : null}
         </>
       ) : (
         <>
@@ -127,36 +128,37 @@ const RoomsFlats = ({navigation, route}) => {
                     googleNavigate={`${data.house_no}+${data.address}, Udaipur, Rajasthan`}
                   />
                 ))}
-                <View style={genericStyles.height(50)} />
+                <View style={genericStyles.height(10)} />
               </ScrollView>
-              <Icon
-                color={COLORS.primary}
-                name="filter"
-                type="material-community"
-                size={27}
-                containerStyle={[
-                  styles.iconContainer,
-                  {
-                    bottom:
-                      Userdata && Userdata.userData.app_role_id === 3
-                        ? '12%'
-                        : '1%',
-                  },
-                ]}
-                reverse
-                onPress={() => setIsvisible(true)}
-              />
-              {Userdata !== null ? (
-                Userdata.userData.app_role_id === 3 ? (
-                  <>
+                {Userdata !== null ? (
+                Userdata.userData.app_role_id === 3? (
+                  <View style={[genericStyles.row,styles.iconContainer]}>
                     <ButtonComponent
                       title="Add room"
-                      ButtonContainer={styles.ButtonContainer}
+                      ButtonContainer={genericStyles.width('68%')}
                       onPress={() => navigation.navigate('Add room')}
                     />
-                    <Poweredby container={{flex: 0}} />
-                  </>
-                ) : null
+                    <Icon
+                      color={COLORS.primary}
+                      name="filter"
+                      type="material-community"
+                      size={23}
+                      containerStyle={genericStyles.shadow}
+                      reverse
+                      onPress={() => setIsvisible(true)}
+                    />
+                  </View>
+                ) : <View style={{alignItems:"flex-end",marginBottom:15,marginRight:15}}>
+                <Icon
+                  color={COLORS.primary}
+                  name="filter"
+                  type="material-community"
+                  size={23}
+                  containerStyle={genericStyles.shadow}
+                  reverse
+                  onPress={() => setIsvisible(true)}
+                />
+              </View>
               ) : null}
             </>
           ) : (
@@ -174,14 +176,7 @@ const RoomsFlats = ({navigation, route}) => {
 export default RoomsFlats;
 
 const styles = StyleSheet.create({
-  ButtonContainer: {
-    width: '90%',
-  },
   iconContainer: {
-    position: 'absolute',
-    bottom: '12%',
-    right: 1,
-    elevation: 5,
-    marginBottom: 20,
+    alignItems:"center",marginBottom:15,justifyContent:"center"
   },
 });

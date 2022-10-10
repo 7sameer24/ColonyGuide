@@ -272,14 +272,14 @@ const HomeScreen = ({navigation}) => {
                     <CategoriesList navigation={navigation} data={newData} />
                   </View>
                 </>
-                {newData.length > 9 && (
+                {/* {newData.length > 9 && (
                   <ButtonComponent
                     title="View more"
                     ButtonContainer={styles.ButtonContainer}
                     buttonStyle={genericStyles.pv(10)}
                     onPress={() => navigation.navigate('categories')}
                   />
-                )}
+                )} */}
               </ScrollView>
             )}
           </>

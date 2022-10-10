@@ -201,11 +201,17 @@ const AdminUserInfo = ({route, navigation}) => {
               Address
             </Text>
             <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(
-                  `google.navigation:q=${houseNumber}+${address}, Udaipur, Rajasthan`,
-                )
-              }>
+              onPress={() => {
+                if (Platform.OS === 'ios') {
+                  Linking.openURL(
+                    `http://maps.apple.com/maps?daddr=${houseNumber}+${address}, Udaipur, Rajasthan`,
+                  );
+                } else {
+                  Linking.openURL(
+                    `google.navigation:q=${houseNumber}+${address}, Udaipur, Rajasthan`,
+                  );
+                }
+              }}>
               <Text style={styles.VisitTitle}>
                 {`${houseNumber ? houseNumber : ''} ${address} ${
                   landmark == null ? '' : landmark

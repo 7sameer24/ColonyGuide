@@ -1,12 +1,13 @@
-import {Image, ScrollView, TouchableOpacity, View} from 'react-native';
+import {ActivityIndicator, ScrollView, TouchableOpacity, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import HeaderBar from '../../../Components/HeaderBar';
-import {genericStyles} from '../../../constants';
+import {COLORS, genericStyles} from '../../../constants';
 import CardsListed from '../../../Components/CardsListed';
 import axios from 'axios';
 import BaseURL from '../../../constants/BaseURL';
 import NoDataAni from '../../../Components/NoDataAni';
 import SkeletonView from '../../../Components/SkeletonView';
+import {Image} from 'react-native-elements';
 
 const ServiceList = ({navigation, route}) => {
   const {ID, Name, BannerImg} = route.params;
@@ -54,12 +55,15 @@ const ServiceList = ({navigation, route}) => {
         <>
           {data.length > 0 ? (
             <ScrollView>
-              {BannerImg.includes('jpg') && (
+              {/* {BannerImg.includes('jpg') && (
                 <Image
-                  source={{uri: BannerImg}}
-                  style={{width: '100%', height: 180}}
-                />
-              )}
+                fadeDuration={0}
+                source={{uri: BannerImg}}
+                style={{width: '100%', height: 180}}
+                placeholderStyle={genericStyles.bg(COLORS.white)}
+                PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
+              />
+              )} */}
               {data.map((data, index) => (
                 <TouchableOpacity
                   key={data.id}

@@ -91,7 +91,7 @@ const CardsListed = ({
   return (
     <View>
       <Card containerStyle={[styles.CardContainer]}>
-      <View style={styles.mainContainer}>
+        <View style={styles.mainContainer}>
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
             <Image
               source={source}
@@ -101,19 +101,19 @@ const CardsListed = ({
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
             <View style={{width: width / 3.5}}>
-                <Text style={[styles.title]} numberOfLines={1}>
-                  {title}
+              <Text style={[styles.title]} numberOfLines={1}>
+                {title}
+              </Text>
+              <Text style={[styles.subTitle1]} numberOfLines={1}>
+                {subTitle}
+              </Text>
+              {category && (
+                <Text numberOfLines={1} style={[styles.subTitle]}>
+                  {category}
                 </Text>
-                <Text style={[styles.subTitle1]} numberOfLines={1}>
-                  {subTitle}
-                </Text>
-                {category && (
-                  <Text numberOfLines={1} style={[styles.subTitle]}>
-                    {category}
-                  </Text>
-                )}
+              )}
             </View>
-           </View>
+          </View>
           <View style={styles.View3}>
             <Icon
               name="phone-outgoing"
@@ -146,11 +146,15 @@ const CardsListed = ({
               onPress={() =>
                 Userdata === null
                   ? setIsLoginPop(true)
+                  : Platform.OS === 'ios'
+                  ? Linking.openURL(
+                      `http://maps.apple.com/maps?daddr=${googleNavigate}`,
+                    )
                   : Linking.openURL(`google.navigation:q=${googleNavigate}`)
               }
               containerStyle={genericStyles.shadow}
             />
-        </View>
+          </View>
         </View>
       </Card>
       <SpinnerModal visible={loading} />

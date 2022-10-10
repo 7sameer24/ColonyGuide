@@ -104,21 +104,21 @@ const RoomsCard = ({
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
             <View style={{width: width / 3.5}}>
-                <Text style={[styles.title]} numberOfLines={1}>
-                  {title}
-                </Text>
-                <Text style={[styles.subTitle1]} numberOfLines={1}>
-                  {subTitle}
-                </Text>
-                <Text numberOfLines={1} style={[styles.subTitle]}>
-                  {is_veg}
-                </Text>
-                <Text numberOfLines={1} style={[styles.subTitle]}>
-                  {renter_type}
-                </Text>
-                <Text numberOfLines={1} style={[styles.subTitle]}>
-                  {category}
-                </Text>
+              <Text style={[styles.title]} numberOfLines={1}>
+                {title}
+              </Text>
+              <Text style={[styles.subTitle1]} numberOfLines={1}>
+                {subTitle}
+              </Text>
+              <Text numberOfLines={1} style={[styles.subTitle]}>
+                {is_veg}
+              </Text>
+              <Text numberOfLines={1} style={[styles.subTitle]}>
+                {renter_type}
+              </Text>
+              <Text numberOfLines={1} style={[styles.subTitle]}>
+                {category}
+              </Text>
             </View>
           </View>
           <View style={styles.View3}>
@@ -153,6 +153,10 @@ const RoomsCard = ({
               onPress={() =>
                 Userdata === null
                   ? setIsLoginPop(true)
+                  : Platform.OS === 'ios'
+                  ? Linking.openURL(
+                      `http://maps.apple.com/maps?daddr=${googleNavigate}`,
+                    )
                   : Linking.openURL(`google.navigation:q=${googleNavigate}`)
               }
               containerStyle={genericStyles.shadow}

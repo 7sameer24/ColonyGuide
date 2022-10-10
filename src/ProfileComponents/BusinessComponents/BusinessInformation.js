@@ -229,11 +229,17 @@ const BusinessInformation = ({route, navigation}) => {
               Business address
             </Text>
             <TouchableOpacity
-              onPress={() =>
-                Linking.openURL(
-                  `google.navigation:q=${busInfoData.house_no}+${busInfoData.address}, Udaipur, Rajasthan`,
-                )
-              }>
+              onPress={() => {
+                if (Platform.OS === 'ios') {
+                  Linking.openURL(
+                    `http://maps.apple.com/maps?daddr=${busInfoData.house_no}+${busInfoData.address}, Udaipur, Rajasthan`,
+                  );
+                } else {
+                  Linking.openURL(
+                    `google.navigation:q=${busInfoData.house_no}+${busInfoData.address}, Udaipur, Rajasthan`,
+                  );
+                }
+              }}>
               <Text style={styles.VisitTitle}>
                 {`${busInfoData.house_no} ${busInfoData.address} ${
                   busInfoData.landmark == null ? '' : busInfoData.landmark

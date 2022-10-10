@@ -1,6 +1,7 @@
 import {
   Keyboard,
   Linking,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -107,11 +108,17 @@ const ContactUs = ({route, navigation}) => {
         <View style={styles.Container2}>
           <Text style={styles.VisitTex}>Visit Us</Text>
           <TouchableOpacity
-            onPress={() =>
-              Linking.openURL(
-                `google.navigation:q=${'193'}+${'Passport office road'}+${'Subhash Nagar'}`,
-              )
-            }>
+            onPress={() => {
+              if (Platform.OS === 'ios') {
+                Linking.openURL(
+                  `http://maps.apple.com/maps?daddr=${'193'}+${'Passport office road'}+${'Subhash Nagar'}`,
+                );
+              } else {
+                Linking.openURL(
+                  `google.navigation:q=${'193'}+${'Passport office road'}+${'Subhash Nagar'}`,
+                );
+              }
+            }}>
             <Text style={styles.VisitTitle}>{text2}</Text>
           </TouchableOpacity>
           <Text style={styles.VisitTex}>Talk to us</Text>
