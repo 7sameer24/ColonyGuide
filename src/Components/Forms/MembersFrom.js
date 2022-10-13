@@ -159,15 +159,17 @@ const MembersFrom = ({
         maxHeight={100}
         onChange={maritalStatusOnchange}
       />
-      <DropDownComponent
-        placeholder="Looking For"
-        data={LookingForArr}
-        labelField="name"
-        valueField="id"
-        value={LookingForValue}
-        maxHeight={100}
-        onChange={LookingForOnchange}
-      />
+      {maritalStatusValue === 'Single' && (
+        <DropDownComponent
+          placeholder="Looking For"
+          data={LookingForArr}
+          labelField="name"
+          valueField="id"
+          value={LookingForValue}
+          maxHeight={100}
+          onChange={LookingForOnchange}
+        />
+      )}
     </>
   );
 };

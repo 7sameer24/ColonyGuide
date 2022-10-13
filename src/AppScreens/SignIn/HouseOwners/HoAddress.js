@@ -67,7 +67,7 @@ const HoAddress = ({data}) => {
       Form.append('address', Address);
       Form.append('landmark', Landmark);
       Form.append('locality_id', LocalityValue);
-      Form.append('street_id', colonyNo);
+      // Form.append('street_id', colonyNo);
       Form.append('is_private', hideNmber);
       Form.append('caste_id', caste);
 
@@ -186,7 +186,7 @@ const HoAddress = ({data}) => {
                 data={HideNumber}
                 labelField="name"
                 valueField="id"
-                placeholder="Hide your contact number (required)"
+                placeholder="Do you want to hide your contact number ? (required)"
                 value={hideNmber}
                 maxHeight={100}
                 onChange={item => {
@@ -205,7 +205,7 @@ const HoAddress = ({data}) => {
                   fetchStreetNo(item.id);
                 }}
               />
-              {LocalityValue !== 8 && (
+              {/* {LocalityValue !== 8 && (
                 <DropDownComponent
                   data={colonyData}
                   labelField="street_no"
@@ -215,7 +215,7 @@ const HoAddress = ({data}) => {
                   maxHeight={200}
                   onChange={item => updateColonyNo(item.id)}
                 />
-              )}
+              )} */}
             </View>
           </ScrollView>
           <ButtonComponent

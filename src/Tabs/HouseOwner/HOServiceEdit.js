@@ -52,7 +52,7 @@ const HOServiceEdit = ({navigation, route}) => {
   };
 
   const openGallery = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -97,7 +97,7 @@ const HOServiceEdit = ({navigation, route}) => {
     }
   };
   const openCamera = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -105,7 +105,7 @@ const HOServiceEdit = ({navigation, route}) => {
       quality: 1,
     };
 
-     launchCamera(opetions, response => {
+    launchCamera(opetions, response => {
       setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -204,12 +204,12 @@ const HOServiceEdit = ({navigation, route}) => {
           <ModalPopup
             visible={modalVisible}
             CameraOnpress={() => {
-                if (Platform.OS === 'android') {
-                  requestCameraPermission();
-                } else {
-                  openCamera();
-                }
-              }}
+              if (Platform.OS === 'android') {
+                requestCameraPermission();
+              } else {
+                openCamera();
+              }
+            }}
             GalleryOnpress={() => openGallery()}
             OnPressCancel={() => setModalVisible(false)}
             onRequestClose={() => setModalVisible(false)}
@@ -224,13 +224,13 @@ const HOServiceEdit = ({navigation, route}) => {
             onChangeText={text => setShopBusName(text)}
           />
           <InputComponent
-            placeholder="Contact person’s name"
+            placeholder="Owner name"
             value={PersonName}
             autoCapitalize="words"
             onChangeText={text => setPersonName(text)}
           />
           <InputComponent
-            placeholder="Contact person’s whatsapp number"
+            placeholder="Owner whatsapp number"
             value={WhatsappNo}
             maxLength={10}
             keyboardType="number-pad"
@@ -250,6 +250,8 @@ const HOServiceEdit = ({navigation, route}) => {
             placeholder="About shop or service (Optional)"
             autoCapitalize="words"
             value={About}
+            multiline
+            maxLength={70}
             onChangeText={text => setAbout(text)}
           />
           <Text style={styles.BusinessDetails}>
@@ -262,7 +264,7 @@ const HOServiceEdit = ({navigation, route}) => {
             onChangeText={text => setBuildFL(text)}
           />
           <InputComponent
-            placeholder="Address Line 1"
+            placeholder="Address"
             value={AL1}
             autoCapitalize="words"
             onChangeText={text => setAL1(text)}

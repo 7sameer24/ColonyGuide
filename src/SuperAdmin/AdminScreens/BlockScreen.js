@@ -111,9 +111,15 @@ const BlockScreen = ({navigation}) => {
                         whatsappNumber: item.whatsapp_no,
                         contact_person: item.shop_name,
                         about: item.about,
-                        categoryName: item.category_name,
-                        houseNumber: item.house_no,
-                        address: item.address,
+                        categoryName: item.category_name
+                          ? item.category_name
+                          : 'No Category',
+                        houseNumber: item.hostel_name
+                          ? item.hostel_name
+                          : item.house_no,
+                        address: item.hostel_address
+                          ? item.hostel_address
+                          : item.address,
                         landmark: item.landmark,
                       })
                     }>

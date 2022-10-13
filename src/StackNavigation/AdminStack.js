@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -94,28 +94,21 @@ const ScreenStack = () => {
         name="Approvals"
         component={Approvals}
         options={() => ({
-          headerStyle: {backgroundColor: COLORS.primary},
-          headerTitleStyle: {color: COLORS.white},
-          headerTintColor: COLORS.white,
+          headerShown: false,
         })}
       />
       <Stack.Screen
         name="BlockUnblock"
         component={BlockUnblock}
         options={() => ({
-          headerStyle: {backgroundColor: COLORS.primary},
-          headerTitleStyle: {color: COLORS.white},
-          headerTintColor: COLORS.white,
-          title: 'Block',
+          headerShown: false,
         })}
       />
       <Stack.Screen
         name="Commercials"
         component={Commercials}
         options={() => ({
-          headerStyle: {backgroundColor: COLORS.primary},
-          headerTitleStyle: {color: COLORS.white},
-          headerTintColor: COLORS.white,
+          headerShown: false,
         })}
       />
       <Stack.Screen
@@ -233,6 +226,9 @@ function Approvals() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
+              tabBarItemStyle: {
+                marginTop: Platform.OS === 'ios' ? 45 : 10,
+              },
             }}
           />
         );
@@ -261,6 +257,9 @@ function BlockUnblock() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
+              tabBarItemStyle: {
+                marginTop: Platform.OS === 'ios' ? 45 : 10,
+              },
             }}
           />
         );
@@ -291,6 +290,9 @@ function Commercials() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
+              tabBarItemStyle: {
+                marginTop: Platform.OS === 'ios' ? 45 : 10,
+              },
             }}
           />
         );

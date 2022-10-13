@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {COLORS, FONTS} from '../constants';
 import {Icon} from 'react-native-elements';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -140,11 +140,7 @@ const HomeStack = () => {
     {
       name: 'Rooms/Flats',
       component: MyTopTabs,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
-      headerShown: true,
-      title: 'Rooms/PG',
+      headerShown: false,
     },
     {
       name: 'Add room',
@@ -261,10 +257,7 @@ const HomeStack = () => {
     {
       name: 'Matrimonial',
       component: MyMatrimonial,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
-      headerShown: true,
+      headerShown: false,
     },
     {
       name: 'Gallery',
@@ -375,7 +368,10 @@ function MyTopTabs() {
               tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
-              tabBarItemStyle: {width: 90},
+              tabBarItemStyle: {
+                width: 90,
+                marginTop: Platform.OS === 'ios' ? 45 : 10,
+              },
               tabBarScrollEnabled: true,
               title: data.name,
             }}
@@ -405,6 +401,9 @@ function MyMatrimonial() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
+              tabBarItemStyle: {
+                marginTop: Platform.OS === 'ios' ? 45 : 10,
+              },
             }}
           />
         );

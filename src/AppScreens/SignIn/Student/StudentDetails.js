@@ -26,8 +26,8 @@ const StudentDetails = ({data, navigation}) => {
   const toast = useToast();
 
   const handleOnSubmit = async () => {
-    if (!FullName || !hostelName || !hostelAdd) {
-      Toast(toast, 'Please fill all required fields');
+    if (!FullName) {
+      Toast(toast, 'Please enter your name');
     } else if (WhatsappNo.length < 10 || WhatsappNo.length > 10) {
       Toast(toast, 'Please check your number and try again');
     } else if (!LocalityValue) {
@@ -94,19 +94,19 @@ const StudentDetails = ({data, navigation}) => {
           subTitleStyle={genericStyles.mb(0)}
         />
         <InputComponent
-          placeholder="Full Name"
+          placeholder="Full name"
           value={FullName}
           autoCapitalize="words"
           onChangeText={text => setFullName(text)}
         />
         <InputComponent
-          placeholder="Hostel Name"
+          placeholder="Hostel name"
           value={hostelName}
           autoCapitalize="words"
           onChangeText={text => setHostelName(text)}
         />
         <InputComponent
-          placeholder="Hostel Address"
+          placeholder="College name"
           value={hostelAdd}
           autoCapitalize="words"
           onChangeText={text => setHostelAdd(text)}

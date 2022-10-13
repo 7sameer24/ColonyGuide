@@ -49,7 +49,8 @@ const Addroom = ({navigation}) => {
 
   const CategoryData = [
     {label: 'Hostel', value: '0'},
-    {label: 'Rooms/Flates', value: '1'},
+    {label: 'Rooms', value: '1'},
+    {label: 'Flats', value: '1'},
   ];
 
   const checkBoxArr = [
@@ -59,7 +60,7 @@ const Addroom = ({navigation}) => {
   ];
 
   const openGallery = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -104,7 +105,7 @@ const Addroom = ({navigation}) => {
     }
   };
   const openCamera = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -112,7 +113,7 @@ const Addroom = ({navigation}) => {
       quality: 1,
     };
 
-     launchCamera(opetions, response => {
+    launchCamera(opetions, response => {
       setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -260,38 +261,38 @@ const Addroom = ({navigation}) => {
             />
             <Text style={styles.textStyle}>Room Details / कमरे का विवरण</Text>
             <InputComponent
-              placeholder="Building / Hostel Name"
+              placeholder="Building / Hostel name"
               value={building_name}
               onChangeText={text => setBN(text)}
               autoCapitalize="words"
             />
             <InputComponent
-              placeholder="Contact person’s name"
+              placeholder="Owner name"
               value={PersonName}
               onChangeText={text => setPersonName(text)}
               autoCapitalize="words"
             />
             <InputComponent
-              placeholder="Contact person’s mobile number"
+              placeholder="Owner mobile number"
               value={mobile_no}
               keyboardType="number-pad"
               maxLength={10}
               onChangeText={text => setMobile(text)}
             />
             <InputComponent
-              placeholder="Contact person’s whatsapp number"
+              placeholder="Owner whatsapp number"
               value={WhatsappNo}
               keyboardType="number-pad"
               maxLength={10}
               onChangeText={text => setWhatsappNo(text)}
             />
             <DropDownComponent
-              placeholder="Select Category"
+              placeholder="Select category"
               labelField="label"
               valueField="value"
               data={CategoryData}
               value={Category}
-              maxHeight={110}
+              maxHeight={150}
               onChange={item => setCategory(item.value)}
             />
             {Category == 0 ? null : (
@@ -316,7 +317,7 @@ const Addroom = ({navigation}) => {
               textStyle={styles.CheckText}
             />
             <Text style={styles.textStyle}>
-              Renter Type / किराएदार का प्रकार
+              Renter type / किराएदार का प्रकार
             </Text>
             <View style={genericStyles.row}>
               {checkBoxArr.map((data, index) => (

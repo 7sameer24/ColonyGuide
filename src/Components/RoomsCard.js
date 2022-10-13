@@ -93,7 +93,11 @@ const RoomsCard = ({
         <View
           style={[
             genericStyles.row,
-            {alignItems: 'center', justifyContent: 'space-between'},
+            {
+              alignItems: 'center',
+              justifyContent: 'space-around',
+              marginHorizontal: 40,
+            },
           ]}>
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
             <Image
@@ -103,7 +107,7 @@ const RoomsCard = ({
               placeholderStyle={genericStyles.bg(COLORS.white)}
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
-            <View style={{width: width / 3.5}}>
+            <View style={{width: width / 2}}>
               <Text style={[styles.title]} numberOfLines={1}>
                 {title}
               </Text>

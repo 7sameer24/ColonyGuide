@@ -60,7 +60,7 @@ const EditRoom = ({navigation, route}) => {
   ];
 
   const openGallery = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -107,7 +107,7 @@ const EditRoom = ({navigation, route}) => {
   };
 
   const openCamera = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -115,7 +115,7 @@ const EditRoom = ({navigation, route}) => {
       quality: 1,
     };
 
-     launchCamera(opetions, response => {
+    launchCamera(opetions, response => {
       setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -293,20 +293,20 @@ const EditRoom = ({navigation, route}) => {
               autoCapitalize="words"
             />
             <InputComponent
-              placeholder="Contact person’s name"
+              placeholder="Owner name"
               value={PersonName}
               onChangeText={text => setPersonName(text)}
               autoCapitalize="words"
             />
             <InputComponent
-              placeholder="Contact person’s mobile number"
+              placeholder="Owner mobile number"
               value={mobile_no}
               keyboardType="number-pad"
               maxLength={10}
               onChangeText={text => setMobile(text)}
             />
             <InputComponent
-              placeholder="Contact person’s whatsapp number"
+              placeholder="Owner whatsapp number"
               value={WhatsappNo}
               keyboardType="number-pad"
               maxLength={10}

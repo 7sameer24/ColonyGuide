@@ -1,9 +1,8 @@
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 import messaging from '@react-native-firebase/messaging';
-import {useApp} from '../../Context/AppContext';
+import PushNotification from 'react-native-push-notification';
 
-
-
-export const requestUserPermission = async (set) => {
+export const requestUserPermission = async set => {
   const authStatus = await messaging().requestPermission();
   const enabled =
     authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
@@ -15,7 +14,7 @@ export const requestUserPermission = async (set) => {
   }
 };
 
-const getToken = (up) => {
+const getToken = up => {
   messaging()
     .getToken()
     .then(token => {
@@ -26,24 +25,38 @@ const getToken = (up) => {
     });
 };
 
-export const notificationListner = async () => {
-  messaging().onNotificationOpenedApp(remoteMessage => {
-    console.log(
-      'Notification caused app to open from background state:',
-      remoteMessage.notification,
-    );
-  });
+export const PushNotificationUser = () => {
+  PushNotification.configure({
+    // (optional) Called when Token is generated (iOS and Android)
+    onRegister: function (token) {
+      console.log('Push Notification:', token);
+    },
 
-  // Check whether an initial notification is available
-  messaging()
-    .getInitialNotification()
-    .then(remoteMessage => {
-      if (remoteMessage) {
-        console.log(
-          'Notification caused app to open from quit state:',
-          remoteMessage.notification,
-        );
-        console.log('background state', remoteMessage.notification);
-      }
-    });
+    // (required) Called when a remote is received or opened, or local notification is opened
+    onNotification: function (notification) {
+      console.log('onNotification:', notification);
+      // navigation.navigate('Notification');
+
+      notification.finish(PushNotificationIOS.FetchResult.NoData);
+    },
+
+    onAction: function (notification) {
+      console.log('ACTION:', notification.action);
+      console.log('onAction:', notification);
+    },
+
+    onRegistrationError: function (err) {
+      console.error(err.message, err);
+    },
+
+    permissions: {
+      alert: true,
+      badge: true,
+      sound: true,
+    },
+
+    popInitialNotification: true,
+
+    requestPermissions: true,
+  });
 };

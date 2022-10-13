@@ -119,7 +119,7 @@ const AddMembersDetails = ({navigation}) => {
       quality: 1,
     };
 
-     launchCamera(opetions, response => {
+    launchCamera(opetions, response => {
       setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -167,7 +167,7 @@ const AddMembersDetails = ({navigation}) => {
       !startDate ||
       !currentworkValue ||
       !MSValue ||
-      !LookingValue ||
+      (MSValue.id === 'Single' && !LookingValue) ||
       !genderValue
     ) {
       Toast(toast, 'Please fill all required fields');
@@ -250,12 +250,12 @@ const AddMembersDetails = ({navigation}) => {
         <ModalPopup
           visible={modalVisible}
           CameraOnpress={() => {
-                if (Platform.OS === 'android') {
-                  requestCameraPermission();
-                } else {
-                  openCamera();
-                }
-              }}
+            if (Platform.OS === 'android') {
+              requestCameraPermission();
+            } else {
+              openCamera();
+            }
+          }}
           GalleryOnpress={() => openGallery()}
           OnPressCancel={() => setModalVisible(false)}
           onRequestClose={() => setModalVisible(false)}

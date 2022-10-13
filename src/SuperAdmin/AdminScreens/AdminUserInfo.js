@@ -160,7 +160,7 @@ const AdminUserInfo = ({route, navigation}) => {
               )}
             </View>
             <View>
-              {whatsappNumber && (
+              {whatsappNumber ? (
                 <TouchableOpacity onPress={() => sendWhatsApp()}>
                   <View style={styles.firstView}>
                     <Icon
@@ -174,6 +174,16 @@ const AdminUserInfo = ({route, navigation}) => {
                     </Text>
                   </View>
                 </TouchableOpacity>
+              ) : (
+                <View style={styles.firstView}>
+                  <Icon
+                    name="whatsapp"
+                    type="material-community"
+                    size={20}
+                    color="#25D366"
+                  />
+                  <Text style={styles.text}>No number</Text>
+                </View>
               )}
               <TouchableOpacity
                 style={genericStyles.row}
@@ -268,7 +278,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: 20,
     marginTop: 20,
-    marginBottom: n && c ? 40 : 0,
+    marginBottom: n && c ? 40 : 40,
   }),
   firstView: {
     flexDirection: 'row',
