@@ -6,14 +6,22 @@ import HoAddress from './HouseOwners/HoAddress';
 import StudentDetails from './Student/StudentDetails';
 
 const AllRegistration = ({route, navigation}) => {
-  const {UserData} = route.params;
+  const {UserData, number} = route.params;
   return (
     <View style={styles.Container}>
       {UserData.app_role_id === 1 ? (
-        <StudentDetails navigation={navigation} data={UserData} />
+        <StudentDetails
+          navigation={navigation}
+          data={UserData}
+          number={number}
+        />
       ) : null}
       {UserData.app_role_id === 2 ? (
-        <ServiceForm navigation={navigation} UserNewData={UserData} />
+        <ServiceForm
+          navigation={navigation}
+          UserNewData={UserData}
+          number={number}
+        />
       ) : null}
       {UserData.app_role_id === 3 ? (
         <HoAddress navigation={navigation} data={UserData} />

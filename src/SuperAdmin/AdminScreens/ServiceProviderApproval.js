@@ -102,8 +102,8 @@ const ServiceProviderApproval = ({navigation}) => {
                     <GalleryCard
                       title={item.name}
                       source={
-                        item.profile_image.includes('jpg')
-                          ? {uri: item.profile_image}
+                        item.logo_image.includes('logo_image')
+                          ? {uri: item.logo_image}
                           : require('../../../assets/Image_not_available.png')
                       }
                       toggleSwitch={() => {

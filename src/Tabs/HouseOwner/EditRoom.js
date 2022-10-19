@@ -418,7 +418,7 @@ const EditRoom = ({navigation, route}) => {
               valueField="id"
               placeholder="Locality"
               value={LocalityValue}
-              maxHeight={100}
+              maxHeight={LocalData.length > 1 ? 150 : 50}
               onChange={item => setLocality(item.id)}
             />
           </ScrollView>

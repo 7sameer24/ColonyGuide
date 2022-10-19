@@ -386,7 +386,7 @@ const Addroom = ({navigation}) => {
               valueField="id"
               placeholder="Locality"
               value={LocalityValue}
-              maxHeight={100}
+              maxHeight={newData.length > 1 ? 150 : 50}
               onChange={item => setLocality(item.id)}
             />
           </ScrollView>

@@ -80,7 +80,7 @@ const AdminCustomDrawer = props => {
                   valueField="id"
                   placeholder="Select Locality"
                   value={LocalityValue}
-                  maxHeight={100}
+                  maxHeight={localityData.length > 1 ? 150 : 50}
                   onChange={item => {
                     setLocality(item.id);
                     updateResponse(item.id);

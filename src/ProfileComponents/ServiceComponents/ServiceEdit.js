@@ -268,7 +268,7 @@ const ServiceEdit = ({navigation, route}) => {
             valueField="id"
             placeholder="Locality (required)"
             value={LocalityValue}
-            maxHeight={100}
+            maxHeight={localityData.length > 1 ? 150 : 50}
             onChange={item => {
               setLocality(item.id);
             }}

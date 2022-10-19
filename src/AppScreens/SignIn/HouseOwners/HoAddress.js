@@ -186,7 +186,7 @@ const HoAddress = ({data}) => {
                 data={HideNumber}
                 labelField="name"
                 valueField="id"
-                placeholder="Do you want to hide your contact number ? (required)"
+                placeholder="Do you want to hide your contact number ?"
                 value={hideNmber}
                 maxHeight={100}
                 onChange={item => {
@@ -199,7 +199,7 @@ const HoAddress = ({data}) => {
                 valueField="id"
                 placeholder="Locality (required)"
                 value={LocalityValue}
-                maxHeight={100}
+                maxHeight={newData.length > 1 ? 150 : 50}
                 onChange={item => {
                   setLocality(item.id);
                   fetchStreetNo(item.id);

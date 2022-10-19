@@ -13,11 +13,11 @@ import DropDownComponent from '../../../Components/DropDownComponent';
 import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../../Components/Toast';
 
-const StudentDetails = ({data, navigation}) => {
+const StudentDetails = ({data, number}) => {
   const [FullName, setFullName] = useState('');
   const [hostelName, setHostelName] = useState('');
   const [hostelAdd, setHostelAdd] = useState('');
-  const [WhatsappNo, setWhatsappNo] = useState();
+  const [WhatsappNo, setWhatsappNo] = useState(`${number}`);
   const [spinner, setSpinner] = useState(false);
   const [newData, setData] = useState([]);
   const [LocalityValue, setLocality] = useState('');
@@ -125,7 +125,7 @@ const StudentDetails = ({data, navigation}) => {
           valueField="id"
           placeholder="Locality"
           value={LocalityValue}
-          maxHeight={100}
+          maxHeight={newData.length > 1 ? 150 : 50}
           onChange={item => setLocality(item.id)}
         />
         <ButtonComponent
