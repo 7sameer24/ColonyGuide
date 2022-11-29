@@ -107,7 +107,7 @@ const BusinessDetails = ({navigation}) => {
       quality: 1,
     };
 
-     launchCamera(opetions, response => {
+    launchCamera(opetions, response => {
       setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -227,26 +227,26 @@ const BusinessDetails = ({navigation}) => {
               Business Details / व्यापार का विवरण
             </Text>
             <InputComponent
-              placeholder="Name of business"
+              placeholder="Name of Business"
               value={ShopBusName}
               autoCapitalize="words"
               onChangeText={text => setShopBusName(text)}
             />
             <InputComponent
-              placeholder="Contact person’s name"
+              placeholder="Owner name"
               value={PersonName}
               autoCapitalize="words"
               onChangeText={text => setPersonName(text)}
             />
             <InputComponent
-              placeholder="Contact person’s mobile number"
+              placeholder="Owner mobile number"
               value={mobile_no}
               keyboardType="number-pad"
               maxLength={10}
               onChangeText={text => setMobile(text)}
             />
             <InputComponent
-              placeholder="Contact person’s whatsapp number"
+              placeholder="Owner whatsapp number"
               value={WhatsappNo}
               maxLength={10}
               keyboardType="number-pad"
@@ -254,7 +254,7 @@ const BusinessDetails = ({navigation}) => {
             />
 
             <DropDownComponent
-              placeholder="Select business type"
+              placeholder="Select Business type"
               data={businessCategoryData}
               labelField="name"
               valueField="id"
@@ -263,9 +263,11 @@ const BusinessDetails = ({navigation}) => {
               onChange={item => updateBusinessValue(item.id)}
             />
             <InputComponent
-              placeholder="About business (Optional)"
+              placeholder="About Business (Optional)"
               autoCapitalize="words"
               value={About}
+              multiline
+              maxLength={70}
               onChangeText={text => setAbout(text)}
             />
             <Text style={styles.BusinessDetails}>
@@ -278,7 +280,7 @@ const BusinessDetails = ({navigation}) => {
               onChangeText={text => setBuildFL(text)}
             />
             <InputComponent
-              placeholder="Address Line 1"
+              placeholder="Address"
               value={AL1}
               autoCapitalize="words"
               onChangeText={text => setAL1(text)}
@@ -295,7 +297,7 @@ const BusinessDetails = ({navigation}) => {
               valueField="id"
               placeholder="Locality (required)"
               value={LocalityValue}
-              maxHeight={100}
+              maxHeight={localityData.length > 1 ? 150 : 50}
               onChange={item => {
                 setLocality(item.id);
               }}

@@ -23,11 +23,11 @@ import {useApp} from '../../../../Context/AppContext';
 import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../../Components/Toast';
 
-const ServiceForm = ({UserNewData}) => {
+const ServiceForm = ({UserNewData, number}) => {
   const [imageUp, setImage] = useState('');
   const [shopName, setShop] = useState('');
   const [fullName, setFullName] = useState('');
-  const [WhatsappNo, setWhatsappNo] = useState();
+  const [WhatsappNo, setWhatsappNo] = useState(`${number}`);
   const [shortDes, setShortDes] = useState('');
   const [newData, updateNewData] = useState([]);
   const [Category, setCategory] = useState('');
@@ -82,7 +82,7 @@ const ServiceForm = ({UserNewData}) => {
       Form.append('category_id', Category);
       Form.append('whatsapp_no', WhatsappNo);
       Form.append('locality_id', LocalityValue);
-      Form.append('street_id', colonyNo);
+      // Form.append('street_id', colonyNo);
       Form.append(
         'logo_image',
         imageUp
@@ -325,13 +325,13 @@ const ServiceForm = ({UserNewData}) => {
               valueField="id"
               placeholder="Locality"
               value={LocalityValue}
-              maxHeight={100}
+              maxHeight={localityData.length > 1 ? 150 : 50}
               onChange={item => {
                 setLocality(item.id);
                 fetchStreetNo(item.id);
               }}
             />
-            <DropDownComponent
+            {/* <DropDownComponent
               data={colonyData}
               labelField="street_no"
               valueField="id"
@@ -339,7 +339,7 @@ const ServiceForm = ({UserNewData}) => {
               value={colonyNo}
               maxHeight={100}
               onChange={item => updateColonyNo(item.id)}
-            />
+            /> */}
           </ScrollView>
           <ButtonComponent
             title="Next"

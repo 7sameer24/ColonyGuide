@@ -212,20 +212,20 @@ const ServiceAddDetails = ({navigation}) => {
           onChangeText={text => setShopBusName(text)}
         />
         <InputComponent
-          placeholder="Contact person’s name"
+          placeholder="Owner name"
           value={PersonName}
           autoCapitalize="words"
           onChangeText={text => setPersonName(text)}
         />
         <InputComponent
-          placeholder="Contact person’s mobile number"
+          placeholder="Owner mobile number"
           value={mobile_no}
           keyboardType="number-pad"
           maxLength={10}
           onChangeText={text => setMobile(text)}
         />
         <InputComponent
-          placeholder="Contact person’s whatsapp number"
+          placeholder="Owner whatsapp number"
           value={WhatsappNo}
           maxLength={10}
           keyboardType="number-pad"
@@ -245,6 +245,8 @@ const ServiceAddDetails = ({navigation}) => {
           placeholder="About shop or service (Optional)"
           autoCapitalize="words"
           value={About}
+          multiline
+          maxLength={70}
           onChangeText={text => setAbout(text)}
         />
         <Text style={styles.BusinessDetails}>Shop address / दुकान का पता</Text>

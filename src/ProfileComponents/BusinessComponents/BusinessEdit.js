@@ -109,7 +109,7 @@ const BusinessEdit = ({navigation, route}) => {
       quality: 1,
     };
 
-     launchCamera(opetions, response => {
+    launchCamera(opetions, response => {
       setModalVisible(false);
       if (response.didCancel) {
         console.log('User Cancelled image picker');
@@ -235,13 +235,13 @@ const BusinessEdit = ({navigation, route}) => {
               onChangeText={text => setShopBusName(text)}
             />
             <InputComponent
-              placeholder="Contact person’s name"
+              placeholder="Owner name"
               value={PersonName}
               autoCapitalize="words"
               onChangeText={text => setPersonName(text)}
             />
             <InputComponent
-              placeholder="Contact person’s whatsapp number"
+              placeholder="Owner whatsapp number"
               value={WhatsappNo}
               keyboardType="number-pad"
               maxLength={10}
@@ -261,6 +261,8 @@ const BusinessEdit = ({navigation, route}) => {
               placeholder="About business (Optional)"
               autoCapitalize="words"
               value={About}
+              multiline
+              maxLength={70}
               onChangeText={text => setAbout(text)}
             />
             <Text style={styles.BusinessDetails}>
@@ -273,7 +275,7 @@ const BusinessEdit = ({navigation, route}) => {
               onChangeText={text => setBuildFL(text)}
             />
             <InputComponent
-              placeholder="Address Line 1"
+              placeholder="Address"
               value={AL1}
               autoCapitalize="words"
               onChangeText={text => setAL1(text)}
@@ -290,7 +292,7 @@ const BusinessEdit = ({navigation, route}) => {
               valueField="id"
               placeholder="Locality (required)"
               value={LocalityValue}
-              maxHeight={100}
+              maxHeight={localityData.length > 1 ? 150 : 50}
               onChange={item => {
                 setLocality(item.id);
               }}

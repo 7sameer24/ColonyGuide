@@ -1,6 +1,11 @@
 import React from 'react';
+<<<<<<< HEAD
 import {Platform, StyleSheet, View} from 'react-native';
 import {COLORS, FONTS, genericStyles} from '../constants';
+=======
+import {Platform, StyleSheet} from 'react-native';
+import {COLORS, FONTS} from '../constants';
+>>>>>>> 955a5bb34ebb8d1e4ead2a12047f65c0dcff70ee
 import {Icon} from 'react-native-elements';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -141,11 +146,15 @@ const HomeStack = () => {
     {
       name: 'Rooms/Flats',
       component: MyTopTabs,
+<<<<<<< HEAD
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
       headerShown: false,
       title: 'Rooms/PG',
+=======
+      headerShown: false,
+>>>>>>> 955a5bb34ebb8d1e4ead2a12047f65c0dcff70ee
     },
     {
       name: 'Add room',
@@ -262,10 +271,7 @@ const HomeStack = () => {
     {
       name: 'Matrimonial',
       component: MyMatrimonial,
-      headerTitleStyle: styles.headerStyle,
-      headerTintColor: COLORS.textColor,
-      headerShadowVisible: false,
-      headerShown: true,
+      headerShown: false,
     },
     {
       name: 'Gallery',
@@ -376,7 +382,14 @@ function MyTopTabs() {
               tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
+<<<<<<< HEAD
               tabBarItemStyle: {width: 90,marginTop:Platform.OS ==='ios' ?40:20},
+=======
+              tabBarItemStyle: {
+                width: 90,
+                marginTop: Platform.OS === 'ios' ? 45 : 10,
+              },
+>>>>>>> 955a5bb34ebb8d1e4ead2a12047f65c0dcff70ee
               tabBarScrollEnabled: true,
               title: data.name,
             }}
@@ -406,6 +419,9 @@ function MyMatrimonial() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
+              tabBarItemStyle: {
+                marginTop: Platform.OS === 'ios' ? 45 : 10,
+              },
             }}
           />
         );

@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {LogBox, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import ButtonComponent from '../../Components/ButtonComponent';
@@ -79,7 +79,10 @@ const OtpScreen = ({route, navigation}) => {
             token: DATA.token,
           });
         } else {
-          navigation.navigate('Registration', {UserData: DATA});
+          navigation.navigate('Registration', {
+            UserData: DATA,
+            number: userMobile,
+          });
         }
         Toast(toast, 'OTP verified successfully');
       } else {
@@ -104,6 +107,7 @@ const OtpScreen = ({route, navigation}) => {
   };
   const start = userMobile.slice(0, 2);
   const end = userMobile.slice(8, 10);
+  LogBox.ignoreLogs(['Warning: Cannot update a component (`OtpScreen`)']);
 
   return (
     <View style={styles.Container}>

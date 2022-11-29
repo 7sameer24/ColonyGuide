@@ -81,6 +81,7 @@ const ResidentApproval = ({navigation}) => {
           <ScrollView>
             <View style={genericStyles.mt(10)}>
               {data.map((item, index) => {
+                console.log(item.logo_image);
                 return (
                   <TouchableOpacity
                     key={index}
@@ -99,7 +100,7 @@ const ResidentApproval = ({navigation}) => {
                     <GalleryCard
                       title={item.name}
                       source={
-                        item.profile_image.includes('jpg')
+                        item.profile_image.includes('profile_image')
                           ? {uri: item.profile_image}
                           : require('../../../assets/Image_not_available.png')
                       }
