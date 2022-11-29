@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {COLORS, FONTS} from '../constants';
+import {Platform, StyleSheet, View} from 'react-native';
+import {COLORS, FONTS, genericStyles} from '../constants';
 import {Icon} from 'react-native-elements';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -53,6 +53,7 @@ import SearchBusResult from '../Tabs/SearchScreens/SearchBusResult';
 import HOServiceEdit from '../Tabs/HouseOwner/HOServiceEdit';
 import MyRooms from '../Tabs/HouseOwner/MyRooms';
 import EditRoom from '../Tabs/HouseOwner/EditRoom';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -143,7 +144,7 @@ const HomeStack = () => {
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,
-      headerShown: true,
+      headerShown: false,
       title: 'Rooms/PG',
     },
     {
@@ -369,13 +370,13 @@ function MyTopTabs() {
             key={data.name}
             name={data.ID}
             component={data.component}
-            options={{
+            options={{  
               tabBarActiveTintColor: COLORS.primary,
               tabBarInactiveTintColor: COLORS.textColor,
               tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
-              tabBarItemStyle: {width: 90},
+              tabBarItemStyle: {width: 90,marginTop:Platform.OS ==='ios' ?40:20},
               tabBarScrollEnabled: true,
               title: data.name,
             }}

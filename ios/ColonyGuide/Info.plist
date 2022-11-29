@@ -47,17 +47,13 @@
 		</dict>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
-    <array>
-    <string>itms-apps</string>
-    </array>
+	<array>
+		<string>itms-apps</string>
+	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires access to the camera your profile photo and logo upload.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-    <string>Your location access is required to route your location on the map.</string>
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Your location access is required to route your location on the map.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-    <string>You need to provide photo album access to upload profile image.</string>
+	<string>You need to provide photo album access to upload profile image.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Inter-Black.ttf</string>
