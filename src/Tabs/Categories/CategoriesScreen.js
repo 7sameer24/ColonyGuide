@@ -14,7 +14,8 @@ const CategoriesScreen = ({navigation}) => {
     <View style={genericStyles.Container}>
       <HeaderBar
         title="Categories"
-        // searchIcon="search"
+        // bellIcon="cart"
+        ThirdType="ionicon"
         navigation={navigation}
         firstIcon="menu"
         firstOnpress={() => navigation.toggleDrawer()}

@@ -53,6 +53,9 @@ import SearchBusResult from '../Tabs/SearchScreens/SearchBusResult';
 import HOServiceEdit from '../Tabs/HouseOwner/HOServiceEdit';
 import MyRooms from '../Tabs/HouseOwner/MyRooms';
 import EditRoom from '../Tabs/HouseOwner/EditRoom';
+import ItemList from '../Tabs/Ecom/ItemList';
+import AddItem from '../Tabs/Ecom/AddItem';
+import Cart from '../Tabs/Ecom/Cart';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -317,6 +320,27 @@ const HomeStack = () => {
     {
       name: 'Edit Room Details',
       component: EditRoom,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Products List',
+      component: ItemList,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Add Product',
+      component: AddItem,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'Cart',
+      component: Cart,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,

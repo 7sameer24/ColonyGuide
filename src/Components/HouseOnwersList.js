@@ -47,17 +47,18 @@ const HouseOnwersList = ({
       alert(error.message);
     }
   };
-
-  const CutName = title != null ? title.slice(0, 2) : null;
+  const nameSplit = title && title.split(' ');
 
   return (
     <Card containerStyle={styles.CardContainer}>
       <View style={styles.mainContainer}>
         <View style={[genericStyles.row, {alignItems: 'center'}]}>
           <View style={styles.CutNameConatiner}>
-            <Text style={styles.CutName}>{CutName}</Text>
+            <Text style={styles.CutName}>{`${nameSplit[0].slice(0, 1)}${
+              nameSplit[1] !== undefined ? nameSplit[1].slice(0, 1) : 'JI'
+            }`}</Text>
           </View>
-          <View style={ {width: width / 2.4}}>
+          <View style={{width: width / 2.4}}>
             <Text style={styles.title} numberOfLines={1}>
               {title}
             </Text>

@@ -34,14 +34,14 @@ const Committee = ({navigation}) => {
     <View style={genericStyles.Container}>
       <HeaderBar
         firstIcon="arrow-back-outline"
-        title="Committee"
+        title="Committee Members"
         // searchIcon="search"
         // bellIcon="filter"
         ThirdType="material-community"
         firstOnpress={() => navigation.goBack()}
       />
       {newData.length > 0 ? (
-        <ScrollView style={genericStyles.mt(30)}>
+        <ScrollView style={genericStyles.mt(10)}>
           <CommiteeList data={newData} />
         </ScrollView>
       ) : (

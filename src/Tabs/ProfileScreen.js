@@ -121,6 +121,9 @@ const ProfileScreen = ({navigation}) => {
         title="Profile"
         navigation={navigation}
         firstIcon="menu"
+        // bellIcon="cart"
+        ThirdType="ionicon"
+        thirdOnpress={() => navigation.navigate('Cart')}
         firstOnpress={() => navigation.toggleDrawer()}
       />
       {Userdata !== null ? (
@@ -229,6 +232,17 @@ const ProfileScreen = ({navigation}) => {
                   }
                 />
               )}
+              {/* <ProfileComponents
+                onPress={() =>
+                  navigation.navigate('Products List', {
+                    userID: Userdata.userData.id,
+                    userToken: UserToken,
+                  })
+                }
+                iconName="chevron-forward-outline"
+                IconSvg={<AddMember />}
+                title="Add Products"
+              /> */}
               {Userdata.userData.app_role_id === 3 && (
                 <>
                   <ProfileComponents

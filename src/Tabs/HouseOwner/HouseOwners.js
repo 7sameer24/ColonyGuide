@@ -43,7 +43,9 @@ const HouseOwners = ({navigation}) => {
   const fetchCasteData = async () => {
     try {
       const response = await axios.post(BaseURL('get-all-master'));
-      setCasteData(response.data.caste);
+      const fruits = [{name: 'All', id: '0'}, ...response.data.caste];
+
+      setCasteData(fruits);
     } catch (error) {
       console.log(error);
     }

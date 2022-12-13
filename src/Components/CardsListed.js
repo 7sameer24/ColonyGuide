@@ -31,6 +31,7 @@ const CardsListed = ({
   serviceId,
   businessId,
   googleNavigate,
+  onProfileShow,
 }) => {
   const toast = useToast();
   const alternatingColor = [COLORS.white, COLORS.primary];
@@ -95,6 +96,7 @@ const CardsListed = ({
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
             <Image
               source={source}
+              onPress={onProfileShow}
               style={styles.ImageStyle}
               fadeDuration={0}
               placeholderStyle={genericStyles.bg(COLORS.white)}

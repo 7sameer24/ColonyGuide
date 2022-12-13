@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {COLORS, FONTS, genericStyles, Images} from '../../../constants';
-import {Icon} from 'react-native-elements';
+import {Card, Icon} from 'react-native-elements';
 import axios from 'axios';
 import BaseURL from '../../../constants/BaseURL';
 import {useApp} from '../../../../Context/AppContext';
@@ -19,6 +19,8 @@ import ImageZoomComponent from '../../../Components/ImageZoomComponent';
 import HeaderBar from '../../../Components/HeaderBar';
 import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../../Components/Toast';
+import {ScrollView} from 'react-native';
+import ButtonComponent from '../../../Components/ButtonComponent';
 
 const ServiceInformation = ({route, navigation}) => {
   const toast = useToast();
@@ -242,7 +244,38 @@ const ServiceInformation = ({route, navigation}) => {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.buttonView}></View>
+          {/* <ScrollView horizontal>
+            <Card containerStyle={styles.ietmContainer}>
+              <Image
+                source={
+                  infoData.logo_image ===
+                  'https://colonyguide.com/portal/storage'
+                    ? Images.Ellipse
+                    : {uri: infoData.logo_image}
+                }
+                style={{
+                  width: 155,
+                  height: 100,
+                  borderRadius: 10,
+                  marginBottom: 5,
+                }}
+                fadeDuration={0}
+              />
+              <View style={genericStyles.rowWithCenterAndSB}>
+                <Text style={[styles.text, {fontFamily: FONTS.InterSemiBold}]}>
+                  Paneer
+                </Text>
+                <Text style={[styles.text, {fontFamily: FONTS.InterSemiBold}]}>
+                  30/kg
+                </Text>
+              </View>
+              <ButtonComponent
+                buttonStyle={genericStyles.pv(5)}
+                ButtonContainer={styles.addCart}
+                title="Add To Cart"
+              />
+            </Card>
+          </ScrollView> */}
         </>
       )}
       <SpinnerModal visible={loading} />
@@ -334,5 +367,20 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textDecorationLine: 'underline',
     lineHeight: 22,
+  },
+  addCart: {
+    width: '96%',
+    marginTop: 10,
+    borderRadius: 10,
+    marginHorizontal: 5,
+  },
+  ietmContainer: {
+    height: 200,
+    margin: 10,
+    borderRadius: 10,
+    borderWidth: 0,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderColor: COLORS.primary,
   },
 });
