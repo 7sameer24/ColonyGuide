@@ -135,8 +135,8 @@ android {
         applicationId "com.colonyguide"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.0.9"
+        versionCode 10
+        versionName "1.1.0"
         multiDexEnabled true
     }
      lintOptions {
@@ -215,7 +215,7 @@ dependencies {
    implementation "androidx.core:core-splashscreen:1.0.0-beta01" // Add this line
    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
    implementation 'com.android.support:multidex:2.0.1'
-   implementation platform('com.google.firebase:firebase-bom:30.2.0')
+   implementation platform('com.google.firebase:firebase-bom:31.1.1')
    implementation 'com.google.firebase:firebase-analytics'
     
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
