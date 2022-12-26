@@ -120,10 +120,10 @@ const ServiceList = ({navigation, route}) => {
                         }
                         index={index}
                         title={data.name}
-                        subTitle={`${data.house_no} ${data.address} ${
+                        subTitle={`${data.house_no}, ${data.address}, ${
                           data.landmark == null ? '' : data.landmark
                         }`}
-                        category={data.about}
+                        // category={data.about}
                         GeoLocation={data.geolocation}
                         phoneNumber={data.contact_person_mobile}
                         WhatsAppNumber={data.contact_person_whatsapp}

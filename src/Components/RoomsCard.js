@@ -96,7 +96,6 @@ const RoomsCard = ({
             {
               alignItems: 'center',
               justifyContent: 'space-around',
-              marginHorizontal: 40,
             },
           ]}>
           <View style={[genericStyles.row, {alignItems: 'center'}]}>
@@ -190,11 +189,13 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     marginRight: 11,
+    marginLeft: 25,
   },
 
   View3: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginRight: 15,
   },
   title: {
     fontSize: 14,

@@ -29,6 +29,7 @@ import Events from '../ProfileComponents/EventsComponets/Events';
 import Gallery from '../ProfileComponents/GalleryComponents/Gallery';
 import AdminList from '../SuperAdmin/AdminScreens/AdminAdd/AdminList';
 import AddAdminUser from '../SuperAdmin/AdminScreens/AdminAdd/AddAdminUser';
+import BusinessInformation from '../ProfileComponents/BusinessComponents/BusinessInformation';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -199,6 +200,13 @@ const ScreenStack = () => {
           headerStyle: {backgroundColor: COLORS.primary},
           headerTitleStyle: {color: COLORS.white},
           headerTintColor: COLORS.white,
+        })}
+      />
+      <Stack.Screen
+        name="Business Information"
+        component={BusinessInformation}
+        options={() => ({
+          headerShown: false,
         })}
       />
     </Stack.Navigator>

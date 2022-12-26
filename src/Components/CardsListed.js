@@ -37,35 +37,28 @@ const CardsListed = ({
   const alternatingColor = [COLORS.white, COLORS.primary];
   const alternatingTextColor = [COLORS.textColor, COLORS.white];
   const {width} = useWindowDimensions();
-  const {Userdata, setIsLoginPop} = useApp();
+  const {Userdata, setIsLoginPop, adminData} = useApp();
   const [loading, updateLoading] = useState(false);
 
   const callCount = async number => {
-    if (
-      Userdata.userData.app_role_id === 3 &&
-      Userdata.userData.is_private == 1
-    ) {
-      Toast(toast, 'These user hide their number');
-    } else {
-      try {
-        updateLoading(true);
-        const response = await axios.post(BaseURL('click-count'), {
-          user_id: userId,
-          service_id: serviceId,
-          businessId: businessId,
-          type: number === 1 ? 1 : 2,
-          clicked_user_id: Userdata.userData.id,
-        });
-        updateLoading(false);
-        if (response.data.success) {
-          number === 1 ? Linking.openURL(`tel:${phoneNumber}`) : sendWhatsApp();
-        } else {
-          alert(response.data.message);
-        }
-      } catch (error) {
-        updateLoading(false);
-        alert(error);
+    try {
+      updateLoading(true);
+      const response = await axios.post(BaseURL('click-count'), {
+        user_id: userId,
+        service_id: serviceId,
+        businessId: businessId,
+        type: number === 1 ? 1 : 2,
+        clicked_user_id: adminData?.userData?.id ?? Userdata.userData.id,
+      });
+      updateLoading(false);
+      if (response.data.success) {
+        number === 1 ? Linking.openURL(`tel:${phoneNumber}`) : sendWhatsApp();
+      } else {
+        alert(response.data.message);
       }
+    } catch (error) {
+      updateLoading(false);
+      alert(error);
     }
   };
 
@@ -102,18 +95,12 @@ const CardsListed = ({
               placeholderStyle={genericStyles.bg(COLORS.white)}
               PlaceholderContent={<ActivityIndicator color={COLORS.primary} />}
             />
-            <View style={{width: width / 3.5}}>
+            <View style={{width: width / 3}}>
               <Text style={[styles.title]} numberOfLines={1}>
                 {title}
               </Text>
-              <Text style={[styles.subTitle1]} numberOfLines={1}>
-                {subTitle}
-              </Text>
-              {category && (
-                <Text numberOfLines={1} style={[styles.subTitle]}>
-                  {category}
-                </Text>
-              )}
+              <Text style={[styles.subTitle1]}>{subTitle}</Text>
+              {category && <Text style={[styles.subTitle]}>{category}</Text>}
             </View>
           </View>
           <View style={styles.View3}>
@@ -123,9 +110,15 @@ const CardsListed = ({
               color="#407BFF"
               size={14}
               reverse
-              onPress={() =>
-                Userdata === null ? setIsLoginPop(true) : callCount(1)
-              }
+              onPress={() => {
+                if (adminData !== null) {
+                  callCount(1);
+                } else if (Userdata !== null) {
+                  callCount(1);
+                } else {
+                  setIsLoginPop(true);
+                }
+              }}
               containerStyle={genericStyles.shadow}
             />
             <Icon
@@ -134,9 +127,15 @@ const CardsListed = ({
               size={14}
               color="#25D366"
               reverse
-              onPress={() =>
-                Userdata === null ? setIsLoginPop(true) : callCount(2)
-              }
+              onPress={() => {
+                if (adminData !== null) {
+                  callCount(2);
+                } else if (Userdata !== null) {
+                  callCount(2);
+                } else {
+                  setIsLoginPop(true);
+                }
+              }}
               containerStyle={genericStyles.shadow}
             />
             <Icon
@@ -145,15 +144,27 @@ const CardsListed = ({
               size={14}
               color={COLORS.primary}
               reverse
-              onPress={() =>
-                Userdata === null
-                  ? setIsLoginPop(true)
-                  : Platform.OS === 'ios'
-                  ? Linking.openURL(
+              onPress={() => {
+                if (adminData !== null) {
+                  if (Platform.OS === 'ios') {
+                    Linking.openURL(
                       `http://maps.apple.com/maps?daddr=${googleNavigate}`,
-                    )
-                  : Linking.openURL(`google.navigation:q=${googleNavigate}`)
-              }
+                    );
+                  } else {
+                    Linking.openURL(`google.navigation:q=${googleNavigate}`);
+                  }
+                } else if (Userdata !== null) {
+                  if (Platform.OS === 'ios') {
+                    Linking.openURL(
+                      `http://maps.apple.com/maps?daddr=${googleNavigate}`,
+                    );
+                  } else {
+                    Linking.openURL(`google.navigation:q=${googleNavigate}`);
+                  }
+                } else {
+                  setIsLoginPop(true);
+                }
+              }}
               containerStyle={genericStyles.shadow}
             />
           </View>
@@ -181,10 +192,12 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     marginRight: 11,
+    // marginLeft: 35,
   },
   View3: {
     flexDirection: 'row',
     alignItems: 'center',
+    // marginRight: 25,
   },
   title: {
     fontSize: 14,

@@ -146,7 +146,7 @@ const HomeStack = () => {
       headerShown: false,
     },
     {
-      name: 'Add room',
+      name: 'Add Room',
       component: Addroom,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,

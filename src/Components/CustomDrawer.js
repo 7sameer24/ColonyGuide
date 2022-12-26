@@ -53,7 +53,7 @@ const CustomDrawer = props => {
   };
   return (
     <View style={genericStyles.fill}>
-      <DrawerContentScrollView>
+      <DrawerContentScrollView showsVerticalScrollIndicator={false}>
         {Userdata !== null ? (
           <>
             <View style={styles.ProfileContanier}>

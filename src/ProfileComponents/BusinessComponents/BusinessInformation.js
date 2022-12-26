@@ -28,36 +28,29 @@ const BusinessInformation = ({route, navigation}) => {
   const [loading, updateLoading] = useState(false);
   const [visible, setIsvisible] = useState(false);
 
-  const {Userdata, setIsLoginPop} = useApp();
+  const {Userdata, setIsLoginPop, adminData} = useApp();
 
   const callCount = async number => {
-    if (
-      Userdata.userData.app_role_id === 3 &&
-      Userdata.userData.is_private == 1
-    ) {
-      Toast(toast, 'These user hide their number');
-    } else {
-      try {
-        updateLoading(true);
-        const response = await axios.post(BaseURL('click-count'), {
-          user_id: busInfoData.user_id,
-          service_id: ID,
-          type: number === 1 ? 1 : 2,
-          clicked_user_id: Userdata.userData.id,
-        });
+    try {
+      updateLoading(true);
+      const response = await axios.post(BaseURL('click-count'), {
+        user_id: busInfoData.user_id,
+        service_id: ID,
+        type: number === 1 ? 1 : 2,
+        clicked_user_id: adminData?.userData?.id ?? Userdata.userData.id,
+      });
+      updateLoading(false);
+      if (response.data.success) {
+        number === 1
+          ? Linking.openURL(`tel:${busInfoData.contact_person_mobile}`)
+          : sendWhatsApp();
+      } else {
         updateLoading(false);
-        if (response.data.success) {
-          number === 1
-            ? Linking.openURL(`tel:${busInfoData.contact_person_mobile}`)
-            : sendWhatsApp();
-        } else {
-          updateLoading(false);
-          alert(response.data.message);
-        }
-      } catch (error) {
-        updateLoading(false);
-        alert(error);
+        alert(response.data.message);
       }
+    } catch (error) {
+      updateLoading(false);
+      alert(error);
     }
   };
   const onShare = async () => {
@@ -167,9 +160,15 @@ const BusinessInformation = ({route, navigation}) => {
             <View style={genericStyles.column}>
               <TouchableOpacity
                 style={styles.firstView}
-                onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : callCount(1)
-                }>
+                onPress={() => {
+                  if (adminData !== null) {
+                    callCount(1);
+                  } else if (Userdata !== null) {
+                    callCount(1);
+                  } else {
+                    setIsLoginPop(true);
+                  }
+                }}>
                 <Icon
                   name="phone-outgoing"
                   type="material-community"
@@ -190,9 +189,15 @@ const BusinessInformation = ({route, navigation}) => {
             </View>
             <View>
               <TouchableOpacity
-                onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : callCount(2)
-                }>
+                onPress={() => {
+                  if (adminData !== null) {
+                    callCount(2);
+                  } else if (Userdata !== null) {
+                    callCount(2);
+                  } else {
+                    setIsLoginPop(true);
+                  }
+                }}>
                 <View style={styles.firstView}>
                   <Icon
                     name="whatsapp"
@@ -207,9 +212,15 @@ const BusinessInformation = ({route, navigation}) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={genericStyles.row}
-                onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : onShare()
-                }>
+                onPress={() => {
+                  if (adminData !== null) {
+                    onShare();
+                  } else if (Userdata !== null) {
+                    onShare();
+                  } else {
+                    setIsLoginPop(true);
+                  }
+                }}>
                 <Icon
                   name="share-social"
                   type="ionicon"

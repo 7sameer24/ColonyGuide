@@ -22,7 +22,7 @@ const HouseOnwersList = ({
   hideNumber,
 }) => {
   const {width} = useWindowDimensions();
-  const {Userdata, setIsLoginPop} = useApp();
+  const {Userdata, setIsLoginPop, adminData} = useApp();
   const toast = useToast();
 
   const onShare = async () => {
@@ -59,20 +59,10 @@ const HouseOnwersList = ({
             }`}</Text>
           </View>
           <View style={{width: width / 2.4}}>
-            <Text style={styles.title} numberOfLines={1}>
-              {title}
-            </Text>
-            <Text style={styles.subTitle} numberOfLines={1}>
-              {subTitle}
-            </Text>
-            <Text style={styles.subTitle} numberOfLines={1}>
-              {AddressLine}
-            </Text>
-            {Landmark && (
-              <Text style={styles.subTitle} numberOfLines={1}>
-                {Landmark}
-              </Text>
-            )}
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.subTitle}>{`${subTitle}, ${AddressLine}, ${
+              Landmark ?? ''
+            }`}</Text>
           </View>
         </View>
         <View
@@ -88,9 +78,15 @@ const HouseOnwersList = ({
             size={15}
             reverse
             containerStyle={genericStyles.shadow}
-            onPress={() =>
-              Userdata === null ? setIsLoginPop(true) : onShare()
-            }
+            onPress={() => {
+              if (adminData !== null) {
+                onShare();
+              } else if (Userdata !== null) {
+                onShare();
+              } else {
+                setIsLoginPop(true);
+              }
+            }}
           />
           <Icon
             name="phone-outgoing"
@@ -100,9 +96,14 @@ const HouseOnwersList = ({
             containerStyle={genericStyles.shadow}
             color={hideNumber == 1 ? COLORS.darkgray : '#25D366'}
             onPress={() => {
-              if (Userdata === null) {
-                setIsLoginPop(true);
-              } else {
+              if (adminData !== null) {
+                if (hideNumber == 1) {
+                  Toast(toast, 'These user hide their number');
+                  return;
+                } else {
+                  Linking.openURL(`tel:${phoneNumber}`);
+                }
+              } else if (Userdata !== null) {
                 if (Userdata.userData.app_role_id === 2) {
                   Toast(
                     toast,
@@ -116,6 +117,8 @@ const HouseOnwersList = ({
                 }
 
                 Linking.openURL(`tel:${phoneNumber}`);
+              } else {
+                setIsLoginPop(true);
               }
             }}
           />

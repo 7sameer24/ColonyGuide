@@ -70,9 +70,9 @@ const AllRoomsHostals = ({navigation}) => {
             Userdata.userData.app_role_id === 3 ? (
               <View style={[genericStyles.row, styles.iconContainer]}>
                 <ButtonComponent
-                  title="Add room"
+                  title="Add Room"
                   ButtonContainer={genericStyles.width('68%')}
-                  onPress={() => navigation.navigate('Add room')}
+                  onPress={() => navigation.navigate('Add Room')}
                 />
                 <Icon
                   color={COLORS.primary}
@@ -138,9 +138,9 @@ const AllRoomsHostals = ({navigation}) => {
                 Userdata.userData.app_role_id === 3 ? (
                   <View style={[genericStyles.row, styles.iconContainer]}>
                     <ButtonComponent
-                      title="Add room"
+                      title="Add Room"
                       ButtonContainer={genericStyles.width('68%')}
-                      onPress={() => navigation.navigate('Add room')}
+                      onPress={() => navigation.navigate('Add Room')}
                     />
                     <Icon
                       color={COLORS.primary}

@@ -1,20 +1,16 @@
 import {
   ActivityIndicator,
   Linking,
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  useWindowDimensions,
   View,
 } from 'react-native';
 import React from 'react';
 import {COLORS, FONTS, genericStyles, SIZES} from '../constants';
 import {Image} from 'react-native-elements';
 
-const CommiteeList = ({cardContainer, ViewContainer, data}) => {
-  const {width, height} = useWindowDimensions();
-
+const CommiteeList = ({data}) => {
   return (
     <View style={styles.container}>
       {data.map(data => (
@@ -33,7 +29,11 @@ const CommiteeList = ({cardContainer, ViewContainer, data}) => {
           </Text>
           <TouchableOpacity
             onPress={() => Linking.openURL(`tel:${data.phone_no}`)}>
-            <Text style={[styles.text, genericStyles.fontSize(12)]}>
+            <Text
+              style={[
+                styles.text,
+                {fontSize: 12, textDecorationLine: 'underline'},
+              ]}>
               {data.phone_no}
             </Text>
           </TouchableOpacity>
@@ -61,8 +61,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   imageContainer: {
-    width: SIZES.width / 3,
-    height: SIZES.height * 0.2,
+    width: 140,
+    height: 140,
     borderRadius: 100,
   },
 });

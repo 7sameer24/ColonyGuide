@@ -83,9 +83,9 @@ const MyRooms = ({navigation, route}) => {
       )}
       {!loading && data.length == [] && <NoDataAni />}
       <ButtonComponent
-        title="Add room"
+        title="Add Room"
         ButtonContainer={styles.ButtonContainer}
-        onPress={() => navigation.navigate('Add room')}
+        onPress={() => navigation.navigate('Add Room')}
       />
       <Poweredby container={{flex: 0}} />
     </View>

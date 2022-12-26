@@ -70,24 +70,13 @@ const RoomsFlats = ({navigation, route}) => {
         <>
           <NoDataAni />
           {Userdata !== null ? (
-                Userdata.userData.app_role_id === 3? (
-                  <View style={[genericStyles.row,styles.iconContainer]}>
-                    <ButtonComponent
-                      title="Add room"
-                      ButtonContainer={genericStyles.width('68%')}
-                      onPress={() => navigation.navigate('Add room')}
-                    />
-                    <Icon
-                      color={COLORS.primary}
-                      name="filter"
-                      type="material-community"
-                      size={23}
-                      containerStyle={genericStyles.shadow}
-                      reverse
-                      onPress={() => setIsvisible(true)}
-                    />
-                  </View>
-                ) : <View style={{alignItems:"flex-end",marginBottom:15,marginRight:15}}>
+            Userdata.userData.app_role_id === 3 ? (
+              <View style={[genericStyles.row, styles.iconContainer]}>
+                <ButtonComponent
+                  title="Add Room"
+                  ButtonContainer={genericStyles.width('68%')}
+                  onPress={() => navigation.navigate('Add Room')}
+                />
                 <Icon
                   color={COLORS.primary}
                   name="filter"
@@ -98,7 +87,25 @@ const RoomsFlats = ({navigation, route}) => {
                   onPress={() => setIsvisible(true)}
                 />
               </View>
-              ) : null}
+            ) : (
+              <View
+                style={{
+                  alignItems: 'flex-end',
+                  marginBottom: 15,
+                  marginRight: 15,
+                }}>
+                <Icon
+                  color={COLORS.primary}
+                  name="filter"
+                  type="material-community"
+                  size={23}
+                  containerStyle={genericStyles.shadow}
+                  reverse
+                  onPress={() => setIsvisible(true)}
+                />
+              </View>
+            )
+          ) : null}
         </>
       ) : (
         <>
@@ -130,13 +137,13 @@ const RoomsFlats = ({navigation, route}) => {
                 ))}
                 <View style={genericStyles.height(10)} />
               </ScrollView>
-                {Userdata !== null ? (
-                Userdata.userData.app_role_id === 3? (
-                  <View style={[genericStyles.row,styles.iconContainer]}>
+              {Userdata !== null ? (
+                Userdata.userData.app_role_id === 3 ? (
+                  <View style={[genericStyles.row, styles.iconContainer]}>
                     <ButtonComponent
-                      title="Add room"
+                      title="Add Room"
                       ButtonContainer={genericStyles.width('68%')}
-                      onPress={() => navigation.navigate('Add room')}
+                      onPress={() => navigation.navigate('Add Room')}
                     />
                     <Icon
                       color={COLORS.primary}
@@ -148,17 +155,24 @@ const RoomsFlats = ({navigation, route}) => {
                       onPress={() => setIsvisible(true)}
                     />
                   </View>
-                ) : <View style={{alignItems:"flex-end",marginBottom:15,marginRight:15}}>
-                <Icon
-                  color={COLORS.primary}
-                  name="filter"
-                  type="material-community"
-                  size={23}
-                  containerStyle={genericStyles.shadow}
-                  reverse
-                  onPress={() => setIsvisible(true)}
-                />
-              </View>
+                ) : (
+                  <View
+                    style={{
+                      alignItems: 'flex-end',
+                      marginBottom: 15,
+                      marginRight: 15,
+                    }}>
+                    <Icon
+                      color={COLORS.primary}
+                      name="filter"
+                      type="material-community"
+                      size={23}
+                      containerStyle={genericStyles.shadow}
+                      reverse
+                      onPress={() => setIsvisible(true)}
+                    />
+                  </View>
+                )
               ) : null}
             </>
           ) : (
@@ -177,6 +191,8 @@ export default RoomsFlats;
 
 const styles = StyleSheet.create({
   iconContainer: {
-    alignItems:"center",marginBottom:15,justifyContent:"center"
+    alignItems: 'center',
+    marginBottom: 15,
+    justifyContent: 'center',
   },
 });
