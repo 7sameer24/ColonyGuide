@@ -1,6 +1,6 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
-import {COLORS, FONTS} from '../constants';
+import {LogBox, StyleSheet, Text, View} from 'react-native';
+import {COLORS, FONTS, genericStyles} from '../constants';
 import {Icon} from 'react-native-elements';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -143,7 +143,6 @@ const HomeStack = () => {
     {
       name: 'Rooms/Flats',
       component: MyTopTabs,
-      headerShown: false,
     },
     {
       name: 'Add Room',
@@ -260,7 +259,6 @@ const HomeStack = () => {
     {
       name: 'Matrimonial',
       component: MyMatrimonial,
-      headerShown: false,
     },
     {
       name: 'Gallery',
@@ -363,6 +361,23 @@ const HomeStack = () => {
             headerBackVisible: data.headerBackVisible,
             title: data.title,
             headerStyle: data.headerStyle,
+            contentStyle: data.contentStyle,
+            header: props => {
+              return (
+                <View style={genericStyles.bg('white')}>
+                <View style={[genericStyles.rowWithCenter, {marginTop: 40}]}>
+                    <Icon
+                    onPress={()=>props.navigation.goBack()}
+                      name="arrow-back"
+                      type="ionicon"
+                      color={COLORS.black}
+                      containerStyle={{marginLeft: 20, marginRight: 30}}
+                    />
+                    <Text style={styles.headerStyle}>{props.route.name}</Text>
+                  </View>
+                </View>
+              );
+            },
           })}
         />
       ))}
@@ -378,6 +393,7 @@ function MyTopTabs() {
     {component: RoomsFlats, name: '2 BHK', ID: '2'},
     {component: RoomsFlats, name: '3 BHK', ID: '3'},
   ];
+  LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no listeners registered.']);
   return (
     <TopTab.Navigator>
       {TopTabsArr.map(data => {
@@ -392,10 +408,6 @@ function MyTopTabs() {
               tabBarLabelStyle: {fontSize: 14, fontFamily: FONTS.InterMedium},
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
-              tabBarItemStyle: {
-                width: 90,
-                marginTop: Platform.OS === 'ios' ? 45 : 10,
-              },
               tabBarScrollEnabled: true,
               title: data.name,
             }}
@@ -410,6 +422,7 @@ function MyMatrimonial() {
     {component: MMFemale, name: 'Female', ID: 'Female'},
     {component: MMMale, name: 'Male', ID: 'Male'},
   ];
+  LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no listeners registered.']);
   return (
     <TopTab.Navigator>
       {TopTabsArr.map(data => {
@@ -425,9 +438,6 @@ function MyMatrimonial() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
-              tabBarItemStyle: {
-                marginTop: Platform.OS === 'ios' ? 45 : 10,
-              },
             }}
           />
         );

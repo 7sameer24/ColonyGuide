@@ -72,48 +72,42 @@ const AdminList = ({navigation, route}) => {
 
   return (
     <View style={genericStyles.Container}>
-      {loading ? (
-        <SkeletonView />
-      ) : (
-        data.length > 0 && (
-          <>
-            <ScrollView>
-              {data.map((item, index) => {
-                return (
-                  <GalleryCard
-                    key={index}
-                    title={item.name}
-                    source={require('../../../../assets/Image_not_available.png')}
-                    toggleSwitch={() => {
-                      onChangeActiveDeactive(item.id, item.status);
-                      selectRow(index, item.status === 0 ? 1 : 0);
-                    }}
-                    subTitle={item.mobile_no}
-                    isEnabled={item.status === 0 ? true : false}
-                    switchButton={true}
-                    iconName="checkmark"
-                    iconType="ionicon"
-                    IconColorChange={true}
-                    iconName2="cancel"
-                    iconType2="material-community"
-                    longText={2}
-                    AddressLine={item.locality.name}
-                    twoMore={true}
-                  />
-                );
-              })}
-            </ScrollView>
-            <ButtonComponent
-              title="Add User"
-              ButtonContainer={styles.ButtonContainer}
-              onPress={() => navigation.navigate('Add User')}
-            />
-            <View style={genericStyles.height(20)} />
-          </>
-        )
+      {data.length > 0 && (
+        <ScrollView>
+          {data.map((item, index) => {
+            return (
+              <GalleryCard
+                key={index}
+                title={item.name}
+                source={require('../../../../assets/Image_not_available.png')}
+                toggleSwitch={() => {
+                  onChangeActiveDeactive(item.id, item.status);
+                  selectRow(index, item.status === 0 ? 1 : 0);
+                }}
+                subTitle={item.mobile_no}
+                isEnabled={item.status === 0 ? true : false}
+                switchButton={true}
+                iconName="checkmark"
+                iconType="ionicon"
+                IconColorChange={true}
+                iconName2="cancel"
+                iconType2="material-community"
+                longText={2}
+                AddressLine={item.locality.name}
+                twoMore={true}
+              />
+            );
+          })}
+        </ScrollView>
       )}
+      {loading && <SkeletonView />}
 
-      {!loading && data.length == [] && <NoDataAni />}
+      {!loading && data.length == 0 && <NoDataAni />}
+      <ButtonComponent
+        title="Add User"
+        ButtonContainer={styles.ButtonContainer}
+        onPress={() => navigation.navigate('Add User')}
+      />
     </View>
   );
 };
@@ -123,5 +117,6 @@ export default AdminList;
 const styles = StyleSheet.create({
   ButtonContainer: {
     width: '90%',
+    marginVertical: 25,
   },
 });

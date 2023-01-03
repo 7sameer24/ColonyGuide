@@ -20,7 +20,10 @@ target 'ColonyGuide' do
   end
 
 pod 'Firebase/Analytics' 
-
+pod 'Firebase', :modular_headers => true
+pod 'FirebaseCore', :modular_headers => true
+pod 'FirebaseCoreInternal', :modular_headers => true
+pod 'GoogleUtilities', :modular_headers => true
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and

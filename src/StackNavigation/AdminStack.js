@@ -1,11 +1,11 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {LogBox, StyleSheet, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import Dashboard from '../SuperAdmin/AdminScreens/Dashboard';
 import AdminGallery from '../SuperAdmin/AdminScreens/AdminGallery';
-import {COLORS, FONTS} from '../constants';
+import {COLORS, FONTS, genericStyles} from '../constants';
 import AddGallery from '../SuperAdmin/AdminScreens/AddGallery';
 import AdminEvent from '../SuperAdmin/AdminScreens/AdminEvent';
 import SendNotification from '../SuperAdmin/AdminScreens/SendNotification';
@@ -30,6 +30,8 @@ import Gallery from '../ProfileComponents/GalleryComponents/Gallery';
 import AdminList from '../SuperAdmin/AdminScreens/AdminAdd/AdminList';
 import AddAdminUser from '../SuperAdmin/AdminScreens/AdminAdd/AddAdminUser';
 import BusinessInformation from '../ProfileComponents/BusinessComponents/BusinessInformation';
+import {View} from 'react-native';
+import {Icon} from 'react-native-elements';
 
 const Stack = createNativeStackNavigator();
 const TopTab = createMaterialTopTabNavigator();
@@ -95,21 +97,66 @@ const ScreenStack = () => {
         name="Approvals"
         component={Approvals}
         options={() => ({
-          headerShown: false,
+          header: props => {
+            return (
+              <View style={genericStyles.bg('white')}>
+                <View style={[genericStyles.rowWithCenter, {marginTop: 40}]}>
+                  <Icon
+                    onPress={() => props.navigation.goBack()}
+                    name="arrow-back"
+                    type="ionicon"
+                    color={COLORS.black}
+                    containerStyle={{marginLeft: 20, marginRight: 30}}
+                  />
+                  <Text style={styles.headerStyle}>{props.route.name}</Text>
+                </View>
+              </View>
+            );
+          },
         })}
       />
       <Stack.Screen
         name="BlockUnblock"
         component={BlockUnblock}
         options={() => ({
-          headerShown: false,
+          header: props => {
+            return (
+              <View style={genericStyles.bg('white')}>
+                <View style={[genericStyles.rowWithCenter, {marginTop: 40}]}>
+                  <Icon
+                    onPress={() => props.navigation.goBack()}
+                    name="arrow-back"
+                    type="ionicon"
+                    color={COLORS.black}
+                    containerStyle={{marginLeft: 20, marginRight: 30}}
+                  />
+                  <Text style={styles.headerStyle}>{props.route.name}</Text>
+                </View>
+              </View>
+            );
+          },
         })}
       />
       <Stack.Screen
         name="Commercials"
         component={Commercials}
         options={() => ({
-          headerShown: false,
+          header: props => {
+            return (
+              <View style={genericStyles.bg('white')}>
+                <View style={[genericStyles.rowWithCenter, {marginTop: 40}]}>
+                  <Icon
+                    onPress={() => props.navigation.goBack()}
+                    name="arrow-back"
+                    type="ionicon"
+                    color={COLORS.black}
+                    containerStyle={{marginLeft: 20, marginRight: 30}}
+                  />
+                  <Text style={styles.headerStyle}>{props.route.name}</Text>
+                </View>
+              </View>
+            );
+          },
         })}
       />
       <Stack.Screen
@@ -214,6 +261,9 @@ const ScreenStack = () => {
 };
 
 function Approvals() {
+  LogBox.ignoreLogs([
+    'Sending `onAnimatedValueUpdate` with no listeners registered.',
+  ]);
   const TopTabsArr = [
     {component: StudentApproval, name: 'Student'},
     {component: ServiceProviderApproval, name: 'Service Provider'},
@@ -234,9 +284,6 @@ function Approvals() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
-              tabBarItemStyle: {
-                marginTop: Platform.OS === 'ios' ? 45 : 10,
-              },
             }}
           />
         );
@@ -246,6 +293,9 @@ function Approvals() {
 }
 
 function BlockUnblock() {
+  LogBox.ignoreLogs([
+    'Sending `onAnimatedValueUpdate` with no listeners registered.',
+  ]);
   const TopTabsArr = [
     {component: BlockScreen, name: 'Blocked'},
     {component: UnblockScreen, name: 'Unblocked'},
@@ -265,9 +315,6 @@ function BlockUnblock() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
-              tabBarItemStyle: {
-                marginTop: Platform.OS === 'ios' ? 45 : 10,
-              },
             }}
           />
         );
@@ -276,6 +323,9 @@ function BlockUnblock() {
   );
 }
 function Commercials() {
+  LogBox.ignoreLogs([
+    'Sending `onAnimatedValueUpdate` with no listeners registered.',
+  ]);
   const TopTabsArr = [
     {component: CommercialsBusiness, name: 'Business'},
     {
@@ -298,9 +348,6 @@ function Commercials() {
               tabBarIndicatorStyle: {backgroundColor: COLORS.primary},
               tabBarPressColor: '#f2f2f2',
               title: data.name,
-              tabBarItemStyle: {
-                marginTop: Platform.OS === 'ios' ? 45 : 10,
-              },
             }}
           />
         );
