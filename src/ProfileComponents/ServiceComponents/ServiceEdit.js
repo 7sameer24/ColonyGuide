@@ -178,8 +178,7 @@ const ServiceEdit = ({navigation, route}) => {
                 source={
                   imageUp
                     ? imageUp
-                    : data.logo_image ==
-                      'https://colonyguide.com/portal/storage'
+                    : data.logo_image == 'https://admin.colonyguide.com/storage'
                     ? Images.Ellipse
                     : {uri: data.logo_image}
                 }

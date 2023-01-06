@@ -97,7 +97,7 @@ const AdminUserInfo = ({route, navigation}) => {
         <ImageZoomComponent
           visible={visible}
           ImageView={
-            image === 'https://colonyguide.com/portal/storage'
+            image === 'https://admin.colonyguide.com/storage'
               ? images
               : ImageView
           }
@@ -123,7 +123,7 @@ const AdminUserInfo = ({route, navigation}) => {
               onPress={() => setIsvisible(true)}>
               <Image
                 source={
-                  image == 'https://colonyguide.com/portal/storage'
+                  image == 'https://admin.colonyguide.com/storage'
                     ? Images.Ellipse
                     : {uri: image}
                 }

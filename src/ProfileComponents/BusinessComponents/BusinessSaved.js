@@ -54,7 +54,7 @@ const BusinessSaved = ({route, navigation}) => {
           <View style={styles.radiusView}>
             <Image
               source={
-                Userdata.logo_image === 'https://colonyguide.com/portal/storage'
+                Userdata.logo_image === 'https://admin.colonyguide.com/storage'
                   ? Images.Ellipse
                   : {uri: Userdata.logo_image}
               }

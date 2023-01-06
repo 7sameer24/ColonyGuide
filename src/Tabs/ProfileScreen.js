@@ -135,7 +135,7 @@ const ProfileScreen = ({navigation}) => {
                   Userdata.userData.app_role_id == 2
                     ? {uri: Userdata.userData.logo_image}
                     : Userdata.userData.profile_image ===
-                      'https://colonyguide.com/portal/storage'
+                      'https://admin.colonyguide.com/storage'
                     ? Images.Ellipse
                     : {uri: Userdata.userData.profile_image}
                 }
@@ -232,17 +232,19 @@ const ProfileScreen = ({navigation}) => {
                   }
                 />
               )}
-              {/* <ProfileComponents
-                onPress={() =>
-                  navigation.navigate('Products List', {
-                    userID: Userdata.userData.id,
-                    userToken: UserToken,
-                  })
-                }
-                iconName="chevron-forward-outline"
-                IconSvg={<AddMember />}
-                title="Add Products"
-              /> */}
+              {Userdata.userData.app_role_id === 3 && (
+                <ProfileComponents
+                  onPress={() =>
+                    navigation.navigate('Products List', {
+                      userID: Userdata.userData.id,
+                      userToken: UserToken,
+                    })
+                  }
+                  iconName="chevron-forward-outline"
+                  IconSvg={<AddMember />}
+                  title="Add Products"
+                />
+              )}
               {Userdata.userData.app_role_id === 3 && (
                 <>
                   <ProfileComponents

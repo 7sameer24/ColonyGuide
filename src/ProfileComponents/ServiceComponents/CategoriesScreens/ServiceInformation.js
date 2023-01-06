@@ -118,7 +118,7 @@ const ServiceInformation = ({route, navigation}) => {
         <ImageZoomComponent
           visible={visible}
           ImageView={
-            infoData.logo_image === 'https://colonyguide.com/portal/storage'
+            infoData.logo_image === 'https://admin.colonyguide.com/storage'
               ? images
               : ImageView
           }
@@ -145,7 +145,7 @@ const ServiceInformation = ({route, navigation}) => {
               <Image
                 source={
                   infoData.logo_image ===
-                  'https://colonyguide.com/portal/storage'
+                  'https://admin.colonyguide.com/storage'
                     ? Images.Ellipse
                     : {uri: infoData.logo_image}
                 }
@@ -249,7 +249,7 @@ const ServiceInformation = ({route, navigation}) => {
               <Image
                 source={
                   infoData.logo_image ===
-                  'https://colonyguide.com/portal/storage'
+                  'https://admin.colonyguide.com/storage'
                     ? Images.Ellipse
                     : {uri: infoData.logo_image}
                 }

@@ -203,7 +203,7 @@ const BusinessEdit = ({navigation, route}) => {
                     imageUp
                       ? imageUp
                       : data.logo_image ==
-                        'https://colonyguide.com/portal/storage'
+                        'https://admin.colonyguide.com/storage'
                       ? Images.Ellipse
                       : {uri: data.logo_image}
                   }

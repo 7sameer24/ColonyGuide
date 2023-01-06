@@ -133,7 +133,7 @@ const EditProfile = ({route, navigation}) => {
   };
 
   const openGallery = () => {
-       let opetions = {
+    let opetions = {
       mediaType: 'photo',
       path: 'images',
       maxWidth: 500,
@@ -221,7 +221,7 @@ const EditProfile = ({route, navigation}) => {
                   : data.app_role_id == 2
                   ? {uri: data.logo_image}
                   : data.profile_image ==
-                    'https://colonyguide.com/portal/storage'
+                    'https://admin.colonyguide.com/storage'
                   ? Images.Ellipse
                   : {uri: data.profile_image}
               }

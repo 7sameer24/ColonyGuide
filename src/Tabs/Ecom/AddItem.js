@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles, SIZES} from '../../constants';
 import {Card, Icon, Image} from 'react-native-elements';
 import ModalPopup from '../../Components/ModalPopup';
@@ -13,10 +13,23 @@ import ImagePicker from 'react-native-image-crop-picker';
 import InputComponent from '../../Components/InputComponent';
 import ButtonComponent from '../../Components/ButtonComponent';
 import Poweredby from '../../Components/Poweredby';
+import Toast from '../../Components/Toast';
+import {useToast} from 'react-native-toast-notifications';
+import BaseURL from '../../constants/BaseURL';
+import {useApp} from '../../../Context/AppContext';
 
-const AddItem = () => {
+const AddItem = ({navigation, route}) => {
   const [visible, setIsvisible] = useState(false);
+  const [spinner, setSpinner] = useState(false);
   const [imageData, setImageData] = useState([]);
+
+  const {Userdata, UserToken} = useApp();
+  const [productData, updateProductData] = useState({
+    name: '',
+    variation: '',
+    price: '',
+  });
+
   let opetions = {
     cropping: true,
     mediaType: 'photo',
@@ -46,13 +59,93 @@ const AddItem = () => {
         console.log(e);
       });
   };
+  const toast = useToast();
+
+  const Saved = async () => {
+    if (!productData.name) {
+      Toast(toast, 'Please enter product name');
+    } else if (!productData.variation) {
+      Toast(toast, 'Please enter variation');
+    } else if (!productData.price) {
+      Toast(toast, 'Please enter price');
+    } else if (imageData.length === 0) {
+      Toast(toast, 'Please select image');
+    } else {
+      try {
+        setSpinner(true);
+        const data = new FormData();
+        data.append('user_id', Userdata.userData.id);
+        data.append('name', productData.name);
+        data.append('variation', productData.variation);
+        data.append('price', productData.price);
+        data.append(
+          'image',
+          imageData && {
+            uri: imageData.path,
+            type: imageData.mime,
+            name: imageData.path,
+          },
+        );
+        const res = await fetch(BaseURL('add-edit-product'), {
+          method: 'post',
+          body: data,
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${UserToken}`,
+            accept: 'application/json',
+          },
+        });
+        let response = await res.json();
+        setSpinner(false);
+        if (response.success === true) {
+          navigation.navigate('Profile');
+          Toast(toast, response.message);
+        } else {
+          console.log(response.message);
+          Toast(toast, response.message);
+        }
+      } catch (error) {
+        setSpinner(false);
+        console.log(error);
+      }
+    }
+  };
+  const produpdateData = () => {
+    updateProductData({
+      ...productData,
+      name: route.params.editData.name,
+      variation: route.params.editData.variation,
+      price: route.params.editData.price,
+    });
+    setImageData({path: route.params.editData.image});
+  };
+  useEffect(() => {
+    route.params && produpdateData();
+  }, []);
 
   return (
     <View style={genericStyles.Container}>
       <ScrollView>
-        <InputComponent placeholder="Product Name" />
-        <InputComponent placeholder="Variations" />
-        <InputComponent placeholder="Price" />
+        <InputComponent
+          placeholder="Product Name"
+          value={productData.name}
+          onChangeText={text => updateProductData({...productData, name: text})}
+        />
+        <InputComponent
+          placeholder="Variations"
+          value={productData.variation}
+          onChangeText={text =>
+            updateProductData({...productData, variation: text})
+          }
+        />
+        <InputComponent
+          placeholder="Price"
+          keyboardType="number-pad"
+          value={productData.price}
+          onChangeText={text =>
+            updateProductData({...productData, price: text})
+          }
+        />
         <Text style={styles.categoryTex}>
           Upload Image / छवि इसे अपलोड करें
         </Text>
@@ -100,6 +193,8 @@ const AddItem = () => {
       </ScrollView>
       <ButtonComponent
         title="Submit"
+        loading={spinner}
+        onPress={Saved}
         ButtonContainer={genericStyles.width('90%')}
       />
       <Poweredby container={{flex: 0}} />
@@ -115,7 +210,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: COLORS.black,
     marginLeft: 20,
-    marginTop: 10,
   },
   categorySub: {
     fontFamily: FONTS.InterRegular,
@@ -162,6 +256,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 0,
     borderRadius: 5,
-    marginBottom: 10,
+    marginTop: 10,
+    marginBottom: 15,
   },
 });

@@ -62,7 +62,7 @@ const ServiceList = ({navigation, route}) => {
         <ImageZoomComponent
           visible={visible}
           ImageView={
-            profileShow === 'https://colonyguide.com/portal/storage'
+            profileShow === 'https://admin.colonyguide.com/storage'
               ? images
               : ImageView
           }
@@ -114,7 +114,7 @@ const ServiceList = ({navigation, route}) => {
                         }}
                         source={
                           data.logo_image ===
-                          'https://colonyguide.com/portal/storage'
+                          'https://admin.colonyguide.com/storage'
                             ? require('../../../../assets/Image_not_available.png')
                             : {uri: data.logo_image}
                         }

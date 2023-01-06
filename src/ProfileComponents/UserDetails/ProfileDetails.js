@@ -63,7 +63,7 @@ const ProfileDetails = ({navigation, route}) => {
                   userData.app_role_id == 2
                     ? {uri: userData.logo_image}
                     : userData.profile_image ===
-                      'https://colonyguide.com/portal/storage'
+                      'https://admin.colonyguide.com/storage'
                     ? Images.Ellipse
                     : {uri: userData.profile_image}
                 }

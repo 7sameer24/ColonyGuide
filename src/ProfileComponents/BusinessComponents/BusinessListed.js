@@ -67,7 +67,7 @@ const BusinessListed = ({navigation}) => {
               }>
               <CardsListed
                 source={
-                  data.logo_image === 'https://colonyguide.com/portal/storage'
+                  data.logo_image === 'https://admin.colonyguide.com/storage'
                     ? require('../../../assets/Image_not_available.png')
                     : {uri: data.logo_image}
                 }

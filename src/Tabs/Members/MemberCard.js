@@ -29,6 +29,8 @@ const MemberCard = ({
   ServiceId,
   OnRoomDelete,
   RoomId,
+  onProductDelete,
+  id,
 }) => {
   const toast = useToast();
 
@@ -46,6 +48,39 @@ const MemberCard = ({
       ],
       {cancelable: false},
     );
+  };
+  const deleteProductAlert = () => {
+    Alert.alert(
+      'Product',
+      'Are you sure you want to delete product ?',
+      [
+        {text: 'Ok', onPress: () => deleteProduct()},
+        {text: 'Cancel', style: 'cancel'},
+      ],
+      {cancelable: false},
+    );
+  };
+
+  const deleteProduct = async () => {
+    try {
+      updateLoading(true);
+      const response = await axios(BaseURL('product-delete'), {
+        method: 'post',
+        data: {
+          id: id,
+        },
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      updateLoading(false);
+      onUpdate([]);
+      fetchMemberList();
+      Toast(toast, response.data.message);
+    } catch (error) {
+      updateLoading(false);
+      console.log(error);
+    }
   };
   const openLockAlert3 = () => {
     Alert.alert(
@@ -185,7 +220,9 @@ const MemberCard = ({
               color={COLORS.red}
               reverse
               onPress={() => {
-                if (onServiceDelete) {
+                if (onProductDelete) {
+                  deleteProductAlert();
+                } else if (onServiceDelete) {
                   openLockAlert2();
                 } else if (OnRoomDelete) {
                   openLockAlert3();

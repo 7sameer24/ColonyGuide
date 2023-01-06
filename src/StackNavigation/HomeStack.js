@@ -1,5 +1,5 @@
 import React from 'react';
-import {LogBox, StyleSheet, Text, View} from 'react-native';
+import {LogBox, Platform, StyleSheet, Text, View} from 'react-native';
 import {COLORS, FONTS, genericStyles} from '../constants';
 import {Icon} from 'react-native-elements';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -365,9 +365,16 @@ const HomeStack = () => {
             header: props => {
               return (
                 <View style={genericStyles.bg('white')}>
-                <View style={[genericStyles.rowWithCenter, {marginTop: 40}]}>
+                  <View
+                    style={[
+                      genericStyles.rowWithCenter,
+                      {
+                        marginTop: Platform.OS === 'ios' ? 40 : 10,
+                        marginBottom: 10,
+                      },
+                    ]}>
                     <Icon
-                    onPress={()=>props.navigation.goBack()}
+                      onPress={() => props.navigation.goBack()}
                       name="arrow-back"
                       type="ionicon"
                       color={COLORS.black}
@@ -393,7 +400,9 @@ function MyTopTabs() {
     {component: RoomsFlats, name: '2 BHK', ID: '2'},
     {component: RoomsFlats, name: '3 BHK', ID: '3'},
   ];
-  LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no listeners registered.']);
+  LogBox.ignoreLogs([
+    'Sending `onAnimatedValueUpdate` with no listeners registered.',
+  ]);
   return (
     <TopTab.Navigator>
       {TopTabsArr.map(data => {
@@ -422,7 +431,9 @@ function MyMatrimonial() {
     {component: MMFemale, name: 'Female', ID: 'Female'},
     {component: MMMale, name: 'Male', ID: 'Male'},
   ];
-  LogBox.ignoreLogs(['Sending `onAnimatedValueUpdate` with no listeners registered.']);
+  LogBox.ignoreLogs([
+    'Sending `onAnimatedValueUpdate` with no listeners registered.',
+  ]);
   return (
     <TopTab.Navigator>
       {TopTabsArr.map(data => {

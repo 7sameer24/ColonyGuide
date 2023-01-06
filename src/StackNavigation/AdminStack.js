@@ -1,5 +1,5 @@
 import React from 'react';
-import {LogBox, StyleSheet, Text} from 'react-native';
+import {LogBox, Platform, StyleSheet, Text} from 'react-native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
@@ -100,7 +100,14 @@ const ScreenStack = () => {
           header: props => {
             return (
               <View style={genericStyles.bg('white')}>
-                <View style={[genericStyles.rowWithCenter, {marginTop: 40}]}>
+                <View
+                  style={[
+                    genericStyles.rowWithCenter,
+                    {
+                      marginTop: Platform.OS === 'ios' ? 40 : 10,
+                      marginBottom: 10,
+                    },
+                  ]}>
                   <Icon
                     onPress={() => props.navigation.goBack()}
                     name="arrow-back"
@@ -122,7 +129,14 @@ const ScreenStack = () => {
           header: props => {
             return (
               <View style={genericStyles.bg('white')}>
-                <View style={[genericStyles.rowWithCenter, {marginTop: 40}]}>
+                <View
+                  style={[
+                    genericStyles.rowWithCenter,
+                    {
+                      marginTop: Platform.OS === 'ios' ? 40 : 10,
+                      marginBottom: 10,
+                    },
+                  ]}>
                   <Icon
                     onPress={() => props.navigation.goBack()}
                     name="arrow-back"
@@ -144,7 +158,14 @@ const ScreenStack = () => {
           header: props => {
             return (
               <View style={genericStyles.bg('white')}>
-                <View style={[genericStyles.rowWithCenter, {marginTop: 40}]}>
+                <View
+                  style={[
+                    genericStyles.rowWithCenter,
+                    {
+                      marginTop: Platform.OS === 'ios' ? 40 : 10,
+                      marginBottom: 10,
+                    },
+                  ]}>
                   <Icon
                     onPress={() => props.navigation.goBack()}
                     name="arrow-back"

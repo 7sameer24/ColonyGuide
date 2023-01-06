@@ -118,7 +118,7 @@ const BusinessInformation = ({route, navigation}) => {
         <ImageZoomComponent
           visible={visible}
           ImageView={
-            busInfoData.logo_image === 'https://colonyguide.com/portal/storage'
+            busInfoData.logo_image === 'https://admin.colonyguide.com/storage'
               ? images
               : ImageView
           }
@@ -145,7 +145,7 @@ const BusinessInformation = ({route, navigation}) => {
               <Image
                 source={
                   busInfoData.logo_image ===
-                  'https://colonyguide.com/portal/storage'
+                  'https://admin.colonyguide.com/storage'
                     ? Images.Ellipse
                     : {uri: busInfoData.logo_image}
                 }
