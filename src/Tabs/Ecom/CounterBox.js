@@ -14,7 +14,7 @@ const CounterBox = ({Qnty, plus, minus, styleContainer, textStyle, touch}) => {
       {Qnty ? (
         <Text style={[styles.title600, {...textStyle}]}>{Qnty}</Text>
       ) : (
-        <ActivityIndicator color={COLORS.primary} size="small" />
+        <ActivityIndicator color={COLORS.lightGray} size="small" />
       )}
       <TouchableOpacity
         onPress={plus}
@@ -29,11 +29,15 @@ export default CounterBox;
 
 const styles = StyleSheet.create({
   container: {
-    width: '82%',
+    width: 150,
     borderRadius: 5,
+    marginVertical: 0,
+    paddingVertical: 0,
     alignItems: 'center',
+    alignSelf: 'center',
     flexDirection: 'row',
     justifyContent: 'space-around',
+    marginTop: 5,
     backgroundColor: COLORS.primary,
   },
   title600: {

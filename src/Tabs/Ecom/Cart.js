@@ -1,49 +1,159 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {COLORS, FONTS, genericStyles} from '../../constants';
 import {StyleSheet, Text, View} from 'react-native';
 import {Card, Icon, Image} from 'react-native-elements';
 import CounterBox from './CounterBox';
+import BaseURL from '../../constants/BaseURL';
+import axios from 'axios';
+import {useApp} from '../../../Context/AppContext';
+import SkeletonView from '../../Components/SkeletonView';
+import {ScrollView} from 'react-native';
+import ButtonComponent from '../../Components/ButtonComponent';
+import {useToast} from 'react-native-toast-notifications';
+import Toast from '../../Components/Toast';
+import NoDataAni from '../../Components/NoDataAni';
 
-const Cart = () => {
+const Cart = ({navigation}) => {
+  const [allData, updateAllData] = useState([]);
+  const [loading, updateLoading] = useState(false);
+  const [orderLoading, updateOrderLoading] = useState(false);
+  const toast = useToast();
+
+  const {Userdata, UserToken, onCartApi, count, updateCount} = useApp();
+
+  const fetchCart = async () => {
+    updateAllData([]);
+    try {
+      updateLoading(true);
+      const response = await axios(BaseURL('cart-list'), {
+        method: 'post',
+        data: {user_id: Userdata.userData.id},
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      updateLoading(false);
+      if (response.data.success == true) {
+        updateAllData(response.data);
+        console.log(response.data.total_price);
+      }
+    } catch (error) {
+      updateLoading(false);
+      console.log(error);
+    }
+  };
+
+  const orderPlace = async () => {
+    updateOrderLoading(true);
+    try {
+      const response = await axios(BaseURL('order-place'), {
+        method: 'post',
+        data: {user_id: Userdata.userData.id},
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      updateOrderLoading(false);
+      if (response.data.success == true) {
+        Toast(toast, 'Order Place successfully');
+        updateCount(0);
+        navigation.navigate('Homee');
+      }
+    } catch (error) {
+      updateOrderLoading(false);
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCart();
+  }, []);
+
   return (
     <View style={genericStyles.container}>
-      <Card
-        containerStyle={styles.ItemCard}
-        wrapperStyle={{
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          alignItems: 'flex-end',
-        }}>
-        <View style={genericStyles.rowWithCenter}>
-          {/* <Image
-                source={{
-                  uri: imageURL(x.item_rows.item_images[0].image_name),
-                }}
-                style={styles.orderImg}
-              /> */}
-          <View>
+      {allData.data?.length > 0 && (
+        <>
+          <ScrollView>
+            {allData.data.map((d, i) => {
+              const key = d.product?.id;
+              return (
+                <Card
+                  key={i}
+                  containerStyle={styles.ItemCard}
+                  wrapperStyle={{
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                    alignItems: 'flex-end',
+                  }}>
+                  <View style={genericStyles.rowWithCenter}>
+                    {/* <Image
+              source={{
+                uri: imageURL(d.product.image),
+              }}
+              style={styles.orderImg}
+            /> */}
+                    <View>
+                      <Text numberOfLines={1} style={styles.subtitle}>
+                        {d.product?.name}
+                      </Text>
+                      <Text numberOfLines={1} style={styles.subtitle}>
+                        {`₹ ${d.product?.price} (${d.product?.variation})`}
+                      </Text>
+                      <CounterBox
+                        plus={() => {
+                          onCartApi(key, 'Plus', d.product?.user_id);
+                          let price = parseInt(d.product.price);
+                          allData.total_price += price;
+                        }}
+                        minus={() => {
+                          onCartApi(key, 'Minus', d.product?.user_id);
+                          let price = parseInt(d.product.price);
+                          allData.total_price -= price;
+                        }}
+                        Qnty={count[key]}
+                        touch={{paddingVertical: 0}}
+                        styleContainer={styles.container}
+                        textStyle={genericStyles.color(COLORS.primary)}
+                      />
+                    </View>
+                  </View>
+                  <Icon
+                    size={25}
+                    color="red"
+                    name="trash"
+                    onPress={() => {
+                      onCartApi(key, 'Remove', d.product?.user_id);
+                      fetchCart();
+                    }}
+                    type="ionicon"
+                    containerStyle={genericStyles.mb(5)}
+                  />
+                </Card>
+              );
+            })}
+          </ScrollView>
+          <View
+            style={[
+              genericStyles.rowWithCenterAndSB,
+              {marginHorizontal: 20, marginBottom: 10},
+            ]}>
             <Text numberOfLines={1} style={styles.subtitle}>
-              Paneer
+              Payable Amount
             </Text>
             <Text numberOfLines={1} style={styles.subtitle}>
-              30/kg
+              {allData.total_price}
             </Text>
-            <CounterBox
-              Qnty="1"
-              styleContainer={styles.container}
-              touch={{paddingVertical: 0}}
-              textStyle={genericStyles.color(COLORS.primary)}
-            />
           </View>
-        </View>
-        <Icon
-          size={25}
-          color="red"
-          name="trash"
-          type="ionicon"
-          containerStyle={genericStyles.mb(5)}
-        />
-      </Card>
+          <ButtonComponent
+            title="Place Order"
+            loading={orderLoading}
+            onPress={() => orderPlace()}
+            ButtonContainer={{width: '90%', marginBottom: 10}}
+          />
+        </>
+      )}
+      {loading && <SkeletonView />}
+      {!loading && allData.data?.length === 0 && <NoDataAni />}
     </View>
   );
 };

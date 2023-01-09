@@ -1,5 +1,7 @@
 import React, {createContext, useContext, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import BaseURL from '../src/constants/BaseURL';
 
 const App = createContext();
 export const navigationStateType = {
@@ -33,6 +35,49 @@ const AppContext = ({children}) => {
   const [adminData, setAdminData] = useState(null);
   const [adminToken, setAdminToken] = useState(null);
   const [onRefresh, setRefresh] = useState(false);
+  const [count, updateCount] = useState(0);
+
+  const onCartApi = async (productId, type, user_id) => {
+    try {
+      const response = await axios(BaseURL('add-edit-cart'), {
+        method: 'post',
+        data: {
+          user_id: user_id,
+          product_id: productId,
+          quantity: 1,
+          type: type,
+        },
+        headers: {
+          Authorization: `Bearer ${UserToken}`,
+        },
+      });
+      if (response.data.success == true) {
+        if (type === 'Remove') {
+          updateCount({...count, [productId]: 0});
+        } else {
+          onAddCart(productId, type);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onAddCart = (productId, type) => {
+    const key = productId;
+    if (count[key] === undefined) {
+      updateCount({...count, [productId]: 1});
+    } else if (count[key] === 0) {
+      updateCount({...count, [productId]: 1});
+    } else {
+      if (type === 'Plus') {
+        count[key] = count[key] + 1;
+      } else {
+        count[key] = count[key] - 1;
+      }
+      updateCount({...count});
+    }
+  };
 
   useEffect(() => {
     const saveDetail = async () => {
@@ -82,6 +127,10 @@ const AppContext = ({children}) => {
         setAdminToken,
         onRefresh,
         setRefresh,
+        onCartApi,
+        count,
+        updateCount,
+        onAddCart,
       }}>
       {children}
     </App.Provider>

@@ -17,6 +17,7 @@ import Toast from '../../Components/Toast';
 import {useToast} from 'react-native-toast-notifications';
 import BaseURL from '../../constants/BaseURL';
 import {useApp} from '../../../Context/AppContext';
+import DropDownComponent from '../../Components/DropDownComponent';
 
 const AddItem = ({navigation, route}) => {
   const [visible, setIsvisible] = useState(false);
@@ -123,6 +124,14 @@ const AddItem = ({navigation, route}) => {
     route.params && produpdateData();
   }, []);
 
+  const dropData = [
+    {label: '250gm', value: '250gm'},
+    {label: '500gm', value: '500gm'},
+    {label: '1kg', value: '1kg'},
+    {label: '500ml', value: '500ml'},
+    {label: '1ltr', value: '1ltr'},
+  ];
+
   return (
     <View style={genericStyles.Container}>
       <ScrollView>
@@ -131,13 +140,23 @@ const AddItem = ({navigation, route}) => {
           value={productData.name}
           onChangeText={text => updateProductData({...productData, name: text})}
         />
-        <InputComponent
+        <DropDownComponent
+          data={dropData}
+          maxHeight={200}
+          labelField="label"
+          valueField="value"
           placeholder="Variations"
+          value={productData.variation}
+          onChange={item =>
+            updateProductData({...productData, variation: item.value})
+          }
+        />
+        {/* <InputComponent
           value={productData.variation}
           onChangeText={text =>
             updateProductData({...productData, variation: text})
           }
-        />
+        /> */}
         <InputComponent
           placeholder="Price"
           keyboardType="number-pad"

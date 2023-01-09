@@ -121,7 +121,7 @@ const ProfileScreen = ({navigation}) => {
         title="Profile"
         navigation={navigation}
         firstIcon="menu"
-        // bellIcon="cart"
+        bellIcon="cart"
         ThirdType="ionicon"
         thirdOnpress={() => navigation.navigate('Cart')}
         firstOnpress={() => navigation.toggleDrawer()}
@@ -232,7 +232,7 @@ const ProfileScreen = ({navigation}) => {
                   }
                 />
               )}
-              {Userdata.userData.app_role_id === 3 && (
+              {Userdata.userData.app_role_id === 2 && (
                 <ProfileComponents
                   onPress={() =>
                     navigation.navigate('Products List', {

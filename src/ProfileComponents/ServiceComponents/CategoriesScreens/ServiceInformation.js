@@ -21,11 +21,12 @@ import {useToast} from 'react-native-toast-notifications';
 import Toast from '../../../Components/Toast';
 import {ScrollView} from 'react-native';
 import ButtonComponent from '../../../Components/ButtonComponent';
+import CounterBox from '../../../Tabs/Ecom/CounterBox';
 
 const ServiceInformation = ({route, navigation}) => {
   const toast = useToast();
   const {ID, infoData} = route.params;
-  const {Userdata, setIsLoginPop} = useApp();
+  const {Userdata, setIsLoginPop, onCartApi, count} = useApp();
   const [loading, updateLoading] = useState(false);
   const [visible, setIsvisible] = useState(false);
 
@@ -138,144 +139,179 @@ const ServiceInformation = ({route, navigation}) => {
             titleStyle={genericStyles.color(COLORS.white)}
             firstOnpress={() => navigation.goBack()}
           />
-          <View style={styles.radiusView}>
-            <TouchableOpacity
-              activeOpacity={0.8}
-              onPress={() => setIsvisible(true)}>
-              <Image
-                source={
-                  infoData.logo_image ===
-                  'https://admin.colonyguide.com/storage'
-                    ? Images.Ellipse
-                    : {uri: infoData.logo_image}
-                }
-                style={styles.ImageStyle}
-                fadeDuration={0}
-              />
-            </TouchableOpacity>
-          </View>
-          {infoData.contact_person !== null ? (
-            <Text style={styles.title}>{infoData.contact_person}</Text>
-          ) : null}
-          {infoData.name !== null ? (
-            <Text style={styles.subTitle}>{infoData.name}</Text>
-          ) : null}
-          <View style={styles.DetailsContanier}>
-            <View style={genericStyles.column}>
+          <ScrollView>
+            <View style={styles.radiusView}>
               <TouchableOpacity
-                style={styles.firstView}
-                onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : callCount(1)
-                }>
-                <Icon
-                  name="phone-outgoing"
-                  type="material-community"
-                  color="#407BFF"
-                  size={20}
+                activeOpacity={0.8}
+                onPress={() => setIsvisible(true)}>
+                <Image
+                  source={
+                    infoData.logo_image ===
+                    'https://admin.colonyguide.com/storage'
+                      ? Images.Ellipse
+                      : {uri: infoData.logo_image}
+                  }
+                  style={styles.ImageStyle}
+                  fadeDuration={0}
                 />
-                <Text style={styles.text}>+91-{`${start}xxxxxx${end}`} </Text>
               </TouchableOpacity>
-              <View style={genericStyles.row}>
-                <Icon
-                  name="store"
-                  type="material-community"
-                  size={20}
-                  color="#A484FF"
-                />
-                <Text style={styles.text}>{infoData.categoryName}</Text>
-              </View>
             </View>
-            <View>
-              <TouchableOpacity
-                style={styles.firstView}
-                onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : callCount(2)
-                }>
-                <Icon
-                  name="whatsapp"
-                  type="material-community"
-                  size={20}
-                  color="#25D366"
-                />
-                <Text style={styles.text}>+91-{`${start2}xxxxxx${end2}`} </Text>
-              </TouchableOpacity>
+            {infoData.contact_person !== null ? (
+              <Text style={styles.title}>{infoData.contact_person}</Text>
+            ) : null}
+            {infoData.name !== null ? (
+              <Text style={styles.subTitle}>{infoData.name}</Text>
+            ) : null}
+            <View style={styles.DetailsContanier}>
+              <View style={genericStyles.column}>
+                <TouchableOpacity
+                  style={styles.firstView}
+                  onPress={() =>
+                    Userdata === null ? setIsLoginPop(true) : callCount(1)
+                  }>
+                  <Icon
+                    name="phone-outgoing"
+                    type="material-community"
+                    color="#407BFF"
+                    size={20}
+                  />
+                  <Text style={styles.text}>+91-{`${start}xxxxxx${end}`} </Text>
+                </TouchableOpacity>
+                <View style={genericStyles.row}>
+                  <Icon
+                    name="store"
+                    type="material-community"
+                    size={20}
+                    color="#A484FF"
+                  />
+                  <Text style={styles.text}>{infoData.categoryName}</Text>
+                </View>
+              </View>
+              <View>
+                <TouchableOpacity
+                  style={styles.firstView}
+                  onPress={() =>
+                    Userdata === null ? setIsLoginPop(true) : callCount(2)
+                  }>
+                  <Icon
+                    name="whatsapp"
+                    type="material-community"
+                    size={20}
+                    color="#25D366"
+                  />
+                  <Text style={styles.text}>
+                    +91-{`${start2}xxxxxx${end2}`}{' '}
+                  </Text>
+                </TouchableOpacity>
 
+                <TouchableOpacity
+                  style={genericStyles.row}
+                  onPress={() =>
+                    Userdata === null ? setIsLoginPop(true) : onShare()
+                  }>
+                  <Icon
+                    name="share-social"
+                    type="ionicon"
+                    size={20}
+                    color={COLORS.primary}
+                  />
+                  <Text style={styles.text}>Share Profile</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+            <View style={genericStyles.ml(20)}>
+              <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
+                Service Offered
+              </Text>
+              <Text style={styles.SubText}>
+                {infoData.about == 'null' ? '' : infoData.about}
+              </Text>
+              <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
+                Shop address
+              </Text>
               <TouchableOpacity
-                style={genericStyles.row}
-                onPress={() =>
-                  Userdata === null ? setIsLoginPop(true) : onShare()
-                }>
-                <Icon
-                  name="share-social"
-                  type="ionicon"
-                  size={20}
-                  color={COLORS.primary}
-                />
-                <Text style={styles.text}>Share Profile</Text>
+                onPress={() => {
+                  if (Platform.OS === 'ios') {
+                    Linking.openURL(
+                      `http://maps.apple.com/maps?daddr=${infoData.house_no}+${infoData.address}, Udaipur, Rajasthan`,
+                    );
+                  } else {
+                    Linking.openURL(
+                      `google.navigation:q=${infoData.house_no}+${infoData.address}, Udaipur, Rajasthan`,
+                    );
+                  }
+                }}>
+                <Text style={styles.VisitTitle}>
+                  {`${infoData.house_no} ${infoData.address} ${
+                    infoData.landmark == null ? '' : infoData.landmark
+                  }`}
+                </Text>
               </TouchableOpacity>
             </View>
-          </View>
-          <View style={genericStyles.ml(20)}>
-            <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              Service Offered
-            </Text>
-            <Text style={styles.SubText}>
-              {infoData.about == 'null' ? '' : infoData.about}
-            </Text>
-            <Text style={[styles.title, {alignSelf: 'flex-start'}]}>
-              Shop address
-            </Text>
-            <TouchableOpacity
-              onPress={() => {
-                if (Platform.OS === 'ios') {
-                  Linking.openURL(
-                    `http://maps.apple.com/maps?daddr=${infoData.house_no}+${infoData.address}, Udaipur, Rajasthan`,
-                  );
-                } else {
-                  Linking.openURL(
-                    `google.navigation:q=${infoData.house_no}+${infoData.address}, Udaipur, Rajasthan`,
-                  );
-                }
-              }}>
-              <Text style={styles.VisitTitle}>
-                {`${infoData.house_no} ${infoData.address} ${
-                  infoData.landmark == null ? '' : infoData.landmark
-                }`}
-              </Text>
-            </TouchableOpacity>
-          </View>
-          {/* <ScrollView horizontal>
-            <Card containerStyle={styles.ietmContainer}>
-              <Image
-                source={
-                  infoData.logo_image ===
-                  'https://admin.colonyguide.com/storage'
-                    ? Images.Ellipse
-                    : {uri: infoData.logo_image}
-                }
-                style={{
-                  width: 155,
-                  height: 100,
-                  borderRadius: 10,
-                  marginBottom: 5,
-                }}
-                fadeDuration={0}
-              />
-              <View style={genericStyles.rowWithCenterAndSB}>
-                <Text style={[styles.text, {fontFamily: FONTS.InterSemiBold}]}>
-                  Paneer
-                </Text>
-                <Text style={[styles.text, {fontFamily: FONTS.InterSemiBold}]}>
-                  30/kg
-                </Text>
-              </View>
-              <ButtonComponent
-                buttonStyle={genericStyles.pv(5)}
-                ButtonContainer={styles.addCart}
-                title="Add To Cart"
-              />
-            </Card>
-          </ScrollView> */}
+            <ScrollView
+              horizontal
+              style={genericStyles.height(180)}
+              showsHorizontalScrollIndicator={false}>
+              {infoData.products.map((d, i) => {
+                return (
+                  <Card containerStyle={styles.ietmContainer} key={i}>
+                    <Image
+                      source={
+                        infoData.logo_image ===
+                        'https://admin.colonyguide.com/storage'
+                          ? Images.Ellipse
+                          : {uri: infoData.logo_image}
+                      }
+                      style={{
+                        width: 145,
+                        height: 90,
+                        borderRadius: 10,
+                      }}
+                      fadeDuration={0}
+                    />
+                    <View style={genericStyles.rowWithCenterAndSB}>
+                      <Text
+                        style={[
+                          styles.text,
+                          {fontFamily: FONTS.InterSemiBold},
+                        ]}>
+                        {d.name}
+                      </Text>
+
+                      <Text
+                        style={[
+                          styles.text,
+                          {fontFamily: FONTS.InterSemiBold},
+                        ]}>
+                        {` (${d.variation})`}
+                      </Text>
+                    </View>
+                    <Text
+                      style={[styles.text, {fontFamily: FONTS.InterSemiBold}]}>
+                      {`₹ ${d.price}`}
+                    </Text>
+                    {count[d.id] !== undefined && count[d.id] !== 0 ? (
+                      <CounterBox
+                        plus={() => onCartApi(d.id, 'Plus', infoData.user_id)}
+                        minus={() => onCartApi(d.id, 'Minus', infoData.user_id)}
+                        Qnty={count[d.id]}
+                        touch={{paddingVertical: 3}}
+                      />
+                    ) : (
+                      <ButtonComponent
+                        buttonStyle={genericStyles.pv(5)}
+                        ButtonContainer={styles.addCart}
+                        title="Add To Cart"
+                        onPress={() =>
+                          onCartApi(d.id, 'Plus', infoData.user_id)
+                        }
+                      />
+                    )}
+                  </Card>
+                );
+              })}
+            </ScrollView>
+          </ScrollView>
         </>
       )}
       <SpinnerModal visible={loading} />
@@ -370,17 +406,18 @@ const styles = StyleSheet.create({
   },
   addCart: {
     width: '96%',
-    marginTop: 10,
+    marginTop: 5,
     borderRadius: 10,
     marginHorizontal: 5,
   },
   ietmContainer: {
     height: 200,
     margin: 10,
+    marginTop: 20,
     borderRadius: 10,
-    borderWidth: 0,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
+    borderWidth: 1,
+    // borderLeftWidth: 1,
+    // borderRightWidth: 1,
     borderColor: COLORS.primary,
   },
 });

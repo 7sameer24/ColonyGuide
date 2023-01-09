@@ -134,7 +134,8 @@ const HomeScreen = ({navigation}) => {
               ? setIsLoginPop(true)
               : navigation.navigate('Notification')
           }
-          // searchIcon="cart"
+          searchIcon="cart"
+          searchIconStyle={genericStyles.ml(10)}
           navigation={navigation}
           firstIcon="menu"
           ThirdType="material-community"

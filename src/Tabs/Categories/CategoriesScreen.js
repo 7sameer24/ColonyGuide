@@ -14,10 +14,11 @@ const CategoriesScreen = ({navigation}) => {
     <View style={genericStyles.Container}>
       <HeaderBar
         title="Categories"
-        // bellIcon="cart"
+        bellIcon="cart"
         ThirdType="ionicon"
         navigation={navigation}
         firstIcon="menu"
+        thirdOnpress={() => navigation.navigate('Cart')}
         firstOnpress={() => navigation.toggleDrawer()}
       />
       {categories.length > 0 && (
