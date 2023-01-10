@@ -56,6 +56,7 @@ import EditRoom from '../Tabs/HouseOwner/EditRoom';
 import ItemList from '../Tabs/Ecom/ItemList';
 import AddItem from '../Tabs/Ecom/AddItem';
 import Cart from '../Tabs/Ecom/Cart';
+import MyOrders from '../Tabs/Ecom/MyOrders';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -339,6 +340,13 @@ const HomeStack = () => {
     {
       name: 'Cart',
       component: Cart,
+      headerTitleStyle: styles.headerStyle,
+      headerTintColor: COLORS.textColor,
+      headerShadowVisible: false,
+    },
+    {
+      name: 'My Orders',
+      component: MyOrders,
       headerTitleStyle: styles.headerStyle,
       headerTintColor: COLORS.textColor,
       headerShadowVisible: false,

@@ -31,6 +31,7 @@ const MemberCard = ({
   RoomId,
   onProductDelete,
   id,
+  myOrders,
 }) => {
   const toast = useToast();
 
@@ -203,36 +204,38 @@ const MemberCard = ({
               </View>
             </View>
           </View>
-          <View style={styles.View3}>
-            <Icon
-              name="square-edit-outline"
-              type="material-community"
-              size={18}
-              reverse
-              color={COLORS.primary}
-              onPress={onEdit}
-              containerStyle={genericStyles.shadow}
-            />
-            <Icon
-              name="trash"
-              type="ionicon"
-              size={18}
-              color={COLORS.red}
-              reverse
-              onPress={() => {
-                if (onProductDelete) {
-                  deleteProductAlert();
-                } else if (onServiceDelete) {
-                  openLockAlert2();
-                } else if (OnRoomDelete) {
-                  openLockAlert3();
-                } else {
-                  openLockAlert();
-                }
-              }}
-              containerStyle={genericStyles.shadow}
-            />
-          </View>
+          {!myOrders && (
+            <View style={styles.View3}>
+              <Icon
+                name="square-edit-outline"
+                type="material-community"
+                size={18}
+                reverse
+                color={COLORS.primary}
+                onPress={onEdit}
+                containerStyle={genericStyles.shadow}
+              />
+              <Icon
+                name="trash"
+                type="ionicon"
+                size={18}
+                color={COLORS.red}
+                reverse
+                onPress={() => {
+                  if (onProductDelete) {
+                    deleteProductAlert();
+                  } else if (onServiceDelete) {
+                    openLockAlert2();
+                  } else if (OnRoomDelete) {
+                    openLockAlert3();
+                  } else {
+                    openLockAlert();
+                  }
+                }}
+                containerStyle={genericStyles.shadow}
+              />
+            </View>
+          )}
         </View>
       </Card>
       <SpinnerModal visible={loading} />

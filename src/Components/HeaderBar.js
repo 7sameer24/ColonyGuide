@@ -36,11 +36,15 @@ const HeaderBar = ({
         },
       });
       if (response.data.success == true) {
-        const found = response.data.data.map(element => element.product).pop();
-        onAddCart(found.id);
+        if (response.data.data.length > 0) {
+          const found = response.data.data
+            .map(element => element.product)
+            .pop();
+          onAddCart(found.id);
+        }
       }
     } catch (error) {
-      console.log(error);
+      console.log('Cart', error);
     }
   };
 
@@ -78,7 +82,7 @@ const HeaderBar = ({
             containerStyle={searchIconStyle}
             onPress={() => navigation.navigate('Cart')}
           />
-          {searchIcon && (
+          {/* {searchIcon && (
             <Badge
               status="error"
               value={
@@ -88,7 +92,7 @@ const HeaderBar = ({
               }
               containerStyle={{position: 'absolute', top: -6, right: -4}}
             />
-          )}
+          )} */}
         </View>
       </View>
     </SafeAreaView>

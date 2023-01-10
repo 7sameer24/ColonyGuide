@@ -121,9 +121,8 @@ const ProfileScreen = ({navigation}) => {
         title="Profile"
         navigation={navigation}
         firstIcon="menu"
-        bellIcon="cart"
+        searchIcon="cart"
         ThirdType="ionicon"
-        thirdOnpress={() => navigation.navigate('Cart')}
         firstOnpress={() => navigation.toggleDrawer()}
       />
       {Userdata !== null ? (
@@ -245,6 +244,17 @@ const ProfileScreen = ({navigation}) => {
                   title="Add Products"
                 />
               )}
+              <ProfileComponents
+                onPress={() =>
+                  navigation.navigate('My Orders', {
+                    userID: Userdata.userData.id,
+                    userToken: UserToken,
+                  })
+                }
+                iconName="chevron-forward-outline"
+                IconSvg={<AddMember />}
+                title="My Orders"
+              />
               {Userdata.userData.app_role_id === 3 && (
                 <>
                   <ProfileComponents
